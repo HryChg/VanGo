@@ -5,10 +5,11 @@ VanGo was created to aid locals and tourists in exploring the city by showing th
 ### Project Task Requirements:
 #### Minimal Requirements (3-5) (will definitely complete):
 - User interface
-- Webscraping for events
+- Web-scraping for events
 - Bookmark/star/add interested events to itinerary
 - Pop-up (or side-bar) for each event with its name, location, time and link for details
 - Share itinerary with self/others
+
 #### Standard Requirements (3-7) (most likely complete):
 - Save itinerary for future
 - Add calendar to be able to choose future dates
@@ -16,6 +17,7 @@ VanGo was created to aid locals and tourists in exploring the city by showing th
 - Show multiple itineraries/plans on a single page
 - Create user account to save data
 - Edit/delete plans
+
 #### Stretch Requirements (2-3) (hope to complete 1):
 - Filter events at main page
 - Be able to detect time conflicts
@@ -26,22 +28,22 @@ VanGo was created to aid locals and tourists in exploring the city by showing th
 #### Breakdown on Tasks (What we can do right now)
 - Create HTML and CSS static website for now (Four Pages)
     - Events Today (Main page)
-    - Google Map Display
-    - Calendar Widget
-    - Button
-- Select Neighborhood Activities
-    - Google Map Display
-    - Additional Markers for Neighboring Events
-    - Filters on event categories
-- Itineraries Generation
-    - Google Maps Path Generation
-    - Saving path as an json file 
-    - Itinerary view (location order can be changed)
-- User view (saved itineraries)
-    - Convert JSON file to HTML
-    - List view on all Itineraries
-    - Additional features: add, edit, delete on Itineraries
-* Each of these pages will require a navigation bar
+        - Google Map Display
+        - Calendar Widget
+        - Button
+    - Select Neighborhood Activities
+        - Google Map Display
+        - Additional Markers for Neighboring Events
+        - Filters on event categories
+    - Itineraries Generation
+        - Google Maps Path Generation
+        - Saving path as an json file 
+        - Itinerary view (location order can be changed)
+    - User view (saved itineraries)
+        - Convert JSON file to HTML
+        - List view on all Itineraries
+        - Additional features: add, edit, delete on Itineraries
+    - Each of these pages will require a navigation bar
 - Scrape websites for details
     - Find the attributes in the HTML page:
         - DailyHive
