@@ -1,13 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<!--    Google Maps API-->
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;  /* The height is 400 pixels */
+            width: 100%;  /* The width is the width of the web page */
+        }
+    </style>
+
+<!--    DatePicker API-->
     <meta charset="utf-8">
-    <title>Express and Webpack App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
+    </script>
+
+    <meta charset="utf-8">
+    <title>VanGo. You destination begins here.</title>
     <link rel="shortcut icon" href="#">
+
+
 </head>
 <body>
-<h1>Expack</h1>
-<p class="description">Express and Webpack Boilerplate App</p>
-<div class="awful-selfie"></div>
+
+
+
+<div class="wrapper">
+    <div class="sidenav">
+        <h1 class="siteheading">VanGo</h1>
+        <p class="description">PLACE HOLDER</p>
+        <p class="navtext">Hello! What do you need? Use the filters below to see the amenities and services near you.</p>
+        <p>Date: <input type="text" id="datepicker"></p>
+        <h3 class="navheading">I need to find...</h3>
+        <div class="search-container">
+            <form>
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <div class="amenlist">
+            <label class="container">Drinking Water
+                <input type="checkbox" class="amenitem" checked="checked" id="Water">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Public Washrooms
+                <input type="checkbox" class="amenitem" checked="checked" id="Washroom">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Emergency Clinics
+                <input type="checkbox" class="amenitem" checked="checked" id="Clinic">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Shelters
+                <input type="checkbox" class="amenitem" checked="checked" id="Shelter">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="HideButton">
+            <a href="#" class="previousRound" onclick="hides()" id="hideSide">&#8249;</a>
+        </div>
+
+    </div>
+<!--    <div class="awful-selfie"></div>-->
+    <div id="map"></div>
+</div>
+
+<script>
+
+    function initMap() {
+
+        const uluru = {lat: -25.344, lng: 131.036};
+        const map = new google.maps.Map(
+            document.getElementById('map'), {zoom: 4, center: uluru});
+        const marker = new google.maps.Marker({position: uluru, map: map});
+    }
+</script>
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEwN5-_bUvle-iTJQqvR5z2Ir90ahG31Y&callback=initMap">
+</script>
+
 </body>
 </html>
