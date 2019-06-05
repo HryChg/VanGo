@@ -51,3 +51,9 @@ VanGo was created to aid locals and tourists in exploring the city by showing th
         - ToDoCanada
         - Eventbrite
     - Save name, location, date, time, price, category, additional details as JSON object
+
+
+### Acknowledgements, References and Resources:
+#####Login and Registration implementation are based on:
+React + Redux - User Registration and Login Tutorial & Example
+https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
