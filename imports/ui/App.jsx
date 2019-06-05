@@ -1,14 +1,10 @@
 import React from 'react';
-import Hello from './Hello.jsx';
-import Info from './Info.jsx';
-import MapView from './components/MapView';
+import Nav from './components/Nav.js';
+
 
 const App = () => (
   <div>
-    <h1>Welcome to Meteor!</h1>
-    <Hello />
-    <Info />
-    <MapView />
+    <Nav />
   </div>
 );
 
