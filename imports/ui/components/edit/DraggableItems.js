@@ -5,8 +5,9 @@ import "./DraggableItems.css";
 
 class DraggableItems extends React.Component {
     // https://www.freecodecamp.org/news/how-to-make-and-test-your-own-react-drag-and-drop-list-with-0-dependencies-6fb461603780/
+    // github link https://github.com/siffogh/drag-and-drop-article
     state = {
-        items: ["🍰 Cake", "🍩 Donut", "🍎 Apple", "🍕 Pizza"]
+        items: ["🍰 EventA", "🍩 EventB", "🍎 AttractionC", "🍕 AttractionD"]
     };
 
     onDragStart = (e, index) => {
@@ -51,8 +52,12 @@ class DraggableItems extends React.Component {
                                     onDragStart={e => this.onDragStart(e, idx)}
                                     onDragEnd={this.onDragEnd}
                                 >
-                                    <label className="dragBtn"> ≡ </label>
-                                    <span className="content">{item}</span>
+
+
+                                    <div className="ui label huge blue">
+                                        <label className="dragBtn"> ≡ </label>
+                                        <span className="content">{item}</span>
+                                    </div>
                                 </div>
 
                             </li>
