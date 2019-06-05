@@ -10,7 +10,7 @@ export class MapView extends Component {
             width: this.props.width,
             height: this.props.height
         };
-        console.log(this.props.children);
+        // console.log(this.props.children);
 
         return (
 
