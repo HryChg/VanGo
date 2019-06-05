@@ -4,9 +4,8 @@ body {
 }
 
 
-
 .sidenav {
-    width: 130px;
+    width: 100%;
     position: relative;
     left: 10px;
     background: #eee;
@@ -24,12 +23,6 @@ body {
 
 .sidenav a:hover {
     color: #064579;
-}
-
-.main {
-    margin-left: 140px; /* Same width as the sidebar + left position in px */
-    font-size: 28px; /* Increased text to enable scrolling */
-    padding: 0px 10px;
 }
 
 @media screen and (max-height: 450px) {

@@ -4,7 +4,9 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import MapContainer from './MapContainer';
 import LoginPage from './user/LoginPage';
 import ItineraryPage from './itinerary/ItineraryPage';
-import SideBar from "./Sidebar";
+import SideNav from "./SideNav";
+import Calendar from "./Calendar";
+import DatePicker from "./DatePicker";
 
 
 // This part routes to "different pages"
@@ -15,7 +17,14 @@ function Home() {
         <div className="ui grid">
 
                 <div className="four wide column">
-                    <SideBar/>
+                    <SideNav>
+                        {/*pass in the html element*/}
+                        <DatePicker/>
+                        <a href="#">About</a>
+                        <a href="#">Services</a>
+                        <a href="#">Clients</a>
+                        <a href="#">Contact</a>
+                    </SideNav>
                 </div>
                 <div className="twelve wide column">
                     <div
