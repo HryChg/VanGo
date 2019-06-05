@@ -8,6 +8,7 @@ class Login extends React.Component {
         return(
             <div id="login-block">
             {/* TODO: Integrate Google Login */}
+            <h2>Login</h2>
             <form id="login-form" onSubmit={(e) => {e.preventDefault();}}>
                 <label className="form-label">
                     Email
@@ -21,7 +22,7 @@ class Login extends React.Component {
                     {/* onChange={(e) => this.props.updatePassword(e)}/> */}
                 </label>
                 <br />
-                <button>Login</button>
+                <button class="ui button">Login</button>
                 <Link to="/register">Register</Link>
             </form>
         </div>

@@ -3,6 +3,7 @@ import React from 'react';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import MapContainer from './MapContainer';
 import LoginPage from './user/LoginPage';
+import RegistrationPage from './user/RegistrationPage';
 import ItineraryPage from './itinerary/ItineraryPage';
 import SideNav from "./SideNav";
 import DatePicker from "./DatePicker";
@@ -71,6 +72,7 @@ function AppRouter() {
                 <Route path="/edit/" exact component={Edit}/>
                 <Route path="/itinerary/" component={ItineraryPage}/>
                 <Route path="/login/" component={LoginPage}/>
+                <Route path="/register/" component={RegistrationPage}/>
             </div>
         </Router>
     );
