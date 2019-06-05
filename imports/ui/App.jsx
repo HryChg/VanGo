@@ -5,7 +5,7 @@ import MapContainer from "./components/MapContainer";
 
 const App = () => (
   <div>
-    <Nav />
+    <Nav id="nav-bar"/>
   </div>
 );
 

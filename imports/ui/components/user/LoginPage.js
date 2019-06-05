@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 class Login extends React.Component {
     render() {
         return(
-            <div id="login-block">
+            <div id="login-block" className="container" style={{width: '25%'}}>
             {/* TODO: Integrate Google Login */}
             <h2>Login</h2>
-            <form id="login-form" onSubmit={(e) => {e.preventDefault();}}>
+            <form class="ui form" id="login-form" onSubmit={(e) => {e.preventDefault();}}>
                 <label className="form-label">
                     Email
                     <input id="email" type="text" className="form-item" />

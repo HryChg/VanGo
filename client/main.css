@@ -4,6 +4,38 @@ body {
 }
 
 /* ---------------------------------------- */
+/* ------------    TopNav   -------------- */
+/* ---------------------------------------- */
+#nav-bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.nav-bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.nav-link {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    text-decoration: none;
+    float: left;
+}
+
+.nav-link:hover {
+    text-decoration-line: underline;
+}
+
+/* ---------------------------------------- */
 /* ------------    SideNav   -------------- */
 /* ---------------------------------------- */
 .sidenav {
