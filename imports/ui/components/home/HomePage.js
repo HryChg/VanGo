@@ -4,7 +4,7 @@ import SideNav from "../SideNav";
 import SearchBar from "../SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
-import MapContainer from "../MapContainer";
+import MapContainer2 from "../map/MapContainer2";
 
 
 class HomePage extends React.Component {
@@ -25,7 +25,7 @@ class HomePage extends React.Component {
                         className={"container"}
                         style={{width: '500px', height:'90vh'}}
                     >
-                        <MapContainer
+                        <MapContainer2
                             width={'95%'}
                             height={'95%'}
                         />
