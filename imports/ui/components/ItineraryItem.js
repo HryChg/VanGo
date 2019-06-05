@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 class ItineraryItem extends React.Component {
     render() {
-        return(<div>{this.props.item}</div>); // TODO: passing in just an item
+        return(<div>{this.props.name}</div>);
     }
 }
 

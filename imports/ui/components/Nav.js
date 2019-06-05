@@ -2,13 +2,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import MapView from './MapView';
+import Login from './Login';
+import Itinerary from './Itinerary';
 
 // This part routes to "different pages"
 function Home() {
     return (<div>
         <h2>Home</h2>
-        <MapView />
-        <p>Test</p>
         </div>);
 }
 
@@ -16,12 +16,12 @@ function Edit() {
     return <h2>Edit</h2>;
 }
 
-function Login() {
-    return <h2>Login</h2>;
+function LoginPage() {
+    return <div>Hello!</div>;
 }
 
-function Itinerary() {
-    return <h2>My Itinerary</h2>;
+function ItineraryPage() {
+    return <Itinerary/>;
 }
 
 function Profile() {
@@ -45,7 +45,7 @@ function AppRouter() {
                 <Route path="/profile/" component={Profile} />
                 <Route path="/edit/" exact component={Edit} />
                 <Route path="/itinerary/" component={Itinerary} />
-                <Route path="/login/" component={Login} />
+                <Route path="/login/" component={LoginPage} />
             </div>
         </Router>
     );

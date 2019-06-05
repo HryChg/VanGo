@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { login } from '../actions/index.js';
 
-class LoginPopup extends React.Component {
+class Login extends React.Component {
     render() {
         return(
             <div id="login-block">
@@ -28,4 +28,4 @@ const mapStateToProps = (state) => {
     return state;
 }
 
-export default connect(mapStateToProps, { login })(LoginPopup);
+export default connect(mapStateToProps, { login })(Login);
