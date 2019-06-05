@@ -1,0 +1,24 @@
+.DraggableItems ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.DraggableItems ul li {
+    background-color: rgba(96, 96, 96, 0);
+    padding: 10px 20px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1;
+}
+
+.DraggableItems li .drag {
+    margin-right: 15px;
+    cursor: move;
+}
+
+.DraggableItems li .dragBtn {
+    height: 2rem;
+    color: #0c0c0c;
+}
