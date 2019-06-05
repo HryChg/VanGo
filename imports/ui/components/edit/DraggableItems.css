@@ -1,3 +1,7 @@
+.DraggableItems{
+    margin: 8px;
+}
+
 .DraggableItems ul {
     margin: 0;
     padding: 0;

@@ -40,9 +40,9 @@ class DraggableItems extends React.Component {
 
     render() {
         return (
-            <div className="DraggableItems">
+            <div className="DraggableItems container centered">
                 <main>
-                    <h3>List of items</h3>
+                    <h3>List of Events</h3>
                     <ul>
                         {this.state.items.map((item, idx) => (
                             <li key={item} onDragOver={() => this.onDragOver(idx)}>
