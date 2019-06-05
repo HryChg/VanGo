@@ -29,7 +29,7 @@ VanGo was created to aid locals and tourists in exploring the city by showing th
 - Create HTML and CSS static website for now (Four Pages)
     - Events Today (Main page)
         - Google Map Display
-        - Calendar Widget
+        - DatePicker Widget
         - Button
     - Select Neighborhood Activities
         - Google Map Display

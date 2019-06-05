@@ -67,6 +67,8 @@ export class MapContainer extends Component {
     }
 }
 
+
+
 // TODO not sure how to incorporate this with REDUX
 export default GoogleApiWrapper({
     apiKey: googleMapsApiKey
