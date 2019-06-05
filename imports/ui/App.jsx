@@ -1,19 +1,16 @@
 import React from 'react';
 import Nav from './components/Nav.js';
-import MapView from "./components/MapView";
-import MapMarker from "./components/MapMarker";
+import MapContainer from "./components/MapContainer";
 
 
 
 const App = () => (
   <div>
     <Nav />
-    <MapView
-        width={'600px'}
-        height={'500px'}
-    >
-        <MapMarker/>
-    </MapView>
+  <MapContainer
+      width={'600px'}
+      height={'500px'}
+  />
   </div>
 );
 
