@@ -62,12 +62,12 @@ function AppRouter() {
         <Router>
             <div>
                 <nav>
-                    <ul>
-                        <li><Link to="/">VANGO</Link></li>
-                        <li><Link to="/profile/">Profile</Link></li>
+                    <ul className="nav-bar">
+                        <li className="nav-link"><Link to="/">VANGO</Link></li>
+                        <li className="nav-link"><Link to="/profile/">Profile</Link></li>
                         {/* <li><Link to="/edit/">Edit</Link></li>  */} {/* TODO: To link from Home */}
-                        <li><Link to="/itinerary/">Itinerary</Link></li>
-                        <li><Link to="/login/">Login</Link></li>
+                        <li className="nav-link"><Link to="/itinerary/">Itinerary</Link></li>
+                        <li className="nav-link"><Link to="/login/">Login</Link></li>
                     </ul>
                 </nav>
                 <Route path="/" exact component={Home}/>

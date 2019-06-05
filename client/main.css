@@ -6,33 +6,26 @@ body {
 /* ---------------------------------------- */
 /* ------------    TopNav   -------------- */
 /* ---------------------------------------- */
-#nav-bar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: rgba(255, 255, 255, 0);
-}
-
 .nav-bar {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: rgba(255, 255, 255, 0);
 }
 
 .nav-link {
     display: block;
-    color: white;
+    color: #2196F3;    
     text-align: center;
-    padding: 1rem;
+    padding: .5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     text-decoration: none;
     float: left;
 }
 
 .nav-link:hover {
-    text-decoration-line: underline;
+    color: #064579;
 }
 
 /* ---------------------------------------- */
