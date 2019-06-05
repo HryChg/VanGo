@@ -6,45 +6,22 @@ import LoginPage from './user/LoginPage';
 import RegistrationPage from './user/RegistrationPage';
 import ItineraryPage from './itinerary/ItineraryPage';
 import SideNav from "./SideNav";
-import DatePicker from "./DatePicker";
+import DatePicker from "./home/DatePicker";
 import SearchBar from "./SearchBar";
-import EventFilter from "./EventFilter";
+import EventFilter from "./home/EventFilter";
 import EditPage from "./edit/EditPage";
+import HomePage from "./home/HomePage";
 
 
 // This part routes to "different pages"
 function Home() {
-    return (<div>
-        <div className="ui grid">
-                <div className="four wide column">
-                    <SideNav>
-                        <h2>VanGo</h2>
-                        <SearchBar/>
-                        <DatePicker/>
-                        <EventFilter/>
-
-                    </SideNav>
-                </div>
-                <div className="twelve wide column">
-                    <div
-                        className={"container"}
-                        style={{width: '500px', height:'90vh'}}
-                    >
-                        <MapContainer
-                            width={'95%'}
-                            height={'95%'}
-                        />
-                    </div>
-                </div>
-        </div>
-
-    </div>);
+    return (<HomePage/>);
 }
 
 function Edit() {
-    return (<h2>
+    return (<div>
         <EditPage/>
-    </h2>);
+    </div>);
 }
 
 function Profile() {

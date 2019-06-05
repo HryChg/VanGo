@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Toggle from "./Toggle";
-import Button from "./Button";
+import Toggle from "../Toggle";
+import Button from "../Button";
 import { Link } from 'react-router-dom';
 
 class EventFilter extends React.Component {
