@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ItineraryDatePanel from './ItineraryDatePanel';
-import MapView from '../MapView';
+import MapContainer from '../MapContainer';
 import ItineraryList from './ItineraryList';
 
 class Itinerary extends React.Component {
@@ -12,7 +12,7 @@ class Itinerary extends React.Component {
             </div>
             <div>
                 <h1>{this.props.itinerary.selectedDate}</h1>
-                <MapView/>
+                <MapContainer/>
                 <ItineraryList />
             </div>
 
