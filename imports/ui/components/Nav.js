@@ -1,27 +1,23 @@
 // Code is based on https://reacttraining.com/react-router/web/guides/quick-start
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import MapView from './MapView';
+import MapContainer from './MapContainer';
+import LoginPage from './user/LoginPage';
+import ItineraryPage from './itinerary/ItineraryPage';
 
 // This part routes to "different pages"
 function Home() {
     return (<div>
         <h2>Home</h2>
-        <MapView />
-        <p>Test</p>
+        <MapContainer
+            width={'600px'}
+            height={'500px'}
+        />
         </div>);
 }
 
 function Edit() {
     return <h2>Edit</h2>;
-}
-
-function Login() {
-    return <h2>Login</h2>;
-}
-
-function Itinerary() {
-    return <h2>My Itinerary</h2>;
 }
 
 function Profile() {
@@ -44,8 +40,8 @@ function AppRouter() {
                 <Route path="/" exact component={Home} />
                 <Route path="/profile/" component={Profile} />
                 <Route path="/edit/" exact component={Edit} />
-                <Route path="/itinerary/" component={Itinerary} />
-                <Route path="/login/" component={Login} />
+                <Route path="/itinerary/" component={ItineraryPage} />
+                <Route path="/login/" component={LoginPage} />
             </div>
         </Router>
     );

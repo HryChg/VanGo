@@ -2,13 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ItineraryItem from './ItineraryItem.js';
 
-class Itinerary extends React.Component {
+class ItineraryList extends React.Component {
     render() {
+        const { itinerary } = this.props.itinerary;
+        const mappedItinerary = itinerary.map(event => <ItineraryItem name={itinerary.name} date={itinerary.date}/>);
         return(<div>
             <h1>Itinerary</h1>
             <ol id="itinerary-list">
-                <li><ItineraryItem item="dummy item"/></li>
-                {/* To add itinerary items from store*/}
+                { mappedItinerary }
             </ol>
         </div>);
     }
@@ -18,4 +19,4 @@ const mapStateToProps = (state) => {
     return state;
 }
 
-export default connect(mapStateToProps)(Itinerary);
+export default connect(mapStateToProps)(ItineraryList);
