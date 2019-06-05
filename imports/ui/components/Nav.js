@@ -6,6 +6,7 @@ import LoginPage from './user/LoginPage';
 import ItineraryPage from './itinerary/ItineraryPage';
 import SideBar from "./Sidebar";
 
+
 // This part routes to "different pages"
 function Home() {
     return (<div>
