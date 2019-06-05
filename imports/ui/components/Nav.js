@@ -5,8 +5,8 @@ import MapContainer from './MapContainer';
 import LoginPage from './user/LoginPage';
 import ItineraryPage from './itinerary/ItineraryPage';
 import SideNav from "./SideNav";
-import Calendar from "./Calendar";
 import DatePicker from "./DatePicker";
+import SearchBar from "./SearchBar";
 
 
 // This part routes to "different pages"
@@ -15,10 +15,10 @@ function Home() {
         <h2>Home</h2>
 
         <div className="ui grid">
-
                 <div className="four wide column">
                     <SideNav>
-                        {/*pass in the html element*/}
+                        <h2>VanGo</h2>
+                        <SearchBar/>
                         <DatePicker/>
                         <a href="#">About</a>
                         <a href="#">Services</a>
@@ -36,9 +36,7 @@ function Home() {
                             height={'95%'}
                         />
                     </div>
-
                 </div>
-
         </div>
 
     </div>);
