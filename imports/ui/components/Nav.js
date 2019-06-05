@@ -15,8 +15,6 @@ import EditPage from "./edit/EditPage";
 // This part routes to "different pages"
 function Home() {
     return (<div>
-        <h2>Home</h2>
-
         <div className="ui grid">
                 <div className="four wide column">
                     <SideNav>
@@ -30,7 +28,7 @@ function Home() {
                 <div className="twelve wide column">
                     <div
                         className={"container"}
-                        style={{width: '500px', height:'100vh'}}
+                        style={{width: '500px', height:'90vh'}}
                     >
                         <MapContainer
                             width={'95%'}

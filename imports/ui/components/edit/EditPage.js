@@ -29,7 +29,7 @@ class EditPage extends React.Component {
                 <div className="twelve wide column">
                     <div
                         className={"container"}
-                        style={{width: '500px', height:'80vh'}}
+                        style={{width: '500px', height:'90vh'}}
                     >
                         <MapContainer
                             width={'95%'}
