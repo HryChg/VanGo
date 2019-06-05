@@ -1,3 +1,4 @@
+// Reference: https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example#user-actions-js
 export default function AlertReducer(state = {}, action) {
     switch(action.type) {
         case 'ALERT_SUCCESS':

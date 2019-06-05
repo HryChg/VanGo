@@ -1,3 +1,4 @@
+// Reference: https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example#user-actions-js
 const initialState = { email: "", password: "" };
 
 // TODO: Figure out where "localStorage.getItem is from"
@@ -22,6 +23,6 @@ export default function LoginReducer(state = initialState, action) {
         case 'LOGOUT':
             return {};
         default:
-            return {};
+            return state;
     }
 }
