@@ -1,22 +1,38 @@
 import React, { Component } from 'react';
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {googleMapsApiKey} from '../config';
 
-export default class MapView extends Component {
-    state = {
-        counter: 0,
-    }
+const mapStyle = {
+    width: '400px',
+    height: '400px'
+};
 
-    increment() {
-        this.setState({
-            counter: this.state.counter + 1
-        });
-    }
+export class MapView extends Component {
+
 
     render() {
+
         return (
-            <div>
-            <button onClick={() => this.increment()}>Click Me</button>
-        <p>You've pressed the button {this.state.counter} times.</p>
-        </div>
-    );
+            <Map
+                google={this.props.google}
+                zoom={14}
+                style={mapStyle}
+            >
+                <Marker
+                    title={'The marker`s title will appear as a tooltip.'}
+                    name={'SOMA'}
+                    position={{lat: 37.778519, lng: -122.405640}} />
+                <Marker
+                    name={'Dolores park'}
+                    position={{lat: 37.759703, lng: -122.428093}} />
+
+
+
+            </Map>
+        );
     }
 }
+
+export default GoogleApiWrapper({
+    apiKey: googleMapsApiKey
+})(MapView)
