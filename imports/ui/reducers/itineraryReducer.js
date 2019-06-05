@@ -5,7 +5,7 @@ const initialState =
         {name: "API Event 3", date: "Saturday"}], 
     selectedDate: "Fake Date" };
 
-export default function itineraryReducer(state = initialState, action) {
+export default function ItineraryReducer(state = initialState, action) {
     let newState;
     switch(action.type) {
         case 'SELECT_DATE':

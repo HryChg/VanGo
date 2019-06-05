@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login } from '../actions/index.js';
+import { login } from '../../actions/index.js';
 
 class Login extends React.Component {
     render() {

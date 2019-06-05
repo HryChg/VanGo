@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ItineraryDate from './ItineraryDate.js';
-import { selectDate } from '../actions/itineraryActions.js';
+import { selectDate } from '../../actions/itineraryActions.js';
 
 class ItineraryDatePanel extends React.Component {
     render() {

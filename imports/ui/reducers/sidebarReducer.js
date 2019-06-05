@@ -1,6 +1,6 @@
 const initialState = { hidden: true, name: "", date: "", message: "", index: -1 }
 
-export default function sidebarReducer(state = initialState, action) {
+export default function SidebarReducer(state = initialState, action) {
     let newState;
     switch(action.type) {
         case 'SELECT_MESSAGE':

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ItineraryDatePanel from './ItineraryDatePanel';
-import MapView from './MapView';
+import MapView from '../MapView';
 import ItineraryList from './ItineraryList';
 
 class Itinerary extends React.Component {
