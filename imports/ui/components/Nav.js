@@ -1,15 +1,13 @@
 // Code is based on https://reacttraining.com/react-router/web/guides/quick-start
 import React from 'react';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import MapContainer from './MapContainer';
 import LoginPage from './user/LoginPage';
 import ItineraryPage from './itinerary/ItineraryPage';
 import SideNav from "./SideNav";
 import DatePicker from "./DatePicker";
 import SearchBar from "./SearchBar";
-import Toggle from "./Toggle";
 import EventFilter from "./EventFilter";
-import Ratings from "./Ratings";
 
 
 // This part routes to "different pages"
@@ -28,7 +26,7 @@ function Home() {
                         <a href="#">Clients</a>
                         <a href="#">Contact</a>
                         <EventFilter/>
-                        <Ratings/>
+
                     </SideNav>
                 </div>
                 <div className="twelve wide column">
