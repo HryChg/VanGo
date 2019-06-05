@@ -9,6 +9,7 @@ import SideNav from "./SideNav";
 import DatePicker from "./DatePicker";
 import SearchBar from "./SearchBar";
 import EventFilter from "./EventFilter";
+import EditPage from "./edit/EditPage";
 
 
 // This part routes to "different pages"
@@ -47,7 +48,9 @@ function Home() {
 }
 
 function Edit() {
-    return <h2>Edit</h2>;
+    return (<h2>
+        <EditPage/>
+    </h2>);
 }
 
 function Profile() {
