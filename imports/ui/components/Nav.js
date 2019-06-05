@@ -7,6 +7,7 @@ import ItineraryPage from './itinerary/ItineraryPage';
 import SideNav from "./SideNav";
 import DatePicker from "./DatePicker";
 import SearchBar from "./SearchBar";
+import Toggle from "./Toggle";
 
 
 // This part routes to "different pages"
@@ -24,6 +25,9 @@ function Home() {
                         <a href="#">Services</a>
                         <a href="#">Clients</a>
                         <a href="#">Contact</a>
+                        <Toggle
+                            content={"Music"}
+                        />
                     </SideNav>
                 </div>
                 <div className="twelve wide column">

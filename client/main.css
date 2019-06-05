@@ -3,7 +3,9 @@ body {
     font-family: sans-serif;
 }
 
-
+/* ---------------------------------------- */
+/* ------------    SideNav   -------------- */
+/* ---------------------------------------- */
 .sidenav {
     width: 100%;
     position: relative;
@@ -29,5 +31,3 @@ body {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
-
-
