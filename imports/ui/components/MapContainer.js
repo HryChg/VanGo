@@ -51,7 +51,8 @@ export class MapContainer extends Component {
     render() {
         const mapStyle = {
             width: this.props.width,
-            height: this.props.height
+            height: this.props.height,
+            position: 'fixed'
         };
 
         return (

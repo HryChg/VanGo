@@ -4,6 +4,31 @@ body {
 }
 
 /* ---------------------------------------- */
+/* ------------    TopNav   -------------- */
+/* ---------------------------------------- */
+.nav-bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.nav-link {
+    display: block;
+    color: #2196F3;    
+    text-align: center;
+    padding: .5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-decoration: none;
+    float: left;
+}
+
+.nav-link:hover {
+    color: #064579;
+}
+
+/* ---------------------------------------- */
 /* ------------    SideNav   -------------- */
 /* ---------------------------------------- */
 .sidenav {

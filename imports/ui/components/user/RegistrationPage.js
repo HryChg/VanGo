@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 class RegistrationPage extends React.Component {
     render() {
         return(
-            <div>
+            <div className="container" style={{width: '25%'}}>
             <h2>Register</h2>
-            <form id="register-form" onSubmit={(e) => {e.preventDefault();}}>
+            <form className="ui form" id="register-form" onSubmit={(e) => {e.preventDefault();}}>
                 <label className="form-label">
                     First Name
                     <input id="first-name" type="text" className="form-item" />
