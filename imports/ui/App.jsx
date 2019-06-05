@@ -6,7 +6,10 @@ import MapView from "./components/MapView";
 const App = () => (
   <div>
     <Nav />
-    <MapView />
+    <MapView
+        width={'600px'}
+        height={'500px'}
+    />
   </div>
 );
 
