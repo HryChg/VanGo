@@ -12,6 +12,7 @@
     "google-maps-react": "^2.0.2",
     "meteor-node-stubs": "^0.4.1",
     "react": "^16.8.6",
+    "react-calendar": "^2.19.0",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",
