@@ -8,6 +8,8 @@ import SideNav from "./SideNav";
 import DatePicker from "./DatePicker";
 import SearchBar from "./SearchBar";
 import Toggle from "./Toggle";
+import EventFilter from "./EventFilter";
+import Ratings from "./Ratings";
 
 
 // This part routes to "different pages"
@@ -25,9 +27,8 @@ function Home() {
                         <a href="#">Services</a>
                         <a href="#">Clients</a>
                         <a href="#">Contact</a>
-                        <Toggle
-                            content={"Music"}
-                        />
+                        <EventFilter/>
+                        <Ratings/>
                     </SideNav>
                 </div>
                 <div className="twelve wide column">
