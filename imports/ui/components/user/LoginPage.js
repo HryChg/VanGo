@@ -9,7 +9,7 @@ class Login extends React.Component {
             <div id="login-block" className="container" style={{width: '25%'}}>
             {/* TODO: Integrate Google Login */}
             <h2>Login</h2>
-            <form class="ui form" id="login-form" onSubmit={(e) => {e.preventDefault();}}>
+            <form className="ui form" id="login-form" onSubmit={(e) => {e.preventDefault();}}>
                 <label className="form-label">
                     Email
                     <input id="email" type="text" className="form-item" />
@@ -21,8 +21,8 @@ class Login extends React.Component {
                     <input id="password" type="text" className="form-item" />  
                     {/* onChange={(e) => this.props.updatePassword(e)}/> */}
                 </label>
-                <br />
-                <button class="ui button">Login</button>
+                <br/>
+                <button className="ui button">Login</button>
                 <Link to="/register">Register</Link>
             </form>
         </div>

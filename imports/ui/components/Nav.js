@@ -23,10 +23,6 @@ function Home() {
                         <h2>VanGo</h2>
                         <SearchBar/>
                         <DatePicker/>
-                        <a href="#">About</a>
-                        <a href="#">Services</a>
-                        <a href="#">Clients</a>
-                        <a href="#">Contact</a>
                         <EventFilter/>
 
                     </SideNav>
@@ -65,7 +61,7 @@ function AppRouter() {
                     <ul className="nav-bar">
                         <li className="nav-link"><Link to="/">VANGO</Link></li>
                         <li className="nav-link"><Link to="/profile/">Profile</Link></li>
-                        {/* <li><Link to="/edit/">Edit</Link></li>  */} {/* TODO: To link from Home */}
+                        <li className="nav-link"><Link to="/edit/">Edit</Link></li>
                         <li className="nav-link"><Link to="/itinerary/">Itinerary</Link></li>
                         <li className="nav-link"><Link to="/login/">Login</Link></li>
                     </ul>

@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Toggle from "./Toggle";
 import Button from "./Button";
+import { Link } from 'react-router-dom';
 
 class EventFilter extends React.Component {
     render() {
@@ -26,11 +27,7 @@ class EventFilter extends React.Component {
                 </div>
             </div>
 
-            <div className="ui primary button container">
-                Show Nearby Attraction
-            </div>
-
-
+            <Link className="ui primary button container" to="/edit">Show Nearby Attraction</Link>
 
 
         </div>);

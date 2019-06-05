@@ -25,14 +25,14 @@ class RegistrationPage extends React.Component {
                     <input id="email" type="text" className="form-item" />  
                     {/* onChange={(e) => this.props.updateEmail(e)}/> */}
                 </label>
-                <br />
+                <br/>
                 <label className="form-label">
                     Password
                     <input id="password" type="text" className="form-item" />
                     {/* onChange={(e) => this.props.updatePassword(e)}/> */}
                 </label>
                 <br/>
-                <button class="ui button">Register</button>
+                <button className="ui button">Register</button>
                 <Link to="/login">Cancel</Link>
             </form>
         </div>
