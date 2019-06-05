@@ -13,4 +13,4 @@ const mapStateToProps = (state) => {
     return state;
 }
 
-export default connect(mapStateToProps)(SearchBar);
+export default connect(mapStateToProps)(Calendar);

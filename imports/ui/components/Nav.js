@@ -4,7 +4,11 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import MapContainer from './MapContainer';
 import LoginPage from './user/LoginPage';
 import ItineraryPage from './itinerary/ItineraryPage';
-import SideBar from "./Sidebar";
+import SideNav from "./SideNav";
+import DatePicker from "./DatePicker";
+import SearchBar from "./SearchBar";
+import Toggle from "./Toggle";
+
 
 // This part routes to "different pages"
 function Home() {
@@ -12,9 +16,19 @@ function Home() {
         <h2>Home</h2>
 
         <div className="ui grid">
-
                 <div className="four wide column">
-                    <SideBar/>
+                    <SideNav>
+                        <h2>VanGo</h2>
+                        <SearchBar/>
+                        <DatePicker/>
+                        <a href="#">About</a>
+                        <a href="#">Services</a>
+                        <a href="#">Clients</a>
+                        <a href="#">Contact</a>
+                        <Toggle
+                            content={"Music"}
+                        />
+                    </SideNav>
                 </div>
                 <div className="twelve wide column">
                     <div
@@ -26,9 +40,7 @@ function Home() {
                             height={'95%'}
                         />
                     </div>
-
                 </div>
-
         </div>
 
     </div>);
