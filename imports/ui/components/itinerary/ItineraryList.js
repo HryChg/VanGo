@@ -5,8 +5,8 @@ import ItineraryItem from './ItineraryItem.js';
 class ItineraryList extends React.Component {
     render() {
         const { itinerary } = this.props.itinerary;
-        const mappedItinerary = itinerary.map(event => <ItineraryItem name={itinerary.name} date={itinerary.date}/>);
-        return(<div>
+        const mappedItinerary = itinerary.map(e => <ItineraryItem event={e}/>);
+        return(<div className="itinerary">
             <h1>Itinerary</h1>
             <ol id="itinerary-list">
                 { mappedItinerary }

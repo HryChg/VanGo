@@ -21,7 +21,7 @@ class Itinerary extends React.Component {
                     style={{width: '500px', height:'50vh'}}
                 >
                     <h1>{this.props.itinerary.selectedDate}</h1>
-                    <div><MapContainer height="70%" width="95%"/></div>
+                    <div><MapContainer height="75%" width="95%"/></div>
                 </div>
                 <div><ItineraryList/></div>
             </div>

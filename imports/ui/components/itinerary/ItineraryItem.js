@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 
 class ItineraryItem extends React.Component {
     render() {
-        return(<div>{this.props.name}</div>);
+        return(<div className="event-block">
+                <div id="event-name">{ this.props.event.name }</div>
+                <div className="event-detail">{ this.props.event.location }</div>
+                <div className="event-detail">{ this.props.event.address }</div>
+            </div>);
     }
 }
 

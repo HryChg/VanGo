@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import CircleButton from './CircleButton';
 
 class ItineraryDate extends React.Component {
     render() {
-        return(<div>
+        return(<div className="it-date">
         {this.props.date}
-        <button onClick={() => this.props.selectDate(this.props.date)}></button>
+        <CircleButton onClick={() => this.props.selectDate(this.props.date)}/>
         </div>);
     }
 }
