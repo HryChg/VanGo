@@ -54,6 +54,18 @@ VanGo was created to aid locals and tourists in exploring the city by showing th
 
 
 ### Acknowledgements, References and Resources:
-#####Login and Registration implementation are based on:
+#####Styling
+Semantic UI
+https://semantic-ui.com/modules/modal.html
+
+#####Home Page
+React Calendar
+https://www.npmjs.com/package/react-calendar
+
+#####React Google Map
+React Google Map API Tutorial
+https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
+
+#####Login and Registration Redux
 React + Redux - User Registration and Login Tutorial & Example
 https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
