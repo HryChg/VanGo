@@ -10,12 +10,12 @@ class Itinerary extends React.Component {
         return(
             <div className="ui grid">
             <div className="four wide column">
-                {/* <div className="it-panel"> */}
-                    <SideNav className="it-panel">
+                <div className="it-panel-bkgd">
+                    <div className="it-panel sidenav">
                         <h2>VanGo</h2>
-                        <ItineraryDatePanel/>
-                    </SideNav>
-                {/* </div> */}
+                        <ItineraryDatePanel><h2>VanGo</h2></ItineraryDatePanel>
+                    </div>
+                </div>
             </div>
             <div className="twelve wide column">
                 <div
