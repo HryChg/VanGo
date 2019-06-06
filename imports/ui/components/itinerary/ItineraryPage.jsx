@@ -10,10 +10,12 @@ class Itinerary extends React.Component {
         return(
             <div className="ui grid">
             <div className="four wide column">
-                <SideNav>
-                    <h2>VanGo</h2>
-                    <ItineraryDatePanel />
-                </SideNav>
+                {/* <div className="it-panel"> */}
+                    <SideNav className="it-panel">
+                        <h2>VanGo</h2>
+                        <ItineraryDatePanel/>
+                    </SideNav>
+                {/* </div> */}
             </div>
             <div className="twelve wide column">
                 <div
@@ -22,8 +24,8 @@ class Itinerary extends React.Component {
                 >
                     <h1>{this.props.itinerary.selectedDate}</h1>
                     <div><MapContainer height="75%" width="95%"/></div>
+                    <div><ItineraryList/></div>
                 </div>
-                <div><ItineraryList/></div>
             </div>
         </div>);
     }

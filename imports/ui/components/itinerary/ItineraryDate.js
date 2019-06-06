@@ -4,8 +4,8 @@ import CircleButton from './CircleButton';
 
 class ItineraryDate extends React.Component {
     render() {
-        return(<div className="it-date">
-        {this.props.date}
+        return(<div className="it-date-circ">
+        <span className="it-date">{this.props.date}</span>
         <CircleButton onClick={() => this.props.selectDate(this.props.date)}/>
         </div>);
     }
