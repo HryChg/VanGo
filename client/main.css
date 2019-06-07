@@ -3,7 +3,7 @@ body {
     font-family: sans-serif;
 }
 
-.container{
+.container {
     padding: 6px;
 }
 
@@ -11,8 +11,6 @@ h1, h2 {
     margin: 6px 6px;
     padding-top: 6px;
 }
-
-
 
 
 /* ---------------------------------------- */
@@ -66,15 +64,20 @@ h1, h2 {
 }
 
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
 }
 
 
 /* ---------------------------------------- */
 /* ------------    Toggle    -------------- */
 /* ---------------------------------------- */
-.checkbox{
+.checkbox {
     margin: 2px;
 }
 
@@ -154,6 +157,36 @@ h1, h2 {
     font-size: 16px;
     line-height: 2em;
 }
+
+/* ---------------------------------------- */
+/* ---------    DraggableItems ------------ */
+/* ---------------------------------------- */
+.DraggableItems ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.DraggableItems ul li {
+    background-color: rgba(96, 96, 96, 0);
+    padding: 10px 15px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1;
+}
+
+.DraggableItems li .drag {
+    margin-right: 15px;
+    cursor: move;
+}
+
+.DraggableItems li .dragBtn {
+    height: 4rem;
+    margin-right: 10px;
+    color: #0c0c0c;
+}
+
 
 /* ---------------------------------------- */
 /* ----  Login, Registration Block -------- */

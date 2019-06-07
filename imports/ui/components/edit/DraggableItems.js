@@ -1,13 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import "./DraggableItems.css";
+
 
 
 class DraggableItems extends React.Component {
-    // https://www.freecodecamp.org/news/how-to-make-and-test-your-own-react-drag-and-drop-list-with-0-dependencies-6fb461603780/
-    // github link https://github.com/siffogh/drag-and-drop-article
     state = {
-        items: ["🍰 EventA", "🍩 EventB", "🍎 AttractionC", "🍕 AttractionD"]
+        items: ["🍰 EventA", "🍩 EventB", "🍎 AttractionC", "🍕 AttractionD", "🐵 AttractionE", "🥎 AttractionF"]
     };
 
     onDragStart = (e, index) => {
@@ -38,12 +36,16 @@ class DraggableItems extends React.Component {
         this.draggedIdx = null;
     };
 
+    /*
+    * The content inside the <main> element
+    * should be unique to the document.
+    * */
+
     render() {
         return (
-            <div className="DraggableItems container">
+            <div className="DraggableItems">
                 <main>
-                    <h3>Attractions</h3>
-                    <ul>
+                    <ul className={""}>
                         {this.state.items.map((item, idx) => (
                             <li key={item} onDragOver={() => this.onDragOver(idx)}>
                                 <div
