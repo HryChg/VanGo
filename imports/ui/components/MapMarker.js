@@ -1,26 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import {Marker} from 'google-maps-react';
 
 class MapMarker extends React.Component {
-    // TODO: Implementation to be determined, image?
+    // TODO find out a way to return original <Marker></Marker> intead of <MapMarker> <Marker></Marker> </MapMarker>
     render() {
         return <Marker
-            key={this.props.key}
-            id={this.props.id}
             position={{
-                lat: this.props.latitude,
-                lng: this.props.longitude
+                lat: 47.49855629475769,
+                lng: -122.14184416996333
             }}
             onClick={() => console.log("You clicked me!")}
         />
     }
 }
 
-// export default MapMarker;
-
-const mapStateToProps = (state) => {
-    return state;
-};
-
-export default connect(mapStateToProps)(MapMarker);
+export default MapMarker;

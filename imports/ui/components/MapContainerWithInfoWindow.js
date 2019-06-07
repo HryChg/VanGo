@@ -8,17 +8,16 @@ import MapMarker from "./MapMarker";
  * Here are more markers if we need them
  *
  <Marker
-    title={'The marker`s title will appear as a tooltip.'}
-    name={'SOMA'}
-    position={{lat: 37.778519, lng: -122.405640}} />
+ title={'The marker`s title will appear as a tooltip.'}
+ name={'SOMA'}
+ position={{lat: 37.778519, lng: -122.405640}} />
  <Marker
-    name={'Dolores park'}
-    position={{lat: 37.759703, lng: -122.428093}} />
+ name={'Dolores park'}
+ position={{lat: 37.759703, lng: -122.428093}} />
 
 
  To draw lines on GoogleMapsReact
  https://stackoverflow.com/questions/47396176/use-polyline-in-google-maps-react?rq=1
- https://www.npmjs.com/package/google-maps-react
  */
 
 const preloadedMarkers = [{latitude: 47.49855629475769, longitude: -122.14184416996333},
@@ -92,27 +91,18 @@ export class MapContainer extends Component {
         return (
             <Map
                 google={this.props.google}
-                zoom={14}
+                zoom={8}
                 style={mapStyle}
-                initialCenter={{lat: 49.2820, lng: -123.1171}}
+                initialCenter={{lat: 47.444, lng: -122.176}}
             >
-                {/*{this.displayMarkers()}*/}
+                {this.displayMarkers()}
 
-
-                <Marker
-                    position={{
-                        lat: 49.2856,
-                        lng: -123.1306
-                    }}
-                    onClick={this.onMarkerClick}
-                    name={'West End'} />
 
                 <InfoWindow
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}>
                     <div>
                         <h1>{this.state.selectedPlace.name}</h1>
-                        <p>This is a mysterious place</p>
                     </div>
                 </InfoWindow>
 
