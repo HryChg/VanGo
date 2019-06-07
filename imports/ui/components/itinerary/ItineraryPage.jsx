@@ -23,7 +23,8 @@ class Itinerary extends React.Component {
                     style={{width: '500px', height:'50vh'}}
                 >
                     <h1>{this.props.itinerary.selectedDate}</h1>
-                    <div><MapContainer height="75%" width="95%"/></div>
+                    <MapContainer height="50%" width="95%"/>
+                    <div className="it-map"></div> {/* Workaround Used to block out size of map */}
                     <div><ItineraryList/></div>
                 </div>
             </div>
