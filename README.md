@@ -69,3 +69,7 @@ https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
 #####Login and Registration Redux
 React + Redux - User Registration and Login Tutorial & Example
 https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
+
+#####Event details
+Web Scraping with Node.js
+https://medium.freecodecamp.org/the-ultimate-guide-to-web-scraping-with-node-js-daa2027dcd3
