@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class RegistrationPage extends React.Component {
     render() {
         return(
-            <div className="container" style={{width: '25%'}}>
+            <div id="register-block" className="container ui card" style={{width: '25%'}}>
             <h2>Register</h2>
             <form className="ui form" id="register-form" onSubmit={(e) => {e.preventDefault();}}>
                 <label className="form-label">

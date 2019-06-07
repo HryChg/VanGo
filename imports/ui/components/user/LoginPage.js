@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 class Login extends React.Component {
     render() {
         return(
-            <div id="login-block" className="container" style={{width: '25%'}}>
+            <div id="login-block" className="container ui card" style={{width: '25%'}}>
             {/* TODO: Integrate Google Login */}
             <h2>Login</h2>
             <form className="ui form" id="login-form" onSubmit={(e) => {e.preventDefault();}}>
