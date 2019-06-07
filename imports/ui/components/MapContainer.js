@@ -95,6 +95,7 @@ export class MapContainer extends Component {
                 zoom={14}
                 style={mapStyle}
                 initialCenter={{lat: 49.2820, lng: -123.1171}}
+                onClick={this.onMapClicked}
             >
                 {/*{this.displayMarkers()}*/}
 
@@ -111,8 +112,20 @@ export class MapContainer extends Component {
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}>
                     <div>
-                        <h1>{this.state.selectedPlace.name}</h1>
-                        <p>This is a mysterious place</p>
+                        <div className="ui card">
+                            <div className="content">
+                                <div className="header">{this.state.selectedPlace.name}</div>
+                                <div className="meta">4 days ago</div>
+                                <div className="description">
+                                    <p>Tucked up tightly against the city’s downtown core, the West End is
+                                        one of the easiest neighbourhoods to eat pray and love!</p>
+                                </div>
+                            </div>
+                            <div className="extra content ui button">
+                                <i className="heart icon"></i>
+                                Save
+                            </div>
+                        </div>
                     </div>
                 </InfoWindow>
 
