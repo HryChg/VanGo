@@ -137,11 +137,23 @@ h1, h2 {
 }
 
 /* ---------------------------------------- */
+/* --------  Itinerary: Map --------------- */
+/* ---------------------------------------- */
+.it-map {
+    display: inline-block;
+    height: 50%;
+    width: 95%;
+    top: 69px;
+    position: absolute;
+}
+
+/* ---------------------------------------- */
 /* ------  Itinerary: Event Section ------- */
 /* ---------------------------------------- */
 .itinerary {
-    position: absolute;
-    top: 95%;
+    position: relative;
+    top: 50vh;
+    display: inline-block;
 }
 
 .event-block {
