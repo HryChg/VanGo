@@ -11,6 +11,11 @@ class CurrentSelection extends React.Component {
 
     handleClick() {
         this.setState({toggle: !this.state.toggle});
+        $('.ui.right.sidebar')
+        // .sidebar('toggle')
+        .sidebar('setting', 'transition', 'overlay')
+        .sidebar('setting', 'dimPage', false)
+        .sidebar('toggle');
     }
 
     render() {
@@ -18,7 +23,8 @@ class CurrentSelection extends React.Component {
         return (
             <div>
                 <div
-                    className={this.state.toggle ? "ui right demo visible vertical inverted sidebar menu" : "ui right demo vertical inverted sidebar menu"}
+                    className="ui right sidebar inverted vertical menu"
+                    // className={this.state.toggle ? "ui right demo visible vertical inverted sidebar menu" : "ui right demo vertical inverted sidebar menu"}
                 >
                     <a className="item">
                         Event 1
@@ -29,15 +35,14 @@ class CurrentSelection extends React.Component {
                     <a className="item">
                         Event 3
                     </a>
-                </div>
-
+                </div>              
 
                 <button
                     className="ui pink button compact"
+                    id="select-button"
                     onClick={this.handleClick}
                 >Show Current Selection
                 </button>
-
 
             </div>
 
