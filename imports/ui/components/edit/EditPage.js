@@ -8,28 +8,30 @@ import SearchBar from "../SearchBar";
 class EditPage extends React.Component {
     render() {
         return (
-            <div className="ui grid centered">
-                <div className="four wide column centered grid">
+            <div className="ui grid">
+                <div className="four wide column">
                     <SideNav>
-                        <h2>VanGo</h2>
-                        <SearchBar/>
+                        <div className={"container"}>
+                            <h2 className={"ui header"}>VanGo</h2>
+                            <SearchBar/>
 
-                        <h2>Itinerary for Jan 27, 2019</h2>
-                        <DraggableItems/>
+                            <h2 className={"ui header"}>Edit Itinerary for <br/>Jan 27, 2019 </h2>
+                            <DraggableItems/>
 
-                        <br/>
-
-                        <div className="ui  button container">
-                            <i className="heart icon"/>
-                            Save
+                            <div className={"container"}>
+                                <button className="fluid ui button">
+                                    <i className="heart icon"/>
+                                    Save
+                                </button>
+                            </div>
                         </div>
+
 
                     </SideNav>
                 </div>
                 <div className="twelve wide column">
                     <div
-                        className={"container"}
-                        style={{width: '500px', height:'90vh'}}
+                        style={{height: '90vh'}}
                     >
                         <MapContainer
                             width={'95%'}
