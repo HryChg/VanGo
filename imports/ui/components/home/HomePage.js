@@ -13,17 +13,17 @@ class HomePage extends React.Component {
             <div className="ui grid">
                 <div className="four wide column">
                     <SideNav>
-                        <h2>VanGo</h2>
-                        <SearchBar/>
-                        <DatePicker/>
-                        <EventFilter/>
-
+                        <div className={"container"} style={{padding: '8px'}}>
+                            <h2 className={"ui header"}>VanGo</h2>
+                            <SearchBar/>
+                            <DatePicker/>
+                            <EventFilter/>
+                        </div>
                     </SideNav>
                 </div>
                 <div className="twelve wide column">
                     <div
-                        className={"container"}
-                        style={{width: '500px', height:'90vh'}}
+                        style={{height: '90vh'}}
                     >
                         <MapContainer
                             width={'95%'}

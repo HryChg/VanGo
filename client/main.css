@@ -3,6 +3,18 @@ body {
     font-family: sans-serif;
 }
 
+.container{
+    padding: 6px;
+}
+
+h1, h2 {
+    margin: 6px 6px;
+    padding-top: 6px;
+}
+
+
+
+
 /* ---------------------------------------- */
 /* ------------    TopNav   -------------- */
 /* ---------------------------------------- */
@@ -15,7 +27,7 @@ body {
 
 .nav-link {
     display: block;
-    color: #2196F3;    
+    color: #2196F3;
     text-align: center;
     padding: .5rem;
     padding-left: 1rem;

@@ -29,13 +29,13 @@ class SearchBar extends React.Component {
 
     render() {
         return (
-            <div className="ui form">
+            <div className="ui form container">
                 <div className="fields">
-                    <div className="field">
+                    <div className="twelve wide field">
                         <input type="text" placeholder="Search Events Here..."/>
                     </div>
-                    <button className="ui icon button">
-                        <i className="search icon"></i>
+                    <button className="ui icon button three wide field">
+                        <i className="search icon"/>
                     </button>
                 </div>
             </div>

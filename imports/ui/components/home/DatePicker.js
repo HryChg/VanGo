@@ -16,12 +16,8 @@ class DatePicker extends React.Component {
     onClickDay = value => console.log(value);
 
     render() {
-        const styles = {
-            width: '100%',
-            height: '100%'
-        };
         return (
-            <div style={styles}>
+            <div>
                 <Calendar
                     onChange={this.onChange}
                     onClickDay={this.onClickDay}
