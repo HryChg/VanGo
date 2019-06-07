@@ -144,8 +144,12 @@ body {
 }
 
 /* ---------------------------------------- */
-/* -------------  Login Block ------------- */
+/* ----  Login, Registration Block -------- */
 /* ---------------------------------------- */
 #login-block, #register-block {
     padding: 20px;
+}
+
+.form-section {
+    margin-bottom: 13px;
 }
