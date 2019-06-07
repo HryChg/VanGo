@@ -78,4 +78,11 @@ https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login
 Web Scraping with Node.js
 https://medium.freecodecamp.org/the-ultimate-guide-to-web-scraping-with-node-js-daa2027dcd3
 
-### Testing
+#### Draggable List
+https://www.freecodecamp.org/news/how-to-make-and-test-your-own-react-drag-and-drop-list-with-0-dependencies-6fb461603780/
+github link https://github.com/siffogh/drag-and-drop-article
+
+#### External Library Used
+- google-maps-react
+- react-calendar
+
