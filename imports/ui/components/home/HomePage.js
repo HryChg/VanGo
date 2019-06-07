@@ -5,9 +5,18 @@ import SearchBar from "../SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
+import {Link} from "react-router-dom";
+import $ from 'jquery';
+import CurrentSelection from "./CurrentSelection";
+
+
 
 
 class HomePage extends React.Component {
+
+
+
+
     render() {
         return (
             <div className="ui grid">
@@ -18,6 +27,10 @@ class HomePage extends React.Component {
                             <SearchBar/>
                             <DatePicker/>
                             <EventFilter/>
+
+
+
+
                         </div>
                     </SideNav>
                 </div>
@@ -31,6 +44,9 @@ class HomePage extends React.Component {
                         />
                     </div>
                 </div>
+
+                <CurrentSelection/>
+
             </div>
         );
     }
