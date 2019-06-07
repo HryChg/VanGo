@@ -12,7 +12,6 @@ class CurrentSelection extends React.Component {
     handleClick() {
         this.setState({toggle: !this.state.toggle});
         $('.ui.right.sidebar')
-        // .sidebar('toggle')
         .sidebar('setting', 'transition', 'overlay')
         .sidebar('setting', 'dimPage', false)
         .sidebar('toggle');
@@ -24,7 +23,6 @@ class CurrentSelection extends React.Component {
             <div>
                 <div
                     className="ui right sidebar inverted vertical menu"
-                    // className={this.state.toggle ? "ui right demo visible vertical inverted sidebar menu" : "ui right demo vertical inverted sidebar menu"}
                 >
                     <a className="item">
                         Event 1
