@@ -43,6 +43,7 @@ h1, h2 {
 /* ---------------------------------------- */
 .sidenav {
     width: 100%;
+    height: 88.5vh;
     position: relative;
     left: 10px;
     background: #eee;
