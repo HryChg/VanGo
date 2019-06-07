@@ -10,7 +10,6 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "google-maps-react": "^2.0.2",
-    "jquery": "^3.4.1",
     "meteor-node-stubs": "^0.4.1",
     "react": "^16.8.6",
     "react-calendar": "^2.19.0",
