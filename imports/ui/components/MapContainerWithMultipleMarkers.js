@@ -27,7 +27,7 @@ const preloadedMarkers = [{latitude: 47.49855629475769, longitude: -122.14184416
     {latitude: 47.3084488, longitude: -122.2140121},
     {latitude: 47.5524695, longitude: -122.0425407}];
 
-export class MapContainer extends Component {
+export class MapContainerWithMultipleMarkers extends Component {
     constructor(props) {
         super(props);
 
@@ -118,4 +118,4 @@ export class MapContainer extends Component {
 // TODO not sure how to incorporate this with REDUX
 export default GoogleApiWrapper({
     apiKey: googleMapsApiKey
-})(MapContainer);
+})(MapContainerWithMultipleMarkers);

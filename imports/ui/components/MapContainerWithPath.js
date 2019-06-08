@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Marker, Map, GoogleApiWrapper, InfoWindow, Polyline, Polygon} from 'google-maps-react';
+import {Marker, Map, GoogleApiWrapper, InfoWindow} from 'google-maps-react';
 import {googleMapsApiKey} from "../config";
 import MapMarker from "./MapMarker";
 
@@ -21,21 +21,14 @@ import MapMarker from "./MapMarker";
  https://www.npmjs.com/package/google-maps-react
  */
 
-const triangleCoords = [
-    {lat: 49.2888, lng: -123.1111}, // Canada Place
-    {lat: 49.2820, lng: -123.1171}, // downtown
-    {lat: 49.2799, lng: -123.1387}, // Sunset Beach
-    {lat: 49.2888, lng: -123.1111} // Canada place
-];
-
-const preloadedMarkers = [
-    {latitude: 49.2888, longitude: -123.1111},
-    {latitude: 49.2820, longitude: -123.1171},
-    {latitude: 49.2799, longitude: -123.1387},
+const preloadedMarkers = [{latitude: 47.49855629475769, longitude: -122.14184416996333},
+    {latitude: 47.359423, longitude: -122.021071},
+    {latitude: 47.2052192687988, longitude: -121.988426208496},
+    {latitude: 47.6307081, longitude: -122.1434325},
     {latitude: 47.3084488, longitude: -122.2140121},
     {latitude: 47.5524695, longitude: -122.0425407}];
 
-export class MapContainer extends Component {
+export class MapContainerWithPath extends Component {
     constructor(props) {
         super(props);
 
@@ -104,7 +97,7 @@ export class MapContainer extends Component {
                 initialCenter={{lat: 49.2820, lng: -123.1171}}
                 onClick={this.onMapClicked}
             >
-                {this.displayMarkers()}
+                {/*{this.displayMarkers()}*/}
 
 
                 <Marker
@@ -136,13 +129,7 @@ export class MapContainer extends Component {
                     </div>
                 </InfoWindow>
 
-                {/*// Changed prop "paths" to "path".*/}
-                {/*// Typo in documentation, fixed with #214*/}
-                <Polyline
-                    path={triangleCoords}
-                    strokeColor="#3F84CA"
-                    strokeOpacity={1}
-                    strokeWeight={5} />
+
 
             </Map>
         );
@@ -154,4 +141,4 @@ export class MapContainer extends Component {
 // TODO not sure how to incorporate this with REDUX
 export default GoogleApiWrapper({
     apiKey: googleMapsApiKey
-})(MapContainer);
+})(MapContainerWithPath);
