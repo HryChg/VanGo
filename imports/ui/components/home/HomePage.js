@@ -26,6 +26,7 @@ class HomePage extends React.Component {
                             <h2 className={"ui header"}>VanGo</h2>
                             <SearchBar/>
                             <DatePicker/>
+                            <br/>
                             <EventFilter/>
 
 

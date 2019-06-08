@@ -35,12 +35,14 @@ class CurrentSelection extends React.Component {
                     </a>
                 </div>              
 
-                <button
-                    className="ui pink button compact"
-                    id="select-button"
-                    onClick={this.handleClick}
-                >Show Current Selection
-                </button>
+                <div className="select-button">
+                    <button
+                        className="ui pink button"
+                        id="select-button"
+                        onClick={this.handleClick}
+                    >Show Current Selection
+                    </button>
+                </div>
 
             </div>
 
