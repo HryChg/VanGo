@@ -48,6 +48,8 @@ h1, h2 {
     left: 10px;
     background: #eee;
     /* overflow-x: hidden; */
+    min-width: 268px;
+    min-height: 720px;
     padding: 8px 0;
     z-index: 0;
 }
@@ -84,9 +86,15 @@ h1, h2 {
 
 .select-button {
     position: absolute;
-    bottom: 2%;
+    top: 650px;
     margin-left: 30px;
     z-index: 1;
+}
+
+.price-toggle {
+    position: absolute;
+    top: 445px;
+    margin-left: 148px;
 }
 
 /* ---------------------------------------- */

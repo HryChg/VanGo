@@ -16,14 +16,19 @@ class EventFilter extends React.Component {
                     <h2 className={"ui header"}>Event Filter</h2>
 
                     <div className="container">
-                        <Toggle content={"Music"}/>
-                        <Toggle content={"Food"}/>
-                        <Toggle content={"Theater"}/>
-                        <Toggle content={"Free"}/>
-                        <Toggle content={"$"}/>
-                        <Toggle content={"$$"}/>
-                        <Toggle content={"$$$"}/>
-                        <Toggle content={"$$$$"}/>
+                        <div className="category-toggle">
+                            <Toggle content={"Music"}/>
+                            <Toggle content={"Food"}/>
+                            <Toggle content={"Theater"}/>
+                            <Toggle content={"Free"}/>
+                        </div>
+                        <div className="price-toggle">
+                            <Toggle content={"$"}/>
+                            <Toggle content={"$$"}/>
+                            <Toggle content={"$$$"}/>
+                            <Toggle content={"$$$$"}/>
+                        </div>
+                        
                     </div>
                     <div className={"container"}>
                         <Link className="ui primary button container" to="/edit">Show Nearby Attraction</Link>
