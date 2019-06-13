@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Calendar from 'react-calendar';
-import changeDate from './changeDateActions';
+import {changeDate} from '../../actions/changeDateActions'
 
 class DatePicker extends React.Component {
     // references: https://www.npmjs.com/package/react-calendar
@@ -18,7 +18,7 @@ class DatePicker extends React.Component {
     onChange = value => {
         console.log(value);
         this.props.changeDate(value);
-    }
+    };
 
     // get value from calendar
     // show events on Calendar
@@ -26,8 +26,7 @@ class DatePicker extends React.Component {
         console.log(value);
         // this.props.onChange(value);
         console.log(this);
-    }
-
+    };
     render() {
         return (
             <div>
