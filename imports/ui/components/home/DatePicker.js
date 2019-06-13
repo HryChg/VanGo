@@ -33,7 +33,7 @@ class DatePicker extends React.Component {
                 <Calendar
                     onChange={this.onChange}
                     onClickDay={this.onClickDay}
-                    // value={this.props.date}
+                    value={this.props.date} //
                 />
             </div>
 
