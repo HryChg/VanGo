@@ -5,5 +5,5 @@ export default function SearchBarReducer(state = initialState, action) {
         console.log(`found the ${action.payload} in the reducer!!`);
         return {keyword: action.payload}
     }
-    return action;
+    return state;
 }
