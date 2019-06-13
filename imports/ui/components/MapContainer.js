@@ -88,14 +88,6 @@ export class MapContainer extends Component {
             position: 'fixed'
         };
 
-        const oneMarker = <Marker
-            position={{
-                lat: 47.49855629475769,
-                lng: -122.14184416996333
-            }}
-            onClick={() => console.log("You clicked me!")}
-        />;
-
         return (
             <Map
                 google={this.props.google}
@@ -105,7 +97,6 @@ export class MapContainer extends Component {
                 onClick={this.onMapClicked}
             >
                 {this.displayMarkers()}
-
 
                 <Marker
                     position={{

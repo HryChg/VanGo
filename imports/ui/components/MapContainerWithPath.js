@@ -21,7 +21,8 @@ import MapMarker from "./MapMarker";
  https://www.npmjs.com/package/google-maps-react
  */
 
-const preloadedMarkers = [{latitude: 47.49855629475769, longitude: -122.14184416996333},
+const preloadedMarkers = [
+    {latitude: 47.49855629475769, longitude: -122.14184416996333},
     {latitude: 47.359423, longitude: -122.021071},
     {latitude: 47.2052192687988, longitude: -121.988426208496},
     {latitude: 47.6307081, longitude: -122.1434325},
