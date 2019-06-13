@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 class CircleButton extends React.Component {
     render() {
-        return(<span className="circle-button"></span>);
+        return(<button className="circle-button" onClick={this.props.onClick}></button>);
     }
 }
 
