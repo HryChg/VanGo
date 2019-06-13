@@ -9,7 +9,7 @@ export class Itinerary {
     constructor(events, date) {
         this.events = events;
         this.date = date;
-        this.key = date;
+        this.key = this.date;
     }
 }
 
@@ -35,13 +35,13 @@ let event5 = new Event(5, "House of Sleep", "555 5th Street", "Jan 8, 2019", "12
 let itinerary1 = new Itinerary("Jan 5, 2019", [event1, event2, event3], "Jan 5, 2019");
 let itinerary2 = new Itinerary("Jan 8, 2019", [event4, event5], "Jan 8, 2019");
 const itineraries = [itinerary1, itinerary2];
-let initialState = { itineraries, selectedDate: "Jan 5, 2018" };
+let initialState = { itineraries: itineraries, selectedDate: "Jan 5, 2018" };
 
 export default function ItineraryReducer(state = initialState, action) {
     let newState;
     switch(action.type) {
         case 'SELECT_DATE':
-            newState = Object.assign({}, state, selectedDate = action.payload);
+            newState = Object.assign({}, state, state.selectedDate = action.payload);
             return newState;
         default:
             return state;
