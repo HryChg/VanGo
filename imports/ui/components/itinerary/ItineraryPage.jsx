@@ -5,7 +5,7 @@ import MapContainer from '../MapContainer';
 import ItineraryList from './ItineraryList';
 import SideNav from '../SideNav';
 
-class Itinerary extends React.Component {
+class ItineraryPage extends React.Component {
     render() {
         return(
             <div className="ui grid">
@@ -36,4 +36,4 @@ const mapStateToProps = (state) => {
     return state;
 }
 
-export default connect(mapStateToProps)(Itinerary);
+export default connect(mapStateToProps)(ItineraryPage);
