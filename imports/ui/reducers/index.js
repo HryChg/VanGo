@@ -6,6 +6,7 @@ import mapReducer from './MapReducer.js';
 import searchBarReducer from './SearchBarReducer.js';
 import loginReducer from './LoginReducer.js';
 import alertReducer from './AlertReducer.js';
+import eventFilterReducer from './EventFilterReducer';
 
 export default combineReducers({
     itinerary: itineraryReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
     sidebar: sidebarReducer,
     searchBar: searchBarReducer,
     login: loginReducer,
-    alert: alertReducer
+    alert: alertReducer,
+    eventFilter: eventFilterReducer
 });
