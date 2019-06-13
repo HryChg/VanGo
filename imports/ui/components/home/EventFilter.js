@@ -11,12 +11,14 @@ class EventFilter extends React.Component {
 
         let categories = ["categoryA", "categoryB", "category"];
 
-
         // TODO if the current category does not differ from before, do not update
         this.props.updateFilters(categories);
     };
 
-
+    // EFFECTS: handle value sent from the toggles
+    handleToggle = (toggleText) => {
+        console.log(`${toggleText} handled!`);
+    };
 
     render() {
         return (
@@ -25,16 +27,16 @@ class EventFilter extends React.Component {
                     <h2 className={"ui header"}>Event Filter</h2>
                     <div className="container">
                         <div className="category-toggle">
-                            <Toggle content={"Music"}/>
-                            <Toggle content={"Food"}/>
-                            <Toggle content={"Theater"}/>
-                            <Toggle content={"Free"}/>
+                            <Toggle content={"Music"} sendData={this.handleToggle}/>
+                            <Toggle content={"Food"} sendData={this.handleToggle}/>
+                            <Toggle content={"Theater"} sendData={this.handleToggle}/>
+                            <Toggle content={"Free"} sendData={this.handleToggle}/>
                         </div>
                         <div className="price-toggle">
-                            <Toggle content={"$"}/>
-                            <Toggle content={"$$"}/>
-                            <Toggle content={"$$$"}/>
-                            <Toggle content={"$$$$"}/>
+                            <Toggle content={"$"} sendData={this.handleToggle}/>
+                            <Toggle content={"$$"} sendData={this.handleToggle}/>
+                            <Toggle content={"$$$"} sendData={this.handleToggle}/>
+                            <Toggle content={"$$$$"} sendData={this.handleToggle}/>
                         </div>
                     </div>
                     <div className={"container"}>
