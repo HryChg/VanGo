@@ -12,10 +12,25 @@ h1, h2 {
     padding-top: 6px;
 }
 
+a {
+    color: darkslateblue;
+}
+
+a:hover {
+    color: slateblue;
+}
 
 /* ---------------------------------------- */
 /* ------------    TopNav   -------------- */
 /* ---------------------------------------- */
+#vango-link, #edit-link, #itinerary-link, #login-link {
+    color: darkslateblue;
+}
+
+#vango-link:hover, #edit-link:hover, #itinerary-link:hover, #login-link:hover {
+    color: slateblue;
+}
+
 .nav-bar {
     list-style-type: none;
     margin: 0;
@@ -25,7 +40,7 @@ h1, h2 {
 
 .nav-link {
     display: block;
-    color: #2196F3;
+    color: darkslateblue;
     text-align: center;
     padding: .5rem;
     padding-left: 1rem;
@@ -35,7 +50,7 @@ h1, h2 {
 }
 
 .nav-link:hover {
-    color: #064579;
+    color: slateblue;
 }
 
 /* ---------------------------------------- */
@@ -58,12 +73,12 @@ h1, h2 {
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 25px;
-    color: #2196F3;
+    color: darkslateblue;
     display: block;
 }
 
 .sidenav a:hover {
-    color: #064579;
+    color: slateblue;
 }
 
 @media screen and (max-height: 450px) {
@@ -125,6 +140,12 @@ h1, h2 {
 
 .circle-button:hover {
     background-color: slateblue;
+}
+
+.circle-button:focus {
+    background-color: slateblue;
+    box-shadow: 0 0 0 2pt lightblue;
+    outline: none;
 }
 
 /* ---------------------------------------- */
