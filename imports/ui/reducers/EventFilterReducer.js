@@ -1,4 +1,4 @@
-let initialState = { categories: []};
+let initialState = {categories: []};
 
 export default function EventFilterReducer(state = initialState, action) {
     if (action.type === 'UPDATE_FILTERS'){
@@ -6,5 +6,5 @@ export default function EventFilterReducer(state = initialState, action) {
         console.log(action.payload);
         return {categories: action.payload}
     }
-    return action;
+    return state;
 }

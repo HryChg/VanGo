@@ -7,8 +7,10 @@ import searchBarReducer from './SearchBarReducer.js';
 import loginReducer from './LoginReducer.js';
 import alertReducer from './AlertReducer.js';
 import eventFilterReducer from './EventFilterReducer';
+import dateReducer from './DateReducer';
 
 export default combineReducers({
+    date: dateReducer,
     itinerary: itineraryReducer,
     map: mapReducer,
     sidebar: sidebarReducer,
