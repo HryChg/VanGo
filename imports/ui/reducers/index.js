@@ -8,7 +8,6 @@ import loginReducer from './LoginReducer.js';
 import alertReducer from './AlertReducer.js';
 
 export default combineReducers({
-    sidebar: sidebarReducer,
     itinerary: itineraryReducer,
     map: mapReducer,
     sidebar: sidebarReducer,

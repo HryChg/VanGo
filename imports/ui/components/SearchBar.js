@@ -5,14 +5,11 @@ class SearchBar extends React.Component {
     // TODO: Implementation to be determined
     constructor(props) {
         super(props);
-
         // https://medium.com/@yaoxiao1222/implementing-search-filter-a-list-on-redux-react-bb5de8d0a3ad
-
         this.state = {
             searchTerm: '',
             currentlyDisplayed: this.props.terms
         };
-
         this.onInputChange = this.onInputChange.bind(this);
     }
 
