@@ -14,14 +14,14 @@ export class Itinerary {
 }
 
 export class Event {
-    constructor(key, name, address, start_date, end_date, start_time, end_time, url, price, category) {
+    constructor(key, name, address, startDate, endDate, startTime, endTime, url, price, category) {
         this.key = key;
         this.name = name;
         this.address = address;
-        this.start_date = start_date;
-        this.end_date = end_date;
-        this.start_time = start_time;
-        this.end_time = end_time;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.url = url;
         this.price = price;
         this.category = category;
@@ -37,13 +37,15 @@ let event5 = new Event(5, "House of Sleep", "555 5th Street", "Jan 8, 2019", "Ja
 let itinerary1 = new Itinerary([event1, event2, event3], "Jan 5, 2019");
 let itinerary2 = new Itinerary([event4, event5], "Jan 8, 2019");
 const itineraries = [itinerary1, itinerary2];
-let initialState = { itineraries: itineraries, selectedDate: "Jan 5, 2019" };
+let selectedDate = itineraries[0] ? itineraries[0].date : "";
+let initialState = { itineraries: itineraries, selectedDate: selectedDate };
 
 export default function ItineraryReducer(state = initialState, action) {
     let newState;
     switch(action.type) {
         case 'SELECT_DATE':
-            newState = Object.assign({}, state, state.selectedDate = action.payload);
+            newState = Object.assign({}, state);
+            newState.selectedDate = action.payload;
             return newState;
         default:
             return state;
