@@ -8,9 +8,11 @@ import loginReducer from './LoginReducer.js';
 import alertReducer from './AlertReducer.js';
 import eventFilterReducer from './EventFilterReducer';
 import dateReducer from './DateReducer';
+import currentEventsReducer from './CurrentEventsReducer';
 
 export default combineReducers({
-    date: dateReducer,
+    currDate: dateReducer,
+    currEvents: currentEventsReducer,
     itinerary: itineraryReducer,
     map: mapReducer,
     sidebar: sidebarReducer,
