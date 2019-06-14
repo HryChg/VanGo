@@ -1,6 +1,6 @@
 import React from 'react';
 
-class CurrentSelection extends React.Component {
+class EventDrawer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,7 +33,7 @@ class CurrentSelection extends React.Component {
                     <a className="item">
                         Event 3
                     </a>
-                </div>              
+                </div>
 
                 <div className="select-button">
                     <button
@@ -52,4 +52,4 @@ class CurrentSelection extends React.Component {
 }
 
 
-export default CurrentSelection;
+export default EventDrawer;

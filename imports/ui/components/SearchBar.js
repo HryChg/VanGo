@@ -11,7 +11,6 @@ class SearchBar extends React.Component {
     onClickSearch = () => {
         let keyword = document.querySelector('#searchInput').value;
         if (keyword !== '') {
-            console.log(this.props);
             this.props.search(keyword);
         }
     };
