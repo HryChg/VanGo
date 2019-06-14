@@ -1,4 +1,4 @@
-initialState = {
+let initialState = {
     date: new Date()
 };
 
