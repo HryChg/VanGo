@@ -9,7 +9,7 @@ import reducers from '../imports/ui/reducers/index.js';
 
 // allow us to inspect redux store on the console
 // https://stackoverflow.com/questions/34373462/while-debugging-can-i-have-access-to-the-redux-store-from-the-browser-console
-let VanGoStore = createStore(reducers);
+export let VanGoStore = createStore(reducers);
 window.store = VanGoStore;
 window.getStoreState = () => {
     console.log(window.store.getState());

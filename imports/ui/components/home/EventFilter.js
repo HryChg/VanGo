@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Toggle from "../Toggle";
 import {Link} from 'react-router-dom';
 import {updateFilters} from "../../actions/eventFilterActions";
+import {VanGoStore} from "../../../../client/main";
 
 class EventFilter extends React.Component {
 
@@ -18,6 +19,19 @@ class EventFilter extends React.Component {
     // EFFECTS: handle value sent from the toggles
     handleToggle = (toggleText) => {
         console.log(`${toggleText} handled!`);
+        const currentCategoriesInStore = VanGoStore.getState().eventFilter.categories;
+        let newCategories = null;
+        if (currentCategoriesInStore.includes(toggleText)){
+            newCategories = currentCategoriesInStore.filter((category) => {return category !== toggleText});
+        } else {
+            newCategories = [...currentCategoriesInStore, toggleText];
+        }
+
+
+
+
+        this.props.updateFilters(newCategories);
+        console.log(`the new categories are: ${VanGoStore.getState().eventFilter.categories}`);
     };
 
     render() {
