@@ -5,16 +5,16 @@ import SearchBar from "../SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
-import {Link} from "react-router-dom";
-import $ from 'jquery';
 import EventDrawer from "./EventDrawer";
 
 
-
-
 class HomePage extends React.Component {
-
-
+    toggleEventDrawer = () => {
+        $('.ui.right.sidebar')
+            .sidebar('setting', 'transition', 'overlay')
+            .sidebar('setting', 'dimPage', false)
+            .sidebar('toggle');
+    };
 
 
     render() {
@@ -29,9 +29,14 @@ class HomePage extends React.Component {
                             <br/>
                             <EventFilter/>
 
-
-
-
+                            <div className="select-button">
+                                <button
+                                    className="ui pink button"
+                                    id="select-button"
+                                    onClick={this.toggleEventDrawer}
+                                >Show Current Selection
+                                </button>
+                            </div>
                         </div>
                     </SideNav>
                 </div>
