@@ -8,7 +8,8 @@ import {VanGoStore} from "../../../../client/main";
 class EventFilter extends React.Component {
     // EFFECTS: handle value sent from the toggles
     handleToggle = (toggleText) => {
-        console.log(`${toggleText} handled!`);
+
+        // get the categories. If toggleText exist, remove it. If not, add it.
         const currentCategoriesInStore = VanGoStore.getState().eventFilter.categories;
 
         let newCategories = null;
