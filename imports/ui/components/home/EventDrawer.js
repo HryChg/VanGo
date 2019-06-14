@@ -6,16 +6,15 @@ class EventDrawer extends React.Component {
         this.state = {
             toggle: false
         };
-        this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
+    toggleEventDrawer = () => {
         this.setState({toggle: !this.state.toggle});
         $('.ui.right.sidebar')
         .sidebar('setting', 'transition', 'overlay')
         .sidebar('setting', 'dimPage', false)
         .sidebar('toggle');
-    }
+    };
 
     render() {
         // These are the selected events deleted 'visible' to hide the menu
@@ -39,14 +38,11 @@ class EventDrawer extends React.Component {
                     <button
                         className="ui pink button"
                         id="select-button"
-                        onClick={this.handleClick}
+                        onClick={this.toggleEventDrawer}
                     >Show Current Selection
                     </button>
                 </div>
-
             </div>
-
-
         );
     }
 }
