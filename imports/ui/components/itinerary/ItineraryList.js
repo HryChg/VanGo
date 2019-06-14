@@ -14,7 +14,7 @@ class ItineraryList extends React.Component {
             }
         }
         const events = selectedItinerary.events;
-        const mappedEvents = events.map(e => <ItineraryItem name={e.name} address={e.address} start={e.startTime} end={e.endTime} url={e.url} price={e.price}/>);
+        const mappedEvents = events.map(e => <ItineraryItem key={e.key} name={e.name} address={e.address} start={e.startTime} end={e.endTime} url={e.url} price={e.price}/>);
         return(<div className="itinerary">
             <h1>Itinerary</h1>
             <ol id="itinerary-list">
