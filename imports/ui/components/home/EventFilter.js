@@ -6,20 +6,11 @@ import {updateFilters} from "../../actions/eventFilterActions";
 import {VanGoStore} from "../../../../client/main";
 
 class EventFilter extends React.Component {
-
-    collectToggles = () => {
-        // TODO collect information from toggles, create a list of categories and update it to the store
-
-        let categories = ["categoryA", "categoryB", "category"];
-
-        // TODO if the current category does not differ from before, do not update
-        this.props.updateFilters(categories);
-    };
-
     // EFFECTS: handle value sent from the toggles
     handleToggle = (toggleText) => {
         console.log(`${toggleText} handled!`);
         const currentCategoriesInStore = VanGoStore.getState().eventFilter.categories;
+
         let newCategories = null;
         if (currentCategoriesInStore.includes(toggleText)){
             newCategories = currentCategoriesInStore.filter((category) => {return category !== toggleText});
@@ -27,11 +18,7 @@ class EventFilter extends React.Component {
             newCategories = [...currentCategoriesInStore, toggleText];
         }
 
-
-
-
         this.props.updateFilters(newCategories);
-        console.log(`the new categories are: ${VanGoStore.getState().eventFilter.categories}`);
     };
 
     render() {
