@@ -9,10 +9,6 @@ class DatePicker extends React.Component {
         super(props);
     }
 
-    // state = {
-    //     date: new Date()
-    // };
-
     // set selected date to the current state
     // onChange = date => this.setState({date});
     onChange = value => {
@@ -24,16 +20,16 @@ class DatePicker extends React.Component {
     // show events on Calendar
     onClickDay = value => {
         console.log(value);
-        // this.props.onChange(value);
         console.log(this);
     };
+    
     render() {
         return (
             <div>
                 <Calendar
                     onChange={this.onChange}
                     onClickDay={this.onClickDay}
-                    // value={this.props.date} //
+                    value={this.props.date.date} 
                 />
             </div>
 
