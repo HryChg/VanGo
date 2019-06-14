@@ -8,6 +8,7 @@ import loginReducer from './LoginReducer.js';
 import alertReducer from './AlertReducer.js';
 import eventFilterReducer from './EventFilterReducer';
 import dateReducer from './DateReducer';
+import eventDrawerReducer from './EventDrawerReducer';
 
 export default combineReducers({
     date: dateReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
     searchBar: searchBarReducer,
     login: loginReducer,
     alert: alertReducer,
-    eventFilter: eventFilterReducer
+    eventFilter: eventFilterReducer,
+    eventDrawer: eventDrawerReducer
 });
