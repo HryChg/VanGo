@@ -1,3 +1,10 @@
+// const initialState = 
+//     { itinerary: [
+//         {id: 1, name: "Event 1", location: "Location 1", address: "Address 1", date: "August 11, 2019"}, 
+//         {id: 2, name: "Event 2", location: "Location 2", address: "Address 2", date: "August 12, 2019"},
+//         {id: 3, name: "Event 3", location: "Location 3", address: "Address 3", date: "August 13, 2019"}], 
+//     selectedDate: "August 9, 2019" };
+
 export class Itinerary {
     constructor(events, date) {
         this.events = events;

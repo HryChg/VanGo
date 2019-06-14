@@ -19,11 +19,11 @@ function AppRouter() {
             <div>
                 <nav>
                     <ul className="nav-bar">
-                        <li className="nav-link"><Link to="/">VANGO</Link></li>
+                        <li className="nav-link" id="vango-link"><Link to="/">VANGO</Link></li>
                         {/* <li className="nav-link"><Link to="/profile/">Profile</Link></li> */}
-                        <li className="nav-link"><Link to="/edit/">Edit</Link></li>
-                        <li className="nav-link"><Link to="/itinerary/">Itinerary</Link></li>
-                        <li className="nav-link"><Link to="/login/">Login</Link></li>
+                        <li className="nav-link" id="edit-link"><Link to="/edit/">Edit</Link></li>
+                        <li className="nav-link" id="itinerary-link"><Link to="/itinerary/">Itinerary</Link></li>
+                        <li className="nav-link" id="login-link"><Link to="/login/">Login</Link></li>
                     </ul>
                 </nav>
                 <Route path="/" exact component={HomePage}/>
