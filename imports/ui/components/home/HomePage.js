@@ -7,7 +7,7 @@ import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import {Link} from "react-router-dom";
 import $ from 'jquery';
-import CurrentSelection from "./CurrentSelection";
+import EventDrawer from "./EventDrawer";
 
 
 
@@ -46,7 +46,7 @@ class HomePage extends React.Component {
                     </div>
                 </div>
 
-                <CurrentSelection/>
+                <EventDrawer/>
 
             </div>
         );
