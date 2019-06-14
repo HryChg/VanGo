@@ -1,19 +1,20 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {toggleEventDrawer} from '../../actions/eventDrawerActions';
+
 
 class EventDrawer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            toggle: false
-        };
     }
 
     toggleEventDrawer = () => {
-        this.setState({toggle: !this.state.toggle});
         $('.ui.right.sidebar')
         .sidebar('setting', 'transition', 'overlay')
         .sidebar('setting', 'dimPage', false)
         .sidebar('toggle');
+
+        this.props.toggleEventDrawer();
     };
 
     render() {
@@ -48,4 +49,8 @@ class EventDrawer extends React.Component {
 }
 
 
-export default EventDrawer;
+const mapStateToProps = (state) => {
+    return state;
+};
+
+export default connect(mapStateToProps, {toggleEventDrawer})(EventDrawer);
