@@ -6,7 +6,7 @@ import { selectDate } from '../../actions/itineraryActions.js';
 class ItineraryDatePanel extends React.Component {
     render() {
         const { itineraries } = this.props.itinerary;
-        const mappedDates = itineraries.map(itinerary => <ItineraryDate date={ itinerary.date }/>)
+        const mappedDates = itineraries.map(itinerary => <ItineraryDate date={ itinerary.date } key={ itinerary.key }/>)
         return(<div>
             { mappedDates }
         </div>);
