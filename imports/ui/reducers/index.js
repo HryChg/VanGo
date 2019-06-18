@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 
 import sidebarReducer from './SidebarReducer.js';
 import itineraryReducer from './ItineraryReducer.js';
-import mapReducer from './MapReducer.js';
 import searchBarReducer from './SearchBarReducer.js';
 import loginReducer from './LoginReducer.js';
 import alertReducer from './AlertReducer.js';
@@ -16,7 +15,6 @@ export default combineReducers({
     currDate: dateReducer,
     currEvents: currentEventsReducer,
     itinerary: itineraryReducer,
-    map: mapReducer,
     sidebar: sidebarReducer,
     searchBar: searchBarReducer,
     login: loginReducer,
