@@ -96,7 +96,7 @@ export class MapContainer extends Component {
 }
 
 const mapStateToProps = state => {
-    return state;
+    return {mapContainer: state.mapContainer};
 };
 
 
