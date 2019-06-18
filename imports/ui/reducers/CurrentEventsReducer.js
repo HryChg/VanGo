@@ -49,6 +49,26 @@ let initialState = {
             latitude: 49.2856,
             longitude: -123.1306,
             link: 'https://www.tourismvancouver.com/vancouver/neighbourhoods/west-end/'
+        },
+        {
+            id: 6,
+            name: 'Strawberry Festival',
+            start_time: new Date('June 22, 2019 13:00:00'),
+            end_time: new Date('June 22, 2019 16:00:00'),
+            price: 0,
+            latitude: 49.289680,
+            longitude: -123.136950,
+            link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/'
+        },
+        {
+            id: 7,
+            name: 'Butterflies – Experience the Transformation - Vancouver Aquarium',
+            start_time: new Date('May 13, 2019 09:00:00'),
+            end_time: new Date('September 2, 2019 17:00:00'),
+            price: 38,
+            latitude: 49.300430,
+            longitude: -123.127910,
+            link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/'
         }
     ]
 };

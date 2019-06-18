@@ -1,28 +1,27 @@
-import React, {Component} from 'react';
-import {Marker, Map, GoogleApiWrapper, InfoWindow, Polyline, Polygon} from 'google-maps-react';
-import {googleMapsApiKey} from "../config";
-import {connect} from 'react-redux';
-
-import {VanGoStore} from "../../../client/main";
-
-
+// How to use google-maps-react
 // Reference: https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
 
 // Connect google-maps-react to redux
 // https://medium.com/@schlunzk/integrating-google-maps-api-in-react-redux-part-1-6b036014f4a6
 
-const triangleCoords = [
+import React, {Component} from 'react';
+import {Marker, Map, GoogleApiWrapper, InfoWindow, Polyline, Polygon} from 'google-maps-react';
+import {connect} from 'react-redux';
+
+import {VanGoStore} from "../../../client/main";
+import {googleMapsApiKey} from "../config";
+
+
+const coordsForPathGeneration = [
     {lat: 49.2888, lng: -123.1111}, // Canada Place
     {lat: 49.2820, lng: -123.1171}, // downtown
     {lat: 49.2799, lng: -123.1387}, // Sunset Beach
     {lat: 49.2888, lng: -123.1111} // Canada place
 ];
 
-
 export class MapContainer extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             showingInfoWindow: false,
             activeMarker: {},
@@ -30,7 +29,7 @@ export class MapContainer extends Component {
         }
     }
 
-
+    // EFFECTS: open InfoWindow specific to the clicked marker
     onMarkerClick = (props, marker, e) =>
         this.setState({
             selectedPlace: props,
@@ -38,6 +37,7 @@ export class MapContainer extends Component {
             showingInfoWindow: true
         });
 
+    // EFFECTS: close InfoWindow when clicking on map area
     onMapClicked = (props) => {
         if (this.state.showingInfoWindow) {
             this.setState({
@@ -47,21 +47,22 @@ export class MapContainer extends Component {
         }
     };
 
-    // TODO toDateString should be reformated to yyyy/mm/dd hh:mm
+    // TODO toDateString should be reformatted to yyyy/mm/dd hh:mm
+    // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
     displayMarkers = () => {
-        let markers = VanGoStore.getState().currEvents.events.map((store) => {
+        let markers = VanGoStore.getState().currEvents.events.map((event) => {
             return <Marker
-                key={store.id}
-                id={store.id}
-                name={store.name}
-                start_time={store.start_time.toDateString()}
-                end_time={store.end_time.toDateString()}
-                price={store.price}
-                link={store.link}
+                key={event.id}
+                id={event.id}
+                name={event.name}
+                start_time={event.start_time.toDateString()}
+                end_time={event.end_time.toDateString()}
+                price={event.price}
+                link={event.link}
                 position={{
-                    lat: store.latitude,
-                    lng: store.longitude
+                    lat: event.latitude,
+                    lng: event.longitude
                 }}
                 onClick={this.onMarkerClick}/>
         });
@@ -126,11 +127,10 @@ export class MapContainer extends Component {
                 {/*// Changed prop "paths" to "path".*/}
                 {/*// Typo in documentation, fixed with #214*/}
                 <Polyline
-                    path={triangleCoords}
+                    path={coordsForPathGeneration}
                     strokeColor="#3F84CA"
                     strokeOpacity={1}
                     strokeWeight={5} />
-
             </Map>
         );
     }
