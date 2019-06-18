@@ -78,7 +78,7 @@ export class MapContainer extends Component {
                             </div>
                             <div className="extra content ui button">
                                 <i className="heart icon"></i>
-                                Save Event to Event Drawer
+                                Save to Event Drawer
                             </div>
                         </div>
                     </div>

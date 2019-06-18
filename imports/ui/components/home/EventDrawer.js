@@ -8,10 +8,13 @@ import {maskString} from "../../../util/util";
 
 class EventDrawer extends React.Component {
 
-    displayCurrentSelection = () => {
-        let currentSelections = VanGoStore.getState().eventDrawer.savedEvents;
-        return  currentSelections.map((selectedEvent, index) => {
-            return <a key={ selectedEvent.id } className="item">{maskString(selectedEvent.name, 25)}</a>
+    displaySavedEvents = () => {
+        let savedEventsInStore = VanGoStore.getState().eventDrawer.savedEvents;
+        return  savedEventsInStore.map((selectedEvent, index) => {
+            return <a
+                key={ selectedEvent.id }
+                className="item">{maskString(selectedEvent.name, 25)}
+            </a>
         });
     };
 
@@ -21,7 +24,7 @@ class EventDrawer extends React.Component {
                 <div
                     className="ui right sidebar inverted vertical menu"
                 >
-                    {this.displayCurrentSelection()}
+                    {this.displaySavedEvents()}
                 </div>
             </div>
         );
