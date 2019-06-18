@@ -20,30 +20,18 @@ const coordsForPathGeneration = [
 ];
 
 export class MapContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showingInfoWindow: false,
-            activeMarker: {},
-            selectedPlace: {}
-        }
-    }
-
     // EFFECTS: open InfoWindow specific to the clicked marker
-    onMarkerClick = (props, marker, e) =>
-        this.setState({
-            selectedPlace: props,
-            activeMarker: marker,
-            showingInfoWindow: true
-        });
+    // props : the property of the marker
+    // marker: the react component marker
+    // e     : event
+    onMarkerClick = (props, marker, e) =>{
+        this.props.handleOnMarkerClick(props, marker);
+    };
 
     // EFFECTS: close InfoWindow when clicking on map area
     onMapClicked = (props) => {
-        if (this.state.showingInfoWindow) {
-            this.setState({
-                showingInfoWindow: false,
-                activeMarker: null
-            })
+        if (VanGoStore.getState().mapContainer.showingInfoWindow){
+            this.props.handleOnMapClicked();
         }
     };
 
@@ -75,7 +63,7 @@ export class MapContainer extends Component {
             height: this.props.height,
             position: 'fixed'
         };
-
+        const mapContainerStore = VanGoStore.getState().mapContainer;
         return (
             <Map
                 google={this.props.google}
@@ -87,16 +75,16 @@ export class MapContainer extends Component {
                 {this.displayMarkers()}
 
                 <InfoWindow
-                    marker={this.state.activeMarker}
-                    visible={this.state.showingInfoWindow}>
+                    marker={mapContainerStore.activeMarker}
+                    visible={mapContainerStore.showingInfoWindow}>
                     <div>
                         <div className="ui card">
                             <div className="content">
-                                <div className="header">{this.state.selectedPlace.name}</div>
-                                <div className="meta">Start Time: {this.state.selectedPlace.start_time}</div>
-                                <div className="meta">End Time: {this.state.selectedPlace.end_time}</div>
-                                <div className="meta">Price: {this.state.selectedPlace.price}</div>
-                                <div className="meta"><a href={this.state.selectedPlace.link}>Link to Website...</a></div>
+                                <div className="header">{mapContainerStore.selectedPlace.name}</div>
+                                <div className="meta">Start Time: {mapContainerStore.selectedPlace.start_time}</div>
+                                <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
+                                <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
+                                <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to Website...</a></div>
 
 
                                 <div className="description">

@@ -10,6 +10,7 @@ import eventFilterReducer from './EventFilterReducer';
 import dateReducer from './DateReducer';
 import currentEventsReducer from './CurrentEventsReducer';
 import eventDrawerReducer from './EventDrawerReducer';
+import mapContainerReducer from './MapContainerReducer'
 
 export default combineReducers({
     currDate: dateReducer,
@@ -21,5 +22,6 @@ export default combineReducers({
     login: loginReducer,
     alert: alertReducer,
     eventFilter: eventFilterReducer,
-    eventDrawer: eventDrawerReducer
+    eventDrawer: eventDrawerReducer,
+    mapContainer: mapContainerReducer
 });
