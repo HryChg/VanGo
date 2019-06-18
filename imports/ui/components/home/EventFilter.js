@@ -1,31 +1,63 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Toggle from "../Toggle";
 import {Link} from 'react-router-dom';
-import {updateFilters} from "../../actions/eventFilterActions";
+
+import Toggle from "../Toggle";
+import {updateCategories, updatePricePoints} from "../../actions/eventFilterActions";
 import {VanGoStore} from "../../../../client/main";
+import {containOneOf} from "../../../util/util";
 
 class EventFilter extends React.Component {
-    // EFFECTS: handle value sent from the toggles
+    // EFFECTS: handle value sent from the toggles.
+    //          If toggleText exist in either categories or price points,
+    //          remove it. If not, add it.
     handleToggle = (toggleText) => {
-        // TODO Toggle needs to be differentialed between pricePoints and categories
+        let toggleType = this.getToggleType(toggleText);
 
-        // get the categories. If toggleText exist, remove it. If not, add it.
-        const currentCategoriesInStore = VanGoStore.getState().eventFilter.categories;
+        if (toggleType === 'CATEGORY'){
 
-        let newCategories = null;
-        if (currentCategoriesInStore.includes(toggleText)) {
-            newCategories = currentCategoriesInStore.filter((category) => {
-                return category !== toggleText
-            });
-        } else {
-            newCategories = [...currentCategoriesInStore, toggleText];
+            const currentCategoriesInStore = VanGoStore.getState().eventFilter.categories;
+            let newCategories = null;
+            if (currentCategoriesInStore.includes(toggleText)) {
+                newCategories = currentCategoriesInStore.filter((category) => {
+                    return category !== toggleText
+                });
+            } else {
+                newCategories = [...currentCategoriesInStore, toggleText];
+            }
+
+            console.log(`new Categories are: ${newCategories}`);
+            this.props.updateCategories(newCategories);
+
+        } else if (toggleType === 'PRICE_POINT'){
+            const currentPricePointsInStore = VanGoStore.getState().eventFilter.pricePoints;
+            let newPricePoints = null;
+            if (currentPricePointsInStore.includes(toggleText)) {
+                newPricePoints = currentPricePointsInStore.filter((category) => {
+                    return category !== toggleText
+                });
+            } else {
+                newPricePoints = [...currentPricePointsInStore, toggleText];
+            }
+
+            console.log(`new PricePoints are: ${newPricePoints}`);
+            this.props.updatePricePoints(newPricePoints);
         }
 
-        this.props.updateFilters(newCategories);
+
+
     };
 
+
+    // EFFECTS: determine if the toggleText is a PricePoint or a Category
+    getToggleType(toggleText){
+        return containOneOf([toggleText], ['Free', '$', '$$', '$$$', '$$$$'])? 'PRICE_POINT' : 'CATEGORY'
+    }
+
     render() {
+
+
+
         // TODO FIX THE CSS ON THE TOGGLE BUTTONS
         // TODO Move Free to under price-toggles
         return (
@@ -59,4 +91,7 @@ const mapStateToProps = (state) => {
     return {eventFilter: state.eventFilter};
 };
 
-export default connect(mapStateToProps, {updateFilters})(EventFilter);
+export default connect(mapStateToProps, {
+    updateCategories: updateCategories,
+    updatePricePoints: updatePricePoints
+})(EventFilter);
