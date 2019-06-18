@@ -118,6 +118,7 @@ class HomePage extends React.Component {
     }
 }
 
+// TODO what do I return here?
 const mapStateToProps = (state) => {
     return state;
 };

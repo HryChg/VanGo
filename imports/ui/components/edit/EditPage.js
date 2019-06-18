@@ -22,8 +22,6 @@ class EditPage extends React.Component {
                                 </button>
                             </div>
                         </div>
-
-
                     </SideNav>
                 </div>
                 <div className="twelve wide column">
@@ -41,6 +39,7 @@ class EditPage extends React.Component {
     }
 }
 
+// TODO What do I return?
 const mapStateToProps = (state) => {
     return state;
 };
