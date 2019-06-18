@@ -28,7 +28,7 @@ class EventDrawer extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    return state;
+    return {eventDrawer: state.eventDrawer};
 };
 
 export default connect(mapStateToProps)(EventDrawer);
