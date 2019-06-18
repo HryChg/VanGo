@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Marker, Map, GoogleApiWrapper, InfoWindow, Polyline, Polygon} from 'google-maps-react';
 import {googleMapsApiKey} from "../config";
-import MapMarker from "./MapMarker";
+import {connect} from 'react-redux';
+
 
 // Reference: https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
 /**
@@ -149,9 +150,13 @@ export class MapContainer extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return state;
+};
 
 
-// TODO not sure how to incorporate this with REDUX
-export default GoogleApiWrapper({
-    apiKey: googleMapsApiKey
-})(MapContainer);
+export default connect(mapStateToProps, null)(
+    GoogleApiWrapper({
+        apiKey: googleMapsApiKey
+    })(MapContainer)
+);
