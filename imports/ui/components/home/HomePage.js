@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Marker} from "google-maps-react";
+
 import SideNav from "../SideNav";
 import SearchBar from "../SearchBar";
 import DatePicker from "./DatePicker";
@@ -8,7 +10,7 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {VanGoStore} from "../../../../client/main";
-import {Marker} from "google-maps-react";
+import {containAll} from "../../../util/util";
 
 
 class HomePage extends React.Component {
@@ -24,21 +26,52 @@ class HomePage extends React.Component {
     // Note store.start_time and end_time are date object, need to convert them to strings
     displayMarkers = () => {
         let markers = VanGoStore.getState().currEvents.events.map((event) => {
-            return <Marker
-                key={event.id}
-                id={event.id}
-                name={event.name}
-                start_time={event.start_time.toDateString()}
-                end_time={event.end_time.toDateString()}
-                price={event.price}
-                link={event.link}
-                position={{
-                    lat: event.latitude,
-                    lng: event.longitude
-                }}
-                onClick={this.props.handleOnMarkerClick}/>
+            if (this.fitEventFilter(event)){
+                return <Marker
+                    key={event.id}
+                    id={event.id}
+                    name={event.name}
+                    start_time={event.start_time.toDateString()}
+                    end_time={event.end_time.toDateString()}
+                    price={event.price}
+                    link={event.link}
+                    position={{
+                        lat: event.latitude,
+                        lng: event.longitude
+                    }}
+                    onClick={this.props.handleOnMarkerClick}/>
+            }
+
+
         });
         return markers;
+    };
+
+    // EFFECTS: return whether event's categories contains every item selected in eventFilter
+    //          If no item selected, by default it will return true
+    fitEventFilter = (event) => {
+        let filterCategories = VanGoStore.getState().eventFilter.categories;
+        if (filterCategories === []) return true;
+        let pricePoint = this.extractPricePoint(event);
+        let eventCategoriesWPrice = [...event.categories, pricePoint];
+        return containAll(eventCategoriesWPrice, filterCategories);
+
+        // TODO: handle multiple $ sign selected
+    };
+
+    // EFFECTS: extract the price point category for the event
+    extractPricePoint = (event) => {
+        if (event.price === 0) {
+            return 'Free';
+        } else if (event.price <= 10) {
+            return '$';
+        } else if (event.price <= 25) {
+            return '$$';
+        } else if (event.price <= 35) {
+            return '$$$';
+        } else {
+            return '$$$$';
+        }
     };
 
 
