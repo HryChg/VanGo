@@ -13,11 +13,8 @@ class EditPage extends React.Component {
                     <SideNav>
                         <div className={"container"}>
                             <h2 className={"ui header"}>VanGo</h2>
-                            <SearchBar/>
-
                             <h2 className={"ui header"}>Edit Itinerary for <br/>Jan 27, 2019 </h2>
                             <DraggableItems/>
-
                             <div className={"container"}>
                                 <button className="fluid ui button">
                                     <i className="heart icon"/>
