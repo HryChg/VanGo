@@ -41,3 +41,11 @@ export const toggleItemInArray = (originalArray, item) => {
     }
     return newArray;
 };
+
+// EFFECTS: return a copy of the str up to `charCount` characters, mask the rest with '...'
+export const maskString = (str, charCount) => {
+    if (str.length > charCount){
+        return str.substring(0, charCount) + '...';
+    }
+    return str;
+};
