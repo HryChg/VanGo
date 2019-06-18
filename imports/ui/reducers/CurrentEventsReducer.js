@@ -39,6 +39,16 @@ let initialState = {
             latitude: 49.28287695,
             longitude: -123.1205638545168
             // link
+        },
+        {
+            id: 5,
+            name: 'West End',
+            start_time: new Date('June 13, 2019 09:00:00'),
+            end_time: new Date('June 13, 2019 05:00:00'),
+            price: 0,
+            latitude: 49.2856,
+            longitude: -123.1306
+            // link
         }
     ]
 };

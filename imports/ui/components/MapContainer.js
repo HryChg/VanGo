@@ -50,9 +50,6 @@ export class MapContainer extends Component {
 
     displayMarkers = () => {
         let markers = VanGoStore.getState().currEvents.events.map((store) => {
-
-            console.log(store);
-
             return <Marker
                 key={store.id}
                 id={store.id}
@@ -63,7 +60,6 @@ export class MapContainer extends Component {
                 }}
                 onClick={this.onMarkerClick}/>
         });
-
         return markers;
     };
 
@@ -84,15 +80,6 @@ export class MapContainer extends Component {
             >
                 {this.displayMarkers()}
 
-
-                <Marker
-                    position={{
-                        lat: 49.2856,
-                        lng: -123.1306
-                    }}
-                    onClick={this.onMarkerClick}
-                    name={'West End'} />
-
                 <InfoWindow
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}>
@@ -100,7 +87,7 @@ export class MapContainer extends Component {
                         <div className="ui card">
                             <div className="content">
                                 <div className="header">{this.state.selectedPlace.name}</div>
-                                <div className="meta">4 days ago</div>
+                                <div className="meta">StartDate: 4 days ago</div>
                                 <div className="description">
                                     <p>Tucked up tightly against the city’s downtown core, the West End is
                                         one of the easiest neighbourhoods to eat pray and love!</p>
