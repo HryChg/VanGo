@@ -27,6 +27,7 @@ export class MapContainer extends Component {
         }
     };
 
+
     render() {
         const mapStyle = {
             width: this.props.width,
@@ -77,7 +78,7 @@ export class MapContainer extends Component {
                             </div>
                             <div className="extra content ui button">
                                 <i className="heart icon"></i>
-                                Save
+                                Save Event to Event Drawer
                             </div>
                         </div>
                     </div>

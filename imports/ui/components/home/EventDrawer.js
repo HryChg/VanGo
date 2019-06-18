@@ -8,8 +8,8 @@ class EventDrawer extends React.Component {
 
     displayCurrentSelection = () => {
         let currentSelections = VanGoStore.getState().eventDrawer.currentSelection;
-        return  currentSelections.map((selection, index) => {
-            return <a key={ index } className="item">{selection}</a>
+        return  currentSelections.map((selectedEvent, index) => {
+            return <a key={ selectedEvent.id } className="item">{selectedEvent.name}</a>
         });
     };
 

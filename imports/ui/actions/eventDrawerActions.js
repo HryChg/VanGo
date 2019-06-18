@@ -1,15 +1,13 @@
-
-
-export const addEvent = (EventName) => {
+export const addEvent = (event) => {
     return {
         type: 'ADD_EVENT',
-        payload: EventName
+        payload: event
     };
 };
 
-export const deleteEvent = (EventName) => {
+export const deleteEvent = (event) => {
     return {
         type: 'DELETE_EVENT',
-        payload: EventName
+        payload: event
     };
 };

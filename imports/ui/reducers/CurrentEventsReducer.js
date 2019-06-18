@@ -10,6 +10,7 @@ let initialState = {
             longitude: -123.1111,
             link: 'https://www.canadaplace.ca/',
             categories: ['Sightseeing']
+            // DESCRIPTION
         },
         {
             id: 2,
@@ -21,6 +22,7 @@ let initialState = {
             longitude: -123.1171,
             link: 'https://vancouver.ca/news-calendar/downtown.aspx',
             categories: ['Sightseeing']
+            // DESCRIPTION
         },
         {
             id: 3,
@@ -32,6 +34,7 @@ let initialState = {
             longitude: -123.1387,
             link: 'https://vancouver.ca/parks-recreation-culture/sunset-beach.aspx',
             categories: ['Sightseeing']
+            // DESCRIPTION
         },
         {
             id: 4,
@@ -43,6 +46,7 @@ let initialState = {
             longitude: -123.1205638545168,
             link: 'http://vanartgallery.bc.ca/index.html',
             categories: ['Sightseeing']
+            // DESCRIPTION
         },
         {
             id: 5,
@@ -54,6 +58,7 @@ let initialState = {
             longitude: -123.1306,
             link: 'https://www.tourismvancouver.com/vancouver/neighbourhoods/west-end/',
             categories: ['Sightseeing']
+            // DESCRIPTION
         },
         {
             id: 6,
@@ -65,6 +70,7 @@ let initialState = {
             longitude: -123.136950,
             link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/',
             categories: ['Food']
+            // DESCRIPTION
         },
         {
             id: 7,
@@ -76,6 +82,7 @@ let initialState = {
             longitude: -123.127910,
             link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/',
             categories: ['Sightseeing']
+            // DESCRIPTION
         }
     ]
 };
