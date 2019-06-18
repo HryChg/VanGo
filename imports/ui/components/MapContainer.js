@@ -3,24 +3,13 @@ import {Marker, Map, GoogleApiWrapper, InfoWindow, Polyline, Polygon} from 'goog
 import {googleMapsApiKey} from "../config";
 import {connect} from 'react-redux';
 
+import {VanGoStore} from "../../../client/main";
+
 
 // Reference: https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
-/**
- * Here are more markers if we need them
- *
- <Marker
-    title={'The marker`s title will appear as a tooltip.'}
-    name={'SOMA'}
-    position={{lat: 37.778519, lng: -122.405640}} />
- <Marker
-    name={'Dolores park'}
-    position={{lat: 37.759703, lng: -122.428093}} />
 
-
- To draw lines on GoogleMapsReact
- https://stackoverflow.com/questions/47396176/use-polyline-in-google-maps-react?rq=1
- https://www.npmjs.com/package/google-maps-react
- */
+// Connect google-maps-react to redux
+// https://medium.com/@schlunzk/integrating-google-maps-api-in-react-redux-part-1-6b036014f4a6
 
 const triangleCoords = [
     {lat: 49.2888, lng: -123.1111}, // Canada Place
@@ -29,19 +18,12 @@ const triangleCoords = [
     {lat: 49.2888, lng: -123.1111} // Canada place
 ];
 
-const preloadedMarkers = [
-    {latitude: 49.2888, longitude: -123.1111},
-    {latitude: 49.2820, longitude: -123.1171},
-    {latitude: 49.2799, longitude: -123.1387},
-    {latitude: 47.3084488, longitude: -122.2140121},
-    {latitude: 47.5524695, longitude: -122.0425407}];
 
 export class MapContainer extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            stores: preloadedMarkers,
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {}
@@ -65,13 +47,16 @@ export class MapContainer extends Component {
         }
     };
 
+
     displayMarkers = () => {
-        let markers = this.state.stores.map((store, index) => {
-            // Store is the position of the marker
-            // index is the array index of the marker
+        let markers = VanGoStore.getState().currEvents.events.map((store) => {
+
+            console.log(store);
+
             return <Marker
-                key={index}
-                id={index}
+                key={store.id}
+                id={store.id}
+                name={store.name}
                 position={{
                     lat: store.latitude,
                     lng: store.longitude
@@ -88,14 +73,6 @@ export class MapContainer extends Component {
             height: this.props.height,
             position: 'fixed'
         };
-
-        const oneMarker = <Marker
-            position={{
-                lat: 47.49855629475769,
-                lng: -122.14184416996333
-            }}
-            onClick={() => console.log("You clicked me!")}
-        />;
 
         return (
             <Map
