@@ -51,7 +51,7 @@ class EventFilter extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {updateFilters: state.updateFilters};
+    return {eventFilter: state.eventFilter};
 };
 
 export default connect(mapStateToProps, {updateFilters})(EventFilter);
