@@ -25,7 +25,7 @@ export const containOneOf = (listA, listB) => {
     return result;
 };
 
-// TODO
+
 // EFFECTS: toggle an item in the array
 //          If it exist in arr, return a copy of the array without that item
 //          If not exist in arr, return a copy of the array with that item
@@ -39,5 +39,5 @@ export const toggleItemInArray = (originalArray, item) => {
     } else {
         newArray = [...originalArray, item];
     }
-    return newArray; //stub
+    return newArray;
 };

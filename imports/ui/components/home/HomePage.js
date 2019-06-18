@@ -26,7 +26,7 @@ class HomePage extends React.Component {
     // Note store.start_time and end_time are date object, need to convert them to strings
     displayMarkers = () => {
         let markers = VanGoStore.getState().currEvents.events.map((event) => {
-            if (this.fitEventFilter(event)){
+            if (this.filterEventMarkers(event)) {
                 return <Marker
                     key={event.id}
                     id={event.id}
@@ -41,22 +41,35 @@ class HomePage extends React.Component {
                     }}
                     onClick={this.props.handleOnMarkerClick}/>
             }
-
-
         });
         return markers;
     };
 
-    // EFFECTS: return whether event's categories contains every item selected in eventFilter
-    //          If no item selected, by default it will return true
-    fitEventFilter = (event) => {
+    // EFFECTS: return true if the event meets one of the selected categories and one of the price points
+    //          If no category selected, events of all categories are considered
+    //          If no price point selected, events of all price points are considered
+    //          If not price point and no category selected, return true by default
+    filterEventMarkers = (event) => {
         let filterCategories = VanGoStore.getState().eventFilter.categories;
-        if (filterCategories === []) return true;
-        let pricePoint = this.extractPricePoint(event);
-        let eventCategoriesWPrice = [...event.categories, pricePoint];
-        return containAll(eventCategoriesWPrice, filterCategories);
+        let filterPricePoints = VanGoStore.getState().eventFilter.pricePoints;
+        if (filterCategories.length === 0 && filterPricePoints.length === 0) return true;
 
-        // TODO: handle multiple $ sign selected
+        let matchCategory;
+        if (filterCategories.length === 0) {
+            matchCategory = true;
+        } else {
+            matchCategory = containAll(filterCategories, event.categories);
+        }
+
+        let matchPricePoints;
+        if (filterPricePoints.length===0){
+            matchPricePoints = true;
+        } else {
+            let eventPricePoint = this.extractPricePoint(event);
+            matchPricePoints = containAll(filterPricePoints, [eventPricePoint]);
+        }
+
+        return matchCategory && matchPricePoints;
     };
 
     // EFFECTS: extract the price point category for the event
