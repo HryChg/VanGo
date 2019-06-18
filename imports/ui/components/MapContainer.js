@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 
 import {VanGoStore} from "../../../client/main";
 import {googleMapsApiKey} from "../config";
-
+import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
 
 const coordsForPathGeneration = [
     {lat: 49.2888, lng: -123.1111}, // Canada Place
@@ -141,7 +141,10 @@ const mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps, null)(
+export default connect(mapStateToProps, {
+    handleOnMapClicked: handleOnMapClicked,
+    handleOnMarkerClick: handleOnMarkerClick
+})(
     GoogleApiWrapper({
         apiKey: googleMapsApiKey
     })(MapContainer)
