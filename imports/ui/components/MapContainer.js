@@ -20,41 +20,11 @@ const coordsForPathGeneration = [
 ];
 
 export class MapContainer extends Component {
-    // EFFECTS: open InfoWindow specific to the clicked marker
-    // props : the property of the marker
-    // marker: the react component marker
-    // e     : event
-    onMarkerClick = (props, marker, e) =>{
-        this.props.handleOnMarkerClick(props, marker);
-    };
-
     // EFFECTS: close InfoWindow when clicking on map area
     onMapClicked = (props) => {
         if (VanGoStore.getState().mapContainer.showingInfoWindow){
             this.props.handleOnMapClicked();
         }
-    };
-
-    // TODO toDateString should be reformatted to yyyy/mm/dd hh:mm
-    // EFFECTS: render markers based on information from currEvents.events in Redux Store
-    // Note store.start_time and end_time are date object, need to convert them to strings
-    displayMarkers = () => {
-        let markers = VanGoStore.getState().currEvents.events.map((event) => {
-            return <Marker
-                key={event.id}
-                id={event.id}
-                name={event.name}
-                start_time={event.start_time.toDateString()}
-                end_time={event.end_time.toDateString()}
-                price={event.price}
-                link={event.link}
-                position={{
-                    lat: event.latitude,
-                    lng: event.longitude
-                }}
-                onClick={this.onMarkerClick}/>
-        });
-        return markers;
     };
 
     render() {
@@ -72,7 +42,8 @@ export class MapContainer extends Component {
                 initialCenter={{lat: 49.2820, lng: -123.1171}}
                 onClick={this.onMapClicked}
             >
-                {this.displayMarkers()}
+
+                {this.props.children}
 
                 <InfoWindow
                     marker={mapContainerStore.activeMarker}
