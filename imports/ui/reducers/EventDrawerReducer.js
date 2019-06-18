@@ -1,6 +1,6 @@
 let initialState = {
     toggleState: false,
-    currentSelection: [
+    savedEvents: [
         {
             id: 1,
             name: 'Canada Place',
@@ -42,9 +42,18 @@ let initialState = {
 
 export default function EventDrawerReducer(state = initialState, action) {
     if (action.type === 'ADD_EVENT') {
-        // TODO add events to selection
+        return {
+            toggleState: state.toggleState,
+            savedEvents: [...state.savedEvents, action.payload]
+        };
     } else if (action.type === 'DELETE_EVENT') {
-        // TODO remove events to selection
+        let newSavedEvents = state.savedEvents.filter((event) => {
+            return event !== action.payload;
+        });
+        return {
+            toggleState: state.toggleState,
+            savedEvents: newSavedEvents
+        }
     }
     return state;
 }

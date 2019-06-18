@@ -9,7 +9,7 @@ import {maskString} from "../../../util/util";
 class EventDrawer extends React.Component {
 
     displayCurrentSelection = () => {
-        let currentSelections = VanGoStore.getState().eventDrawer.currentSelection;
+        let currentSelections = VanGoStore.getState().eventDrawer.savedEvents;
         return  currentSelections.map((selectedEvent, index) => {
             return <a key={ selectedEvent.id } className="item">{maskString(selectedEvent.name, 25)}</a>
         });
