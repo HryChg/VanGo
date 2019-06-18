@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import Toggle from "../Toggle";
 import {updateCategories, updatePricePoints} from "../../actions/eventFilterActions";
 import {VanGoStore} from "../../../../client/main";
-import {containOneOf} from "../../../util/util";
+import {containOneOf, toggleItemInArray} from "../../../util/util";
 
 class EventFilter extends React.Component {
     // EFFECTS: handle value sent from the toggles.
@@ -13,41 +13,17 @@ class EventFilter extends React.Component {
     //          remove it. If not, add it.
     handleToggle = (toggleText) => {
         let toggleType = this.getToggleType(toggleText);
-
         if (toggleType === 'CATEGORY'){
-
             const currentCategoriesInStore = VanGoStore.getState().eventFilter.categories;
-            let newCategories = null;
-            if (currentCategoriesInStore.includes(toggleText)) {
-                newCategories = currentCategoriesInStore.filter((category) => {
-                    return category !== toggleText
-                });
-            } else {
-                newCategories = [...currentCategoriesInStore, toggleText];
-            }
-
-            console.log(`new Categories are: ${newCategories}`);
+            let newCategories = toggleItemInArray(currentCategoriesInStore, toggleText);
             this.props.updateCategories(newCategories);
 
         } else if (toggleType === 'PRICE_POINT'){
             const currentPricePointsInStore = VanGoStore.getState().eventFilter.pricePoints;
-            let newPricePoints = null;
-            if (currentPricePointsInStore.includes(toggleText)) {
-                newPricePoints = currentPricePointsInStore.filter((category) => {
-                    return category !== toggleText
-                });
-            } else {
-                newPricePoints = [...currentPricePointsInStore, toggleText];
-            }
-
-            console.log(`new PricePoints are: ${newPricePoints}`);
+            let newPricePoints = toggleItemInArray(currentPricePointsInStore, toggleText);
             this.props.updatePricePoints(newPricePoints);
         }
-
-
-
     };
-
 
     // EFFECTS: determine if the toggleText is a PricePoint or a Category
     getToggleType(toggleText){
@@ -55,9 +31,6 @@ class EventFilter extends React.Component {
     }
 
     render() {
-
-
-
         // TODO FIX THE CSS ON THE TOGGLE BUTTONS
         // TODO Move Free to under price-toggles
         return (

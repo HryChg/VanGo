@@ -1,4 +1,6 @@
 // EFFECTS: return true if listA contains every element in listB
+import {VanGoStore} from "../../client/main";
+
 export const containAll = (listA, listB) => {
     let result = true;
     for (let item of listB){
@@ -24,9 +26,18 @@ export const containOneOf = (listA, listB) => {
 };
 
 // TODO
-// EFFECTS: toggle an item in the array.
+// EFFECTS: toggle an item in the array
 //          If it exist in arr, return a copy of the array without that item
-//          If it does not exist in arr, return a copy of the array with that item
-export const toggleItemInArray = (array, item) => {
-    return []; //stub
+//          If not exist in arr, return a copy of the array with that item
+//          Note item's index in the array is not preserved
+export const toggleItemInArray = (originalArray, item) => {
+    let newArray = null;
+    if (originalArray.includes(item)) {
+        newArray = originalArray.filter((category) => {
+            return category !== item
+        });
+    } else {
+        newArray = [...originalArray, item];
+    }
+    return newArray; //stub
 };
