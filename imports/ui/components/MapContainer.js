@@ -47,13 +47,18 @@ export class MapContainer extends Component {
         }
     };
 
-
+    // TODO toDateString should be reformated to yyyy/mm/dd hh:mm
+    // Note store.start_time and end_time are date object, need to convert them to strings
     displayMarkers = () => {
         let markers = VanGoStore.getState().currEvents.events.map((store) => {
             return <Marker
                 key={store.id}
                 id={store.id}
                 name={store.name}
+                start_time={store.start_time.toDateString()}
+                end_time={store.end_time.toDateString()}
+                price={store.price}
+                link={store.link}
                 position={{
                     lat: store.latitude,
                     lng: store.longitude
@@ -87,10 +92,27 @@ export class MapContainer extends Component {
                         <div className="ui card">
                             <div className="content">
                                 <div className="header">{this.state.selectedPlace.name}</div>
-                                <div className="meta">StartDate: 4 days ago</div>
+                                <div className="meta">Start Time: {this.state.selectedPlace.start_time}</div>
+                                <div className="meta">End Time: {this.state.selectedPlace.end_time}</div>
+                                <div className="meta">Price: {this.state.selectedPlace.price}</div>
+                                <div className="meta"><a href={this.state.selectedPlace.link}>Link to Website...</a></div>
+
+
                                 <div className="description">
-                                    <p>Tucked up tightly against the city’s downtown core, the West End is
-                                        one of the easiest neighbourhoods to eat pray and love!</p>
+                                    <div className="ui placeholder">
+                                        <div className="paragraph">
+                                            <div className="line"></div>
+                                            <div className="line"></div>
+                                            <div className="line"></div>
+                                            <div className="line"></div>
+                                            <div className="line"></div>
+                                        </div>
+                                        <div className="paragraph">
+                                            <div className="line"></div>
+                                            <div className="line"></div>
+                                            <div className="line"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="extra content ui button">
