@@ -23,6 +23,7 @@ class EventFilter extends React.Component {
     };
 
     render() {
+        // TODO FIX THE CSS ON THE TOGGLE BUTTONS
         return (
             <div>
                 <div className={"container"}>

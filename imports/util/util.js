@@ -9,3 +9,16 @@ export const containAll = (listA, listB) => {
     }
     return result;
 };
+
+
+// EFFECTS: return true if listA container one of the elements in listB
+export const containOneOf = (listA, listB) => {
+    let result = false;
+    for (let item of listA){
+        result = listB.includes(item);
+        if (result === true){
+            return true;
+        }
+    }
+    return result;
+};
