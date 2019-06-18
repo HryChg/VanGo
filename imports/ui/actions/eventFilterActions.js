@@ -4,3 +4,10 @@ export const updateFilters = (selectedCategories) => {
         payload: selectedCategories
     };
 };
+
+export const updatePriceRange = (selectedPricePoints) => {
+    return {
+        type: 'UPDATE_PRICE_RANGE',
+        payload: selectedPricePoints
+    }
+};

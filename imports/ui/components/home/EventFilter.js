@@ -8,13 +8,16 @@ import {VanGoStore} from "../../../../client/main";
 class EventFilter extends React.Component {
     // EFFECTS: handle value sent from the toggles
     handleToggle = (toggleText) => {
+        // TODO Toggle needs to be differentialed between pricePoints and categories
 
         // get the categories. If toggleText exist, remove it. If not, add it.
         const currentCategoriesInStore = VanGoStore.getState().eventFilter.categories;
 
         let newCategories = null;
-        if (currentCategoriesInStore.includes(toggleText)){
-            newCategories = currentCategoriesInStore.filter((category) => {return category !== toggleText});
+        if (currentCategoriesInStore.includes(toggleText)) {
+            newCategories = currentCategoriesInStore.filter((category) => {
+                return category !== toggleText
+            });
         } else {
             newCategories = [...currentCategoriesInStore, toggleText];
         }
@@ -24,6 +27,7 @@ class EventFilter extends React.Component {
 
     render() {
         // TODO FIX THE CSS ON THE TOGGLE BUTTONS
+        // TODO Move Free to under price-toggles
         return (
             <div>
                 <div className={"container"}>
