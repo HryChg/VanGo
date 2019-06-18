@@ -8,7 +8,8 @@ let initialState = {
             price: 20,
             latitude: 49.2888,
             longitude: -123.1111,
-            link: 'https://www.canadaplace.ca/'
+            link: 'https://www.canadaplace.ca/',
+            categories: ['Sightseeing']
         },
         {
             id: 2,
@@ -18,7 +19,8 @@ let initialState = {
             price: 50,
             latitude: 49.2820,
             longitude: -123.1171,
-            link: 'https://vancouver.ca/news-calendar/downtown.aspx'
+            link: 'https://vancouver.ca/news-calendar/downtown.aspx',
+            categories: ['Sightseeing']
         },
         {
             id: 3,
@@ -28,7 +30,8 @@ let initialState = {
             price: 33,
             latitude: 49.2799,
             longitude: -123.1387,
-            link: 'https://vancouver.ca/parks-recreation-culture/sunset-beach.aspx'
+            link: 'https://vancouver.ca/parks-recreation-culture/sunset-beach.aspx',
+            categories: ['Sightseeing']
         },
         {
             id: 4,
@@ -38,7 +41,8 @@ let initialState = {
             price: 99,
             latitude: 49.28287695,
             longitude: -123.1205638545168,
-            link: 'http://vanartgallery.bc.ca/index.html'
+            link: 'http://vanartgallery.bc.ca/index.html',
+            categories: ['Sightseeing']
         },
         {
             id: 5,
@@ -48,7 +52,8 @@ let initialState = {
             price: 0,
             latitude: 49.2856,
             longitude: -123.1306,
-            link: 'https://www.tourismvancouver.com/vancouver/neighbourhoods/west-end/'
+            link: 'https://www.tourismvancouver.com/vancouver/neighbourhoods/west-end/',
+            categories: ['Sightseeing']
         },
         {
             id: 6,
@@ -58,7 +63,8 @@ let initialState = {
             price: 0,
             latitude: 49.289680,
             longitude: -123.136950,
-            link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/'
+            link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/',
+            categories: ['Food']
         },
         {
             id: 7,
@@ -68,7 +74,8 @@ let initialState = {
             price: 38,
             latitude: 49.300430,
             longitude: -123.127910,
-            link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/'
+            link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/',
+            categories: ['Sightseeing']
         }
     ]
 };

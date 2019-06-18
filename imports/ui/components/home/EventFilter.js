@@ -31,7 +31,7 @@ class EventFilter extends React.Component {
                         <div className="category-toggle">
                             <Toggle content={"Music"} sendData={this.handleToggle}/>
                             <Toggle content={"Food"} sendData={this.handleToggle}/>
-                            <Toggle content={"Theater"} sendData={this.handleToggle}/>
+                            <Toggle content={"Sightseeing"} sendData={this.handleToggle}/>
                             <Toggle content={"Free"} sendData={this.handleToggle}/>
                         </div>
                         <div className="price-toggle">
