@@ -113,13 +113,8 @@ class HomePage extends React.Component {
                     </SideNav>
                 </div>
                 <div className="twelve wide column">
-                    <div
-                        style={{height: '90vh'}}
-                    >
-                        <MapContainer
-                            width={'95%'}
-                            height={'95%'}
-                        >
+                    <div style={{height: '90vh'}}>
+                        <MapContainer width={'95%'} height={'95%'}>
                             {this.displayMarkers()}
                         </MapContainer>
                     </div>

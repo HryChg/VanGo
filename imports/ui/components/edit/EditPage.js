@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
 
-
 import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
@@ -10,6 +9,8 @@ import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 
 
 class EditPage extends React.Component {
+
+    // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
         let markers = this.props.draggableItems.items.map((event) => {
             if (event) {
@@ -32,6 +33,7 @@ class EditPage extends React.Component {
         return markers;
     };
 
+    // EFFECTS: display path based on the order of events in DraggableItems
     displayPolyLine = () => {
         let coordinates = this.props.draggableItems.items.map((item, index) => {
             return {lat: item.latitude, lng: item.longitude};
@@ -77,7 +79,6 @@ class EditPage extends React.Component {
     }
 }
 
-// TODO What do I return?
 const mapStateToProps = (state) => {
     return {draggableItems: state.draggableItems};
 };
