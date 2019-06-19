@@ -5,12 +5,14 @@
 // https://medium.com/@schlunzk/integrating-google-maps-api-in-react-redux-part-1-6b036014f4a6
 
 import React, {Component} from 'react';
-import {Marker, Map, GoogleApiWrapper, InfoWindow, Polyline, Polygon} from 'google-maps-react';
+import {GoogleApiWrapper, Map, Polyline} from 'google-maps-react';
 import {connect} from 'react-redux';
 
 import {VanGoStore} from "../../../client/main";
 import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
+import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
+import {addEvent} from "../actions/eventDrawerActions";
 
 const coordsForPathGeneration = [
     {lat: 49.2888, lng: -123.1111}, // Canada Place
@@ -25,6 +27,19 @@ export class MapContainer extends Component {
         if (VanGoStore.getState().mapContainer.showingInfoWindow){
             this.props.handleOnMapClicked();
         }
+    };
+
+    onSaveEventClick = () => {
+        // get EventID from marker
+        const eventID = VanGoStore.getState().mapContainer.selectedPlace.id;
+
+        // find Event in the store with EventID
+        const allEvents = VanGoStore.getState().currEvents.events;
+        const eventToBeSaved = allEvents.find((element) => {
+            return element.id === eventID;
+        });
+
+        this.props.addEvent(eventToBeSaved);
     };
 
 
@@ -46,7 +61,7 @@ export class MapContainer extends Component {
 
                 {this.props.children}
 
-                <InfoWindow
+                <MapInfoWindowContainer
                     marker={mapContainerStore.activeMarker}
                     visible={mapContainerStore.showingInfoWindow}>
                     <div>
@@ -57,32 +72,21 @@ export class MapContainer extends Component {
                                 <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
                                 <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
                                 <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to Website...</a></div>
-
-
-                                <div className="description">
-                                    <div className="ui placeholder">
-                                        <div className="paragraph">
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                        </div>
-                                        <div className="paragraph">
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div className="description">{mapContainerStore.selectedPlace.description}</div>
                             </div>
-                            <div className="extra content ui button">
+
+                            <button
+                                className="extra content ui button"
+                                onClick={() => {
+                                    this.onSaveEventClick();
+                                }}>
                                 <i className="heart icon"></i>
                                 Save to Event Drawer
-                            </div>
+                            </button>
                         </div>
                     </div>
-                </InfoWindow>
+                </MapInfoWindowContainer>
+
 
                 {/*// Changed prop "paths" to "path".*/}
                 {/*// Typo in documentation, fixed with #214*/}
@@ -103,7 +107,8 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
-    handleOnMarkerClick: handleOnMarkerClick
+    handleOnMarkerClick: handleOnMarkerClick,
+    addEvent: addEvent
 })(
     GoogleApiWrapper({
         apiKey: googleMapsApiKey

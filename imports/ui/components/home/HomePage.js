@@ -39,6 +39,7 @@ class HomePage extends React.Component {
                         lat: event.latitude,
                         lng: event.longitude
                     }}
+                    description={event.description}
                     onClick={this.props.handleOnMarkerClick}/>
             }
         });
