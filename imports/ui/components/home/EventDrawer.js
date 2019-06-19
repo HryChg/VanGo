@@ -10,11 +10,20 @@ class EventDrawer extends React.Component {
 
     displaySavedEvents = () => {
         let savedEventsInStore = VanGoStore.getState().eventDrawer.savedEvents;
-        return  savedEventsInStore.map((selectedEvent, index) => {
-            return <a
-                key={ selectedEvent.id }
-                className="item">{maskString(selectedEvent.name, 25)}
-            </a>
+        return savedEventsInStore.map((selectedEvent, index) => {
+
+            // TODO the delete button from the item
+            return (
+
+                <a className={"item"}
+                   key={selectedEvent.id}
+                   className="item">
+                    <i className="trash icon"></i>
+                    {maskString(selectedEvent.name, 25)}
+                </a>
+
+
+            );
         });
     };
 
