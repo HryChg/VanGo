@@ -18,7 +18,11 @@ class EventDrawer extends React.Component {
                 <a className={"item"}
                    key={selectedEvent.id}
                    className="item">
-                    <i className="trash icon"></i>
+
+                    <i className="trash icon" onClick={() => {
+                        console.log('hi');
+                    }}></i>
+
                     {maskString(selectedEvent.name, 25)}
                 </a>
 

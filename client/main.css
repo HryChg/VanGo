@@ -248,3 +248,10 @@ a:hover {
 .form-section {
     margin-bottom: 13px;
 }
+
+/* ---------------------------------------- */
+/* ----        Event Drawer        -------- */
+/* ---------------------------------------- */
+.trash.icon:active {
+    transform: translateY(2px);
+}
