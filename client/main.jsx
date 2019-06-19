@@ -5,6 +5,7 @@ import App from '/imports/ui/App'
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import reducers from '../imports/ui/reducers/index.js';
+import '../imports/startup/accounts-config.js';
 
 
 // allow us to inspect redux store on the console
