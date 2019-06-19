@@ -40,6 +40,8 @@ let initialState = {
     ]
 };
 
+
+
 export default function EventDrawerReducer(state = initialState, action) {
     if (action.type === 'ADD_EVENT') {
         return {

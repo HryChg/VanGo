@@ -35,11 +35,11 @@ export class MapContainer extends Component {
 
         // find Event in the store with EventID
         const allEvents = VanGoStore.getState().currEvents.events;
-        const event = allEvents.find((element) => {
+        const eventToBeSaved = allEvents.find((element) => {
             return element.id === eventID;
         });
 
-        console.log(event);
+        this.props.addEvent(eventToBeSaved);
     };
 
 
