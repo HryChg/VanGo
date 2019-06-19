@@ -5,13 +5,14 @@
 // https://medium.com/@schlunzk/integrating-google-maps-api-in-react-redux-part-1-6b036014f4a6
 
 import React, {Component} from 'react';
-import {Marker, Map, GoogleApiWrapper, InfoWindow, Polyline, Polygon} from 'google-maps-react';
+import {GoogleApiWrapper, Map, Polyline} from 'google-maps-react';
 import {connect} from 'react-redux';
 
 import {VanGoStore} from "../../../client/main";
 import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
 import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
+import {addEvent} from "../actions/eventDrawerActions";
 
 const coordsForPathGeneration = [
     {lat: 49.2888, lng: -123.1111}, // Canada Place
@@ -26,6 +27,19 @@ export class MapContainer extends Component {
         if (VanGoStore.getState().mapContainer.showingInfoWindow){
             this.props.handleOnMapClicked();
         }
+    };
+
+    onSaveEventClick = () => {
+        // get EventID from marker
+        const eventID = VanGoStore.getState().mapContainer.selectedPlace.id;
+
+        // find Event in the store with EventID
+        const allEvents = VanGoStore.getState().currEvents.events;
+        const event = allEvents.find((element) => {
+            return element.id === eventID;
+        });
+
+        console.log(event);
     };
 
 
@@ -81,8 +95,7 @@ export class MapContainer extends Component {
                             <button
                                 className="extra content ui button"
                                 onClick={() => {
-                                    console.log('saved');
-                                    // TODO FIND A WAY TO INSERT A WORKING BUTTON HERE
+                                    this.onSaveEventClick();
                                 }}>
                                 <i className="heart icon"></i>
                                 Save to Event Drawer
@@ -111,7 +124,8 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
-    handleOnMarkerClick: handleOnMarkerClick
+    handleOnMarkerClick: handleOnMarkerClick,
+    addEvent: addEvent
 })(
     GoogleApiWrapper({
         apiKey: googleMapsApiKey
