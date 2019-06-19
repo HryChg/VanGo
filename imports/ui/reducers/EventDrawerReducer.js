@@ -52,11 +52,14 @@ const findDuplicate = (array, event) => {
 
 export default function EventDrawerReducer(state = initialState, action) {
     if (action.type === 'ADD_EVENT') {
+        const eventName = action.payload.name;
+
         if (findDuplicate(state.savedEvents, action.payload) === true){
-            const eventName = action.payload.name;
-            alert(`You have already added "${eventName}" to the drawer. It will not be added again`);
+            alert(`"${eventName}" is already in the drawer.\n It will not be added again.`);
             return state;
         }
+
+        alert(`${eventName} had been added`);
         return {
             toggleState: state.toggleState,
             savedEvents: [...state.savedEvents, action.payload]
