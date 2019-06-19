@@ -1,12 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {updateEditedItem} from "../../actions/draggableItemsActions";
+import {updateDraggableItems} from "../../actions/draggableItemsActions";
+import {VanGoStore} from "../../../../client/main";
+
+
+
+
+
 
 
 class DraggableItems extends React.Component {
     state = {
         items: ["🍰 EventA", "🍩 EventB", "🍎 AttractionC", "🍕 AttractionD", "🐵 AttractionE", "🥎 AttractionF"]
     };
+
+    componentDidMount() {
+        let eventsFromHomePage = VanGoStore.getState().eventDrawer.savedEvents;
+        this.props.updateDraggableItems(eventsFromHomePage);
+    }
 
     onDragStart = (e, index) => {
         this.draggedItem = this.state.items[index];
@@ -76,7 +87,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-    updateEditedItem: updateEditedItem
+    updateDraggableItems: updateDraggableItems
 })(DraggableItems);
 
 
