@@ -1,11 +1,13 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
-import App from '/imports/ui/App'
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import reducers from '../imports/ui/reducers/index.js';
 import '../imports/startup/accounts-config.js';
+
+import App from '/imports/ui/App'
+import PostLogout from '/imports/ui/components/user/PostLogout'
 
 
 // allow us to inspect redux store on the console
@@ -27,7 +29,9 @@ Meteor.startup(() => {
   );
 });
 
-AccountsTemplates.configure({});
+// AccountsTemplates.configure({
+//   onLogoutHook: PostLogout
+// });
 
 AccountsTemplates.addFields([
     {

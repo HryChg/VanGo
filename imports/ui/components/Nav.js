@@ -2,7 +2,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import LoginPage from './user/LoginPage';
-import RegistrationPage from './user/RegistrationPage';
 import ItineraryPage from './itinerary/ItineraryPage';
 import EditPage from "./edit/EditPage";
 import HomePage from "./home/HomePage";
@@ -24,6 +23,7 @@ function AppRouter() {
                         <li className="nav-link" id="edit-link"><Link to="/edit/">Edit</Link></li>
                         <li className="nav-link" id="itinerary-link"><Link to="/itinerary/">Itinerary</Link></li>
                         <li className="nav-link" id="login-link"><Link to="/login/">Login</Link></li>
+                        <li className="nav-link" id="logout-link" onClick={AccountsTemplates.logout()}><Link to="/logout/">Logout</Link></li>
                     </ul>
                 </nav>
                 <Route path="/" exact component={HomePage}/>
@@ -31,7 +31,7 @@ function AppRouter() {
                 <Route path="/edit/" exact component={EditPage}/>
                 <Route path="/itinerary/" component={ItineraryPage}/>
                 <Route path="/login/" component={LoginPage}/>
-                <Route path="/register/" component={RegistrationPage}/>
+                <Route path="/logout/" component={HomePage}/>
             </div>
         </Router>
     );

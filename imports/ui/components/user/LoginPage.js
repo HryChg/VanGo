@@ -20,31 +20,9 @@ class Login extends React.Component {
 
     render() {
         return(
-            <span ref="container" />
-        //     <div id="login-block" className="container ui card" style={{width: '25%'}}>
-        //     {/* TODO: Integrate Google Login */}
-        //     <h2>Login</h2>
-        //     <form className="ui form" id="login-form" onSubmit={(e) => {e.preventDefault();}}>
-        //         <div className="form-section">
-        //             <label className="form-label">
-        //                 Email
-        //                 <input id="email" type="text" className="form-item" />
-        //                 {/* onChange={(e) => this.props.updateEmail(e)}/> */}
-        //             </label>
-        //         </div>
-        //         <div className="form-section">
-        //             <label className="form-label">
-        //                 Password
-        //                 <input id="password" type="text" className="form-item" />  
-        //                 {/* onChange={(e) => this.props.updatePassword(e)}/> */}
-        //             </label>
-        //         </div>
-        //         <div>
-        //             <button className="ui button">Login</button>
-        //             <Link to="/register">Register</Link>
-        //         </div>
-        //     </form>
-        // </div>
+            <div className="center outer">
+                <div id="login-block" ref="container" className="container inner" style={{width: '25%'}}/>
+            </div>
         );
     }
 }

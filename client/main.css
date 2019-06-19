@@ -248,3 +248,12 @@ a:hover {
 .form-section {
     margin-bottom: 13px;
 }
+
+.outer {
+    width: 100%;
+}
+
+.inner {
+    display: table;
+    margin: 0 auto;
+}
