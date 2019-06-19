@@ -218,8 +218,8 @@ a:hover {
 }
 
 .DraggableItems ul li {
-    background-color: rgba(96, 96, 96, 0);
-    padding: 10px 15px;
+    /*background-color: rgba(96, 96, 96, 0);*/
+    padding: 5px 15px;
     position: relative;
     display: flex;
     align-items: flex-start;
@@ -235,6 +235,11 @@ a:hover {
     height: 4rem;
     margin-right: 10px;
     color: #0c0c0c;
+}
+
+/*font size of the draggable item*/
+.ui.label.DraggableItem{
+    font-size: 1.1rem;
 }
 
 
