@@ -11,6 +11,7 @@ import {connect} from 'react-redux';
 import {VanGoStore} from "../../../client/main";
 import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
+import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
 
 const coordsForPathGeneration = [
     {lat: 49.2888, lng: -123.1111}, // Canada Place
@@ -46,7 +47,7 @@ export class MapContainer extends Component {
 
                 {this.props.children}
 
-                <InfoWindow
+                <MapInfoWindowContainer
                     marker={mapContainerStore.activeMarker}
                     visible={mapContainerStore.showingInfoWindow}>
                     <div>
@@ -88,7 +89,8 @@ export class MapContainer extends Component {
                             </button>
                         </div>
                     </div>
-                </InfoWindow>
+                </MapInfoWindowContainer>
+
 
                 {/*// Changed prop "paths" to "path".*/}
                 {/*// Typo in documentation, fixed with #214*/}
