@@ -6,10 +6,6 @@ import {maskString} from "../../../util/util";
 
 
 class DraggableItems extends React.Component {
-    // state = {
-    //     items: ["🍰 EventA", "🍩 EventB", "🍎 AttractionC", "🍕 AttractionD", "🐵 AttractionE", "🥎 AttractionF"]
-    // };
-
     componentDidMount() {
         let eventsFromHomePage = VanGoStore.getState().eventDrawer.savedEvents;
         this.props.updateDraggableItems(eventsFromHomePage);
@@ -22,6 +18,8 @@ class DraggableItems extends React.Component {
         e.dataTransfer.setDragImage(e.target.parentNode, 20, 20);
     };
 
+    // TODO this might be really computation heavy as it update multiples times while you are dragging on air
+    //      Try Console.log to see the update frequency
     onDragOver = index => {
         const draggedOverItem = VanGoStore.getState().draggableItems.editedPath[index];
 
