@@ -72,24 +72,7 @@ export class MapContainer extends Component {
                                 <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
                                 <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
                                 <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to Website...</a></div>
-
-
-                                <div className="description">
-                                    <div className="ui placeholder">
-                                        <div className="paragraph">
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                        </div>
-                                        <div className="paragraph">
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                            <div className="line"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div className="description">{mapContainerStore.selectedPlace.description}</div>
                             </div>
 
                             <button
