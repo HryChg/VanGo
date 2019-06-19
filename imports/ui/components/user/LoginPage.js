@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 class Login extends React.Component {
 
     componentDidMount() {
-        this.view = Blaze.render(Template.loginButtons,
+        this.view = Blaze.render(Template.atForm,
             ReactDOM.findDOMNode(this.refs.container));
     }
 
