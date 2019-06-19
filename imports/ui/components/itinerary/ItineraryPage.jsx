@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import ItineraryDatePanel from './ItineraryDatePanel';
 import MapContainer from '../MapContainer';
 import ItineraryList from './ItineraryList';
-import SideNav from '../SideNav';
 
 class ItineraryPage extends React.Component {
     render() {
@@ -33,7 +32,9 @@ class ItineraryPage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return state;
+    return {
+        itinerary: state.itinerary
+    };
 }
 
 export default connect(mapStateToProps)(ItineraryPage);
