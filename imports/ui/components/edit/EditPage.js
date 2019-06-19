@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Marker} from "google-maps-react";
+import {Marker, Polyline} from "google-maps-react";
 
 
 import SideNav from "../SideNav";
@@ -32,6 +32,19 @@ class EditPage extends React.Component {
         return markers;
     };
 
+    displayPolyLine = () => {
+        let coordinates = this.props.draggableItems.items.map((item, index) => {
+            return {lat: item.latitude, lng: item.longitude};
+        });
+
+        return (<Polyline
+            path={coordinates}
+            strokeColor={"#3F84CA"}
+            strokeOpacity={1}
+            strokeWeight={5}
+        />);
+    };
+
 
     render() {
         return (
@@ -55,6 +68,7 @@ class EditPage extends React.Component {
                     <div style={{height: '90vh'}}>
                         <MapContainer width={'95%'} height={'95%'}>
                             {this.displayMarkers()}
+                            {this.displayPolyLine()}
                         </MapContainer>
                     </div>
                 </div>

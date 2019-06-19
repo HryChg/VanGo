@@ -37,6 +37,18 @@ let initialState = {
             categories: ['Sightseeing'],
             description: 'The Vancouver Art Gallery is the fifth-largest art gallery in Canada, and the largest in Western Canada. It is located at 750 Hornby Street in Vancouver, British Columbia.'
         },
+        {
+            id: 3,
+            name: 'Sunset Beach',
+            start_time: new Date('February 10, 2019 09:00:00'),
+            end_time: new Date('February 13, 2019 05:00:00'),
+            price: 33,
+            latitude: 49.2799,
+            longitude: -123.1387,
+            link: 'https://vancouver.ca/parks-recreation-culture/sunset-beach.aspx',
+            categories: ['Sightseeing'],
+            description: 'Sunset Beach is situated in the West End near the Burrard Street Bridge and Vancouver International Hostel. The Vancouver Aquatic Centre lies at the East end of Sunset beach right next to the North end of Burrard Street Bridge. The beach has lifeguards on duty in the warm months.'
+        },
     ]
 };
 
