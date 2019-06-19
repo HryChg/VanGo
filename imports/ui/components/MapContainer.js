@@ -76,10 +76,16 @@ export class MapContainer extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="extra content ui button">
+
+                            <button
+                                className="extra content ui button"
+                                onClick={() => {
+                                    console.log('saved');
+                                    // TODO FIND A WAY TO INSERT A WORKING BUTTON HERE
+                                }}>
                                 <i className="heart icon"></i>
                                 Save to Event Drawer
-                            </div>
+                            </button>
                         </div>
                     </div>
                 </InfoWindow>
