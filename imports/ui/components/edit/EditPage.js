@@ -3,9 +3,37 @@ import {connect} from 'react-redux';
 import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
+import {VanGoStore} from "../../../../client/main";
+import {Marker} from "google-maps-react";
+
+import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 
 
 class EditPage extends React.Component {
+    displayMarkers = () => {
+        let markers = VanGoStore.getState().draggableItems.items.map((event) => {
+            if (event) {
+                return <Marker
+                    key={event.id}
+                    id={event.id}
+                    name={event.name}
+                    start_time={event.start_time.toDateString()}
+                    end_time={event.end_time.toDateString()}
+                    price={event.price}
+                    link={event.link}
+                    position={{
+                        lat: event.latitude,
+                        lng: event.longitude
+                    }}
+                    description={event.description}
+                    onClick={this.props.handleOnMarkerClick}/>
+            }
+        });
+        return markers;
+    };
+
+
+
     render() {
         return (
             <div className="ui grid">
@@ -31,7 +59,9 @@ class EditPage extends React.Component {
                         <MapContainer
                             width={'95%'}
                             height={'95%'}
-                        />
+                        >
+                            {this.displayMarkers()}
+                        </MapContainer>
                     </div>
                 </div>
             </div>
@@ -44,4 +74,6 @@ const mapStateToProps = (state) => {
     return state;
 };
 
-export default connect(mapStateToProps)(EditPage);
+export default connect(mapStateToProps, {
+    handleOnMarkerClick: handleOnMarkerClick
+})(EditPage);

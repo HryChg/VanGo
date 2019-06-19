@@ -90,11 +90,11 @@ export class MapContainer extends Component {
 
                 {/*// Changed prop "paths" to "path".*/}
                 {/*// Typo in documentation, fixed with #214*/}
-                <Polyline
-                    path={coordsForPathGeneration}
-                    strokeColor="#3F84CA"
-                    strokeOpacity={1}
-                    strokeWeight={5} />
+                {/*<Polyline*/}
+                {/*    path={coordsForPathGeneration}*/}
+                {/*    strokeColor="#3F84CA"*/}
+                {/*    strokeOpacity={1}*/}
+                {/*    strokeWeight={5} />*/}
             </Map>
         );
     }
