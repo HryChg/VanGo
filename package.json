@@ -9,11 +9,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-<<<<<<< HEAD
-    "bcrypt": "^3.0.6",
-=======
     "axios": "^0.19.0",
->>>>>>> dc677aba69112e4d9af9cd885ace3ed53f71859f
+    "bcrypt": "^3.0.6",
     "google-maps-react": "^2.0.2",
     "jquery": "^3.4.1",
     "meteor-node-stubs": "^0.4.1",

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
-import SearchBar from "../SearchBar";
+
 
 class EditPage extends React.Component {
     render() {
