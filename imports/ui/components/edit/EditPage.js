@@ -1,17 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Marker} from "google-maps-react";
+
+
 import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
-import {VanGoStore} from "../../../../client/main";
-import {Marker} from "google-maps-react";
-
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 
 
 class EditPage extends React.Component {
     displayMarkers = () => {
-        let markers = VanGoStore.getState().draggableItems.items.map((event) => {
+        let markers = this.props.draggableItems.items.map((event) => {
             if (event) {
                 return <Marker
                     key={event.id}
@@ -33,7 +33,6 @@ class EditPage extends React.Component {
     };
 
 
-
     render() {
         return (
             <div className="ui grid">
@@ -53,13 +52,8 @@ class EditPage extends React.Component {
                     </SideNav>
                 </div>
                 <div className="twelve wide column">
-                    <div
-                        style={{height: '90vh'}}
-                    >
-                        <MapContainer
-                            width={'95%'}
-                            height={'95%'}
-                        >
+                    <div style={{height: '90vh'}}>
+                        <MapContainer width={'95%'} height={'95%'}>
                             {this.displayMarkers()}
                         </MapContainer>
                     </div>
@@ -71,7 +65,7 @@ class EditPage extends React.Component {
 
 // TODO What do I return?
 const mapStateToProps = (state) => {
-    return state;
+    return {draggableItems: state.draggableItems};
 };
 
 export default connect(mapStateToProps, {

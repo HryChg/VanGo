@@ -26,17 +26,17 @@ let initialState = {
             description: 'Mostly residential, the easygoing West End offers gay bars in Davie Village, chic fashion stores on Robson Street, and diverse dining ranging from ramen shops to seafood grills. It’s also the gateway to vast Stanley Park, known for its forested trails and Seawall waterfront path. The area’s public art includes the A-maze-ing Laughter sculpture, featuring 14 cast-bronze figures, and the Inukshuk, a stone Inuit statue.'
         },
         {
-            id: 7,
-            name: 'Butterflies – Experience the Transformation - Vancouver Aquarium',
+            id: 4,
+            name: 'Vancouver Art Gallery',
             start_time: new Date('May 13, 2019 09:00:00'),
-            end_time: new Date('September 2, 2019 17:00:00'),
-            price: 38,
-            latitude: 49.300430,
-            longitude: -123.127910,
-            link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/',
+            end_time: new Date('June 27, 2019 05:00:00'),
+            price: 99,
+            latitude: 49.28287695,
+            longitude: -123.1205638545168,
+            link: 'http://vanartgallery.bc.ca/index.html',
             categories: ['Sightseeing'],
-            description: 'Immerse yourself in the beautiful world of butterflies at the Vancouver Aquarium, from May to September, 2019. The Graham Amazon Gallery has been transformed to become home to several species of beautiful butterflies, all the way from Costa Rica.'
-        }
+            description: 'The Vancouver Art Gallery is the fifth-largest art gallery in Canada, and the largest in Western Canada. It is located at 750 Hornby Street in Vancouver, British Columbia.'
+        },
     ]
 };
 
