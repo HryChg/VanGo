@@ -1,7 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-class ItineraryItem extends React.Component {
+export default class ItineraryItem extends React.Component {
     render() {
         return(<div className="event-block">
                 <div className="event-detail" id="event-name">{ this.props.name }</div>
@@ -12,9 +11,3 @@ class ItineraryItem extends React.Component {
             </div>);
     }
 }
-
-const mapStateToProps = (state) => {
-    return state;
-}
-
-export default connect(mapStateToProps)(ItineraryItem);

@@ -14,7 +14,9 @@ class ItineraryDatePanel extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return state;
+    return {
+        itinerary: state.itinerary
+    };
 }
 
 export default connect(mapStateToProps, { selectDate })(ItineraryDatePanel);

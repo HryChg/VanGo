@@ -12,8 +12,4 @@ class ItineraryDate extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return state;
-}
-
-export default connect(mapStateToProps, { selectDate })(ItineraryDate);
+export default connect(null, { selectDate })(ItineraryDate);
