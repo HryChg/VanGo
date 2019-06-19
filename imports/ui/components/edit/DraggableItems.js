@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
+import {updateEditedItem} from "../../actions/draggableItemsActions";
 
 
 class DraggableItems extends React.Component {
@@ -72,9 +72,11 @@ class DraggableItems extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return state;
+    return {draggableItems: state.draggableItems};
 };
 
-export default connect(mapStateToProps)(DraggableItems);
+export default connect(mapStateToProps, {
+    updateEditedItem: updateEditedItem
+})(DraggableItems);
 
 
