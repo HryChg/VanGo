@@ -26,7 +26,7 @@ class ItineraryList extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        itinerary: state.itinerary
+        itinerary: state.itineraryStore
     };
 }
 

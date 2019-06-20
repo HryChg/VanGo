@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Options for displaying date and time
 let options = {weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};
 
 

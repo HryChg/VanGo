@@ -15,7 +15,7 @@ import draggableItemsReducer from './DraggableItemsReducers';
 export default combineReducers({
     datePicker: datePickerReducer,
     currEvents: currentEventsReducer,
-    itinerary: itineraryReducer,
+    itineraryStore: itineraryReducer,
     sidebar: sidebarReducer,
     searchBar: searchBarReducer,
     login: loginReducer,
