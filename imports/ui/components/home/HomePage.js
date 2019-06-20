@@ -64,7 +64,7 @@ class HomePage extends React.Component {
         }
 
         let matchPricePoints;
-        if (filterPricePoints.length===0){
+        if (filterPricePoints.length === 0) {
             matchPricePoints = true;
         } else {
             let eventPricePoint = this.extractPricePoint(event);
@@ -90,23 +90,77 @@ class HomePage extends React.Component {
     };
 
 
+    // render() {
+    //     return (
+    //         <div className="ui grid">
+    //             <div className="four wide column">
+    //                 <SideNav>
+    //                     <div className={"container"} style={{padding: '8px'}}>
+    //                         <h2 className={"ui header"}>VanGo</h2>
+    //                         <SearchBar/>
+    //                         <DatePicker/>
+    //                         <br/>
+    //                         <EventFilter/>
+    //                         <div className="select-button">
+    //                             <Link
+    //                                 className="ui pink button"
+    //                                 id="select-button"
+    //                                 to="/edit"
+    //                                 onClick={() => {
+    //                                     console.log('send me to next page')
+    //                                 }}
+    //                             >Go Make Your Itinerary
+    //                             </Link>
+    //                         </div>
+    //
+    //                         <div className="select-button">
+    //                             <button
+    //                                 className="ui pink button"
+    //                                 id="select-button"
+    //                                 onClick={this.toggleEventDrawer}
+    //                             >Show Current Selection
+    //                             </button>
+    //                         </div>
+    //                     </div>
+    //                 </SideNav>
+    //             </div>
+    //             <div className="twelve wide column">
+    //                 <div style={{height: '90vh'}}>
+    //                     <MapContainer width={'95%'} height={'95%'}>
+    //                         {this.displayMarkers()}
+    //                     </MapContainer>
+    //                 </div>
+    //             </div>
+    //
+    //             <EventDrawer/>
+    //
+    //         </div>
+    //     );
+    // }
+
+
     render() {
         return (
             <div className="ui grid">
                 <div className="four wide column">
                     <SideNav>
-                        <div className={"container"} style={{padding: '8px'}}>
+                        <div className={"ui grid"} style={{padding: '8px'}}>
                             <h2 className={"ui header"}>VanGo</h2>
                             <SearchBar/>
-                            <DatePicker/>
-                            <br/>
+                            <div className={"DatePickerContainer"}>
+                                <DatePicker/>
+                            </div>
+
+
                             <EventFilter/>
                             <div className="select-button">
                                 <Link
                                     className="ui pink button"
                                     id="select-button"
                                     to="/edit"
-                                    onClick={()=> {console.log('send me to next page')}}
+                                    onClick={() => {
+                                        console.log('send me to next page')
+                                    }}
                                 >Go Make Your Itinerary
                                 </Link>
                             </div>

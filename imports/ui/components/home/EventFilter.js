@@ -52,7 +52,7 @@ class EventFilter extends React.Component {
                         </div>
                     </div>
                     <div className={"container"}>
-                        <Link className="ui primary button container" to="/edit">Show Nearby Attractions</Link>
+                        <Link className="ui primary button" to="/edit">Show Nearby Attractions</Link>
                     </div>
                 </div>
             </div>

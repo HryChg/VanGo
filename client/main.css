@@ -58,38 +58,23 @@ a:hover {
 /* ---------------------------------------- */
 .sidenav {
     width: 100%;
-    height: 88.5vh;
     position: relative;
     left: 10px;
     background: #eee;
-    /* overflow-x: hidden; */
-    min-width: 268px;
-    min-height: 720px;
-    padding: 8px 0;
-    z-index: 0;
+    min-width: 270px;
+    min-height: 89vh;
+    /*padding: 8px 0;*/
 }
 
-.sidenav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: darkslateblue;
-    display: block;
+
+/* ---------------------------------------- */
+/* ------------  DatePicker  -------------- */
+/* ---------------------------------------- */
+.DatePickerContainer{
+    max-width: 100%;
 }
 
-.sidenav a:hover {
-    color: slateblue;
-}
 
-@media screen and (max-height: 450px) {
-    .sidenav {
-        padding-top: 15px;
-    }
-
-    .sidenav a {
-        font-size: 18px;
-    }
-}
 
 
 /* ---------------------------------------- */
