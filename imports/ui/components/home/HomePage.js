@@ -150,9 +150,11 @@ class HomePage extends React.Component {
                             <div className={"DatePickerContainer"}>
                                 <DatePicker/>
                             </div>
+                            <div className={"EventFilterContainer"}>
+                                <EventFilter/>
+                            </div>
 
 
-                            <EventFilter/>
                             <div className="select-button">
                                 <Link
                                     className="ui pink button"

@@ -12,6 +12,8 @@ h1, h2 {
     padding-top: 6px;
 }
 
+
+
 a {
     color: darkslateblue;
 }
@@ -256,3 +258,20 @@ a:hover {
     transform: translateY(2px);
 }
 
+
+/* ---------------------------------------- */
+/* ----    EventFilterContainer    -------- */
+/* ---------------------------------------- */
+.EventFilterContainer{
+    margin: 6px;
+    text-align: center;
+}
+
+.EventFilterContainer h2{
+    text-align: left;
+}
+
+.EventFilterContainer .ui.grid{
+    margin-top: -2rem;
+    text-align: left;
+}
