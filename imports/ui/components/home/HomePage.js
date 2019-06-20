@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
+import {Link} from 'react-router-dom';
 
 import SideNav from "../SideNav";
 import SearchBar from "../SearchBar";
@@ -100,6 +101,15 @@ class HomePage extends React.Component {
                             <DatePicker/>
                             <br/>
                             <EventFilter/>
+                            <div className="select-button">
+                                <Link
+                                    className="ui pink button"
+                                    id="select-button"
+                                    to="/edit"
+                                    onClick={()=> {console.log('send me to next page')}}
+                                >Go Make Your Itinerary
+                                </Link>
+                            </div>
 
                             <div className="select-button">
                                 <button
