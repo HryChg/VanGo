@@ -1,4 +1,4 @@
-// Reference: https://www.youtube.com/watch?v=eNxuaTGq4Qk
+// Reference: https://guide.meteor.com/react.html#blaze-in-react
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Redirect } from 'react-router-dom';

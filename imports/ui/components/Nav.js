@@ -1,6 +1,5 @@
 // Reference: https://reacttraining.com/react-router/web/guides/quick-start
 import React from 'react';
-import Blaze from 'meteor/gadicc:blaze-react-component';
 import { Meteor } from 'meteor/meteor';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
@@ -27,7 +26,7 @@ class AppRouter extends React.Component {
         } else {
             console.log("logged in");
             return (
-                <li className="nav-link" id="logout-link" onClick={Meteor.logout()}>
+                <li className="nav-link" id="logout-link" onClick={AccountsTemplates.logout()}>
                     <Link to="/logout/">Logout</Link>
                 </li>
             );

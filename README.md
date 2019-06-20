@@ -73,8 +73,10 @@ https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
 ##### Login and Registration Redux
 React + Redux - User Registration and Login Tutorial & Example
 https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
-Meteor & React For Everyone #12 - Adding User Accounts & Adjusting Permissions by LevelUpTuts
-https://www.youtube.com/watch?v=eNxuaTGq4Qk
+Blaze Templates in React
+https://guide.meteor.com/react.html#blaze-in-react
+Meteor User Accounts
+https://github.com/meteor-useraccounts/core/blob/master/Guide.md
 
 ##### Event details
 Web Scraping with Node.js
@@ -87,4 +89,8 @@ github link https://github.com/siffogh/drag-and-drop-article
 #### External Library Used
 - google-maps-react
 - react-calendar
-
+- accounts-password
+- useraccounts:semantic-ui
+- accounts-google
+- service-configuration
+- gadicc:blaze-react-component
