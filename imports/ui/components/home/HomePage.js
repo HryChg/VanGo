@@ -59,7 +59,7 @@ class HomePage extends React.Component {
         if (filterCategories.length === 0) {
             matchCategory = true;
         } else {
-            matchCategory = containAll(filterCategories, event.categories);
+            matchCategory = containAll(filterCategories, [event.category]);
         }
 
         let matchPricePoints;

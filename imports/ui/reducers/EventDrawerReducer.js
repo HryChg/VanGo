@@ -10,7 +10,7 @@ let initialState = {
             latitude: 49.2888,
             longitude: -123.1111,
             link: 'https://www.canadaplace.ca/',
-            categories: ['Sightseeing'],
+            category: 'Sightseeing',
             type: 'Attraction',
             description: 'Canada Place is a building situated on the Burrard Inlet waterfront of Vancouver, British Columbia. It is the home of the Vancouver Convention Centre, the Pan Pacific Vancouver Hotel, Vancouver\'s World Trade Centre, and the virtual flight ride FlyOver Canada.'
         },
@@ -23,7 +23,7 @@ let initialState = {
             latitude: 49.2856,
             longitude: -123.1306,
             link: 'https://www.tourismvancouver.com/vancouver/neighbourhoods/west-end/',
-            categories: ['Sightseeing'],
+            category: 'Sightseeing',
             type: 'Attraction',
             description: 'Mostly residential, the easygoing West End offers gay bars in Davie Village, chic fashion stores on Robson Street, and diverse dining ranging from ramen shops to seafood grills. It’s also the gateway to vast Stanley Park, known for its forested trails and Seawall waterfront path. The area’s public art includes the A-maze-ing Laughter sculpture, featuring 14 cast-bronze figures, and the Inukshuk, a stone Inuit statue.'
         },
@@ -36,7 +36,7 @@ let initialState = {
             latitude: 49.28287695,
             longitude: -123.1205638545168,
             link: 'http://vanartgallery.bc.ca/index.html',
-            categories: ['Sightseeing'],
+            category: 'Sightseeing',
             type: 'Attraction',
             description: 'The Vancouver Art Gallery is the fifth-largest art gallery in Canada, and the largest in Western Canada. It is located at 750 Hornby Street in Vancouver, British Columbia.'
         },
@@ -49,7 +49,7 @@ let initialState = {
             latitude: 49.2799,
             longitude: -123.1387,
             link: 'https://vancouver.ca/parks-recreation-culture/sunset-beach.aspx',
-            categories: ['Sightseeing'],
+            category: 'Sightseeing',
             type: 'Attraction',
             description: 'Sunset Beach is situated in the West End near the Burrard Street Bridge and Vancouver International Hostel. The Vancouver Aquatic Centre lies at the East end of Sunset beach right next to the North end of Burrard Street Bridge. The beach has lifeguards on duty in the warm months.'
         },
