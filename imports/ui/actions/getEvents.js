@@ -37,17 +37,18 @@ function daysInMonth(mth){
     }
 }
 
-function getEventsInMonth() {
-    let endDay = daysInMonth(month);
+async function getEventsInMonth() {
+    // limit 5QPS
+    let endDay = await daysInMonth(month);
     for (let i = 1; i <= endDay; i++) {
         let dayStart = Date.UTC(year, month, i, 0, 0, 0)/1000;
         let dayEnd = Date.UTC(year, month, i, 23, 59, 59)/1000;
-        monthlyEvents[i] = getEventsInDay(dayStart, dayEnd);
+        await setTimeout(getEventsInDay, 1000, i, dayStart, dayEnd);
     }
     console.log(monthlyEvents);
 }
 
-function getEventsInDay(start, end) {
+function getEventsInDay(date, start, end) {
     axios.get('https://api.yelp.com/v3/events', {
         headers: {
             'Authorization': `Bearer ${apiKey}`
@@ -61,8 +62,9 @@ function getEventsInDay(start, end) {
     })
         .then((res) => {
             // returns obj w/ events attrib: array of events
-            console.log(res.data);
-            return res.data;
+            // console.log(res.data);
+            monthlyEvents[date] = res.data;
+            // return res.data;
         })
         .catch((err) => {
             console.log(err);
@@ -71,6 +73,4 @@ function getEventsInDay(start, end) {
 
 getEventsInMonth();
 
-// getEventsInDay(Date.UTC(2019, 6, 20, 0, 0, 0)/1000, Date.UTC(2019, 6, 20, 23, 59, 59)/1000);
-// console.log((Date.UTC(year, month, 20, 0, 0, 0))/1000) //1560988800
-// console.log((Date.UTC(year, month, 20, 23, 59, 59))/1000) //1561075199
+// setTimeout(getEventsInDay, 1000, 1560988800, 1561075199);
