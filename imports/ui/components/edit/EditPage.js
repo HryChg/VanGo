@@ -53,7 +53,7 @@ class EditPage extends React.Component {
         let path = {
             id: uniqid(),
             name: '', // stub
-            date: this.props.selectedDate,
+            date: this.props.datePicker.selectedDate,
             events: events
         };
         console.log(path);
@@ -61,7 +61,7 @@ class EditPage extends React.Component {
 
 
     render() {
-        let selectedDateString = this.props.selectedDate.selectedDate.toDateString();
+        let selectedDateString = this.props.datePicker.selectedDate.toDateString();
         return (
             <div className="ui grid">
                 <div className="four wide column">
@@ -95,7 +95,7 @@ class EditPage extends React.Component {
 const mapStateToProps = (state) => {
     return {
         draggableItems: state.draggableItems,
-        selectedDate: state.selectedDate
+        datePicker: state.datePicker
     };
 };
 

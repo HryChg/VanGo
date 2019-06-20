@@ -20,7 +20,7 @@ class DatePicker extends React.Component {
             <div>
                 <Calendar
                     onChange={this.onChange}
-                    value={this.props.selectedDate.date}
+                    value={this.props.datePicker.selectedDate}
                 />
             </div>
 
@@ -29,7 +29,7 @@ class DatePicker extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {selectedDate: state.selectedDate};
+    return {datePicker: state.datePicker};
 };
 
 export default connect(mapStateToProps, {changeDate})(DatePicker);
