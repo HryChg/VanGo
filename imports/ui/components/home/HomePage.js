@@ -23,6 +23,10 @@ class HomePage extends React.Component {
             .sidebar('toggle');
     };
 
+    componentWillUnmount() {
+        $('.ui.right.sidebar').detach();
+    }
+
     // TODO toDateString should be reformatted to yyyy/mm/dd hh:mm
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
