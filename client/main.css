@@ -86,18 +86,7 @@ a:hover {
     margin: 2px;
 }
 
-.select-button {
-    position: absolute;
-    top: 650px;
-    margin-left: 30px;
-    z-index: 1;
-}
 
-.price-toggle {
-    position: absolute;
-    top: 463px;
-    margin-left: 148px;
-}
 
 /* ---------------------------------------- */
 /* ------------     Form     -------------- */
