@@ -10,6 +10,7 @@ class DraggableItems extends React.Component {
         this.props.updateDraggableItems(eventsFromHomePage);
     }
 
+    // EFFECTS: Extract the data of the dragged HTML element to class and set the image being dragged on the mouse
     onDragStart = (e, index) => {
         this.draggedItem = this.props.draggableItems.items[index];
         e.dataTransfer.effectAllowed = "move";
@@ -19,6 +20,7 @@ class DraggableItems extends React.Component {
 
     // TODO this might be really computation heavy as it update multiples times while you are dragging on air
     //      Try Console.log to see the update frequency
+    // EFFECTS: Continually update the the item order according to the location of the draggedOver Item
     onDragOver = index => {
         const draggedOverItem = this.props.draggableItems.items[index];
 
