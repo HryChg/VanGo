@@ -159,7 +159,7 @@ class HomePage extends React.Component {
                                 <Link className="item active" onClick={()=>{alert('clicked')}}>
                                     <div className="ui small teal label">1</div>
                                     Show Nearby Attractions
-                                </Link>
+                                </a>
                                 <a className="item" onClick={this.toggleEventDrawer}>
                                     <div className="ui small label" >1</div>
                                     Show Current Selection

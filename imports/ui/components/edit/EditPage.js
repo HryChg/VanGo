@@ -78,10 +78,10 @@ class EditPage extends React.Component {
                     <SideNav>
                         <div className={"container"}>
                             <h2 className={"ui header"}>VanGo</h2>
-                            <h2 className={"ui header"}>Edit Itinerary for <br/>{selectedDateString}</h2>
+                            <h3 className={"ui header"}>Edit Itinerary for <br/>{selectedDateString}</h3>
                             <DraggableItems/>
                             <div className={"container"}>
-                                <div className="ui action input mini">
+                                <div className="ui action input mini fluid">
                                     <input className={"edit-page-path-name"} type="text" placeholder={"Give it a name..."}/>
                                     <button className="ui button" onClick={this.createItinerary}>
                                         <i className="heart icon"/>
