@@ -31,7 +31,7 @@ class EventFilter extends React.Component {
 
     render() {
         return (
-            <div className={"ui segment"}>
+            <div className={""}>
                 <h2 className={"ui header"}>Event Filter</h2>
                 <div className={"ui grid"}>
                     <div className={"eight wide column"}>

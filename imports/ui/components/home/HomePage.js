@@ -155,8 +155,8 @@ class HomePage extends React.Component {
                         </div>
 
                         <div className={"sidenav-options-container"}>
-                            <div className="ui large vertical menu">
-                                <Link className="item active" onClick={()=>{alert('clicked')}}>
+                            <div className="ui large vertical menu fluid">
+                                <a className="item active" onClick={()=>{alert('clicked')}}>
                                     <div className="ui small teal label">1</div>
                                     Show Nearby Attractions
                                 </a>

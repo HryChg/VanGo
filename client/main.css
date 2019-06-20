@@ -57,7 +57,7 @@ a:hover {
     position: relative;
     left: 10px;
     background: #eee;
-    min-width: 270px;
+    min-width: 300px;
     min-height: 89vh;
     /*padding: 8px 0;*/
 }
@@ -70,9 +70,6 @@ a:hover {
 .sidenav h2{
     text-align: center;
 }
-
-
-
 
 
 /* ---------------------------------------- */
@@ -89,7 +86,11 @@ a:hover {
 /* ------------    Toggle    -------------- */
 /* ---------------------------------------- */
 .checkbox {
-    margin: 2px;
+    margin: 2px 0;
+}
+
+.ui.toggle.checkbox label {
+    padding-left: 3.8rem;
 }
 
 
@@ -269,8 +270,4 @@ a:hover {
 .EventFilterContainer .ui.grid{
     /*margin-top: -2rem;*/
     text-align: left;
-}
-
-.sidenav-options-container{
-
 }
