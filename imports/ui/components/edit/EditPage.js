@@ -48,15 +48,25 @@ class EditPage extends React.Component {
         />);
     };
 
-    createPath = () => {
+    // EFFECTS: create a path containing id, name, date, and events
+    // TODO Will have to send this to server in the future
+    createItinerary = () => {
+        let itineraryName = document.querySelector(".edit-page-path-name").value;
+        if (itineraryName === ''){
+            alert("Please enter a name for this Itinerary");
+            return null;
+        }
+
         let events = this.props.draggableItems.items;
-        let path = {
+        let itin = {
             id: uniqid(),
-            name: '', // stub
+            name: itineraryName,
             date: this.props.datePicker.selectedDate,
             events: events
         };
-        console.log(path);
+
+        alert('You Itinerary Has been Saved');
+        console.log(itin);
     };
 
 
@@ -71,10 +81,13 @@ class EditPage extends React.Component {
                             <h2 className={"ui header"}>Edit Itinerary for <br/>{selectedDateString}</h2>
                             <DraggableItems/>
                             <div className={"container"}>
-                                <button className="fluid ui button" onClick={this.createPath}>
-                                    <i className="heart icon"/>
-                                    Save
-                                </button>
+                                <div className="ui action input mini">
+                                    <input className={"edit-page-path-name"} type="text" placeholder={"Give it a name..."}/>
+                                    <button className="ui button" onClick={this.createItinerary}>
+                                        <i className="heart icon"/>
+                                        Save
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </SideNav>
