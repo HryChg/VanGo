@@ -77,7 +77,6 @@ class ItineraryPage extends React.Component {
                         {this.displayMarkers()}
                         {this.displayPolyLine()}
                     </MapContainer>
-                    <div className="it-map"></div> {/* Workaround Used to block out size of map */}
                     <div><ItineraryList/></div>
                 </div>
             </div>
