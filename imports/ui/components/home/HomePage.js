@@ -10,6 +10,7 @@ import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import {VanGoStore} from "../../../../client/main";
 import {containAll} from "../../../util/util";
 
@@ -26,8 +27,8 @@ class HomePage extends React.Component {
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
     displayMarkers = () => {
-        let markers = VanGoStore.getState().currEvents.events.map((event) => {
-            if (this.filterEventMarkers(event)) {
+        let markers = this.props.currEvents.events.map((event) => {
+            if (this.filterMarker(event)) {
                 return <Marker
                     key={event.id}
                     id={event.id}
@@ -47,27 +48,34 @@ class HomePage extends React.Component {
         return markers;
     };
 
-    // EFFECTS: return true if the event meets one of the selected categories and one of the price points
-    //          If no category selected, events of all categories are considered
-    //          If no price point selected, events of all price points are considered
-    //          If not price point and no category selected, return true by default
-    filterEventMarkers = (event) => {
-        let filterCategories = VanGoStore.getState().eventFilter.categories;
-        let filterPricePoints = VanGoStore.getState().eventFilter.pricePoints;
+    // EFFECTS: return true if the item meets one of the selected categories and one of the price points
+    //          return false if user decides not to show nearby attraction and this item is an attraction
+    //          If no category selected, items of all categories are considered
+    //          If no price point selected, items of all price points are considered
+    //          If no price point and no category selected, return true by default
+    filterMarker = (item) => {
+        let showAttractions = this.props.homePage.toggleNearbyAttractions;
+        let isAttraction = item.type==='Attraction';
+        if (isAttraction && !showAttractions){
+            return false;
+        }
+
+        let filterCategories = this.props.eventFilter.categories;
+        let filterPricePoints = this.props.eventFilter.pricePoints;
         if (filterCategories.length === 0 && filterPricePoints.length === 0) return true;
 
         let matchCategory;
         if (filterCategories.length === 0) {
             matchCategory = true;
         } else {
-            matchCategory = containAll(filterCategories, [event.category]);
+            matchCategory = containAll(filterCategories, [item.category]);
         }
 
         let matchPricePoints;
         if (filterPricePoints.length === 0) {
             matchPricePoints = true;
         } else {
-            let eventPricePoint = this.extractPricePoint(event);
+            let eventPricePoint = this.extractPricePoint(item);
             matchPricePoints = containAll(filterPricePoints, [eventPricePoint]);
         }
 
@@ -90,55 +98,6 @@ class HomePage extends React.Component {
     };
 
 
-    // render() {
-    //     return (
-    //         <div className="ui grid">
-    //             <div className="four wide column">
-    //                 <SideNav>
-    //                     <div className={"container"} style={{padding: '8px'}}>
-    //                         <h2 className={"ui header"}>VanGo</h2>
-    //                         <SearchBar/>
-    //                         <DatePicker/>
-    //                         <br/>
-    //                         <EventFilter/>
-    //                         <div className="select-button">
-    //                             <Link
-    //                                 className="ui pink button"
-    //                                 id="select-button"
-    //                                 to="/edit"
-    //                                 onClick={() => {
-    //                                     console.log('send me to next page')
-    //                                 }}
-    //                             >Go Make Your Itinerary
-    //                             </Link>
-    //                         </div>
-    //
-    //                         <div className="select-button">
-    //                             <button
-    //                                 className="ui pink button"
-    //                                 id="select-button"
-    //                                 onClick={this.toggleEventDrawer}
-    //                             >Show Current Selection
-    //                             </button>
-    //                         </div>
-    //                     </div>
-    //                 </SideNav>
-    //             </div>
-    //             <div className="twelve wide column">
-    //                 <div style={{height: '90vh'}}>
-    //                     <MapContainer width={'95%'} height={'95%'}>
-    //                         {this.displayMarkers()}
-    //                     </MapContainer>
-    //                 </div>
-    //             </div>
-    //
-    //             <EventDrawer/>
-    //
-    //         </div>
-    //     );
-    // }
-
-
     render() {
         return (
             <div className="ui grid">
@@ -156,12 +115,12 @@ class HomePage extends React.Component {
 
                         <div className={"sidenav-options-container"}>
                             <div className="ui large vertical menu fluid">
-                                <a className="item active" onClick={()=>{alert('clicked')}}>
+                                <a className="item" onClick={this.props.toggleNearbyAttractions}>
                                     <div className="ui small teal label">1</div>
-                                    Show Nearby Attractions
+                                    {this.props.homePage.toggleNearbyAttractions?'Hide Attractions':'Show Nearby Attractions'}
                                 </a>
                                 <a className="item" onClick={this.toggleEventDrawer}>
-                                    <div className="ui small label" >1</div>
+                                    <div className="ui small label">1</div>
                                     Show Current Selection
                                 </a>
                                 <Link className="item" to="/edit">
@@ -190,9 +149,14 @@ class HomePage extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    return state;
+    return {
+        homePage: state.homePage,
+        currEvents: state.currEvents,
+        eventFilter: state.eventFilter
+    };
 };
 
 export default connect(mapStateToProps, {
-    handleOnMarkerClick: handleOnMarkerClick
+    handleOnMarkerClick: handleOnMarkerClick,
+    toggleNearbyAttractions: toggleNearbyAttractions
 })(HomePage);

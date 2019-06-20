@@ -11,6 +11,7 @@ import currentEventsReducer from './CurrentEventsReducer';
 import eventDrawerReducer from './EventDrawerReducer';
 import mapContainerReducer from './MapContainerReducer';
 import draggableItemsReducer from './DraggableItemsReducers';
+import HomePageReducer from "./HomePageReducer";
 
 export default combineReducers({
     datePicker: datePickerReducer,
@@ -23,5 +24,6 @@ export default combineReducers({
     eventFilter: eventFilterReducer,
     eventDrawer: eventDrawerReducer,
     mapContainer: mapContainerReducer,
-    draggableItems: draggableItemsReducer
+    draggableItems: draggableItemsReducer,
+    homePage: HomePageReducer
 });
