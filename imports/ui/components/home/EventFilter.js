@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
 
 import Toggle from "../Toggle";
 import {updateCategories, updatePricePoints} from "../../actions/eventFilterActions";
@@ -30,38 +29,9 @@ class EventFilter extends React.Component {
         return containOneOf([toggleText], ['Free', '$', '$$', '$$$', '$$$$']) ? 'PRICE_POINT' : 'CATEGORY'
     }
 
-    // render() {
-    //     // TODO FIX THE CSS ON THE TOGGLE BUTTONS
-    //     // TODO Move Free to under price-toggles
-    //     return (
-    //         <div>
-    //             <div className={"container"}>
-    //                 <h2 className={"ui header"}>Event Filter</h2>
-    //                 <div className="container">
-    //                     <div className="category-toggle">
-    //                         <Toggle content={"Music"} sendData={this.handleToggle}/>
-    //                         <Toggle content={"Food"} sendData={this.handleToggle}/>
-    //                         <Toggle content={"Sightseeing"} sendData={this.handleToggle}/>
-    //                         <Toggle content={"Free"} sendData={this.handleToggle}/>
-    //                     </div>
-    //                     <div className="price-toggle">
-    //                         <Toggle content={"$"} sendData={this.handleToggle}/>
-    //                         <Toggle content={"$$"} sendData={this.handleToggle}/>
-    //                         <Toggle content={"$$$"} sendData={this.handleToggle}/>
-    //                         <Toggle content={"$$$$"} sendData={this.handleToggle}/>
-    //                     </div>
-    //                 </div>
-    //                 <Link className="ui primary button" to="/edit">Show Nearby Attractions</Link>
-    //             </div>
-    //         </div>
-    //     );
-    // }
-
     render() {
-        // TODO FIX THE CSS ON THE TOGGLE BUTTONS
-        // TODO Move Free to under price-toggles
         return (
-            <div>
+            <div className={"ui segment"}>
                 <h2 className={"ui header"}>Event Filter</h2>
                 <div className={"ui grid"}>
                     <div className={"eight wide column"}>
@@ -82,9 +52,7 @@ class EventFilter extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Link className="ui primary fluid button" to="/edit">Show Nearby Attractions</Link>
             </div>
-
         );
     }
 }

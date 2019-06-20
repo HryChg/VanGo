@@ -144,38 +144,33 @@ class HomePage extends React.Component {
             <div className="ui grid">
                 <div className="four wide column">
                     <SideNav>
-                        <div className={"ui grid"} style={{padding: '8px'}}>
-                            <h2 className={"ui header"}>VanGo</h2>
-                            <SearchBar/>
-                            <div className={"DatePickerContainer"}>
-                                <DatePicker/>
-                            </div>
-                            <div className={"EventFilterContainer"}>
-                                <EventFilter/>
-                            </div>
 
+                        <h2 className={"ui header"}>VanGo</h2>
+                        <SearchBar/>
+                        <div className={"DatePickerContainer"}>
+                            <DatePicker/>
+                        </div>
+                        <div className={"EventFilterContainer"}>
+                            <EventFilter/>
+                        </div>
 
-                            <div className="select-button">
-                                <Link
-                                    className="ui pink button"
-                                    id="select-button"
-                                    to="/edit"
-                                    onClick={() => {
-                                        console.log('send me to next page')
-                                    }}
-                                >Go Make Your Itinerary
+                        <div className={"sidenav-options-container"}>
+                            <div className="ui large vertical menu">
+                                <Link className="item active" onClick={()=>{alert('clicked')}}>
+                                    <div className="ui small teal label">1</div>
+                                    Show Nearby Attractions
+                                </Link>
+                                <a className="item" onClick={this.toggleEventDrawer}>
+                                    <div className="ui small label" >1</div>
+                                    Show Current Selection
+                                </a>
+                                <Link className="item" to="/edit">
+                                    <div className="ui small label">51</div>
+                                    Make Your Itinerary
                                 </Link>
                             </div>
-
-                            <div className="select-button">
-                                <button
-                                    className="ui pink button"
-                                    id="select-button"
-                                    onClick={this.toggleEventDrawer}
-                                >Show Current Selection
-                                </button>
-                            </div>
                         </div>
+
                     </SideNav>
                 </div>
                 <div className="twelve wide column">
@@ -193,7 +188,7 @@ class HomePage extends React.Component {
     }
 }
 
-// TODO what do I return here?
+
 const mapStateToProps = (state) => {
     return state;
 };

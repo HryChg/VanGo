@@ -7,12 +7,6 @@ body {
     padding: 6px;
 }
 
-h1, h2 {
-    margin: 6px 6px;
-    padding-top: 6px;
-}
-
-
 
 a {
     color: darkslateblue;
@@ -67,6 +61,18 @@ a:hover {
     min-height: 89vh;
     /*padding: 8px 0;*/
 }
+
+.sidenav .ui.header:first-child {
+    margin-top: -0.05em;
+    margin-bottom: -0.05em;
+}
+
+.sidenav h2{
+    text-align: center;
+}
+
+
+
 
 
 /* ---------------------------------------- */
@@ -261,6 +267,10 @@ a:hover {
 }
 
 .EventFilterContainer .ui.grid{
-    margin-top: -2rem;
+    /*margin-top: -2rem;*/
     text-align: left;
+}
+
+.sidenav-options-container{
+
 }
