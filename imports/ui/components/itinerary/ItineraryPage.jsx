@@ -7,10 +7,20 @@ import ItineraryList from './ItineraryList';
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 
 class ItineraryPage extends React.Component {
+    // EFFECTS: returns itinerary with the selectedDate
+    getSelectedItinerary(selectedDate) {
+        let itineraries = this.props.itineraries;
+        for (let x in itineraries) {
+            if (itineraries[x].date === selectedDate) {
+                return itineraries[x];
+            }
+        }
+    }
+
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
-        let firstItinerary = this.props.itineraries[0];
-        let markers = firstItinerary.events.map((event) => {
+        let selectedItinerary = this.getSelectedItinerary(this.props.selectedDate);
+        let markers = selectedItinerary.events.map((event) => {
             if (event) {
                 return <Marker
                     key={event.id}
@@ -33,8 +43,8 @@ class ItineraryPage extends React.Component {
 
     // EFFECTS: display path based on the order of events in DraggableItems
     displayPolyLine = () => {
-        let firstItinerary = this.props.itineraries[0];
-        let coordinates = firstItinerary.events.map((event, index) => {
+        let selectedItinerary = this.getSelectedItinerary(this.props.selectedDate);
+        let coordinates = selectedItinerary.events.map((event, index) => {
             return {lat: event.latitude, lng: event.longitude};
         });
 
