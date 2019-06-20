@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
+import uniqid from 'uniqid';
 
 import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
@@ -47,18 +48,30 @@ class EditPage extends React.Component {
         />);
     };
 
+    createPath = () => {
+        let events = this.props.draggableItems.items;
+        let path = {
+            id: uniqid(),
+            name: '', // stub
+            date: this.props.selectedDate,
+            events: events
+        };
+        console.log(path);
+    };
+
 
     render() {
+        let selectedDateString = this.props.selectedDate.selectedDate.toDateString();
         return (
             <div className="ui grid">
                 <div className="four wide column">
                     <SideNav>
                         <div className={"container"}>
                             <h2 className={"ui header"}>VanGo</h2>
-                            <h2 className={"ui header"}>Edit Itinerary for <br/>Jan 27, 2019 </h2>
+                            <h2 className={"ui header"}>Edit Itinerary for <br/>{selectedDateString}</h2>
                             <DraggableItems/>
                             <div className={"container"}>
-                                <button className="fluid ui button">
+                                <button className="fluid ui button" onClick={this.createPath}>
                                     <i className="heart icon"/>
                                     Save
                                 </button>
@@ -80,7 +93,10 @@ class EditPage extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {draggableItems: state.draggableItems};
+    return {
+        draggableItems: state.draggableItems,
+        selectedDate: state.selectedDate
+    };
 };
 
 export default connect(mapStateToProps, {

@@ -13,7 +13,7 @@ import mapContainerReducer from './MapContainerReducer';
 import draggableItemsReducer from './DraggableItemsReducers';
 
 export default combineReducers({
-    currDate: dateReducer,
+    selectedDate: dateReducer,
     currEvents: currentEventsReducer,
     itinerary: itineraryReducer,
     sidebar: sidebarReducer,
