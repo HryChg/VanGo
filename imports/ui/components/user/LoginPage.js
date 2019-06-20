@@ -1,34 +1,32 @@
 // Reference: https://www.youtube.com/watch?v=eNxuaTGq4Qk
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Blaze } from 'meteor/blaze';
-import { Template } from 'meteor/templating';
+import { Redirect } from 'react-router-dom';
+import Blaze from 'meteor/gadicc:blaze-react-component';
 import { connect } from 'react-redux';
-import { login } from '../../actions/index.js';
-import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
-
-    componentDidMount() {
-        this.view = Blaze.render(Template.atForm,
-            ReactDOM.findDOMNode(this.refs.container));
-    }
-
-    componentWillUnmount() {
-        Blaze.remove(this.view);
+    toggleUserView() {
+        if (this.props.loggedIn) {
+            return (<Redirect to='/' />);
+        } else {
+            return (
+            <div className="center outer">
+                <Blaze id="login-block" template="atForm" className="container inner" style={{width: '25%'}}/>
+            </div>
+            );
+        }
     }
 
     render() {
-        return(
-            <div className="center outer">
-                <div id="login-block" ref="container" className="container inner" style={{width: '25%'}}/>
-            </div>
-        );
+        return(<div>{this.toggleUserView()}</div>);
     }
 }
 
 const mapStateToProps = (state) => {
-    return state;
+    return {
+        loggedIn: state.login.loggedIn
+    };
 }
 
 export default connect(mapStateToProps)(Login);

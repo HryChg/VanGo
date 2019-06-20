@@ -4,7 +4,9 @@ import { render } from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import reducers from '../imports/ui/reducers/index.js';
-import '../imports/startup/accounts-config.js';
+import {ServiceConfiguration} from 'meteor/service-configuration';
+
+import '../imports/ui/config.js';
 
 import App from '/imports/ui/App'
 import PostLogout from '/imports/ui/components/user/PostLogout'
@@ -18,7 +20,6 @@ window.getStoreState = () => {
     console.log(window.store.getState());
 };
 
-
 Meteor.startup(() => {
   render(
       <Provider store={ VanGoStore }>
@@ -29,21 +30,27 @@ Meteor.startup(() => {
   );
 });
 
+// Meteor.startup(() => {
+//     ServiceConfiguration.configurations.upsert(
+//         { service: 'google' },
+//         { $set: {
+//                 clientId: googleOAuthClientID,
+//                 loginStyle: 'popup',
+//                 secret: googleOAuthSecret
+//             }
+//         }
+//     );
+// })
+
 // AccountsTemplates.configure({
 //   onLogoutHook: PostLogout
 // });
 
 AccountsTemplates.addFields([
     {
-        _id: 'firstName',
+        _id: 'name',
         type: 'text',
-        displayName: 'First Name',
-        required: true
-    },
-    {
-        _id: 'lastName',
-        type: 'text',
-        displayName: 'Last Name',
+        displayName: 'Name',
         required: true
     }
 ]);

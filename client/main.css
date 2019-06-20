@@ -254,7 +254,6 @@ a:hover {
     margin-bottom: 13px;
 }
 
-<<<<<<< HEAD
 .outer {
     width: 100%;
 }
@@ -263,11 +262,9 @@ a:hover {
     display: table;
     margin: 0 auto;
 }
-=======
 /* ---------------------------------------- */
 /* ----        Event Drawer        -------- */
 /* ---------------------------------------- */
 .trash.icon:active {
     transform: translateY(2px);
 }
->>>>>>> dc677aba69112e4d9af9cd885ace3ed53f71859f

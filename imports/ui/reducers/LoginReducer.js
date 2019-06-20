@@ -1,12 +1,8 @@
-// Reference: https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example#user-actions-js
-const initialState = { email: "", password: "" };
+import { Meteor } from 'meteor/meteor'
 
-// TODO: Figure out where "localStorage.getItem is from"
-let user = JSON.parse(localStorage.getItem('user'));
-const intialState = user ? { loggedIn: true, user} : {};
+const initialState = { loggedIn: Meteor.user() !== null ? true: false };
 
 export default function LoginReducer(state = initialState, action) {
-    let newState;
     switch(action.type) {
         case 'LOGIN_REQUEST':
             return {
