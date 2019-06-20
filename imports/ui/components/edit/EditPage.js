@@ -89,6 +89,12 @@ class EditPage extends React.Component {
                                     </button>
                                 </div>
                             </div>
+                            <div className={"container"}>
+                                <button className="ui button fluid" onClick={() => {alert('Work in Proegress')}}>
+                                    <i className="envelope outline icon"/>
+                                    Email
+                                </button>
+                            </div>
                         </div>
                     </SideNav>
                 </div>
