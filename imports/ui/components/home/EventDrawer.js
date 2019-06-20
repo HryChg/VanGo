@@ -2,12 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {deleteEvent} from '../../actions/eventDrawerActions';
-import {VanGoStore} from "../../../../client/main";
 import {maskString} from "../../../util/util";
 
 class EventDrawer extends React.Component {
     displaySavedEvents = () => {
-        let savedEventsInStore = VanGoStore.getState().eventDrawer.savedEvents;
+        let savedEventsInStore = this.props.eventDrawer.savedEvents;
         return savedEventsInStore.map((selectedEvent, index) => {
             return (
                 <a className={"item"}
