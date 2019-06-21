@@ -6,6 +6,7 @@ import {createStore} from 'redux';
 import reducers from '../imports/ui/reducers/index.js';
 import {ServiceConfiguration} from 'meteor/service-configuration';
 
+import '../imports/api/itineraries.js';
 import '../imports/ui/config.js';
 import '../imports/config/Accounts.js';
 import App from '/imports/ui/App';

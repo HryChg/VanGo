@@ -1,5 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import Links from '/imports/api/links';
+import '/imports/api/itineraries';
+import { Itineraries } from '../imports/api/itineraries';
+
+function insertItinerary() {
+  Itineraries.insert({})
+}
 
 function insertLink(title, url) {
   Links.insert({ title, url, createdAt: new Date() });
