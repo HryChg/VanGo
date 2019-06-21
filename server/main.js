@@ -2,15 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import '/imports/api/itineraries';
 import Itineraries from '../imports/api/itineraries';
 
-
-export class Itinerary {
-  constructor(events, date) {
-      this.events = events;
-      this.date = date;
-      this.key = this.date;
-  }
-}
-
 let event1 =  {
           id: 1,
           name: 'Canada Place',
@@ -102,13 +93,6 @@ let event7 = {
           type: 'Event',
           description: 'Immerse yourself in the beautiful world of butterflies at the Vancouver Aquarium, from May to September, 2019. The Graham Amazon Gallery has been transformed to become home to several species of beautiful butterflies, all the way from Costa Rica.'
       };
-
-let itinerary1 = new Itinerary([event1, event2, event3], "Jan 5, 2019");
-let itinerary2 = new Itinerary([event4, event5], "Jan 8, 2019");
-const itineraries = [itinerary1, itinerary2];
-let selectedDate = itineraries[0] ? itineraries[0].date : "";
-let initialState = { itineraries: itineraries, selectedDate: selectedDate };
-
 
 function insertItineraries(events, date) {
   Itineraries.insert({events: events, date: date});

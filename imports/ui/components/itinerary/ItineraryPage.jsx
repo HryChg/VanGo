@@ -1,9 +1,11 @@
+//Reference: https://forums.meteor.com/t/solved-meteor-1-3s-createcontainer-and-redux-dispatch-event-handlers-etc/20092/9
+
 import React from 'react';
 import { connect } from 'react-redux';
-// import { connect } from 'react-redux-meteor';
 import {Marker, Polyline} from "google-maps-react";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import { withTracker } from 'meteor/react-meteor-data';
+import { selectDate } from './../../actions/itineraryActions';
 
 import ItineraryDatePanel from './ItineraryDatePanel';
 import MapContainer from '../MapContainer';
@@ -13,9 +15,16 @@ import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
 class ItineraryPage extends React.Component {
+    // TODO: Debug commented out code -- currently must set default
     // EFFECTS: returns itinerary with the selectedDate
     getSelectedItinerary(selectedDate) {
         let itineraries = this.props.itineraries;
+        // console.log(itineraries);
+        // if (selectedDate === "" && itineraries === []) {
+        //     return null;
+        // } else if (selectedDate === "") {
+        //     selectDate(itineraries[0].date);
+        // }
         for (let x in itineraries) {
             if (itineraries[x].date === selectedDate) {
                 return itineraries[x];
@@ -69,7 +78,6 @@ class ItineraryPage extends React.Component {
     };
 
     render() {
-        console.log(this.props.itineraries);
         return(
             <div className="ui grid">
             <div className="four wide column">
@@ -99,56 +107,18 @@ class ItineraryPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        itineraries: state.itineraryStore.itineraries,
         selectedDate: state.itineraryStore.selectedDate
     };
 }
 
-// const mapTrackerToProps = (state, props) => {
-//     if (Meteor.subscribe('itineraries').ready()) {
-//         return { itineraries: Itineraries.find().fetch() };
-//     }
-//     return { itineraries: [] };
-// }
+const ItineraryPageContainer = withTracker(() => {
+    const handle = Meteor.subscribe('itineraries');
+    const itineraries = Itineraries.find().fetch();
 
-// export default connect(mapTrackerToProps, mapStateToProps, { handleOnMarkerClick })(ItineraryPage);
-export default connect(mapStateToProps, { handleOnMarkerClick })(ItineraryPage);
+    return {
+        dataReady: handle.ready(),
+        itineraries: itineraries
+    }
+})(ItineraryPage);
 
-// export default withTracker(() => {
-//     return {
-//         itineraries: Itineraries.find().fetch()
-//     };
-// })(ItineraryPage);
-
-//////
-
-// const ItineraryPageContainer = withTracker(() => {
-//     if (Meteor.subscribe('itineraries').ready()) {
-//         return { itineraries: Itineraries.find().fetch() };
-//     }
-//     return { itineraries: [] };
-// }, ItineraryPage);
-
-// export default connect(mapStateToProps, { handleOnMarkerClick })(ItineraryPageContainer);
-
-//////
-
-// export default withTracker(() => {
-//     return {
-//         itineraries: Itineraries.find().fetch()
-//     };
-// }, TestContainer)
-
-///////////
-
-// const ItineraryPageContainer = withTracker(() => {
-//     const handle = Meteor.subscribe('itineraries');
-//     const itineraries = Itineraries.find().fetch();
-
-//     return {
-//         dataReady: handle.ready(),
-//         itineraries
-//     }
-// })(ItineraryPage);
-
-// export default connect(mapStateToProps, { handleOnMarkerClick })(ItineraryPageContainer);
+export default connect(mapStateToProps, { handleOnMarkerClick, selectDate })(ItineraryPageContainer);
