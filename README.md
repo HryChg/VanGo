@@ -78,9 +78,8 @@ https://guide.meteor.com/react.html#blaze-in-react
 Meteor User Accounts
 https://github.com/meteor-useraccounts/core/blob/master/Guide.md
 
-##### Event details
-Web Scraping with Node.js
-https://medium.freecodecamp.org/the-ultimate-guide-to-web-scraping-with-node-js-daa2027dcd3
+##### Yelp Api
+https://medium.com/@chaoyue_zhao/how-to-make-axios-api-calls-with-yelp-fusion-inside-react-js-10755d8485c5
 
 #### Draggable List
 https://www.freecodecamp.org/news/how-to-make-and-test-your-own-react-drag-and-drop-list-with-0-dependencies-6fb461603780/
