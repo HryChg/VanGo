@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
+import {Link} from 'react-router-dom';
 
 import SideNav from "../SideNav";
 import SearchBar from "../SearchBar";
@@ -9,6 +10,7 @@ import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import {VanGoStore} from "../../../../client/main";
 import {containAll} from "../../../util/util";
 
@@ -21,12 +23,16 @@ class HomePage extends React.Component {
             .sidebar('toggle');
     };
 
+    componentWillUnmount() {
+        $('.ui.right.sidebar').detach();
+    }
+
     // TODO toDateString should be reformatted to yyyy/mm/dd hh:mm
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
     displayMarkers = () => {
-        let markers = VanGoStore.getState().currEvents.events.map((event) => {
-            if (this.filterEventMarkers(event)) {
+        let markers = this.props.currEvents.events.map((event) => {
+            if (this.filterMarker(event)) {
                 return <Marker
                     key={event.id}
                     id={event.id}
@@ -46,27 +52,34 @@ class HomePage extends React.Component {
         return markers;
     };
 
-    // EFFECTS: return true if the event meets one of the selected categories and one of the price points
-    //          If no category selected, events of all categories are considered
-    //          If no price point selected, events of all price points are considered
-    //          If not price point and no category selected, return true by default
-    filterEventMarkers = (event) => {
-        let filterCategories = VanGoStore.getState().eventFilter.categories;
-        let filterPricePoints = VanGoStore.getState().eventFilter.pricePoints;
+    // EFFECTS: return true if the item meets one of the selected categories and one of the price points
+    //          return false if user decides not to show nearby attraction and this item is an attraction
+    //          If no category selected, items of all categories are considered
+    //          If no price point selected, items of all price points are considered
+    //          If no price point and no category selected, return true by default
+    filterMarker = (item) => {
+        let showAttractions = this.props.homePage.toggleNearbyAttractions;
+        let isAttraction = item.type==='Attraction';
+        if (isAttraction && !showAttractions){
+            return false;
+        }
+
+        let filterCategories = this.props.eventFilter.categories;
+        let filterPricePoints = this.props.eventFilter.pricePoints;
         if (filterCategories.length === 0 && filterPricePoints.length === 0) return true;
 
         let matchCategory;
         if (filterCategories.length === 0) {
             matchCategory = true;
         } else {
-            matchCategory = containAll(filterCategories, event.categories);
+            matchCategory = containAll(filterCategories, [item.category]);
         }
 
         let matchPricePoints;
-        if (filterPricePoints.length===0){
+        if (filterPricePoints.length === 0) {
             matchPricePoints = true;
         } else {
-            let eventPricePoint = this.extractPricePoint(event);
+            let eventPricePoint = this.extractPricePoint(item);
             matchPricePoints = containAll(filterPricePoints, [eventPricePoint]);
         }
 
@@ -94,32 +107,38 @@ class HomePage extends React.Component {
             <div className="ui grid">
                 <div className="four wide column">
                     <SideNav>
-                        <div className={"container"} style={{padding: '8px'}}>
-                            <h2 className={"ui header"}>VanGo</h2>
-                            <SearchBar/>
-                            <DatePicker/>
-                            <br/>
-                            <EventFilter/>
 
-                            <div className="select-button">
-                                <button
-                                    className="ui pink button"
-                                    id="select-button"
-                                    onClick={this.toggleEventDrawer}
-                                >Show Current Selection
-                                </button>
+                        <h2 className={"ui header"}>VanGo</h2>
+                        <SearchBar/>
+                        <div className={"DatePickerContainer"}>
+                            <DatePicker/>
+                        </div>
+                        <div className={"EventFilterContainer"}>
+                            <EventFilter/>
+                        </div>
+
+                        <div className={"sidenav-options-container"}>
+                            <div className="ui large vertical menu fluid">
+                                <a className="item" onClick={this.props.toggleNearbyAttractions}>
+                                    <div className="ui small teal label">1</div>
+                                    {this.props.homePage.toggleNearbyAttractions?'Hide Attractions':'Show Nearby Attractions'}
+                                </a>
+                                <a className="item" onClick={this.toggleEventDrawer}>
+                                    <div className="ui small label">1</div>
+                                    Show Current Selection
+                                </a>
+                                <Link className="item" to="/edit">
+                                    <div className="ui small label">51</div>
+                                    Make Your Itinerary
+                                </Link>
                             </div>
                         </div>
+
                     </SideNav>
                 </div>
                 <div className="twelve wide column">
-                    <div
-                        style={{height: '90vh'}}
-                    >
-                        <MapContainer
-                            width={'95%'}
-                            height={'95%'}
-                        >
+                    <div style={{height: '90vh'}}>
+                        <MapContainer width={'95%'} height={'95%'}>
                             {this.displayMarkers()}
                         </MapContainer>
                     </div>
@@ -132,11 +151,16 @@ class HomePage extends React.Component {
     }
 }
 
-// TODO what do I return here?
+
 const mapStateToProps = (state) => {
-    return state;
+    return {
+        homePage: state.homePage,
+        currEvents: state.currEvents,
+        eventFilter: state.eventFilter
+    };
 };
 
 export default connect(mapStateToProps, {
-    handleOnMarkerClick: handleOnMarkerClick
+    handleOnMarkerClick: handleOnMarkerClick,
+    toggleNearbyAttractions: toggleNearbyAttractions
 })(HomePage);

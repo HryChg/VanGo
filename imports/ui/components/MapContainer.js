@@ -5,7 +5,7 @@
 // https://medium.com/@schlunzk/integrating-google-maps-api-in-react-redux-part-1-6b036014f4a6
 
 import React, {Component} from 'react';
-import {GoogleApiWrapper, Map, Polyline} from 'google-maps-react';
+import {GoogleApiWrapper, Map} from 'google-maps-react';
 import {connect} from 'react-redux';
 
 import {VanGoStore} from "../../../client/main";
@@ -13,13 +13,6 @@ import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
 import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
 import {addEvent} from "../actions/eventDrawerActions";
-
-const coordsForPathGeneration = [
-    {lat: 49.2888, lng: -123.1111}, // Canada Place
-    {lat: 49.2820, lng: -123.1171}, // downtown
-    {lat: 49.2799, lng: -123.1387}, // Sunset Beach
-    {lat: 49.2888, lng: -123.1111} // Canada place
-];
 
 export class MapContainer extends Component {
     // EFFECTS: close InfoWindow when clicking on map area
@@ -58,9 +51,7 @@ export class MapContainer extends Component {
                 initialCenter={{lat: 49.2820, lng: -123.1171}}
                 onClick={this.onMapClicked}
             >
-
                 {this.props.children}
-
                 <MapInfoWindowContainer
                     marker={mapContainerStore.activeMarker}
                     visible={mapContainerStore.showingInfoWindow}>
@@ -80,21 +71,12 @@ export class MapContainer extends Component {
                                 onClick={() => {
                                     this.onSaveEventClick();
                                 }}>
-                                <i className="heart icon"></i>
+                                <i className="heart icon"/>
                                 Save to Event Drawer
                             </button>
                         </div>
                     </div>
                 </MapInfoWindowContainer>
-
-
-                {/*// Changed prop "paths" to "path".*/}
-                {/*// Typo in documentation, fixed with #214*/}
-                <Polyline
-                    path={coordsForPathGeneration}
-                    strokeColor="#3F84CA"
-                    strokeOpacity={1}
-                    strokeWeight={5} />
             </Map>
         );
     }

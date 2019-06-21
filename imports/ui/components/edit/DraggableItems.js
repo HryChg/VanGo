@@ -1,18 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {updateDraggableItems} from "../../actions/draggableItemsActions";
-import {VanGoStore} from "../../../../client/main";
 import {maskString} from "../../../util/util";
 
 
 class DraggableItems extends React.Component {
     componentDidMount() {
-        let eventsFromHomePage = VanGoStore.getState().eventDrawer.savedEvents;
+        let eventsFromHomePage = this.props.eventDrawer.savedEvents;
         this.props.updateDraggableItems(eventsFromHomePage);
     }
 
+    // EFFECTS: Extract the data of the dragged HTML element to class and set the image being dragged on the mouse
     onDragStart = (e, index) => {
-        this.draggedItem = VanGoStore.getState().draggableItems.editedPath[index];
+        this.draggedItem = this.props.draggableItems.items[index];
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("text/html", e.target.parentNode);
         e.dataTransfer.setDragImage(e.target.parentNode, 20, 20);
@@ -20,8 +20,9 @@ class DraggableItems extends React.Component {
 
     // TODO this might be really computation heavy as it update multiples times while you are dragging on air
     //      Try Console.log to see the update frequency
+    // EFFECTS: Continually update the the item order according to the location of the draggedOver Item
     onDragOver = index => {
-        const draggedOverItem = VanGoStore.getState().draggableItems.editedPath[index];
+        const draggedOverItem = this.props.draggableItems.items[index];
 
         // if the item is dragged over itself, ignore
         if (this.draggedItem === draggedOverItem) {
@@ -29,7 +30,7 @@ class DraggableItems extends React.Component {
         }
 
         // filter out the currently dragged item
-        let items = VanGoStore.getState().draggableItems.editedPath.filter(item => item !== this.draggedItem);
+        let items = this.props.draggableItems.items.filter(item => item !== this.draggedItem);
 
         // add the dragged item after the dragged over item
         items.splice(index, 0, this.draggedItem);
@@ -63,7 +64,7 @@ class DraggableItems extends React.Component {
     * should be unique to the document.
     * */
     render() {
-        let items = VanGoStore.getState().draggableItems.editedPath;
+        let items = this.props.draggableItems.items;
         if (items) {
             return (
                 <div className="DraggableItems">
@@ -87,7 +88,10 @@ class DraggableItems extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {draggableItems: state.draggableItems};
+    return {
+        draggableItems: state.draggableItems,
+        eventDrawer: state.eventDrawer
+    };
 };
 
 export default connect(mapStateToProps, {

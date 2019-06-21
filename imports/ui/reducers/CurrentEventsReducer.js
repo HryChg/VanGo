@@ -9,7 +9,8 @@ let initialState = {
             latitude: 49.2888,
             longitude: -123.1111,
             link: 'https://www.canadaplace.ca/',
-            categories: ['Sightseeing'],
+            category: 'Sightseeing',
+            type: 'Attraction',
             description: 'Canada Place is a building situated on the Burrard Inlet waterfront of Vancouver, British Columbia. It is the home of the Vancouver Convention Centre, the Pan Pacific Vancouver Hotel, Vancouver\'s World Trade Centre, and the virtual flight ride FlyOver Canada.'
         },
         {
@@ -21,7 +22,8 @@ let initialState = {
             latitude: 49.2820,
             longitude: -123.1171,
             link: 'https://vancouver.ca/news-calendar/downtown.aspx',
-            categories: ['Sightseeing'],
+            category: 'Sightseeing',
+            type: 'Attraction',
             description: 'Downtown is known for a buzzing nightlife scene on neon-lit Granville Street, with raucous bars, clubs, and live bands at the art deco Commodore Ballroom. By day, it’s a busy shopping hub of chain and luxury boutiques, plus high-end department stores in the CF Pacific Centre mall. Food trucks and casual lunch spots dot the area, and cruise liners depart from Canada Place, a terminal designed to look like a ship.'
         },
         {
@@ -33,7 +35,8 @@ let initialState = {
             latitude: 49.2799,
             longitude: -123.1387,
             link: 'https://vancouver.ca/parks-recreation-culture/sunset-beach.aspx',
-            categories: ['Sightseeing'],
+            category: 'Sightseeing',
+            type: 'Attraction',
             description: 'Sunset Beach is situated in the West End near the Burrard Street Bridge and Vancouver International Hostel. The Vancouver Aquatic Centre lies at the East end of Sunset beach right next to the North end of Burrard Street Bridge. The beach has lifeguards on duty in the warm months.'
         },
         {
@@ -45,7 +48,8 @@ let initialState = {
             latitude: 49.28287695,
             longitude: -123.1205638545168,
             link: 'http://vanartgallery.bc.ca/index.html',
-            categories: ['Sightseeing'],
+            category: 'Sightseeing',
+            type: 'Attraction',
             description: 'The Vancouver Art Gallery is the fifth-largest art gallery in Canada, and the largest in Western Canada. It is located at 750 Hornby Street in Vancouver, British Columbia.'
         },
         {
@@ -57,7 +61,8 @@ let initialState = {
             latitude: 49.2856,
             longitude: -123.1306,
             link: 'https://www.tourismvancouver.com/vancouver/neighbourhoods/west-end/',
-            categories: ['Sightseeing'],
+            category: 'Sightseeing',
+            type: 'Attraction',
             description: 'Mostly residential, the easygoing West End offers gay bars in Davie Village, chic fashion stores on Robson Street, and diverse dining ranging from ramen shops to seafood grills. It’s also the gateway to vast Stanley Park, known for its forested trails and Seawall waterfront path. The area’s public art includes the A-maze-ing Laughter sculpture, featuring 14 cast-bronze figures, and the Inukshuk, a stone Inuit statue.'
         },
         {
@@ -69,7 +74,8 @@ let initialState = {
             latitude: 49.289680,
             longitude: -123.136950,
             link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/',
-            categories: ['Food'],
+            category: 'Food',
+            type: 'Event',
             description: 'Our annual Strawberry Festival is always lots of fun for the whole family! We have musical performances, a bouncy castle, horse-drawn carriage rides, activities for all ages and, of course, we’ll be selling delicious strawberry shortcakes!'
         },
         {
@@ -81,7 +87,8 @@ let initialState = {
             latitude: 49.300430,
             longitude: -123.127910,
             link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/',
-            categories: ['Sightseeing'],
+            category: 'Sightseeing',
+            type: 'Event',
             description: 'Immerse yourself in the beautiful world of butterflies at the Vancouver Aquarium, from May to September, 2019. The Graham Amazon Gallery has been transformed to become home to several species of beautiful butterflies, all the way from Costa Rica.'
         }
     ]

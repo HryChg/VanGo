@@ -5,21 +5,23 @@ import itineraryReducer from './ItineraryReducer.js';
 import searchBarReducer from './SearchBarReducer.js';
 import loginReducer from './LoginReducer.js';
 import eventFilterReducer from './EventFilterReducer';
-import dateReducer from './DateReducer';
+import datePickerReducer from './DatePickerReducer';
 import currentEventsReducer from './CurrentEventsReducer';
 import eventDrawerReducer from './EventDrawerReducer';
 import mapContainerReducer from './MapContainerReducer';
 import draggableItemsReducer from './DraggableItemsReducers';
+import HomePageReducer from "./HomePageReducer";
 
 export default combineReducers({
-    currDate: dateReducer,
+    datePicker: datePickerReducer,
     currEvents: currentEventsReducer,
-    itinerary: itineraryReducer,
+    itineraryStore: itineraryReducer,
     sidebar: sidebarReducer,
     searchBar: searchBarReducer,
     login: loginReducer,
     eventFilter: eventFilterReducer,
     eventDrawer: eventDrawerReducer,
     mapContainer: mapContainerReducer,
-    draggableItems: draggableItemsReducer
+    draggableItems: draggableItemsReducer,
+    homePage: HomePageReducer
 });

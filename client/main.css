@@ -7,10 +7,6 @@ body {
     padding: 6px;
 }
 
-h1, h2 {
-    margin: 6px 6px;
-    padding-top: 6px;
-}
 
 a {
     color: darkslateblue;
@@ -58,59 +54,46 @@ a:hover {
 /* ---------------------------------------- */
 .sidenav {
     width: 100%;
-    height: 88.5vh;
     position: relative;
     left: 10px;
     background: #eee;
-    /* overflow-x: hidden; */
-    min-width: 268px;
-    min-height: 720px;
-    padding: 8px 0;
-    z-index: 0;
+    min-width: 300px;
+    min-height: 89vh;
+    /*padding: 8px 0;*/
 }
 
-.sidenav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: darkslateblue;
-    display: block;
+.sidenav .ui.header:first-child {
+    margin-top: -0.05em;
+    margin-bottom: -0.05em;
 }
 
-.sidenav a:hover {
-    color: slateblue;
+.sidenav h2{
+    text-align: center;
 }
 
-@media screen and (max-height: 450px) {
-    .sidenav {
-        padding-top: 15px;
-    }
 
-    .sidenav a {
-        font-size: 18px;
-    }
+/* ---------------------------------------- */
+/* ------------  DatePicker  -------------- */
+/* ---------------------------------------- */
+.DatePickerContainer{
+    max-width: 100%;
 }
+
+
 
 
 /* ---------------------------------------- */
 /* ------------    Toggle    -------------- */
 /* ---------------------------------------- */
 .checkbox {
-    margin: 2px;
+    margin: 2px 0;
 }
 
-.select-button {
-    position: absolute;
-    top: 650px;
-    margin-left: 30px;
-    z-index: 1;
+.ui.toggle.checkbox label {
+    padding-left: 3.8rem;
 }
 
-.price-toggle {
-    position: absolute;
-    top: 463px;
-    margin-left: 148px;
-}
+
 
 /* ---------------------------------------- */
 /* ------------     Form     -------------- */
@@ -174,23 +157,13 @@ a:hover {
 }
 
 /* ---------------------------------------- */
-/* --------  Itinerary: Map --------------- */
-/* ---------------------------------------- */
-.it-map {
-    display: inline-block;
-    height: 50%;
-    width: 95%;
-    top: 69px;
-    position: absolute;
-}
-
-/* ---------------------------------------- */
 /* ------  Itinerary: Event Section ------- */
 /* ---------------------------------------- */
 .itinerary {
     position: relative;
     top: 50vh;
     display: inline-block;
+    width: 135%;
 }
 
 .event-block {
@@ -267,4 +240,22 @@ a:hover {
 /* ---------------------------------------- */
 .trash.icon:active {
     transform: translateY(2px);
+}
+
+
+/* ---------------------------------------- */
+/* ----    EventFilterContainer    -------- */
+/* ---------------------------------------- */
+.EventFilterContainer{
+    margin: 6px;
+    text-align: center;
+}
+
+.EventFilterContainer h2{
+    text-align: left;
+}
+
+.EventFilterContainer .ui.grid{
+    /*margin-top: -2rem;*/
+    text-align: left;
 }

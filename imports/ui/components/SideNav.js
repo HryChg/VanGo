@@ -5,7 +5,9 @@ class SideNav extends React.Component {
     render() {
         return (
             <div className="sidenav">
-                {this.props.children}
+                <div className={"container"}>
+                    {this.props.children}
+                </div>
             </div>
         );
     }

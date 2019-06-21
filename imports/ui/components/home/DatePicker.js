@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Calendar from 'react-calendar';
-import {changeDate} from '../../actions/changeDateActions'
+import {changeDate} from '../../actions/datePickerActions'
 
 class DatePicker extends React.Component {
     // references: https://www.npmjs.com/package/react-calendar
@@ -9,27 +9,18 @@ class DatePicker extends React.Component {
         super(props);
     }
 
-    // set selected date to the current state
-    // onChange = date => this.setState({date});
+    // update selected date in store
     onChange = value => {
-        console.log(value);
         this.props.changeDate(value);
     };
 
-    // get value from calendar
-    // show events on Calendar
-    onClickDay = value => {
-        console.log(value);
-        console.log(this);
-    };
 
     render() {
         return (
             <div>
                 <Calendar
                     onChange={this.onChange}
-                    onClickDay={this.onClickDay}
-                    value={this.props.currDate.date} 
+                    value={this.props.datePicker.selectedDate}
                 />
             </div>
 
@@ -38,7 +29,7 @@ class DatePicker extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {currDate: state.currDate};
+    return {datePicker: state.datePicker};
 };
 
 export default connect(mapStateToProps, {changeDate})(DatePicker);
