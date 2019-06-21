@@ -76,9 +76,8 @@ https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login
 Meteor & React For Everyone #12 - Adding User Accounts & Adjusting Permissions by LevelUpTuts
 https://www.youtube.com/watch?v=eNxuaTGq4Qk
 
-##### Event details
-Web Scraping with Node.js
-https://medium.freecodecamp.org/the-ultimate-guide-to-web-scraping-with-node-js-daa2027dcd3
+##### Yelp Api
+https://medium.com/@chaoyue_zhao/how-to-make-axios-api-calls-with-yelp-fusion-inside-react-js-10755d8485c5
 
 #### Draggable List
 https://www.freecodecamp.org/news/how-to-make-and-test-your-own-react-drag-and-drop-list-with-0-dependencies-6fb461603780/
