@@ -14,20 +14,22 @@ class ItineraryList extends React.Component {
 
     render() {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedDate);
-        const events = selectedItinerary.events;
-        const mappedEvents = events.map(event => <ItineraryItem key={event.id} event={event} />);
-        return(<div className="itinerary">
-            <h1>Itinerary</h1>
-            <ol id="itinerary-list">
-                { mappedEvents }
-            </ol>
-        </div>);
+        if (selectedItinerary) {
+            const events = selectedItinerary.events;
+            const mappedEvents = events.map(event => <ItineraryItem key={event.id} event={event} />);
+            return(<div className="itinerary">
+                <h1>Itinerary</h1>
+                <ol id="itinerary-list">
+                    { mappedEvents }
+                </ol>
+            </div>);
+        }
+        return <div></div>;
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        itineraries: state.itineraryStore.itineraries,
         selectedDate: state.itineraryStore.selectedDate
     };
 }
