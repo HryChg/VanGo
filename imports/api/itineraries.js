@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 
-export default Itineraries = new Mongo.Collection('itineraries');
+const Itineraries = new Mongo.Collection('itineraries');
 
 // TODO: This will need some restrictions
 if (Meteor.isServer) {
@@ -13,3 +13,5 @@ if (Meteor.isServer) {
 if (Meteor.isClient) {
     Meteor.subscribe('itineraries');
 }
+
+export default Itineraries;
