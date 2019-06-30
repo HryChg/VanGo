@@ -1,32 +1,41 @@
-// Reference: https://guide.meteor.com/react.html#blaze-in-react
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Redirect } from 'react-router-dom';
-import Blaze from 'meteor/gadicc:blaze-react-component';
 import { connect } from 'react-redux';
+import { login } from '../../actions/index.js';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
-    toggleUserView() {
-        if (this.props.loggedIn) {
-            return (<Redirect to='/' />);
-        } else {
-            return (
-            <div className="center outer">
-                <Blaze id="login-block" template="atForm" className="container inner" style={{width: '25%'}}/>
-            </div>
-            );
-        }
-    }
-
     render() {
-        return(<div>{this.toggleUserView()}</div>);
+        return(
+            <div id="login-block" className="container ui card" style={{width: '25%'}}>
+            {/* TODO: Integrate Google Login */}
+            <h2>Login</h2>
+            <form className="ui form" id="login-form" onSubmit={(e) => {e.preventDefault();}}>
+                <div className="form-section">
+                    <label className="form-label">
+                        Email
+                        <input id="email" type="text" className="form-item" />
+                        {/* onChange={(e) => this.props.updateEmail(e)}/> */}
+                    </label>
+                </div>
+                <div className="form-section">
+                    <label className="form-label">
+                        Password
+                        <input id="password" type="text" className="form-item" />  
+                        {/* onChange={(e) => this.props.updatePassword(e)}/> */}
+                    </label>
+                </div>
+                <div>
+                    <button className="ui button">Login</button>
+                    <Link to="/register">Register</Link>
+                </div>
+            </form>
+        </div>
+        );
     }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        loggedIn: state.login.loggedIn
-    };
+    return state;
 }
 
 export default connect(mapStateToProps)(Login);

@@ -17,6 +17,13 @@ let postLogin = (error, state) => {
   }
 }
 
+
+AccountsTemplates.configureRoute('signIn', {
+  layoutType: 'blaze-to-react',
+  name: 'signin',
+  path: '/login',
+});
+
 AccountsTemplates.configure({
   onLogoutHook: postLogout,
   onSubmitHook: postLogin

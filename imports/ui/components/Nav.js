@@ -1,12 +1,16 @@
 // Reference: https://reacttraining.com/react-router/web/guides/quick-start
 import React from 'react';
 import {BrowserRouter as Router, NavLink, Redirect, Route} from 'react-router-dom';
+import { Meteor } from 'meteor/meteor'
+import Blaze from 'meteor/gadicc:blaze-react-component';
 import { connect } from 'react-redux';
 
-import LoginPage from './user/LoginPage';
+// sub with TemplateLoginPage for Meteor template
+import LoginPage from './user/LoginPage'; 
 import ItineraryPageContainer from './itinerary/ItineraryPage';
 import EditPage from "./edit/EditPage";
 import HomePage from "./home/HomePage";
+import RegistrationPage from './user/RegistrationPage';
 
 
 // This part routes to "different pages"
@@ -40,6 +44,7 @@ class AppRouter extends React.Component {
                             <li className="nav-link" id="edit-link"><NavLink to="/edit/">Edit</NavLink></li>
                             <li className="nav-link" id="itinerary-link"><NavLink to="/itinerary/">Itinerary</NavLink></li>
                             {this.toggleUserView()}
+                            <Blaze className="nav-link" template="atNavButton"/> 
                         </ul>
                     </nav>
                     <Route path="/" exact component={HomePage}/>
@@ -47,6 +52,7 @@ class AppRouter extends React.Component {
                     <Route path="/edit/" component={EditPage}/>
                     <Route path="/itinerary/" component={ItineraryPageContainer}/>
                     <Route path="/login/" component={LoginPage}/>
+                    <Route path="/register/" component={RegistrationPage}/>
                     <Route path="/logout/" component={HomePage}/>
                 </div>
             </Router>
