@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Accounts } from 'meteor/accounts-base';
+import { updateRegisterField } from '../../actions/userActions';
 
 class RegistrationPage extends React.Component {
     render() {
@@ -12,27 +13,30 @@ class RegistrationPage extends React.Component {
                 <div className="form-section">
                     <label className="form-label">
                         Name
-                        <input id="name" type="text" className="form-item" />
-                        {/* onChange={(e) => this.props.updateFirstName(e)}/> */}
+                        <input id="name" type="text" className="form-item"
+                        onChange={(e) => this.props.updateRegisterField(e)}/>
                     </label>
                 </div>
                 <div className="form-section">
                     <label className="form-label">
                         Email
-                        <input id="email" type="text" className="form-item" />  
-                        {/* onChange={(e) => this.props.updateEmail(e)}/> */}
+                        <input id="email" type="text" className="form-item"
+                        onChange={(e) => this.props.updateRegisterField(e)}/>
                     </label>
                 </div>
                 <div className="form-section">
                     <label className="form-label">
                         Password
-                        <input id="password" type="text" className="form-item" />
-                        {/* onChange={(e) => this.props.updatePassword(e)}/> */}
+                        <input type="password" id="password" type="text" className="form-item"
+                        onChange={(e) => this.props.updateRegisterField(e)}/>
                     </label>
                 </div>
                 <div>
                     <button className="ui button" 
-                    onClick={Accounts.createUser({email: this.props.email, password: this.props.password, profile: this.props.name})}>
+                    onClick={Accounts.createUser({email: this.props.email, password: this.props.password, profile: this.props.name},
+                    (err) => {
+                        if (err) console.log(err);
+                    })}>
                         Register
                     </button>
                     <Link to="/login">Cancel</Link>
@@ -45,10 +49,10 @@ class RegistrationPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        name: state.registerReducer.name, 
-        email: state.registerReducer.email,
-        password: state.registerReducer.password
+        name: state.registerForm.name, 
+        email: state.registerForm.email,
+        password: state.registerForm.password
     };
 }
 
-export default connect(mapStateToProps)(RegistrationPage);
+export default connect(mapStateToProps, { updateRegisterField })(RegistrationPage);

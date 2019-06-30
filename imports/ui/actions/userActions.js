@@ -1,12 +1,25 @@
+// Field updates
+export const updateLoginField = (event) => {
+    return {
+        type: 'UPDATE_LOGIN_FIELD',
+        payload: event.target
+    }
+}
+
+export const updateRegisterField = (event) => {
+    return {
+        type: 'UPDATE_REGISTER_FIELD',
+        payload: event.target
+    }
+}
+
 export const login = () => {
-	console.log('within-action');
 	return {
         type: 'LOGIN_REQUEST'
     };
 };
 
 export const logout = () => {
-	console.log('within-action');
     return {
         type: 'LOGOUT_REQUEST'
     };

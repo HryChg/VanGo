@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login } from '../../actions/index.js';
 import { Link } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
+import { updateLoginField } from '../../actions/userActions';
 
 class Login extends React.Component {
     render() {
@@ -13,19 +14,22 @@ class Login extends React.Component {
                 <div className="form-section">
                     <label className="form-label">
                         Email
-                        <input id="email" type="text" className="form-item" />
-                        {/* onChange={(e) => this.props.updateEmail(e)}/> */}
+                        <input id="email" type="text" className="form-item"
+                        onChange={(e) => this.props.updateLoginField(e)}/>
                     </label>
                 </div>
                 <div className="form-section">
                     <label className="form-label">
                         Password
-                        <input id="password" type="text" className="form-item" />  
-                        {/* onChange={(e) => this.props.updatePassword(e)}/> */}
+                        <input type="password" id="password" type="text" className="form-item"
+                        onChange={(e) => this.props.updateLoginField(e)}/>
                     </label>
                 </div>
                 <div>
-                    <button className="ui button">Login</button>
+                    <button className="ui button" 
+                        onClick={Meteor.loginWithPassword(this.props.email, this.props.password)}>
+                        Login
+                    </button>
                     <Link to="/register">Register</Link>
                 </div>
             </form>
@@ -35,8 +39,10 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return state;
+    return {
+        email: state.loginForm.email,
+        password: state.loginForm.password
+    };
 }
 
-export default connect(mapStateToProps)(Login);
-// export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { updateLoginField })(Login);
