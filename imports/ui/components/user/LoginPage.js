@@ -21,16 +21,15 @@ class Login extends React.Component {
                 <div className="form-section">
                     <label className="form-label">
                         Password
-                        <input type="password" id="password" type="text" className="form-item"
+                        <input type="password" id="password" className="form-item"
                         onChange={(e) => this.props.updateLoginField(e)}/>
                     </label>
                 </div>
                 <div>
                     <button className="ui button" 
-                        onClick={() => {Meteor.loginWithPassword("this.props.email", "this.props.password", (err) => {
-                            if (err) console.log(err);
-                        })}}
-                        >
+                    onClick={() => {Meteor.loginWithPassword("this.props.email", "this.props.password", (err) => {
+                        if (err) console.log(err);
+                    })}}>
                         Login
                     </button>
                     <Link to="/register">Register</Link>

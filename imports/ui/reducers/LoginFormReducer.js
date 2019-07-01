@@ -6,8 +6,6 @@ export default function LoginReducer(state = initialState, action) {
         case 'UPDATE_LOGIN_FIELD':
             newState = Object.assign({}, state);
             newState[action.payload.id] = action.payload.value;
-            console.log(action.payload.id);
-            console.log(action.payload.value);
             return newState;
         default:
             return state;
