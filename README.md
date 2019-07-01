@@ -92,7 +92,5 @@ https://forums.meteor.com/t/solved-meteor-1-3s-createcontainer-and-redux-dispatc
 - google-maps-react
 - react-calendar
 - accounts-password
-- useraccounts:semantic-ui
 - accounts-google
 - service-configuration
-- gadicc:blaze-react-component

@@ -35,7 +35,11 @@ class RegistrationPage extends React.Component {
                     <button className="ui button" 
                     onClick={() => {Accounts.createUser({email: this.props.email, password: this.props.password, profile: this.props.name},
                     (err) => {
-                        if (err) console.log(err);
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            // TODO: Redirect
+                        }
                     })}}>
                         Register
                     </button>

@@ -2,7 +2,6 @@
 import React from 'react';
 import {BrowserRouter as Router, NavLink, Redirect, Route} from 'react-router-dom';
 import { Meteor } from 'meteor/meteor'
-import Blaze from 'meteor/gadicc:blaze-react-component';
 import { connect } from 'react-redux';
 
 // sub with TemplateLoginPage for Meteor template
@@ -28,7 +27,7 @@ class AppRouter extends React.Component {
         } else {
             console.log("logged in");
             return (
-                <li className="nav-link" id="logout-link" onClick={AccountsTemplates.logout()}>
+                <li className="nav-link" id="logout-link" onClick={Meteor.logout()}>
                     <NavLink to="/logout/">Logout</NavLink>
                 </li>
             );
@@ -44,7 +43,6 @@ class AppRouter extends React.Component {
                             <li className="nav-link" id="edit-link"><NavLink to="/edit/">Edit</NavLink></li>
                             <li className="nav-link" id="itinerary-link"><NavLink to="/itinerary/">Itinerary</NavLink></li>
                             {this.toggleUserView()}
-                            <Blaze className="nav-link" template="atNavButton"/> 
                         </ul>
                     </nav>
                     <Route path="/" exact component={HomePage}/>
