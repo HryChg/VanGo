@@ -1,6 +1,6 @@
 // Reference: https://reacttraining.com/react-router/web/guides/quick-start
 import React from 'react';
-import {BrowserRouter as Router, NavLink, Redirect, Route} from 'react-router-dom';
+import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 import { logout } from '../actions/userActions.js';
 import { connect } from 'react-redux';
 
