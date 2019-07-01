@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import '/imports/api/itineraries';
 import Itineraries from '../imports/api/itineraries';
 import CurrentEvents from '../imports/api/CurrentEvents';
+import EventDrawer from '../imports/api/EventDrawer';
 import PreLoadedEvents from './PreLoadedEvents';
 
 let event1 =  {
@@ -111,6 +112,10 @@ Meteor.startup(() => {
           CurrentEvents.insert(event);
       }
       console.log(`The Current Events is empty.  Will Preload with new Events. `);
+  }
+
+  if (EventDrawer.find().count()===0){
+      console.log(`EventDrawer is Empty`);
   }
 });
 
