@@ -13,6 +13,10 @@ import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
 import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
 import {addEvent} from "../actions/eventDrawerActions";
+import {withTracker} from "meteor/react-meteor-data";
+import CurrentEvents from "../../api/CurrentEvents";
+import {toggleNearbyAttractions} from "../actions/homePageActions";
+import EventDrawer from "../../api/EventDrawer";
 
 export class MapContainer extends Component {
     // EFFECTS: close InfoWindow when clicking on map area
@@ -27,12 +31,16 @@ export class MapContainer extends Component {
         const eventID = VanGoStore.getState().mapContainer.selectedPlace.id;
 
         // find Event in the store with EventID
-        const allEvents = VanGoStore.getState().currEvents.events;
+        const allEvents = this.props.currentEvents;
         const eventToBeSaved = allEvents.find((element) => {
-            return element.id === eventID;
+            return element._id === eventID;
         });
 
-        this.props.addEvent(eventToBeSaved);
+        console.log(`you have selected this event: ${eventToBeSaved._id}, ${eventToBeSaved.name}`);
+
+        // this.props.addEvent(eventToBeSaved);
+
+        EventDrawer.insert(eventToBeSaved); // TODO insert failed: Access denied
     };
 
 
@@ -86,13 +94,31 @@ const mapStateToProps = state => {
     return {mapContainer: state.mapContainer};
 };
 
+const apiWrapper = GoogleApiWrapper({apiKey: googleMapsApiKey})(MapContainer);
+
+const MeteorMapContainer = withTracker(()=>{
+    const currentEventsHandle = Meteor.subscribe('currentEvents');
+    const eventDrawerHandle = Meteor.subscribe('eventDrawer');
+
+    const currentEvents = CurrentEvents.find().fetch();
+    const eventDrawer = EventDrawer.find().fetch();
+
+    // TODO how to give access to both currentEvent and eventDrawer
+
+    return {
+        dataReady: currentEventsHandle.ready() && eventDrawerHandle,
+        currentEvents: currentEvents,
+        eventDrawer: eventDrawer
+    }
+})(apiWrapper);
+
+
+
 
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
     handleOnMarkerClick: handleOnMarkerClick,
     addEvent: addEvent
 })(
-    GoogleApiWrapper({
-        apiKey: googleMapsApiKey
-    })(MapContainer)
+    MeteorMapContainer
 );
