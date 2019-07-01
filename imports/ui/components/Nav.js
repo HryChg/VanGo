@@ -1,7 +1,7 @@
 // Reference: https://reacttraining.com/react-router/web/guides/quick-start
 import React from 'react';
 import {BrowserRouter as Router, NavLink, Redirect, Route} from 'react-router-dom';
-import { Meteor } from 'meteor/meteor'
+import { logout } from '../actions/userActions.js';
 import { connect } from 'react-redux';
 
 // sub with TemplateLoginPage for Meteor template
@@ -27,7 +27,7 @@ class AppRouter extends React.Component {
         } else {
             console.log("logged in");
             return (
-                <li className="nav-link" id="logout-link" onClick={Meteor.logout()}>
+                <li className="nav-link" id="logout-link" onClick={() => {this.props.logout()}}>
                     <NavLink to="/logout/">Logout</NavLink>
                 </li>
             );
@@ -64,4 +64,4 @@ const mapStateToProps = (state) => {
     });
 }
 
-export default connect(mapStateToProps)(AppRouter);
+export default connect(mapStateToProps, { logout })(AppRouter);

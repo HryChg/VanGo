@@ -21,12 +21,16 @@ export const clearField = () => {
     };
 };
 
+// Login
 export const login = (email, password) => {
-    return async () => {
-        Meteor.loginWithPassword(email, password, (err) => {
+    return async dispatch => {
+        dispatch(loginRequest());
+        return Meteor.loginWithPassword(email, password, (err) => {
             if (err) {
                 console.log(err);
+                dispatch(loginFailure(err));
             } else {
+                dispatch(loginSuccess());
                 clearField();
                 // TODO: Redirect and debug clearField
             }
@@ -34,16 +38,69 @@ export const login = (email, password) => {
     }
 }
 
+const loginRequest = () => {
+	return {
+		type: "LOGIN_REQUEST"
+	}
+}
+
+const loginSuccess = () => {
+	return {
+		type: "LOGIN_SUCCESS"
+	}
+}
+
+const loginFailure = (err) => {
+	return {
+		type: "LOGIN_FAILURE",
+		error: { err }
+	}
+}
+
+// Logout
+export const logout = () => {
+    return async dispatch => {
+        return Meteor.logout((err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+    }
+}
+
+// Register
 export const createUser = (email, password, name) => {
-    return async () => {
-        Accounts.createUser({email: email, password: password, profile: {name: name}},
+    return async dispatch => {
+        dispatch(registerRequest());
+        return Accounts.createUser({email: email, password: password, profile: {name: name}},
             (err) => {
                 if (err) {
+                    dispatch(registerFailure(err));
                     console.log(err);
                 } else {
+                    dispatch(registerSuccess());
                     clearField();
                     // TODO: Redirect and debug clearField
                 }
             })
     };
+}
+
+const registerRequest = () => {
+	return {
+		type: "REGISTER_REQUEST"
+	}
+}
+
+const registerSuccess = () => {
+	return {
+		type: "REGISTER_SUCCESS"
+	}
+}
+
+const registerFailure = (err) => {
+	return {
+		type: "REGISTER_FAILURE",
+		error: { err }
+	}
 }
