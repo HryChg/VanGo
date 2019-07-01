@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 // Field updates
 export const updateLoginField = (event) => {
     return {
@@ -13,14 +15,35 @@ export const updateRegisterField = (event) => {
     }
 }
 
-export const login = () => {
+export const clearField = () => {
 	return {
-        type: 'LOGIN_REQUEST'
+        type: 'CLEAR_FIELD'
     };
 };
 
-export const logout = () => {
-    return {
-        type: 'LOGOUT_REQUEST'
+export const login = (email, password) => {
+    return async () => {
+        Meteor.loginWithPassword(email, password, (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                clearField();
+                // TODO: Redirect and debug clearField
+            }
+        });
+    }
+}
+
+export const createUser = (email, password, name) => {
+    return async () => {
+        Accounts.createUser({email: email, password: password, profile: {name: name}},
+            (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    clearField();
+                    // TODO: Redirect and debug clearField
+                }
+            })
     };
-};
+}

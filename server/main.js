@@ -107,7 +107,7 @@ function insertItineraries(events, date) {
 
 Meteor.startup(() => {
   if (Itineraries.find().count() === 0) {
-    // insertItineraries([event1, event2, event3], "Jan 12, 2019");
-    // insertItineraries([event4, event5, event6], "Jan 13, 2019");
+    insertItineraries([event1, event2, event3], "Jan 12, 2019");
+    insertItineraries([event4, event5, event6], "Jan 13, 2019");
   }
 });

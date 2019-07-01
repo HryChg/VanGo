@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Meteor } from 'meteor/meteor';
-import { updateLoginField } from '../../actions/userActions';
+import { updateLoginField, login } from '../../actions/userActions';
 
 class Login extends React.Component {
     render() {
@@ -27,9 +26,7 @@ class Login extends React.Component {
                 </div>
                 <div>
                     <button className="ui button" 
-                    onClick={() => {Meteor.loginWithPassword(this.props.email, this.props.password, (err) => {
-                        if (err) console.log(err);
-                    })}}>
+                    onClick={() => {this.props.login(this.props.email, this.props.password)}}>
                         Login
                     </button>
                     <Link to="/register">Register</Link>
@@ -47,4 +44,4 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { updateLoginField })(Login);
+export default connect(mapStateToProps, { updateLoginField, login })(Login);

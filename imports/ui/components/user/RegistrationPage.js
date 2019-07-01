@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Accounts } from 'meteor/accounts-base';
-import { updateRegisterField } from '../../actions/userActions';
+import { updateRegisterField, createUser } from '../../actions/userActions';
 
 class RegistrationPage extends React.Component {
     render() {
@@ -33,14 +33,7 @@ class RegistrationPage extends React.Component {
                 </div>
                 <div>
                     <button className="ui button" 
-                    onClick={() => {Accounts.createUser({email: this.props.email, password: this.props.password, profile: {name: this.props.name}},
-                    (err) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            // TODO: Redirect
-                        }
-                    })}}>
+                    onClick={() => {this.props.createUser(this.props.email, this.props.password, this.props.name)}}>
                         Register
                     </button>
                     <Link to="/login">Cancel</Link>
@@ -59,4 +52,4 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { updateRegisterField })(RegistrationPage);
+export default connect(mapStateToProps, { updateRegisterField, createUser })(RegistrationPage);
