@@ -31,8 +31,6 @@ class HomePage extends React.Component {
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
     displayMarkers = () => {
-        console.log(this.props.currentEvents);
-
         let markers = this.props.currentEvents.map((event) => {
             if (this.filterMarker(event)) {
                 return <Marker

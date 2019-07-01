@@ -6,7 +6,6 @@ import searchBarReducer from './SearchBarReducer.js';
 import loginReducer from './LoginReducer.js';
 import eventFilterReducer from './EventFilterReducer';
 import datePickerReducer from './DatePickerReducer';
-import currentEventsReducer from './CurrentEventsReducer';
 import eventDrawerReducer from './EventDrawerReducer';
 import mapContainerReducer from './MapContainerReducer';
 import draggableItemsReducer from './DraggableItemsReducers';
@@ -14,7 +13,6 @@ import HomePageReducer from "./HomePageReducer";
 
 export default combineReducers({
     datePicker: datePickerReducer,
-    currEvents: currentEventsReducer,
     itineraryStore: itineraryReducer,
     sidebar: sidebarReducer,
     searchBar: searchBarReducer,
