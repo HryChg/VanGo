@@ -52,7 +52,7 @@ const loginSuccess = () => {
 const loginFailure = (err) => {
 	return {
 		type: "LOGIN_FAILURE",
-		error: { err }
+		payload: { err }
 	}
 }
 

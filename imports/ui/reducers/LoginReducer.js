@@ -12,11 +12,11 @@ export default function LoginReducer(state = initialState, action) {
             newState.loading = true;
             return newState;
         case 'LOGIN_SUCCESS':
-            return { loggedIn: true, loading: false, error: false };
+            return { loggedIn: true, loading: false, error: null };
         case 'LOGIN_FAILURE':
             newState = Object.assign({}, state);
             newState.loading = false;
-            newState.error = action.payload;
+            newState.error = action.payload.err;
             return newState;
         case 'LOGOUT':
             return { loggedIn: false }
