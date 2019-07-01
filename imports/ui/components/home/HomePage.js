@@ -160,7 +160,7 @@ const mapStateToProps = (state) => {
 };
 
 const HomePageContainer = withTracker(()=>{
-    const handle = Meteor.subscribe('events');
+    const handle = Meteor.subscribe('currentEvents');
     const currentEvents = CurrentEvents.find().fetch();
 
     return {

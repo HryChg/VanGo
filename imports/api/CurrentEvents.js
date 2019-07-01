@@ -5,13 +5,13 @@ const CurrentEvents = new Mongo.Collection('events');
 
 // TODO: This will need some restrictions
 if (Meteor.isServer) {
-    Meteor.publish('events', function() {
+    Meteor.publish('currenEvents', function() {
         return CurrentEvents.find();
     })
 }
 
 if (Meteor.isClient) {
-    Meteor.subscribe('events');
+    Meteor.subscribe('currenEvents');
 }
 
 export default CurrentEvents;
