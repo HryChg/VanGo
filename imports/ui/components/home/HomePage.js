@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {Link} from 'react-router-dom';
+import {withTracker} from 'meteor/react-meteor-data';
 
 import SideNav from "../SideNav";
 import SearchBar from "../SearchBar";
@@ -11,9 +12,8 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
-import {VanGoStore} from "../../../../client/main";
 import {containAll} from "../../../util/util";
-
+import CurrentEvents from '../../../api/CurrentEvents';
 
 class HomePage extends React.Component {
     toggleEventDrawer = () => {
@@ -160,7 +160,17 @@ const mapStateToProps = (state) => {
     };
 };
 
+const HomePageContainer = withTracker(()=>{
+    const handle = Meteor.subscribe('events');
+    const currentEvents = CurrentEvents.find().fetch();
+
+    return {
+        dataReady: handle.ready(),
+        currentEvents: currentEvents
+    }
+})(HomePage);
+
 export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     toggleNearbyAttractions: toggleNearbyAttractions
-})(HomePage);
+})(HomePageContainer);
