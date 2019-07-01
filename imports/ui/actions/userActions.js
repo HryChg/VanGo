@@ -109,6 +109,6 @@ const registerSuccess = () => {
 const registerFailure = (err) => {
 	return {
 		type: "REGISTER_FAILURE",
-		error: { err }
+		payload: err
 	}
 }

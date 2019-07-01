@@ -12,6 +12,17 @@ class Login extends React.Component {
             );
         }
     }
+    
+    displayError() {
+        if (this.props.error) {
+            return (
+            <Message negative>
+                <Message.Header>Error</Message.Header>
+                <p>{this.props.error.reason}</p>
+            </Message>
+            );
+        }
+    }
 
     render() {
         return(
@@ -41,6 +52,7 @@ class Login extends React.Component {
                         Login
                     </button>
                     <Link to="/register">Register</Link>
+                    {this.displayError()}
                 </div>
             </form>
         </div>
@@ -52,7 +64,8 @@ const mapStateToProps = (state) => {
     return {
         email: state.loginForm.email,
         password: state.loginForm.password,
-        loginSuccess: state.login.loggedIn
+        loginSuccess: state.login.loggedIn,
+        error: state.login.error
     };
 }
 

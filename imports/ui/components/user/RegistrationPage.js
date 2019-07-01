@@ -3,11 +3,23 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {BrowserRouter as Redirect} from 'react-router-dom';
 import { updateRegisterField, createUser } from '../../actions/userActions';
+import { Message } from 'semantic-ui-react';
 
 class RegistrationPage extends React.Component {
     redirect() {
         if (this.props.registerSuccess) {
             return (<Redirect to='/'/>);
+        }
+    }
+
+    displayError() {
+        if (this.props.error) {
+            return (
+            <Message negative>
+                <Message.Header>Error</Message.Header>
+                <p>{this.props.error.reason}</p>
+            </Message>
+            );
         }
     }
 
@@ -45,6 +57,7 @@ class RegistrationPage extends React.Component {
                         Register
                     </button>
                     <Link to="/login">Cancel</Link>
+                    {this.displayError()}
                 </div>
             </form>
         </div>
@@ -57,7 +70,8 @@ const mapStateToProps = (state) => {
         name: state.registerForm.name, 
         email: state.registerForm.email,
         password: state.registerForm.password,
-        redirectSuccess: state.register.register
+        redirectSuccess: state.register.register,
+        error: state.register.error
     };
 }
 
