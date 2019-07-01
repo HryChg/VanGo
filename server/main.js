@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import '/imports/api/itineraries';
 import Itineraries from '../imports/api/itineraries';
+import CurrentEvents from '../imports/api/CurrentEvents';
+import PreLoadedEvents from './PreLoadedEvents';
 
 let event1 =  {
           id: 1,
@@ -102,6 +104,13 @@ Meteor.startup(() => {
   if (Itineraries.find().count() === 0) {
     insertItineraries([event1, event2, event3], "Jan 12, 2019");
     insertItineraries([event4, event5, event6], "Jan 13, 2019");
+  }
+
+  if (CurrentEvents.find().count() === 0){
+      for (let event of PreLoadedEvents){
+          CurrentEvents.insert(event);
+      }
+      console.log(`The Current Events is empty.  Will Preload with new Events. `);
   }
 });
 
