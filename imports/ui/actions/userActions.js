@@ -32,7 +32,6 @@ export const login = (email, password) => {
             } else {
                 dispatch(loginSuccess());
                 dispatch(clearField());
-                // TODO: Redirect and debug clearField
             }
         });
     }
@@ -88,7 +87,6 @@ export const createUser = (email, password, name) => {
                 } else {
                     dispatch(registerSuccess());
                     dispatch(clearField());
-                    // TODO: Redirect and debug clearField
                 }
             })
     };

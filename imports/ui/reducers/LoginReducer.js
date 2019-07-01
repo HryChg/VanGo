@@ -19,7 +19,6 @@ export default function LoginReducer(state = initialState, action) {
             newState.error = action.payload;
             return newState;
         case 'LOGOUT':
-            console.log("LOGOUT in LoginReducer");
             return { loggedIn: false }
         default:
             return state;
