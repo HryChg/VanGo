@@ -33,7 +33,7 @@ class RegistrationPage extends React.Component {
                 </div>
                 <div>
                     <button className="ui button" 
-                    onClick={() => {Accounts.createUser({email: this.props.email, password: this.props.password, profile: this.props.name},
+                    onClick={() => {Accounts.createUser({email: this.props.email, password: this.props.password, profile: {name: this.props.name}},
                     (err) => {
                         if (err) {
                             console.log(err);
