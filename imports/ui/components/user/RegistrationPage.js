@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import {BrowserRouter as Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { updateRegisterField, createUser } from '../../actions/userActions';
 import { Message } from 'semantic-ui-react';
 
