@@ -1,12 +1,15 @@
 // Reference: https://reacttraining.com/react-router/web/guides/quick-start
 import React from 'react';
-import {BrowserRouter as Router, NavLink, Redirect, Route} from 'react-router-dom';
+import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
+import { logout } from '../actions/userActions.js';
 import { connect } from 'react-redux';
 
-import LoginPage from './user/LoginPage';
+// sub with TemplateLoginPage for Meteor template
+import LoginPage from './user/LoginPage'; 
 import ItineraryPageContainer from './itinerary/ItineraryPage';
 import EditPage from "./edit/EditPage";
 import HomePage from "./home/HomePage";
+import RegistrationPage from './user/RegistrationPage';
 
 
 // This part routes to "different pages"
@@ -17,14 +20,12 @@ function ProfilePage() {
 class AppRouter extends React.Component {
     toggleUserView() {
         if (!this.props.loggedIn) {
-            console.log("not logged in");
             return (
                 <li className="nav-link" id="login-link"><NavLink to="/login/">Login</NavLink></li>
             );
         } else {
-            console.log("logged in");
             return (
-                <li className="nav-link" id="logout-link" onClick={AccountsTemplates.logout()}>
+                <li className="nav-link" id="logout-link" onClick={() => {this.props.logout()}}>
                     <NavLink to="/logout/">Logout</NavLink>
                 </li>
             );
@@ -47,6 +48,7 @@ class AppRouter extends React.Component {
                     <Route path="/edit/" component={EditPage}/>
                     <Route path="/itinerary/" component={ItineraryPageContainer}/>
                     <Route path="/login/" component={LoginPage}/>
+                    <Route path="/register/" component={RegistrationPage}/>
                     <Route path="/logout/" component={HomePage}/>
                 </div>
             </Router>
@@ -60,4 +62,4 @@ const mapStateToProps = (state) => {
     });
 }
 
-export default connect(mapStateToProps)(AppRouter);
+export default connect(mapStateToProps, { logout })(AppRouter);

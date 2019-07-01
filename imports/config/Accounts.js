@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { logout, login } from '../ui/actions/userActions.js';
 import { connect } from 'react-redux';
+import { Accounts } from 'meteor/accounts-base';
 
 let postLogout = () => {
   // logout();
@@ -16,17 +17,3 @@ let postLogin = (error, state) => {
     }
   }
 }
-
-AccountsTemplates.configure({
-  onLogoutHook: postLogout,
-  onSubmitHook: postLogin
-});
-
-AccountsTemplates.addFields([
-    {
-        _id: 'name',
-        type: 'text',
-        displayName: 'Name',
-        required: true
-    }
-]);
