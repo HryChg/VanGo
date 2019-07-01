@@ -27,7 +27,10 @@ class Login extends React.Component {
                 </div>
                 <div>
                     <button className="ui button" 
-                        onClick={Meteor.loginWithPassword(this.props.email, this.props.password)}>
+                        onClick={() => {Meteor.loginWithPassword("this.props.email", "this.props.password", (err) => {
+                            if (err) console.log(err);
+                        })}}
+                        >
                         Login
                     </button>
                     <Link to="/register">Register</Link>

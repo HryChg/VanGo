@@ -24,7 +24,7 @@ export default combineReducers({
     login: loginReducer,
     loginForm: loginFormReducer,
     register: registerReducer,
-    registerform: registerFormReducer,
+    registerForm: registerFormReducer,
     eventFilter: eventFilterReducer,
     eventDrawer: eventDrawerReducer,
     mapContainer: mapContainerReducer,
