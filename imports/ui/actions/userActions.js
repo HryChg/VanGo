@@ -31,7 +31,7 @@ export const login = (email, password) => {
                 dispatch(loginFailure(err));
             } else {
                 dispatch(loginSuccess());
-                clearField();
+                dispatch(clearField());
                 // TODO: Redirect and debug clearField
             }
         });
@@ -63,8 +63,16 @@ export const logout = () => {
         return Meteor.logout((err) => {
             if (err) {
                 console.log(err);
+            } else {
+                dispatch(logoutRequest());
             }
         });
+    }
+}
+
+const logoutRequest = () => {
+    return {
+        type: "LOGOUT"
     }
 }
 
@@ -79,7 +87,7 @@ export const createUser = (email, password, name) => {
                     console.log(err);
                 } else {
                     dispatch(registerSuccess());
-                    clearField();
+                    dispatch(clearField());
                     // TODO: Redirect and debug clearField
                 }
             })

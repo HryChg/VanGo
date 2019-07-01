@@ -20,12 +20,10 @@ function ProfilePage() {
 class AppRouter extends React.Component {
     toggleUserView() {
         if (!this.props.loggedIn) {
-            console.log("not logged in");
             return (
                 <li className="nav-link" id="login-link"><NavLink to="/login/">Login</NavLink></li>
             );
         } else {
-            console.log("logged in");
             return (
                 <li className="nav-link" id="logout-link" onClick={() => {this.props.logout()}}>
                     <NavLink to="/logout/">Logout</NavLink>
