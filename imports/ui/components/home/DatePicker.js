@@ -12,8 +12,8 @@ class DatePicker extends React.Component {
     // update selected date in store
     onChange = value => {
         this.props.changeDate(value);
+        // getDayEvents(value) call yelp api from server with value param?
     };
-
 
     render() {
         return (
