@@ -12,11 +12,6 @@ import {VanGoStore} from "../../../client/main";
 import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
 import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
-import {addEvent} from "../actions/eventDrawerActions";
-import {withTracker} from "meteor/react-meteor-data";
-import CurrentEvents from "../../api/CurrentEvents";
-import {toggleNearbyAttractions} from "../actions/homePageActions";
-import EventDrawerApi from "../../api/EventDrawerApi";
 
 export class MapContainer extends Component {
     // EFFECTS: close InfoWindow when clicking on map area
@@ -94,33 +89,11 @@ export class MapContainer extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        mapContainer: state.mapContainer
-    };
-};
-
+const mapStateToProps = state => {return {mapContainer: state.mapContainer};};
 const apiWrapper = GoogleApiWrapper({apiKey: googleMapsApiKey})(MapContainer);
-
-const MeteorMapContainer = withTracker(() => {
-    const currentEventsHandle = Meteor.subscribe('currentEvents');
-    const eventDrawerHandle = Meteor.subscribe('eventDrawer');
-
-    const currentEvents = CurrentEvents.find().fetch();
-    const eventDrawer = EventDrawerApi.find().fetch();
-
-    return {
-        dataReady: currentEventsHandle.ready() && eventDrawerHandle,
-        currentEvents: currentEvents,
-        eventDrawer: eventDrawer
-    }
-})(apiWrapper);
-
-
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
     handleOnMarkerClick: handleOnMarkerClick,
-    addEvent: addEvent
 })(
-    MeteorMapContainer
+    apiWrapper
 );
