@@ -32,8 +32,13 @@ class ItineraryPage extends React.Component {
                 return null;
             } else {
                 if (selectedDate === "") {
-                    selectDate(itineraries[0].date);
-                    selectedDate = itineraries[0].date;
+                    let firstDate = itineraries[0] ? itineraries[0].date : "";
+                    if (firstDate) {
+                        selectDate(firstDate);
+                        selectedDate = firstDate;
+                    } else {
+                        return null;
+                    }
                 }
                 for (let x in itineraries) {
                     if (itineraries[x].date === selectedDate) {
@@ -137,7 +142,7 @@ const mapStateToProps = (state) => {
 
 const ItineraryPageContainer = withTracker(() => {
     const handle = Meteor.subscribe('userItineraries');
-    const itineraries = Itineraries.find().fetch(); //TODO: Not sure this is the best place to put this
+    const itineraries = Itineraries.find().fetch();
 
     return {
         dataReady: handle.ready(),

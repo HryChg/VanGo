@@ -15,6 +15,7 @@ if (Meteor.isServer) {
 
 if (Meteor.isClient) {
     Meteor.subscribe('itineraries');
+    Meteor.subscribe('userItineraries');
 }
 
 export default Itineraries;
