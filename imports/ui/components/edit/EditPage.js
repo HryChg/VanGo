@@ -8,10 +8,16 @@ import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import {loadDrawer} from "../../actions/eventDrawerActions";
 import { saveItinerary } from "../../actions/draggableItemsActions";
 
 
 class EditPage extends React.Component {
+
+    componentDidMount() {
+        this.props.loadDrawer();
+    }
+
 
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
@@ -113,7 +119,7 @@ class EditPage extends React.Component {
                         </div>
                     </div>
                 </div>
-            );    
+            );
         }
     }
 }
@@ -128,5 +134,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
-    saveItinerary: saveItinerary
+    saveItinerary: saveItinerary,
+    loadDrawer: loadDrawer
 })(EditPage);

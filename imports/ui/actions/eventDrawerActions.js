@@ -1,3 +1,6 @@
+import {Meteor} from 'meteor/meteor';
+import {startSubscription} from 'meteor-redux-middlewares';
+
 import EventDrawerApi from "../../api/EventDrawerApi";
 
 export const addEvent = (event) => {
@@ -14,25 +17,14 @@ export const deleteEvent = (event) => {
     };
 };
 
+export const EVENT_DRAWER_SUBSCRIPTION_READY = 'LOAD_EVENT_DRAWER_SUBSCRIPTION_READY';
+export const EVENT_DRAWER_SUBSCRIPTION_CHANGED = 'LOAD_EVENT_DRAWER_SUBSCRIPTION_CHANGED';
+export const EVENT_DRAWER_SUB = 'eventDrawer';
 
-export const loadDrawer = (events) => {
-    return async (dispatch, getState) => {
-        try {
-            console.log('loadDrawer action creator called');
-
-            const response = await EventDrawerApi.find();
-            console.log(response);
-            dispatch({
-                type: 'LOAD_DRAWER',
-                payload: response
-            });
-        } catch (error) {
-            console.log('Error: Unable to extract drawer items from EventDrawer');
-            console.log(error);
-        }
-
-
-
-
-    };
+export const loadDrawer = () => {
+    return startSubscription({
+        key: 'LOAD_EVENT_DRAWER',
+        get: () => EventDrawerApi.find().fetch(),
+        subscribe: () => Meteor.subscribe(EVENT_DRAWER_SUB)
+    })
 };
