@@ -15,19 +15,33 @@ import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
 class ItineraryPage extends React.Component {
-    // TODO: Debug commented out code -- currently must set default
     // EFFECTS: returns itinerary with the selectedDate
     getSelectedItinerary(selectedDate) {
-        let itineraries = this.props.itineraries;
-        // console.log(itineraries);
-        // if (selectedDate === "" && itineraries === []) {
-        //     return null;
-        // } else if (selectedDate === "") {
-        //     selectDate(itineraries[0].date);
-        // }
-        for (let x in itineraries) {
-            if (itineraries[x].date === selectedDate) {
-                return itineraries[x];
+        if (this.props.dataReady) {
+            let itineraries = this.props.itineraries;
+            if (itineraries === []) {
+                return null;
+            } else {
+                if (selectedDate === "") {
+                    selectDate(itineraries[0].date);
+                    selectedDate = itineraries[0].date;
+                }
+                for (let x in itineraries) {
+                    if (itineraries[x].date === selectedDate) {
+                        return itineraries[x];
+                    }
+                }
+            }
+        }
+    }
+
+    getSelectedDate(selectDate) {
+        if (this.props.dataReady) {
+            let itineraries = this.props.itineraries;
+            if (selectDate === "") {
+                return itineraries[0] ? itineraries[0].date : null;
+            } else {
+                return this.props.selectedDate;
             }
         }
     }
@@ -93,12 +107,12 @@ class ItineraryPage extends React.Component {
                     className={"container"}
                     style={{width: '500px', height:'50vh'}}
                 >
-                    <h1>{this.props.selectedDate}</h1>
+                    <h1>{this.getSelectedDate(this.props.selectedDate)}</h1>
                     <MapContainer width={'95%'} height={'50%'}>
                         {this.displayMarkers()}
                         {this.displayPolyLine()}
                     </MapContainer>
-                    <div><ItineraryList itineraries={this.props.itineraries}/></div>
+                    <div><ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedDate)}/></div>
                 </div>
             </div>
         </div>);

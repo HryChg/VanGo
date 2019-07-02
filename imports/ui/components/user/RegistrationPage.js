@@ -38,6 +38,7 @@ class RegistrationPage extends React.Component {
                         <label className="form-label">
                             Email
                             <input id="email" type="text" className="form-item" value={this.props.email}
+                            name="email" autoComplete="username email"
                             onChange={(e) => this.props.updateRegisterField(e)}/>
                         </label>
                     </div>
@@ -45,6 +46,7 @@ class RegistrationPage extends React.Component {
                         <label className="form-label">
                             Password
                             <input id="password" type="password" className="form-item" value={this.props.password}
+                            name="password" autoComplete="current-password"
                             onChange={(e) => this.props.updateRegisterField(e)}/>
                         </label>
                     </div>
