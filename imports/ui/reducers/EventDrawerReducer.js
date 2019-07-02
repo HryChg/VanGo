@@ -54,6 +54,8 @@
 //         },]
 // };
 
+import {LOAD_EVENT_DRAWER_SUBSCRIPTION_READY, LOAD_EVENT_DRAWER_SUBSCRIPTION_CHANGED} from '../actions/eventDrawerActions'
+
 let initialState = {
     toggleState: false,
     ready: false,
@@ -93,14 +95,14 @@ export default function EventDrawerReducer(state = initialState, action) {
             ready: state.ready,
             savedEvents: newSavedEvents
         }
-    } else if (action.type === 'LOAD_EVENT_DRAWER_SUBSCRIPTION_READY'){
+    } else if (action.type === LOAD_EVENT_DRAWER_SUBSCRIPTION_READY){
         return {
             toggleState: state.toggleState,
             ready: action.payload.ready,
             savedEvents: state.savedEvents
         };
 
-    } else if (action.type === 'LOAD_EVENT_DRAWER_SUBSCRIPTION_CHANGED'){
+    } else if (action.type === LOAD_EVENT_DRAWER_SUBSCRIPTION_CHANGED){
         return {
             toggleState: state.toggleState,
             ready: state.ready,
