@@ -1,19 +1,18 @@
 let initialState = {
     toggleState: false,
-    savedEvents: [
-        {
-            id: 1,
-            name: 'Canada Place',
-            start_time: new Date('June 13, 2019 09:00:00'),
-            end_time: new Date('May 13, 2020 05:00:00'),
-            price: 20,
-            latitude: 49.2888,
-            longitude: -123.1111,
-            link: 'https://www.canadaplace.ca/',
-            category: 'Sightseeing',
-            type: 'Attraction',
-            description: 'Canada Place is a building situated on the Burrard Inlet waterfront of Vancouver, British Columbia. It is the home of the Vancouver Convention Centre, the Pan Pacific Vancouver Hotel, Vancouver\'s World Trade Centre, and the virtual flight ride FlyOver Canada.'
-        },
+    savedEvents: [{
+        id: 1,
+        name: 'Canada Place',
+        start_time: new Date('June 13, 2019 09:00:00'),
+        end_time: new Date('May 13, 2020 05:00:00'),
+        price: 20,
+        latitude: 49.2888,
+        longitude: -123.1111,
+        link: 'https://www.canadaplace.ca/',
+        category: 'Sightseeing',
+        type: 'Attraction',
+        description: 'Canada Place is a building situated on the Burrard Inlet waterfront of Vancouver, British Columbia. It is the home of the Vancouver Convention Centre, the Pan Pacific Vancouver Hotel, Vancouver\'s World Trade Centre, and the virtual flight ride FlyOver Canada.'
+    },
         {
             id: 5,
             name: 'West End',
@@ -52,10 +51,13 @@ let initialState = {
             category: 'Sightseeing',
             type: 'Attraction',
             description: 'Sunset Beach is situated in the West End near the Burrard Street Bridge and Vancouver International Hostel. The Vancouver Aquatic Centre lies at the East end of Sunset beach right next to the North end of Burrard Street Bridge. The beach has lifeguards on duty in the warm months.'
-        },
-    ]
+        },]
 };
 
+// let initialState = {
+//     toggleState: false,
+//     savedEvents: []
+// };
 
 const findDuplicate = (array, event) => {
     for (let i = 0; i < array.length; i++){
@@ -87,6 +89,11 @@ export default function EventDrawerReducer(state = initialState, action) {
         return {
             toggleState: state.toggleState,
             savedEvents: newSavedEvents
+        }
+    } else if (action.type === 'LOAD_DRAWER'){
+        return {
+            toggleState: state.toggleState,
+            savedEvents: action.payload
         }
     }
     return state;
