@@ -1,6 +1,6 @@
 import {
-    LOAD_EVENT_DRAWER_SUBSCRIPTION_CHANGED,
-    LOAD_EVENT_DRAWER_SUBSCRIPTION_READY
+    GET_EVENT_DRAWER_SUBSCRIPTION_CHANGED,
+    GET_EVENT_DRAWER_SUBSCRIPTION_READY
 } from "../actions/draggableItemsActions";
 
 let initialState = {items: [], ready: false, saved: false};
@@ -21,14 +21,14 @@ export default function DraggableItemsReducer(state = initialState, action) {
         case 'RESET_EDIT':
             return initialState;
 
-        case LOAD_EVENT_DRAWER_SUBSCRIPTION_READY:
+        case GET_EVENT_DRAWER_SUBSCRIPTION_READY:
             return {
                 ready: action.payload.ready,
                 items: state.items,
                 saved: state.saved
             };
 
-        case LOAD_EVENT_DRAWER_SUBSCRIPTION_CHANGED:
+        case GET_EVENT_DRAWER_SUBSCRIPTION_CHANGED:
             return {
                 ready: state.ready,
                 items: action.payload,

@@ -1,6 +1,9 @@
 // allow us to inspect redux store on the console
 // https://stackoverflow.com/questions/34373462/while-debugging-can-i-have-access-to-the-redux-store-from-the-browser-console
 
+// meteor-redux-middlewares tutorial
+// https://github.com/samybob1/meteor-redux-middlewares#step-1-apply-middlewares
+
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';

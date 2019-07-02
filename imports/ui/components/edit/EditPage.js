@@ -8,7 +8,7 @@ import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
-import {loadDrawer} from "../../actions/draggableItemsActions";
+import {getDrawerItems} from "../../actions/draggableItemsActions";
 import { saveItinerary } from "../../actions/draggableItemsActions";
 
 
@@ -129,5 +129,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     saveItinerary: saveItinerary,
-    loadDrawer: loadDrawer
+    getDrawerItems: getDrawerItems
 })(EditPage);
