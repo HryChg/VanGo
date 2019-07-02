@@ -74,7 +74,6 @@ class EditPage extends React.Component {
 
 
     render() {
-        console.log(this.props.saved);
         if (this.props.saved) {
             return (<Redirect exact to='/itinerary'/>);
         } else {

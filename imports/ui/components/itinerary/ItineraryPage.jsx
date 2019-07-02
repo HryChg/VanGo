@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import { withTracker } from 'meteor/react-meteor-data';
-import { selectDate } from './../../actions/itineraryActions';
 
 import ItineraryDatePanel from './ItineraryDatePanel';
 import MapContainer from '../MapContainer';
@@ -14,7 +13,17 @@ import ItineraryList from './ItineraryList';
 import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
+import { selectDate } from './../../actions/itineraryActions';
+import { resetEditPage } from './../../actions/draggableItemsActions';
+
 class ItineraryPage extends React.Component {
+    // EFFECTS: resets edit page after saved
+    componentDidMount() {
+        if (this.props.saved) {
+            this.props.resetEditPage();
+        }
+    }
+
     // EFFECTS: returns itinerary with the selectedDate
     getSelectedItinerary(selectedDate) {
         if (this.props.dataReady) {
@@ -121,7 +130,8 @@ class ItineraryPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        selectedDate: state.itineraryStore.selectedDate
+        selectedDate: state.itineraryStore.selectedDate,
+        saved: state.draggableItems.saved
     };
 }
 
@@ -135,4 +145,4 @@ const ItineraryPageContainer = withTracker(() => {
     }
 })(ItineraryPage);
 
-export default connect(mapStateToProps, { handleOnMarkerClick, selectDate })(ItineraryPageContainer);
+export default connect(mapStateToProps, { handleOnMarkerClick, selectDate, resetEditPage })(ItineraryPageContainer);

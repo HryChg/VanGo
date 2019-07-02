@@ -9,6 +9,8 @@ export default function DraggableItemsReducer(state = initialState, action) {
             newState = Object.assign({}, state);
             newState.saved = true;
             return newState;
+        case 'RESET_EDIT':
+            return initialState;
         default:
             return state;
     }

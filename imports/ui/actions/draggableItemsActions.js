@@ -13,6 +13,12 @@ export const saveItineraryState = () => {
 	}
 };
 
+export const resetEditPage = () => {
+	return {
+		type: 'RESET_EDIT'
+	}
+};
+
 export const saveItinerary = (itinerary) => {
 	return async dispatch => {
 		Meteor.call('saveItinerary', itinerary);
