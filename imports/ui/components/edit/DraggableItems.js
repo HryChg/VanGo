@@ -43,7 +43,7 @@ class DraggableItems extends React.Component {
 
     displayItems = (items) => {
         return items.map((item, idx) => (
-            <li key={item.id} onDragOver={() => this.onDragOver(idx)}>
+            <li key={item._id} onDragOver={() => this.onDragOver(idx)}>
                 <div
                     className="drag"
                     draggable

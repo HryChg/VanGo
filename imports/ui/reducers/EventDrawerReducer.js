@@ -96,7 +96,7 @@ export default function EventDrawerReducer(state = initialState, action) {
     } else if (action.type === 'LOAD_EVENT_DRAWER_SUBSCRIPTION_READY'){
         return {
             toggleState: state.toggleState,
-            ready: true,
+            ready: action.payload.ready,
             savedEvents: state.savedEvents
         };
 

@@ -24,8 +24,8 @@ class EditPage extends React.Component {
         let markers = this.props.draggableItems.items.map((event) => {
             if (event) {
                 return <Marker
-                    key={event.id}
-                    id={event.id}
+                    key={event._id}
+                    id={event._id}
                     name={event.name}
                     start_time={event.start_time.toDateString()}
                     end_time={event.end_time.toDateString()}

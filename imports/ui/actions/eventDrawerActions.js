@@ -20,7 +20,6 @@ export const deleteEvent = (event) => {
 export const EVENT_DRAWER_SUBSCRIPTION_READY = 'LOAD_EVENT_DRAWER_SUBSCRIPTION_READY';
 export const EVENT_DRAWER_SUBSCRIPTION_CHANGED = 'LOAD_EVENT_DRAWER_SUBSCRIPTION_CHANGED';
 export const EVENT_DRAWER_SUB = 'eventDrawer';
-
 export const loadDrawer = () => {
     return startSubscription({
         key: 'LOAD_EVENT_DRAWER',
