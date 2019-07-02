@@ -7,6 +7,7 @@ import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import { saveItinerary } from "../../actions/itineraryActions";
 
 
 class EditPage extends React.Component {
@@ -61,12 +62,13 @@ class EditPage extends React.Component {
         let itin = {
             id: uniqid(),
             name: itineraryName,
-            date: this.props.datePicker.selectedDate,
+            date: this.props.datePicker.selectedDate.toDateString(), // TODO: Convert to uniform format
             events: events
         };
 
         alert('You Itinerary Has been Saved');
         console.log(itin);
+        this.props.saveItinerary(itin);
     };
 
 
@@ -119,5 +121,6 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-    handleOnMarkerClick: handleOnMarkerClick
+    handleOnMarkerClick: handleOnMarkerClick,
+    saveItinerary: saveItinerary
 })(EditPage);

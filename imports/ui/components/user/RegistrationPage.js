@@ -52,7 +52,7 @@ class RegistrationPage extends React.Component {
                     </div>
                     <div>
                         <button className="ui button" 
-                        onClick={() => {this.props.createUser(this.props.email, this.props.password, this.props.name, this.redirect())}}>
+                        onClick={() => {this.props.createUser(this.props.email, this.props.password, this.props.name)}}>
                             Register
                         </button>
                         <Link to="/login">Cancel</Link>
