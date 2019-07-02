@@ -18,7 +18,7 @@ class RegistrationPage extends React.Component {
     }
 
     render() {
-        if (this.props.registerSuccess) {
+        if (this.props.register) {
             return (
                 <Redirect exact to='/login'/>
             );
@@ -70,7 +70,7 @@ const mapStateToProps = (state) => {
         name: state.registerForm.name, 
         email: state.registerForm.email,
         password: state.registerForm.password,
-        redirectSuccess: state.register.register,
+        register: state.register.register,
         error: state.register.error
     };
 }
