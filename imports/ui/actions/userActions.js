@@ -21,6 +21,13 @@ export const clearField = () => {
     };
 };
 
+export const setLoginState = (state) => {
+    return {
+        type: 'SET_LOGIN_STATE',
+        payload: state
+    };
+};
+
 // Login
 export const login = (email, password) => {
     return async dispatch => {
