@@ -15,7 +15,7 @@ class EventDrawer extends React.Component {
         return savedEventsInStore.map((selectedEvent, index) => {
             return (
                 <a className={"item"}
-                   key={selectedEvent.id}
+                   key={selectedEvent._id}
                    className="item">
                     <i className="trash icon" onClick={() => {
                         this.props.deleteEvent(selectedEvent);
