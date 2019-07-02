@@ -8,17 +8,11 @@ import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
-import {loadDrawer} from "../../actions/eventDrawerActions";
+import {loadDrawer} from "../../actions/draggableItemsActions";
 import { saveItinerary } from "../../actions/draggableItemsActions";
 
 
 class EditPage extends React.Component {
-
-    componentDidMount() {
-        this.props.loadDrawer();
-    }
-
-
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
         let markers = this.props.draggableItems.items.map((event) => {
