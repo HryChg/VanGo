@@ -1,13 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
+import { Redirect } from 'react-router-dom';
 import uniqid from 'uniqid';
 
 import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
-import { saveItinerary } from "../../actions/itineraryActions";
+import { saveItinerary } from "../../actions/draggableItemsActions";
 
 
 class EditPage extends React.Component {
@@ -73,50 +74,56 @@ class EditPage extends React.Component {
 
 
     render() {
-        let selectedDateString = this.props.datePicker.selectedDate.toDateString();
-        return (
-            <div className="ui grid">
-                <div className="four wide column">
-                    <SideNav>
-                        <div className={"container"}>
-                            <h2 className={"ui header"}>VanGo</h2>
-                            <h3 className={"ui header"}>Edit Itinerary for <br/>{selectedDateString}</h3>
-                            <DraggableItems/>
+        console.log(this.props.saved);
+        if (this.props.saved) {
+            return (<Redirect exact to='/itinerary'/>);
+        } else {
+            let selectedDateString = this.props.datePicker.selectedDate.toDateString();
+            return (
+                <div className="ui grid">
+                    <div className="four wide column">
+                        <SideNav>
                             <div className={"container"}>
-                                <div className="ui action input mini fluid">
-                                    <input className={"edit-page-path-name"} type="text" placeholder={"Give it a name..."}/>
-                                    <button className="ui button" onClick={this.createItinerary}>
-                                        <i className="heart icon"/>
-                                        Save
+                                <h2 className={"ui header"}>VanGo</h2>
+                                <h3 className={"ui header"}>Edit Itinerary for <br/>{selectedDateString}</h3>
+                                <DraggableItems/>
+                                <div className={"container"}>
+                                    <div className="ui action input mini fluid">
+                                        <input className={"edit-page-path-name"} type="text" placeholder={"Give it a name..."}/>
+                                        <button className="ui button" onClick={this.createItinerary}>
+                                            <i className="heart icon"/>
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className={"container"}>
+                                    <button className="ui button fluid" onClick={() => {alert('Work in Proegress')}}>
+                                        <i className="envelope outline icon"/>
+                                        Email
                                     </button>
                                 </div>
                             </div>
-                            <div className={"container"}>
-                                <button className="ui button fluid" onClick={() => {alert('Work in Proegress')}}>
-                                    <i className="envelope outline icon"/>
-                                    Email
-                                </button>
-                            </div>
+                        </SideNav>
+                    </div>
+                    <div className="twelve wide column">
+                        <div style={{height: '90vh'}}>
+                            <MapContainer width={'95%'} height={'95%'}>
+                                {this.displayMarkers()}
+                                {this.displayPolyLine()}
+                            </MapContainer>
                         </div>
-                    </SideNav>
-                </div>
-                <div className="twelve wide column">
-                    <div style={{height: '90vh'}}>
-                        <MapContainer width={'95%'} height={'95%'}>
-                            {this.displayMarkers()}
-                            {this.displayPolyLine()}
-                        </MapContainer>
                     </div>
                 </div>
-            </div>
-        );
+            );    
+        }
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         draggableItems: state.draggableItems,
-        datePicker: state.datePicker
+        datePicker: state.datePicker,
+        saved: state.draggableItems.saved
     };
 };
 
