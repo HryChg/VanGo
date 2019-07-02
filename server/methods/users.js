@@ -15,18 +15,23 @@ Meteor.methods({
 
   // Returns error message
   function checkPassword(password) {
+    let error = "";
     if (password.length < 6) {
-      const passwordError = "Password too short. Must be at least 6 characters.\n"
-      return passwordError;
+      error = "Password too short. Must be at least 6 characters.\n"
+    } else {
+      error = "";
     }
+    return error;
   }
 
   // Returns error message
   function checkEmail(email) {
     const regex = /^[A-Z0-9'.1234z_%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
-    console.log(regex);
+    let error = "";
     if (regex) {
-      const emailError = "Invalid email address.\n"
-      return emailError;
+      error = "";
+    } else {
+      error = "Invalid email address.\n";
     }
+    return error;
   }
