@@ -36,7 +36,7 @@ export class MapContainer extends Component {
             return element._id === eventID;
         });
 
-
+        // insert to EventDrawer. Alert for success.
         EventDrawer.insert(eventToBeSaved, (error, result) => {
             if (error) console.log(`insertion to EventDrawer collection failed!! ${error}`);
             if (result) alert(`insertion to EventDrawer collection success! savedEventID: ${result}`);
@@ -105,8 +105,6 @@ const MeteorMapContainer = withTracker(() => {
 
     const currentEvents = CurrentEvents.find().fetch();
     const eventDrawer = EventDrawer.find().fetch();
-
-    // TODO how to give access to both currentEvent and eventDrawer
 
     return {
         dataReady: currentEventsHandle.ready() && eventDrawerHandle,
