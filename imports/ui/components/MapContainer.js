@@ -16,7 +16,7 @@ import {addEvent} from "../actions/eventDrawerActions";
 import {withTracker} from "meteor/react-meteor-data";
 import CurrentEvents from "../../api/CurrentEvents";
 import {toggleNearbyAttractions} from "../actions/homePageActions";
-import EventDrawer from "../../api/EventDrawer";
+import EventDrawerApi from "../../api/EventDrawerApi";
 
 export class MapContainer extends Component {
     // EFFECTS: close InfoWindow when clicking on map area
@@ -36,8 +36,8 @@ export class MapContainer extends Component {
             return element._id === eventID;
         });
 
-        // insert to EventDrawer. Alert for success.
-        EventDrawer.insert(eventToBeSaved, (error, result) => {
+        // insert to EventDrawerApi. Alert for success.
+        EventDrawerApi.insert(eventToBeSaved, (error, result) => {
             if (error) console.log(`insertion to EventDrawer collection failed!! ${error}`);
             if (result) alert(`insertion to EventDrawer collection success! savedEventID: ${result}`);
         });
@@ -104,7 +104,7 @@ const MeteorMapContainer = withTracker(() => {
     const eventDrawerHandle = Meteor.subscribe('eventDrawer');
 
     const currentEvents = CurrentEvents.find().fetch();
-    const eventDrawer = EventDrawer.find().fetch();
+    const eventDrawer = EventDrawerApi.find().fetch();
 
     return {
         dataReady: currentEventsHandle.ready() && eventDrawerHandle,
