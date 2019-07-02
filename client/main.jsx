@@ -3,10 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
-<<<<<<< HEAD
-import thunk from 'redux-thunk';
-=======
->>>>>>> 8052522e886888b17835853c4510fe3c7a855eed
 import reducers from '../imports/ui/reducers/index.js';
 import thunk from 'redux-thunk';
 
