@@ -1,3 +1,8 @@
+import { Events } from '../../api/events';
+import getEventsInDay from '../../api/dayEventsActions';
+
+// let initialState = getEventsInDay(new Date());
+
 let initialState = {
     events: [
         {
