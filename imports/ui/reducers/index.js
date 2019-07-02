@@ -4,6 +4,9 @@ import sidebarReducer from './SidebarReducer.js';
 import itineraryReducer from './ItineraryReducer.js';
 import searchBarReducer from './SearchBarReducer.js';
 import loginReducer from './LoginReducer.js';
+import loginFormReducer from './LoginFormReducer.js';
+import registerReducer from './RegisterReducer.js';
+import registerFormReducer from './RegisterFormReducer.js';
 import eventFilterReducer from './EventFilterReducer';
 import datePickerReducer from './DatePickerReducer';
 import eventDrawerReducer from './EventDrawerReducer';
@@ -17,6 +20,9 @@ export default combineReducers({
     sidebar: sidebarReducer,
     searchBar: searchBarReducer,
     login: loginReducer,
+    loginForm: loginFormReducer,
+    register: registerReducer,
+    registerForm: registerFormReducer,
     eventFilter: eventFilterReducer,
     eventDrawer: eventDrawerReducer,
     mapContainer: mapContainerReducer,

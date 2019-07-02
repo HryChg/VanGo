@@ -97,8 +97,15 @@ let event7 = {
           description: 'Immerse yourself in the beautiful world of butterflies at the Vancouver Aquarium, from May to September, 2019. The Graham Amazon Gallery has been transformed to become home to several species of beautiful butterflies, all the way from Costa Rica.'
       };
 
+// TODO: This will need to be moved into a handleSubmit
+// https://github.com/meteor/simple-todos-react/commit/39a066815149de6a1b327fd389278e3c2da93e60
 function insertItineraries(events, date) {
-  Itineraries.insert({events: events, date: date});
+  Itineraries.insert({
+    events: events, 
+    date: date,
+    // owner: Meteor.userId(),
+    // username: Meteor.user().username
+  });
 }
 
 Meteor.startup(() => {

@@ -3,19 +3,9 @@ import { connect } from 'react-redux';
 import ItineraryItem from './ItineraryItem.js';
 
 class ItineraryList extends React.Component {
-    getSelectedItinerary(selectedDate) {
-        let itineraries = this.props.itineraries;
-        for (let x in itineraries) {
-            if (itineraries[x].date === selectedDate) {
-                return itineraries[x];
-            }
-        }
-    }
-
     render() {
-        let selectedItinerary = this.getSelectedItinerary(this.props.selectedDate);
-        if (selectedItinerary) {
-            const events = selectedItinerary.events;
+        if (this.props.itinerary != null) {
+            const events = this.props.itinerary.events;
             const mappedEvents = events.map(event => <ItineraryItem key={event.id} event={event} />);
             return(<div className="itinerary">
                 <h1>Itinerary</h1>
@@ -23,8 +13,9 @@ class ItineraryList extends React.Component {
                     { mappedEvents }
                 </ol>
             </div>);
+        } else {
+            return <div></div>;
         }
-        return <div></div>;
     }
 }
 
