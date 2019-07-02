@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {Link} from 'react-router-dom';
+import {withTracker} from 'meteor/react-meteor-data';
 
 import SideNav from "../SideNav";
 import SearchBar from "../SearchBar";
@@ -11,9 +12,8 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
-import {VanGoStore} from "../../../../client/main";
 import {containAll} from "../../../util/util";
-
+import CurrentEvents from '../../../api/CurrentEvents';
 
 class HomePage extends React.Component {
     toggleEventDrawer = () => {
@@ -31,11 +31,11 @@ class HomePage extends React.Component {
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
     displayMarkers = () => {
-        let markers = this.props.currEvents.events.map((event) => {
+        let markers = this.props.currentEvents.map((event) => {
             if (this.filterMarker(event)) {
                 return <Marker
-                    key={event.id}
-                    id={event.id}
+                    key={event._id}
+                    id={event._id}
                     name={event.name}
                     start_time={event.start_time.toDateString()}
                     end_time={event.end_time.toDateString()}
@@ -155,12 +155,21 @@ class HomePage extends React.Component {
 const mapStateToProps = (state) => {
     return {
         homePage: state.homePage,
-        currEvents: state.currEvents,
         eventFilter: state.eventFilter
     };
 };
 
+const HomePageContainer = withTracker(()=>{
+    const handle = Meteor.subscribe('currentEvents');
+    const currentEvents = CurrentEvents.find().fetch();
+
+    return {
+        dataReady: handle.ready(),
+        currentEvents: currentEvents
+    }
+})(HomePage);
+
 export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     toggleNearbyAttractions: toggleNearbyAttractions
-})(HomePage);
+})(HomePageContainer);

@@ -1,6 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import '/imports/api/itineraries';
+import './methods/itinerary';
 import Itineraries from '../imports/api/itineraries';
+import CurrentEvents from '../imports/api/CurrentEvents';
+import EventDrawerApi from '../imports/api/EventDrawerApi';
+import PreLoadedEvents from './PreLoadedEvents';
 
 let event1 =  {
           id: 1,
@@ -94,14 +98,30 @@ let event7 = {
           description: 'Immerse yourself in the beautiful world of butterflies at the Vancouver Aquarium, from May to September, 2019. The Graham Amazon Gallery has been transformed to become home to several species of beautiful butterflies, all the way from Costa Rica.'
       };
 
+// TODO: This will need to be moved into a handleSubmit
+// https://github.com/meteor/simple-todos-react/commit/39a066815149de6a1b327fd389278e3c2da93e60
 function insertItineraries(events, date) {
-  Itineraries.insert({events: events, date: date});
+  Itineraries.insert({
+    events: events, 
+    date: date,
+  });
 }
 
 Meteor.startup(() => {
   if (Itineraries.find().count() === 0) {
     insertItineraries([event1, event2, event3], "Jan 12, 2019");
     insertItineraries([event4, event5, event6], "Jan 13, 2019");
+  }
+
+  if (CurrentEvents.find().count() === 0){
+      for (let event of PreLoadedEvents){
+          CurrentEvents.insert(event);
+      }
+      console.log(`The Current Events is empty.  Will Preload with new Events. `);
+  }
+
+  if (EventDrawerApi.find().count()===0){
+      console.log(`EventDrawer is Empty`);
   }
 });
 

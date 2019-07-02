@@ -73,10 +73,11 @@ https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
 ##### Login and Registration Redux
 React + Redux - User Registration and Login Tutorial & Example
 https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
-Blaze Templates in React
-https://guide.meteor.com/react.html#blaze-in-react
+Adding User Accounts & Adjusting Permissions
+https://www.youtube.com/watch?v=eNxuaTGq4Qk
 Meteor User Accounts
 https://github.com/meteor-useraccounts/core/blob/master/Guide.md
+
 
 ##### Yelp Api
 https://medium.com/@chaoyue_zhao/how-to-make-axios-api-calls-with-yelp-fusion-inside-react-js-10755d8485c5
@@ -92,7 +93,5 @@ https://forums.meteor.com/t/solved-meteor-1-3s-createcontainer-and-redux-dispatc
 - google-maps-react
 - react-calendar
 - accounts-password
-- useraccounts:semantic-ui
 - accounts-google
 - service-configuration
-- gadicc:blaze-react-component

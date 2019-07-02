@@ -1,21 +1,25 @@
-import { Meteor } from 'meteor/meteor';
-
-// This function is not yet working...
-// Not exactly sure where to call this
-function isLoggedIn() {
-    Meteor.user() !== null ? true: false;
-}
-
-const initialState = { loggedIn: false };
+const initialState = { 
+    loggedIn: false,
+    loading: false,
+    error: null
+};
 
 export default function LoginReducer(state = initialState, action) {
+    let newState;
     switch(action.type) {
         case 'LOGIN_REQUEST':
-            console.log("login-request");    
-            return { loggedIn: true };
-        case 'LOGOUT_REQUEST':
-            console.log("logout-request");
-            return { loggedIn: false };
+            newState = Object.assign({}, state);
+            newState.loading = true;
+            return newState;
+        case 'LOGIN_SUCCESS':
+            return { loggedIn: true, loading: false, error: null };
+        case 'LOGIN_FAILURE':
+            newState = Object.assign({}, state);
+            newState.loading = false;
+            newState.error = action.payload.err;
+            return newState;
+        case 'LOGOUT':
+            return { loggedIn: false }
         default:
             return state;
     }

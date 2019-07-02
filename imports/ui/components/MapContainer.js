@@ -13,26 +13,37 @@ import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
 import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
 import {addEvent} from "../actions/eventDrawerActions";
+import {withTracker} from "meteor/react-meteor-data";
+import CurrentEvents from "../../api/CurrentEvents";
+import {toggleNearbyAttractions} from "../actions/homePageActions";
+import EventDrawerApi from "../../api/EventDrawerApi";
 
 export class MapContainer extends Component {
     // EFFECTS: close InfoWindow when clicking on map area
     onMapClicked = (props) => {
-        if (VanGoStore.getState().mapContainer.showingInfoWindow){
+        if (VanGoStore.getState().mapContainer.showingInfoWindow) {
             this.props.handleOnMapClicked();
         }
     };
 
     onSaveEventClick = () => {
         // get EventID from marker
-        const eventID = VanGoStore.getState().mapContainer.selectedPlace.id;
+        const eventID = this.props.mapContainer.selectedPlace.id;
 
-        // find Event in the store with EventID
-        const allEvents = VanGoStore.getState().currEvents.events;
+        // find Event in the server with EventID
+        const allEvents = this.props.currentEvents;
         const eventToBeSaved = allEvents.find((element) => {
-            return element.id === eventID;
+            return element._id === eventID;
         });
 
-        this.props.addEvent(eventToBeSaved);
+        Meteor.call('saveEventToDrawer', eventToBeSaved, (error, result) => {
+            if (error) {
+                alert(error);
+            } else {
+                alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`)
+            }
+
+        })
     };
 
 
@@ -62,7 +73,8 @@ export class MapContainer extends Component {
                                 <div className="meta">Start Time: {mapContainerStore.selectedPlace.start_time}</div>
                                 <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
                                 <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
-                                <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to Website...</a></div>
+                                <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to
+                                    Website...</a></div>
                                 <div className="description">{mapContainerStore.selectedPlace.description}</div>
                             </div>
 
@@ -83,8 +95,26 @@ export class MapContainer extends Component {
 }
 
 const mapStateToProps = state => {
-    return {mapContainer: state.mapContainer};
+    return {
+        mapContainer: state.mapContainer
+    };
 };
+
+const apiWrapper = GoogleApiWrapper({apiKey: googleMapsApiKey})(MapContainer);
+
+const MeteorMapContainer = withTracker(() => {
+    const currentEventsHandle = Meteor.subscribe('currentEvents');
+    const eventDrawerHandle = Meteor.subscribe('eventDrawer');
+
+    const currentEvents = CurrentEvents.find().fetch();
+    const eventDrawer = EventDrawerApi.find().fetch();
+
+    return {
+        dataReady: currentEventsHandle.ready() && eventDrawerHandle,
+        currentEvents: currentEvents,
+        eventDrawer: eventDrawer
+    }
+})(apiWrapper);
 
 
 export default connect(mapStateToProps, {
@@ -92,7 +122,5 @@ export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     addEvent: addEvent
 })(
-    GoogleApiWrapper({
-        apiKey: googleMapsApiKey
-    })(MapContainer)
+    MeteorMapContainer
 );
