@@ -21,26 +21,26 @@ import EventDrawer from "../../api/EventDrawer";
 export class MapContainer extends Component {
     // EFFECTS: close InfoWindow when clicking on map area
     onMapClicked = (props) => {
-        if (VanGoStore.getState().mapContainer.showingInfoWindow){
+        if (VanGoStore.getState().mapContainer.showingInfoWindow) {
             this.props.handleOnMapClicked();
         }
     };
 
     onSaveEventClick = () => {
         // get EventID from marker
-        const eventID = VanGoStore.getState().mapContainer.selectedPlace.id;
+        const eventID = this.props.mapContainer.selectedPlace.id;
 
-        // find Event in the store with EventID
+        // find Event in the server with EventID
         const allEvents = this.props.currentEvents;
         const eventToBeSaved = allEvents.find((element) => {
             return element._id === eventID;
         });
 
-        console.log(`you have selected this event: ${eventToBeSaved._id}, ${eventToBeSaved.name}`);
 
-        // this.props.addEvent(eventToBeSaved);
-
-        EventDrawer.insert(eventToBeSaved); // TODO insert failed: Access denied
+        EventDrawer.insert(eventToBeSaved, (error, result) => {
+            if (error) console.log(`insertion to EventDrawer collection failed!! ${error}`);
+            if (result) alert(`insertion to EventDrawer collection success! savedEventID: ${result}`);
+        });
     };
 
 
@@ -70,7 +70,8 @@ export class MapContainer extends Component {
                                 <div className="meta">Start Time: {mapContainerStore.selectedPlace.start_time}</div>
                                 <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
                                 <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
-                                <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to Website...</a></div>
+                                <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to
+                                    Website...</a></div>
                                 <div className="description">{mapContainerStore.selectedPlace.description}</div>
                             </div>
 
@@ -91,12 +92,14 @@ export class MapContainer extends Component {
 }
 
 const mapStateToProps = state => {
-    return {mapContainer: state.mapContainer};
+    return {
+        mapContainer: state.mapContainer
+    };
 };
 
 const apiWrapper = GoogleApiWrapper({apiKey: googleMapsApiKey})(MapContainer);
 
-const MeteorMapContainer = withTracker(()=>{
+const MeteorMapContainer = withTracker(() => {
     const currentEventsHandle = Meteor.subscribe('currentEvents');
     const eventDrawerHandle = Meteor.subscribe('eventDrawer');
 
@@ -111,8 +114,6 @@ const MeteorMapContainer = withTracker(()=>{
         eventDrawer: eventDrawer
     }
 })(apiWrapper);
-
-
 
 
 export default connect(mapStateToProps, {
