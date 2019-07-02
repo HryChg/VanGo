@@ -1,6 +1,6 @@
 const initialState = { email: "", password: "" };
 
-export default function LoginReducer(state = initialState, action) {
+export default function LoginFormReducer(state = initialState, action) {
     let newState;
     switch(action.type) {
         case 'UPDATE_LOGIN_FIELD':

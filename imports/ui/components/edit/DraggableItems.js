@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {updateDraggableItems} from "../../actions/draggableItemsActions";
+import {getDrawerItems} from "../../actions/draggableItemsActions";
 import {maskString} from "../../../util/util";
 
 
 class DraggableItems extends React.Component {
     componentDidMount() {
-        let eventsFromHomePage = this.props.eventDrawer.savedEvents;
-        this.props.updateDraggableItems(eventsFromHomePage);
+        this.props.getDrawerItems();
     }
 
     // EFFECTS: Extract the data of the dragged HTML element to class and set the image being dragged on the mouse
@@ -43,7 +43,7 @@ class DraggableItems extends React.Component {
 
     displayItems = (items) => {
         return items.map((item, idx) => (
-            <li key={item.id} onDragOver={() => this.onDragOver(idx)}>
+            <li key={item._id} onDragOver={() => this.onDragOver(idx)}>
                 <div
                     className="drag"
                     draggable
@@ -95,7 +95,8 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-    updateDraggableItems: updateDraggableItems
+    updateDraggableItems: updateDraggableItems,
+    getDrawerItems: getDrawerItems
 })(DraggableItems);
 
 

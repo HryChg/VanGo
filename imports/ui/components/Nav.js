@@ -1,8 +1,9 @@
 // Reference: https://reacttraining.com/react-router/web/guides/quick-start
 import React from 'react';
 import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
-import { logout } from '../actions/userActions.js';
+import { logout, setLoginState } from '../actions/userActions.js';
 import { connect } from 'react-redux';
+import { Meteor } from 'meteor/meteor';
 
 // sub with TemplateLoginPage for Meteor template
 import LoginPage from './user/LoginPage'; 
@@ -18,6 +19,10 @@ function ProfilePage() {
 }
 
 class AppRouter extends React.Component {
+    componentDidMount() {
+        this.props.setLoginState(Meteor.userId());
+    }
+
     toggleUserView() {
         if (!this.props.loggedIn) {
             return (
@@ -62,4 +67,4 @@ const mapStateToProps = (state) => {
     });
 }
 
-export default connect(mapStateToProps, { logout })(AppRouter);
+export default connect(mapStateToProps, { logout, setLoginState })(AppRouter);

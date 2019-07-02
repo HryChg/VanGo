@@ -14,16 +14,8 @@ import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
 import { selectDate } from './../../actions/itineraryActions';
-import { resetEditPage } from './../../actions/draggableItemsActions';
 
 class ItineraryPage extends React.Component {
-    // EFFECTS: resets edit page after saved
-    componentDidMount() {
-        if (this.props.saved) {
-            this.props.resetEditPage();
-        }
-    }
-
     // EFFECTS: returns itinerary with the selectedDate
     getSelectedItinerary(selectedDate) {
         if (this.props.dataReady) {
@@ -135,8 +127,7 @@ class ItineraryPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        selectedDate: state.itineraryStore.selectedDate,
-        saved: state.draggableItems.saved
+        selectedDate: state.itineraryStore.selectedDate
     };
 }
 
@@ -150,4 +141,4 @@ const ItineraryPageContainer = withTracker(() => {
     }
 })(ItineraryPage);
 
-export default connect(mapStateToProps, { handleOnMarkerClick, selectDate, resetEditPage })(ItineraryPageContainer);
+export default connect(mapStateToProps, { handleOnMarkerClick, selectDate })(ItineraryPageContainer);

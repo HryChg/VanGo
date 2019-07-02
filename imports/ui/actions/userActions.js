@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 
 // Field updates
 export const updateLoginField = (event) => {
@@ -20,6 +21,20 @@ export const clearField = () => {
         type: 'CLEAR_FIELD'
     };
 };
+
+// Set or reset pages
+export const setLoginState = (state) => {
+    return {
+        type: 'SET_LOGIN_STATE',
+        payload: state
+    };
+};
+
+export const resetRegisterPage = () => {
+    return {
+        type: 'RESET_REGISTER_PAGE'
+    }
+}
 
 // Login
 export const login = (email, password) => {
@@ -79,7 +94,7 @@ const logoutRequest = () => {
 export const createUser = (email, password, name) => {
     return async dispatch => {
         dispatch(registerRequest());
-        return Accounts.createUser({email: email, password: password, profile: {name: name}},
+        return Meteor.call('createUserWithCheck', {email: email, password: password, profile: {name: name}},
             (err) => {
                 if (err) {
                     dispatch(registerFailure(err));
