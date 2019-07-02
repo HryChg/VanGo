@@ -36,11 +36,14 @@ export class MapContainer extends Component {
             return element._id === eventID;
         });
 
-        // insert to EventDrawerApi. Alert for success.
-        EventDrawerApi.insert(eventToBeSaved, (error, result) => {
-            if (error) console.log(`insertion to EventDrawer collection failed!! ${error}`);
-            if (result) alert(`insertion to EventDrawer collection success! savedEventID: ${result}`);
-        });
+        Meteor.call('saveEventToDrawer', eventToBeSaved, (error, result) => {
+            if (error) {
+                alert(error);
+            } else {
+                alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`)
+            }
+
+        })
     };
 
 
