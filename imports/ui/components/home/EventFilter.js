@@ -1,10 +1,13 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import Toggle from "../Toggle";
-import {updateCategories, updatePricePoints} from "../../actions/eventFilterActions";
-import {VanGoStore} from "../../../../client/main";
-import {containOneOf, toggleItemInArray} from "../../../util/util";
+import { updateCategories, updatePricePoints } from "../../actions/eventFilterActions";
+import { VanGoStore } from "../../../../client/main";
+import { containOneOf, toggleItemInArray } from "../../../util/util";
+import { Slider } from "react-semantic-ui-range";
+
+//https://www.npmjs.com/package/react-semantic-ui-range
 
 class EventFilter extends React.Component {
     // EFFECTS: handle value sent from the toggles.
@@ -36,29 +39,36 @@ class EventFilter extends React.Component {
                 <div className={"ui grid"}>
                     <div className={"eight wide column"}>
                         <div className="container">
-                            <Toggle content={"Music"} sendData={this.handleToggle}/>
-                            <Toggle content={"Food"} sendData={this.handleToggle}/>
-                            <Toggle content={"Sightseeing"} sendData={this.handleToggle}/>
+                            <Toggle content={"Music"} sendData={this.handleToggle} />
+                            <Toggle content={"Food"} sendData={this.handleToggle} />
+                            <Toggle content={"Sightseeing"} sendData={this.handleToggle} />
 
                         </div>
                     </div>
                     <div className={"eight wide column"}>
                         <div className={"container"}>
-                            <Toggle content={"Free"} sendData={this.handleToggle}/>
-                            <Toggle content={"$"} sendData={this.handleToggle}/>
-                            <Toggle content={"$$"} sendData={this.handleToggle}/>
-                            <Toggle content={"$$$"} sendData={this.handleToggle}/>
-                            <Toggle content={"$$$$"} sendData={this.handleToggle}/>
+                            <Toggle content={"Free"} sendData={this.handleToggle} />
+                            <Toggle content={"$"} sendData={this.handleToggle} />
+                            <Toggle content={"$$"} sendData={this.handleToggle} />
+                            <Toggle content={"$$$"} sendData={this.handleToggle} />
+                            <Toggle content={"$$$$"} sendData={this.handleToggle} />
                         </div>
                     </div>
                 </div>
+                <div className={"ui grid"}>
+                    <div className={"two wide column"}>Price: </div>
+                    <div className={"fourteen wide column"}>
+                        <Slider color="red" settings={{ start: 0, min: 0, max: 100, step: 1 }} />  
+                    </div>
+                </div>
+                <br />
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    return {eventFilter: state.eventFilter};
+    return { eventFilter: state.eventFilter };
 };
 
 export default connect(mapStateToProps, {
