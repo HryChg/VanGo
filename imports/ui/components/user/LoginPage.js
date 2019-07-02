@@ -32,6 +32,7 @@ class Login extends React.Component {
                         <label className="form-label">
                             Email
                             <input id="email" type="text" className="form-item" value={this.props.email}
+                            name="email" autoComplete="username email"
                             onChange={(e) => this.props.updateLoginField(e)}/>
                         </label>
                     </div>
@@ -39,6 +40,7 @@ class Login extends React.Component {
                         <label className="form-label">
                             Password
                             <input type="password" id="password" className="form-item" value={this.props.password}
+                            name="password" autoComplete="current-password"
                             onChange={(e) => this.props.updateLoginField(e)}/>
                         </label>
                     </div>

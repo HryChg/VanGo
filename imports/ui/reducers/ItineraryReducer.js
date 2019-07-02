@@ -1,4 +1,4 @@
-let initialState = { selectedDate: "Jan 12, 2019" };
+let initialState = { selectedDate: "" };
 
 export default function ItineraryReducer(state = initialState, action) {
     let newState;
