@@ -9,25 +9,6 @@ export const updateDraggableItems = (newOrder) => {
   }
 };
 
-export const saveItineraryState = () => {
-	return {
-		type: 'SAVED_ITINERARY'
-	}
-};
-
-export const resetEditPage = () => {
-	return {
-		type: 'RESET_EDIT'
-	}
-};
-
-export const saveItinerary = (itinerary) => {
-	return async dispatch => {
-		Meteor.call('saveItinerary', itinerary);
-		dispatch(saveItineraryState());
-	}
-};
-
 export const GET_EVENT_DRAWER_SUBSCRIPTION_READY = 'GET_EVENT_DRAWER_SUBSCRIPTION_READY';
 export const GET_EVENT_DRAWER_SUBSCRIPTION_CHANGED = 'GET_EVENT_DRAWER_SUBSCRIPTION_CHANGED';
 export const LOAD_EVENT_DRAWER_SUB = 'GET_EVENT_DRAWER';

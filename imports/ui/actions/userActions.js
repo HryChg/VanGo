@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 
 // Field updates
 export const updateLoginField = (event) => {
@@ -93,7 +94,7 @@ const logoutRequest = () => {
 export const createUser = (email, password, name) => {
     return async dispatch => {
         dispatch(registerRequest());
-        return Accounts.createUser({email: email, password: password, profile: {name: name}},
+        return Meteor.call('createUserWithCheck', {email: email, password: password, profile: {name: name}},
             (err) => {
                 if (err) {
                     dispatch(registerFailure(err));
