@@ -9,10 +9,14 @@ import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {getDrawerItems} from "../../actions/draggableItemsActions";
-import { saveItinerary } from "../../actions/draggableItemsActions";
+import { saveItinerary, resetEditPage } from "../../actions/editPageActions";
 
 
 class EditPage extends React.Component {
+    componentWillUnmount() {
+        this.props.resetEditPage();
+    }
+
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
         let markers = this.props.draggableItems.items.map((event) => {
@@ -129,5 +133,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     saveItinerary: saveItinerary,
+    resetEditPage: resetEditPage,
     getDrawerItems: getDrawerItems
 })(EditPage);
