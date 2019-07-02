@@ -126,7 +126,7 @@ const mapStateToProps = (state) => {
 }
 
 const ItineraryPageContainer = withTracker(() => {
-    const handle = Meteor.subscribe('itineraries');
+    const handle = Meteor.subscribe('userItineraries');
     const itineraries = Itineraries.find().fetch();
 
     return {

@@ -100,11 +100,13 @@ let event7 = {
 // TODO: This will need to be moved into a handleSubmit
 // https://github.com/meteor/simple-todos-react/commit/39a066815149de6a1b327fd389278e3c2da93e60
 function insertItineraries(events, date) {
+  if (!Meteor.userId()) {
+    throw new Meteor.Error('Not Authorized: Must have user to save itinerary.');
+  }
   Itineraries.insert({
     events: events, 
     date: date,
-    // owner: Meteor.userId(),
-    // username: Meteor.user().username
+    user: Meteor.userId()
   });
 }
 
