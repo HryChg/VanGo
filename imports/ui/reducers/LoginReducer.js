@@ -7,6 +7,10 @@ const initialState = {
 export default function LoginReducer(state = initialState, action) {
     let newState;
     switch(action.type) {
+        case 'SET_LOGIN_STATE': 
+            newState = Object.assign({}, state);
+            newState.loggedIn = action.payload ? true : false;
+            return newState;
         case 'LOGIN_REQUEST':
             newState = Object.assign({}, state);
             newState.loading = true;

@@ -21,6 +21,20 @@ export const clearField = () => {
     };
 };
 
+// Set or reset pages
+export const setLoginState = (state) => {
+    return {
+        type: 'SET_LOGIN_STATE',
+        payload: state
+    };
+};
+
+export const resetRegisterPage = () => {
+    return {
+        type: 'RESET_REGISTER_PAGE'
+    }
+}
+
 // Login
 export const login = (email, password) => {
     return async dispatch => {

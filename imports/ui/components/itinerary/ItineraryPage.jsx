@@ -17,6 +17,7 @@ import { selectDate } from './../../actions/itineraryActions';
 import { resetEditPage } from './../../actions/draggableItemsActions';
 
 class ItineraryPage extends React.Component {
+    // TODO: move this to edit page as componentWillUnmount()
     // EFFECTS: resets edit page after saved
     componentDidMount() {
         if (this.props.saved) {

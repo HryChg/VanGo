@@ -3,8 +3,10 @@ const initialState = {
     loading: false, 
     error: null };
 
-export default function LoginReducer(state = initialState, action) {
+export default function RegisterReducer(state = initialState, action) {
     switch(action.type) {
+        case 'RESET_REGISTER_PAGE': 
+            return initialState;
         case 'REGISTER_REQUEST':
             return {register: false, loading: true, error: null};
         case 'REGISTER_SUCCESS':

@@ -2,10 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { updateRegisterField, createUser } from '../../actions/userActions';
+import { updateRegisterField, createUser, resetRegisterPage } from '../../actions/userActions';
 import { Message } from 'semantic-ui-react';
 
 class RegistrationPage extends React.Component {
+    componentWillUnmount() {
+        this.props.resetRegisterPage();
+    }
+
     displayError() {
         if (this.props.error) {
             return (
@@ -18,7 +22,7 @@ class RegistrationPage extends React.Component {
     }
 
     render() {
-        if (this.props.registerSuccess) {
+        if (this.props.register) {
             return (
                 <Redirect exact to='/login'/>
             );
@@ -70,9 +74,9 @@ const mapStateToProps = (state) => {
         name: state.registerForm.name, 
         email: state.registerForm.email,
         password: state.registerForm.password,
-        redirectSuccess: state.register.register,
+        register: state.register.register,
         error: state.register.error
     };
 }
 
-export default connect(mapStateToProps, { updateRegisterField, createUser })(RegistrationPage);
+export default connect(mapStateToProps, { updateRegisterField, createUser, resetRegisterPage })(RegistrationPage);
