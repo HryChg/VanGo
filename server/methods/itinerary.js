@@ -4,7 +4,8 @@ import Itineraries from '../../imports/api/itineraries';
 Meteor.methods({
     'saveItinerary': function(itinerary) {
         if (!Meteor.userId()) {
-            throw new Meteor.Error('Not Authorized: Must be logged in to save itinerary.');
+            const err = 'Not Authorized: Must be logged in to save itinerary.';
+            throw new Meteor.Error(err, err);
         }
         Itineraries.insert({
             id: itinerary.id,
