@@ -24,8 +24,7 @@ class ItineraryPage extends React.Component {
                 return null;
             } else {
                 if (selectedID === "") {
-                    let firstID = itineraries ? itineraries[0]._id : "";
-                    console.log(itineraries[0]._id);
+                    let firstID = itineraries[0] ? itineraries[0]._id : "";
                     if (firstID) {
                         selectID(firstID);
                         selectedID = firstID;
@@ -47,8 +46,8 @@ class ItineraryPage extends React.Component {
         if (this.props.dataReady) {
             let itineraries = this.props.itineraries;
             if (selectedID === "") {
-                if (itineraries) {
-                    let i = itineraries[0];
+                let i = itineraries[0];
+                if (i) {
                     return i.name ? i.date + ': ' + i.name : i.date;
                 } else {
                     return null;

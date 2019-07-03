@@ -140,7 +140,7 @@ Meteor.startup(async () => {
   let type = 'bar';
   let places = new GooglePlacesApi();
   let result = await places.getResults(dt, type);
-  console.log(result);
+  // console.log(result);
 });
 
 
