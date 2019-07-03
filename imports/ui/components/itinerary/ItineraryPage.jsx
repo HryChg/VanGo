@@ -13,27 +13,28 @@ import ItineraryList from './ItineraryList';
 import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
-import { selectDate } from './../../actions/itineraryActions';
+import { selectID } from './../../actions/itineraryActions';
 
 class ItineraryPage extends React.Component {
-    // EFFECTS: returns itinerary with the selectedDate
-    getSelectedItinerary(selectedDate) {
+    // EFFECTS: returns itinerary with the selectedID, if none selected, choose first if available, else null
+    getSelectedItinerary(selectedID) {
         if (this.props.dataReady) {
             let itineraries = this.props.itineraries;
             if (itineraries === []) {
                 return null;
             } else {
-                if (selectedDate === "") {
-                    let firstDate = itineraries[0] ? itineraries[0].date : "";
-                    if (firstDate) {
-                        selectDate(firstDate);
-                        selectedDate = firstDate;
+                if (selectedID === "") {
+                    let firstID = itineraries ? itineraries[0]._id : "";
+                    console.log(itineraries[0]._id);
+                    if (firstID) {
+                        selectID(firstID);
+                        selectedID = firstID;
                     } else {
                         return null;
                     }
                 }
                 for (let x in itineraries) {
-                    if (itineraries[x].date === selectedDate) {
+                    if (itineraries[x]._id === selectedID) {
                         return itineraries[x];
                     }
                 }
@@ -41,20 +42,31 @@ class ItineraryPage extends React.Component {
         }
     }
 
-    getSelectedDate(selectDate) {
+    // EFFECTS: returns displayName based on selectedID; if not set, get first
+    getDisplayName(selectedID) {
         if (this.props.dataReady) {
             let itineraries = this.props.itineraries;
-            if (selectDate === "") {
-                return itineraries[0] ? itineraries[0].date : null;
+            if (selectedID === "") {
+                if (itineraries) {
+                    let i = itineraries[0];
+                    return i.name ? i.date + ': ' + i.name : i.date;
+                } else {
+                    return null;
+                }
             } else {
-                return this.props.selectedDate;
+                for (let x in itineraries) {
+                    if (itineraries[x]._id === selectedID) {
+                        let i = itineraries[x];
+                        return i.name ? i.date + ': ' + i.name : i.date;
+                    }
+                }
             }
         }
     }
 
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
-        let selectedItinerary = this.getSelectedItinerary(this.props.selectedDate);
+        let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
             let markers = selectedItinerary.events.map((event) => {
                 if (event) {
@@ -81,7 +93,7 @@ class ItineraryPage extends React.Component {
 
     // EFFECTS: display path based on the order of events in DraggableItems
     displayPolyLine = () => {
-        let selectedItinerary = this.getSelectedItinerary(this.props.selectedDate);
+        let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
             let coordinates = selectedItinerary.events.map((event, index) => {
                 return {lat: event.latitude, lng: event.longitude};
@@ -113,12 +125,12 @@ class ItineraryPage extends React.Component {
                     className={"container"}
                     style={{width: '500px', height:'50vh'}}
                 >
-                    <h1>{this.getSelectedDate(this.props.selectedDate)}</h1>
+                    <h1>{this.getDisplayName(this.props.selectedID)}</h1>
                     <MapContainer width={'95%'} height={'50%'}>
                         {this.displayMarkers()}
                         {this.displayPolyLine()}
                     </MapContainer>
-                    <div><ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedDate)}/></div>
+                    <div><ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/></div>
                 </div>
             </div>
         </div>);
@@ -127,7 +139,7 @@ class ItineraryPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        selectedDate: state.itineraryStore.selectedDate
+        selectedID: state.itineraryStore.selectedID
     };
 }
 
@@ -141,4 +153,4 @@ const ItineraryPageContainer = withTracker(() => {
     }
 })(ItineraryPage);
 
-export default connect(mapStateToProps, { handleOnMarkerClick, selectDate })(ItineraryPageContainer);
+export default connect(mapStateToProps, { handleOnMarkerClick, selectID })(ItineraryPageContainer);
