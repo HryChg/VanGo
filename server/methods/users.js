@@ -9,7 +9,10 @@ Meteor.methods({
       if (errorMessage !== "") {
         throw new Meteor.Error(errorMessage, errorMessage);
       }
-        return Accounts.onCreateUser(data);
+        return Accounts.createUser(data);
+        // , (err) => {
+        //   throw new Meteor.Error(err, err);
+        // });
     }
   });
 
