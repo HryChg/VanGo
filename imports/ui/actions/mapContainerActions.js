@@ -1,6 +1,6 @@
-// EFFECTS: open InfoWindow specific to the clicked marker
-// props : the property of the marker
-// marker: the react component marker
+// EFFECTS: open InfoWindow specific to the clicked googlePlace
+// props : the property of the googlePlace
+// googlePlace: the react component googlePlace
 // e     : event
 export const handleOnMarkerClick = (props, marker) => {
     return {

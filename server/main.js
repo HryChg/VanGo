@@ -7,7 +7,8 @@ import CurrentEvents from '../imports/api/CurrentEvents';
 import EventDrawerApi from '../imports/api/EventDrawerApi';
 import PreLoadedEvents from './PreLoadedEvents';
 import getEventsInDay from './../imports/api/getDayEvents';
-import GooglePlacesApi from "../imports/api/GooglePlacesApi";
+import GooglePlacesApi, {convertPlacesToAttractions} from "../imports/api/GooglePlacesApi";
+import {convertPlaceToAttraction} from "../imports/api/GooglePlacesApi";
 
 let event1 = {
   id: 1,
@@ -135,11 +136,12 @@ Meteor.startup(async () => {
     console.log(`EventDrawer is Empty`);
   }
 
-  let dt = {lat: 49.2820, lon: -123.1171};
-  let type = 'bar';
-  let places = new GooglePlacesApi();
-  let result = await places.getResults(dt, type);
-  console.log(result);
+  // let dt = {lat: 49.2820, lon: -123.1171};
+  // let type = 'bar';
+  // let places = new GooglePlacesApi();
+  // let downtownBars = await places.getNearbyPlaces(dt, type);
+  // console.log(convertPlaceToAttraction(downtownBars[0]));
+  // console.log(convertPlacesToAttractions(downtownBars))
 });
 
 

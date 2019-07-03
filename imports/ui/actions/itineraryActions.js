@@ -1,6 +1,6 @@
-export const selectDate = (date) => {
+export const selectID = (id) => {
 	return {
-		type: 'SELECT_DATE',
-		payload: date
+		type: 'SELECT_ID',
+		payload: id
 	}
 }

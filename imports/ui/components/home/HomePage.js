@@ -158,7 +158,7 @@ class HomePage extends React.Component {
                 </div>
                 <div className="twelve wide column">
                     <div style={{height: '90vh'}}>
-                        <MapContainer width={'95%'} height={'95%'}>
+                        <MapContainer width={'95%'} height={'95%'} initialCenter={{lat: 49.2820, lng: -123.1171}}>
                             {this.displayMarkers()}
                         </MapContainer>
                     </div>

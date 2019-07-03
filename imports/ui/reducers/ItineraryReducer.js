@@ -1,12 +1,9 @@
-let initialState = { selectedDate: "" };
+let initialState = { selectedID: "" };
 
 export default function ItineraryReducer(state = initialState, action) {
-    let newState;
     switch(action.type) {
-        case 'SELECT_DATE':
-            newState = Object.assign({}, state);
-            newState.selectedDate = action.payload;
-            return newState;
+        case 'SELECT_ID':
+            return {selectedID: action.payload};
         default:
             return state;
     }

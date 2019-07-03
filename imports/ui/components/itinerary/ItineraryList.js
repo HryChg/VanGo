@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import ItineraryItem from './ItineraryItem.js';
 
-class ItineraryList extends React.Component {
+export default class ItineraryList extends React.Component {
     render() {
         if (this.props.itinerary != null) {
             const events = this.props.itinerary.events;
@@ -18,11 +17,3 @@ class ItineraryList extends React.Component {
         }
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        selectedDate: state.itineraryStore.selectedDate
-    };
-}
-
-export default connect(mapStateToProps)(ItineraryList);
