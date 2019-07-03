@@ -118,6 +118,7 @@ Meteor.startup(async () => {
     // return Promise.resolve(eventsToday)
     return eventsToday;
   }
+  
   loadEvents().then(res => console.log('resolved promise: ' + res))
 
   if (Itineraries.find().count() === 0) {
