@@ -94,7 +94,7 @@ class HomePage extends React.Component {
             return '$';
         } else if (event.price <= 25) {
             return '$$';
-        } else if (event.price <= 35) {
+        } else if (event.price <= 50) {
             return '$$$';
         } else {
             return '$$$$';

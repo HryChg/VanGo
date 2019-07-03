@@ -58,7 +58,26 @@ class EventFilter extends React.Component {
                 <div className={"ui grid"}>
                     <div className={"two wide column"}>Price: </div>
                     <div className={"fourteen wide column"}>
-                        <Slider color="red" settings={{ start: 0, min: 0, max: 100, step: 1 }} />  
+                        <Slider color="red" settings={{ 
+                        start: 0, 
+                        min: 0, 
+                        max: 100, 
+                        step: 1, 
+                        onChange: (value) => {
+                            let priceText;
+                            if (value === 0) {
+                                priceText = "Free";
+                            } else if (value <= 10) {
+                                priceText = "$"
+                            } else if (value <= 25) {
+                                priceText = "$$"
+                            } else if (value <= 50) {
+                                priceText = "$$$"
+                            } else {
+                                priceText = "$$$$"
+                            }
+                            this.handleToggle(priceText)
+                        }}} />  
                     </div>
                 </div>
                 <br />
