@@ -70,8 +70,7 @@ class EditPage extends React.Component {
             date: this.props.datePicker.selectedDate.toDateString(), // TODO: Convert to uniform format
             events: events
         };
-
-        alert('You Itinerary Has been Saved');
+        
         console.log(itin);
         this.props.saveItinerary(itin);
     };

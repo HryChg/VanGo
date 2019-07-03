@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 class ItineraryDatePanel extends React.Component {
     render() {
-        const mappedDates = this.props.itineraries.map(itinerary => <ItineraryDate date={ itinerary.date } key={ itinerary._id }/>)
+        const mappedDates = this.props.itineraries.map(itinerary => <ItineraryDate date={ itinerary.date } name={ itinerary.name } key={ itinerary._id }/>)
         return(<div>
             { mappedDates }
         </div>);
