@@ -58,6 +58,9 @@ VanGo was created to aid locals and tourists in exploring the city by showing th
 Semantic UI
 https://semantic-ui.com/modules/modal.html
 
+Marker Icons
+https://sites.google.com/site/gmapsdevelopment/
+
 ##### Navigation Bar
 React-Router Quick Start
 https://reacttraining.com/react-router/web/guides/quick-start
