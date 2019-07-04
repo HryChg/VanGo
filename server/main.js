@@ -118,8 +118,8 @@ Meteor.startup(async () => {
     // return Promise.resolve(eventsToday)
     return eventsToday;
   }
-
-  // loadEvents().then(res => console.log('resolved promise: ' + res))
+  
+  loadEvents().then(res => console.log('resolved promise: ' + res))
 
   if (Itineraries.find().count() === 0) {
     insertItineraries([event1, event2, event3], "Jan 12, 2019");

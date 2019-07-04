@@ -31,22 +31,42 @@ class HomePage extends React.Component {
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
     displayMarkers = () => {
-        let markers = this.props.currentEvents.map((event) => {
-            if (this.filterMarker(event)) {
-                return <Marker
-                    key={event._id}
-                    id={event._id}
-                    name={event.name}
-                    start_time={(event.start_time) ? event.start_time.toDateString() : null}
-                    end_time={(event.end_time) ? event.end_time.toDateString() : null}
-                    price={event.price}
-                    link={event.link}
+        let markers = this.props.currentEvents.map((item) => {
+            if (this.filterItems(item)) {
+                if (item.type === 'Attraction') {
+                    return <Marker
+                    key={item._id}
+                    id={item._id}
+                    name={item.name}
+                    start_time={item.start_time.toDateString()}
+                    end_time={item.end_time.toDateString()}
+                    price={item.price}
+                    link={item.link}
                     position={{
-                        lat: event.latitude,
-                        lng: event.longitude
+                        lat: item.latitude,
+                        lng: item.longitude
                     }}
-                    description={event.description}
+                    description={item.description}
+                    icon={{
+                        url: "http://maps.google.com/mapfiles/kml/pal4/icon46.png"
+                      }}
                     onClick={this.props.handleOnMarkerClick}/>
+                } else {
+                    return <Marker
+                    key={item._id}
+                    id={item._id}
+                    name={item.name}
+                    start_time={item.start_time.toDateString()}
+                    end_time={item.end_time.toDateString()}
+                    price={item.price}
+                    link={item.link}
+                    position={{
+                        lat: item.latitude,
+                        lng: item.longitude
+                    }}
+                    description={item.description}
+                    onClick={this.props.handleOnMarkerClick}/>
+                }
             }
         });
         return markers;
@@ -57,7 +77,7 @@ class HomePage extends React.Component {
     //          If no category selected, items of all categories are considered
     //          If no price point selected, items of all price points are considered
     //          If no price point and no category selected, return true by default
-    filterMarker = (item) => {
+    filterItems = (item) => {
         let showAttractions = this.props.homePage.toggleNearbyAttractions;
         let isAttraction = item.type==='Attraction';
         if (isAttraction && !showAttractions){
@@ -86,15 +106,15 @@ class HomePage extends React.Component {
         return matchCategory && matchPricePoints;
     };
 
-    // EFFECTS: extract the price point category for the event
-    extractPricePoint = (event) => {
-        if (event.price === 0) {
+    // EFFECTS: extract the price point category for the item
+    extractPricePoint = (item) => {
+        if (item.price === 0) {
             return 'Free';
-        } else if (event.price <= 10) {
+        } else if (item.price <= 10) {
             return '$';
-        } else if (event.price <= 25) {
+        } else if (item.price <= 25) {
             return '$$';
-        } else if (event.price <= 50) {
+        } else if (item.price <= 50) {
             return '$$$';
         } else {
             return '$$$$';

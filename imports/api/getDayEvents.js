@@ -5,7 +5,7 @@ const apiKey = 'dDfY4JOu4vSBJWZabgu-iYx3INycXIhofarhRe7YNahDQVUp9Oub8KDvFTq-lK5y
 // export default 
 // https://cors-anywhere.herokuapp.com
 export default async function getEventsInDay(date) {
-    axios.get('https://api.yelp.com/v3/events', {
+    return axios.get('https://api.yelp.com/v3/events', {
         headers: {
             'Authorization': `Bearer ${apiKey}`
         },
@@ -44,8 +44,6 @@ export default async function getEventsInDay(date) {
             });
             console.log(dayEvents);
             return dayEvents;
-        }).then((res) => {
-            resolve(res);
         }).catch((err) => {
             console.log(err);
         });
