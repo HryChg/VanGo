@@ -37,8 +37,8 @@ class HomePage extends React.Component {
                     key={event._id}
                     id={event._id}
                     name={event.name}
-                    start_time={event.start_time.toDateString()}
-                    end_time={event.end_time.toDateString()}
+                    start_time={(event.start_time) ? event.start_time.toDateString() : null}
+                    end_time={(event.end_time) ? event.end_time.toDateString() : null}
                     price={event.price}
                     link={event.link}
                     position={{
