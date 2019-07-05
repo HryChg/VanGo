@@ -69,9 +69,9 @@ if (Meteor.isServer) {
         // TODO Needs Security Measure for these methods, e.g. checking this.userID
         saveEventToDrawer: async (eventToBeSaved) => {
             try {
-                console.log(`the current user id is ${Meteor.userId()}`);
-                console.log(`the current user first email is ${Meteor.user().emails[0].address}`);
-                console.log(`the current user name is ${Meteor.user().profile.name}`);
+                // console.log(`the current user id is ${Meteor.userId()}`);
+                // console.log(`the current user first email is ${Meteor.user().emails[0].address}`);
+                // console.log(`the current user name is ${Meteor.user().profile.name}`);
 
                 return await EventDrawerApi.insert(eventToBeSaved);
             } catch (err) {
