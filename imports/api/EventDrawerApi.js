@@ -53,7 +53,7 @@ const updateExistingAccount = async (item) => {
         let updatedDrawer = userDrawer.items.push(item);
         return await EventDrawerApi.update({_id: userDrawerID}, {updatedDrawer});
     } catch (err) {
-        console.log(`Error occurred when saving to account ${userDrawerID}: ${err.message}`);
+        console.log(`Error occurred when saving to account  ${userDrawerID}: ${err.message}`);
     }
 };
 
