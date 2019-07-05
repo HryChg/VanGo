@@ -38,26 +38,26 @@ class HomePage extends React.Component {
                     key={item._id}
                     id={item._id}
                     name={item.name}
-                    start_time={item.start_time.toDateString()}
-                    end_time={item.end_time.toDateString()}
-                    price={item.price}
+                    start_time={(item.start_time) ? item.start_time.toDateString() : 'n/a'}
+                    end_time=  {(item.end_time) ? item.end_time.toDateString(): 'n/a'}
+                    price={(item.price) ? item.price : 'n/a'}
                     link={item.link}
                     position={{
                         lat: item.latitude,
                         lng: item.longitude
                     }}
-                    description={item.description}
                     icon={{
                         url: "http://maps.google.com/mapfiles/kml/pal4/icon46.png"
                       }}
+                    description={(item.description)?item.description:'No Description Available'}
                     onClick={this.props.handleOnMarkerClick}/>
                 } else {
                     return <Marker
                     key={item._id}
                     id={item._id}
                     name={item.name}
-                    start_time={item.start_time.toDateString()}
-                    end_time={item.end_time.toDateString()}
+                    start_time={(item.start_time) ? item.start_time.toDateString() : 'n/a'}
+                    end_time=  {(item.end_time) ? item.end_time.toDateString(): 'n/a'}
                     price={item.price}
                     link={item.link}
                     position={{

@@ -9,6 +9,7 @@ import PreLoadedEvents from './PreLoadedEvents';
 import getEventsInDay from './../imports/api/getDayEvents';
 import GooglePlacesApi, {convertPlacesToAttractions} from "../imports/api/GooglePlacesApi";
 import {convertPlaceToAttraction} from "../imports/api/GooglePlacesApi";
+import YelpAttractionsApi, {convertBusinessesToAttractions} from "../imports/api/YelpAttractionsApi";
 
 let event1 = {
   id: 1,
@@ -112,14 +113,14 @@ function insertItineraries(events, date) {
 }
 
 Meteor.startup(async () => {
-  async function loadEvents() {
-    let eventsToday = await getEventsInDay(new Date());
-    console.log('scraped events: ' + eventsToday)
-    // return Promise.resolve(eventsToday)
-    return eventsToday;
-  }
-  
-  loadEvents().then(res => console.log('resolved promise: ' + res))
+  // async function loadEvents() {
+  //   let eventsToday = await getEventsInDay(new Date());
+  //   console.log('scraped events: ' + eventsToday)
+  //   // return Promise.resolve(eventsToday)
+  //   return eventsToday;
+  // }
+  //
+  // loadEvents().then(res => console.log('resolved promise: ' + res))
 
   if (Itineraries.find().count() === 0) {
     insertItineraries([event1, event2, event3], "Jan 12, 2019");
@@ -137,13 +138,17 @@ Meteor.startup(async () => {
     console.log(`EventDrawer is Empty`);
   }
 
-  // let dt = {lat: 49.2820, lon: -123.1171};
-  // let type = 'bar';
-  // let places = new GooglePlacesApi();
-  // let downtownBars = await places.getNearbyPlaces(dt, type);
-  // console.log(convertPlaceToAttraction(downtownBars[0]));
-  // console.log(convertPlacesToAttractions(downtownBars))
+  let yelp = new YelpAttractionsApi();
+  if (CurrentEvents.find().count() < 30){
+    let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
+    let attractions = convertBusinessesToAttractions(res);
+    for (let attraction of attractions){
+      CurrentEvents.insert(attraction);
+    }
+    console.log(`Current Events has less than 30 items. Added ${attractions.length} events from Yelp[`);
+  }
 });
+
 
 
 
