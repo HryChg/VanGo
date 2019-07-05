@@ -25,8 +25,8 @@ class EditPage extends React.Component {
                     key={event._id}
                     id={event._id}
                     name={event.name}
-                    start_time={event.start_time.toDateString()}
-                    end_time={event.end_time.toDateString()}
+                    start_time={(event.start_time) ? event.start_time.toDateString() : 'n/a'}
+                    end_time={(event.end_time) ? event.end_time.toDateString() : 'n/a'}
                     price={event.price}
                     link={event.link}
                     position={{
@@ -70,7 +70,7 @@ class EditPage extends React.Component {
             date: this.props.datePicker.selectedDate.toDateString(), // TODO: Convert to uniform format
             events: events
         };
-        
+
         console.log(itin);
         this.props.saveItinerary(itin);
     };
