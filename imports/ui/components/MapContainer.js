@@ -7,11 +7,13 @@
 import React, {Component} from 'react';
 import {GoogleApiWrapper, Map} from 'google-maps-react';
 import {connect} from 'react-redux';
+import {withTracker} from 'meteor/react-meteor-data';
 
 import {VanGoStore} from "../../../client/main";
 import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
 import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
+import CurrentEvents from '../../api/CurrentEvents';
 
 export class MapContainer extends Component {
     // EFFECTS: close InfoWindow when clicking on map area
@@ -91,9 +93,23 @@ export class MapContainer extends Component {
 
 const mapStateToProps = state => {return {mapContainer: state.mapContainer};};
 const apiWrapper = GoogleApiWrapper({apiKey: googleMapsApiKey})(MapContainer);
+// export default connect(mapStateToProps, {
+//     handleOnMapClicked: handleOnMapClicked,
+//     handleOnMarkerClick: handleOnMarkerClick,
+// })(
+//     apiWrapper
+// );
+const MeteorMapContainer = withTracker(() => {
+    const currentEventsHandle = Meteor.subscribe('currentEvents');
+    const currentEvents = CurrentEvents.find().fetch();
+    return {
+        dataReady: currentEventsHandle.ready(),
+        currentEvents: currentEvents,
+    }
+})(apiWrapper);
+
+
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
     handleOnMarkerClick: handleOnMarkerClick,
-})(
-    apiWrapper
-);
+})(MeteorMapContainer);

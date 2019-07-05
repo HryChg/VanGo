@@ -1,3 +1,6 @@
+// Yelp Business Search Documentation
+// https://www.yelp.ca/developers/documentation/v3/business_search
+
 const axios = require('axios');
 import {yelpApi} from '../ui/config'
 

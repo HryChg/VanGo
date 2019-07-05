@@ -20,6 +20,8 @@ if (Meteor.isServer) {
         // TODO Needs Security Measure for these methods, e.g. checking this.userID
         saveEventToDrawer: async (eventToBeSaved) => {
             try {
+                console.log(`the current user id is ${Meteor.userId()}`);
+
                 return await EventDrawerApi.insert(eventToBeSaved);
             } catch (err) {
                 throw new Meteor.Error("Unable to insert", `${err.message}`);
