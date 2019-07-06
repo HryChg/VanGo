@@ -16,6 +16,18 @@ import {containAll} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 
 class HomePage extends React.Component {
+
+    formatAMPM = (date) => {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; 
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+      }
+
     toggleEventDrawer = () => {
         $('.ui.right.sidebar')
             .sidebar('setting', 'transition', 'overlay')
@@ -38,9 +50,9 @@ class HomePage extends React.Component {
                     key={item._id}
                     id={item._id}
                     name={item.name}
-                    start_time={(item.start_time) ? item.start_time.toDateString() : 'n/a'}
-                    end_time=  {(item.end_time) ? item.end_time.toDateString(): 'n/a'}
-                    price={(item.price) ? item.price : 'n/a'}
+                    start_time={(item.start_time) ? this.formatAMPM(new Date(item.start_time.toString())) : 'n/a'}
+                    end_time=  {(item.end_time) ? this.formatAMPM(new Date(item.end_time.toString())): 'n/a'}
+                    price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                     link={item.link}
                     position={{
                         lat: item.latitude,
@@ -56,9 +68,9 @@ class HomePage extends React.Component {
                     key={item._id}
                     id={item._id}
                     name={item.name}
-                    start_time={(item.start_time) ? item.start_time.toString() : 'n/a'}
-                    end_time=  {(item.end_time) ? item.end_time.toString(): 'n/a'}
-                    price={item.price}
+                    start_time={(item.start_time) ? this.formatAMPM(new Date(item.start_time)) : 'n/a'}
+                    end_time=  {(item.end_time) ? this.formatAMPM(new Date(item.end_time)) : 'n/a'}
+                    price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                     link={item.link}
                     position={{
                         lat: item.latitude,

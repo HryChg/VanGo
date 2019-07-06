@@ -29,7 +29,7 @@ export default async function getEventsInDay(date) {
                     name: event.name,
                     start_time: event.time_start,
                     end_time: event.time_end,
-                    price: event.cost,
+                    price: event.is_free ? 0 : event.cost,
                     free: event.is_free,
                     location: event.location,
                     latitude: event.latitude,
