@@ -53,6 +53,7 @@ class HomePage extends React.Component {
                     start_time={(item.start_time) ? this.formatAMPM(new Date(item.start_time.toString())) : 'n/a'}
                     end_time=  {(item.end_time) ? this.formatAMPM(new Date(item.end_time.toString())): 'n/a'}
                     price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
+                    location={item.location.display_address[0]}
                     link={item.link}
                     position={{
                         lat: item.latitude,
@@ -71,6 +72,7 @@ class HomePage extends React.Component {
                     start_time={(item.start_time) ? this.formatAMPM(new Date(item.start_time)) : 'n/a'}
                     end_time=  {(item.end_time) ? this.formatAMPM(new Date(item.end_time)) : 'n/a'}
                     price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
+                    location={item.location.display_address[0]}
                     link={item.link}
                     position={{
                         lat: item.latitude,

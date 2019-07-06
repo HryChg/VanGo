@@ -70,6 +70,7 @@ export class MapContainer extends Component {
                                 <div className="meta">Start Time: {mapContainerStore.selectedPlace.start_time}</div>
                                 <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
                                 <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
+                                <div className="meta">Location: {mapContainerStore.selectedPlace.location}</div>
                                 <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to
                                     Website...</a></div>
                                 <div className="description">{mapContainerStore.selectedPlace.description}</div>

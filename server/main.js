@@ -113,11 +113,12 @@ function insertItineraries(events, date) {
 }
 
 Meteor.startup(async () => {
-  // let eventsToday = await getEventsInDay(new Date());
-  // console.log('scraped events: ' + eventsToday);
-  // for (event of eventsToday.events) {
-  //   CurrentEvents.insert(event);
-  // }
+  CurrentEvents.remove({});
+
+  let eventsToday = await getEventsInDay(new Date());
+  for (event of eventsToday.events) {
+    CurrentEvents.insert(event);
+  }
 
   if (Itineraries.find().count() === 0) {
     insertItineraries([event1, event2, event3], "Jan 12, 2019");
@@ -138,6 +139,7 @@ Meteor.startup(async () => {
   let yelp = new YelpAttractionsApi();
   if (CurrentEvents.find().count() < 30){
     let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
+    console.log(res);
     let attractions = convertBusinessesToAttractions(res);
     for (let attraction of attractions){
       CurrentEvents.insert(attraction);

@@ -40,7 +40,7 @@ export default async function getEventsInDay(date) {
                     description: event.description
                 };
             });
-            console.log(dayEvents);
+            // console.log(dayEvents);
             return dayEvents;
         }).catch((err) => {
             console.log(err);
