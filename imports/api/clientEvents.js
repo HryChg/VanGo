@@ -6,20 +6,19 @@ export default async function getDayEvents(date) {
     return axios.get('https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/events', {
         headers: {
             'Authorization': `Bearer ${apiKey}`,
-            "Access-Control-Allow-Origin": "*",
-            'Access-Control-Allow-Headers': `${apiKey}`
+            'X-Requested-With': 'XMLHttpRequest'
         },
         params: {
             location: 'Vancouver',
             start_date: Date.UTC(
                 date.getFullYear(),
                 date.getMonth(),
-                date.getDate(), 
+                date.getDate(),
                 0, 0, 0) / 1000,
             end_date: Date.UTC(
                 date.getFullYear(),
                 date.getMonth(),
-                date.getDate(), 
+                date.getDate(),
                 23, 59, 59) / 1000,
             limit: 50
         }
