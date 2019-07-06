@@ -46,5 +46,3 @@ export default async function getEventsInDay(date) {
             console.log(err);
         });
 }
-
-// getEventsInDay(new Date());

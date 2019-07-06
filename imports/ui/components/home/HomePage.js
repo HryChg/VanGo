@@ -56,8 +56,8 @@ class HomePage extends React.Component {
                     key={item._id}
                     id={item._id}
                     name={item.name}
-                    start_time={(item.start_time) ? item.start_time.toDateString() : 'n/a'}
-                    end_time=  {(item.end_time) ? item.end_time.toDateString(): 'n/a'}
+                    start_time={(item.start_time) ? item.start_time.toString() : 'n/a'}
+                    end_time=  {(item.end_time) ? item.end_time.toString(): 'n/a'}
                     price={item.price}
                     link={item.link}
                     position={{
