@@ -21,7 +21,18 @@ if (Meteor.isServer){
             let res = await getAnonAccountID();
             let expected = await EventDrawerApi.findOne({_id: res});
             chai.assert.equal(res, expected._id);
+            chai.assert.equal("anon", expected.user)
         });
+
+        it ("should create or get the id of a user account", async function () {
+            // create an account in the empty database
+
+            // loging to that account
+
+            // Meteor Method login form Shirley
+
+            chai.assert.fail();
+        })
     });
 
 }
