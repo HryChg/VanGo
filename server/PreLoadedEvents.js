@@ -4,6 +4,22 @@ export default [
         start_time: new Date('June 13, 2019 09:00:00'),
         end_time: new Date('May 13, 2020 05:00:00'),
         price: 20,
+        free: false,
+        location: {
+            "address1": "999 Canada Pl",
+            "address2": "",
+            "address3": "",
+            "city": "Vancouver",
+            "zip_code": "V6C 3T4",
+            "country": "CA",
+            "state": "BC",
+            "display_address": [
+                "999 Canada Pl",
+                "Vancouver, BC V6C 3T4",
+                "Canada"
+            ],
+            "cross_streets": ""
+        },
         latitude: 49.2888,
         longitude: -123.1111,
         link: 'https://www.canadaplace.ca/',
@@ -16,6 +32,22 @@ export default [
         start_time: new Date('June 13, 2019 09:00:00'),
         end_time: new Date('June 15, 2019 05:00:00'),
         price: 50,
+        free: false,
+        location: {
+            "address1": "Granville St",
+            "address2": "",
+            "address3": "",
+            "city": "Vancouver",
+            "zip_code": "V7Y 1K8",
+            "country": "CA",
+            "state": "BC",
+            "display_address": [
+                "Granville St",
+                "Vancouver, BC V7Y 1K8",
+                "Canada"
+            ],
+            "cross_streets": ""
+        },
         latitude: 49.2820,
         longitude: -123.1171,
         link: 'https://vancouver.ca/news-calendar/downtown.aspx',
@@ -28,6 +60,22 @@ export default [
         start_time: new Date('February 10, 2019 09:00:00'),
         end_time: new Date('February 13, 2019 05:00:00'),
         price: 33,
+        free: false,
+        location: {
+            "address1": "1204 Beach Ave",
+            "address2": "",
+            "address3": "",
+            "city": "Vancouver",
+            "zip_code": "V6E 1V3",
+            "country": "CA",
+            "state": "BC",
+            "display_address": [
+                "1204 Beach Ave",
+                "Vancouver, BC V6E 1V3",
+                "Canada"
+            ],
+            "cross_streets": ""
+        },
         latitude: 49.2799,
         longitude: -123.1387,
         link: 'https://vancouver.ca/parks-recreation-culture/sunset-beach.aspx',
@@ -40,6 +88,22 @@ export default [
         start_time: new Date('May 13, 2019 09:00:00'),
         end_time: new Date('June 27, 2019 05:00:00'),
         price: 99,
+        free: false,
+        location: {
+            "address1": "750 Hornby St",
+            "address2": "",
+            "address3": "",
+            "city": "Vancouver",
+            "zip_code": "V6Z 2H7",
+            "country": "CA",
+            "state": "BC",
+            "display_address": [
+                "750 Hornby St",
+                "Vancouver, BC V6Z 2H7",
+                "Canada"
+            ],
+            "cross_streets": ""
+        },
         latitude: 49.28287695,
         longitude: -123.1205638545168,
         link: 'http://vanartgallery.bc.ca/index.html',
@@ -52,6 +116,22 @@ export default [
         start_time: new Date('June 10, 2019 09:00:00'),
         end_time: new Date('June 17, 2019 05:00:00'),
         price: 0,
+        free: false,
+        location: {
+            "address1": "Barclay St & Jervis St",
+            "address2": "",
+            "address3": "",
+            "city": "Vancouver",
+            "zip_code": "V6E 2B8",
+            "country": "CA",
+            "state": "BC",
+            "display_address": [
+                "Barclay St & Jervis St",
+                "Vancouver, BC V6E 2B8",
+                "Canada"
+            ],
+            "cross_streets": ""
+        },
         latitude: 49.2856,
         longitude: -123.1306,
         link: 'https://www.tourismvancouver.com/vancouver/neighbourhoods/west-end/',
@@ -64,6 +144,22 @@ export default [
         start_time: new Date('June 22, 2019 13:00:00'),
         end_time: new Date('June 22, 2019 16:00:00'),
         price: 0,
+        free: false,
+        location: {
+            "address1": "999 Canada Pl",
+            "address2": "",
+            "address3": "",
+            "city": "Vancouver",
+            "zip_code": "V6C 3T4",
+            "country": "CA",
+            "state": "BC",
+            "display_address": [
+                "999 Canada Pl",
+                "Vancouver, BC V6C 3T4",
+                "Canada"
+            ],
+            "cross_streets": ""
+        },
         latitude: 49.289680,
         longitude: -123.136950,
         link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/',
@@ -76,6 +172,22 @@ export default [
         start_time: new Date('May 13, 2019 09:00:00'),
         end_time: new Date('September 2, 2019 17:00:00'),
         price: 38,
+        free: false,
+        location: {
+            "address1": "999 Canada Pl",
+            "address2": "",
+            "address3": "",
+            "city": "Vancouver",
+            "zip_code": "V6C 3T4",
+            "country": "CA",
+            "state": "BC",
+            "display_address": [
+                "999 Canada Pl",
+                "Vancouver, BC V6C 3T4",
+                "Canada"
+            ],
+            "cross_streets": ""
+        },
         latitude: 49.300430,
         longitude: -123.127910,
         link: 'https://www.todocanada.ca/city/vancouver/event/strawberry-festival-2/',

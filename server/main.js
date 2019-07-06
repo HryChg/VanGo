@@ -122,6 +122,12 @@ Meteor.startup(async () => {
   //
   // loadEvents().then(res => console.log('resolved promise: ' + res))
 
+  // let eventsToday = await getEventsInDay(new Date());
+  // console.log('scraped events: ' + eventsToday);
+  // for (event of eventsToday.events) {
+  //   CurrentEvents.insert(event);
+  // }
+
   if (Itineraries.find().count() === 0) {
     insertItineraries([event1, event2, event3], "Jan 12, 2019");
     insertItineraries([event4, event5, event6], "Jan 13, 2019");

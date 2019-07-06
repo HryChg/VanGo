@@ -2,8 +2,6 @@ const axios = require('axios');
 const apiKey = 'dDfY4JOu4vSBJWZabgu-iYx3INycXIhofarhRe7YNahDQVUp9Oub8KDvFTq-lK5y1HdDhnIF8jSxdl1aOQzTmAjkKceyZJXc5nQbkd97glTL-svXmKw3u0Nof00AXXYx';
 // https://medium.com/@chaoyue_zhao/how-to-make-axios-api-calls-with-yelp-fusion-inside-react-js-10755d8485c5
 
-// export default 
-// https://cors-anywhere.herokuapp.com
 export default async function getEventsInDay(date) {
     return axios.get('https://api.yelp.com/v3/events', {
         headers: {
@@ -28,18 +26,18 @@ export default async function getEventsInDay(date) {
             let dayEvents = {};
             dayEvents.events = res.data.events.map(event => {
                 return {
-                    category: event.category,
-                    price: event.cost,
-                    description: event.description,
-                    link: event.event_site_url,
-                    id: event.id,
-                    free: event.is_free,
-                    latitude: event.latitude,
-                    longitude: event.longitude,
                     name: event.name,
                     start_time: event.time_start,
                     end_time: event.time_end,
-                    location: event.location
+                    price: event.cost,
+                    free: event.is_free,
+                    location: event.location,
+                    latitude: event.latitude,
+                    longitude: event.longitude,
+                    link: event.event_site_url,
+                    category: event.category,
+                    type: 'Event',
+                    description: event.description
                 };
             });
             console.log(dayEvents);
