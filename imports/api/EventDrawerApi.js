@@ -8,7 +8,7 @@ import {Meteor} from 'meteor/meteor';
 const EventDrawerApi = new Mongo.Collection('eventDrawer');
 
 
-const getAnonAccountID = async () => {
+export const getAnonAccountID = async () => {
     let anonDrawer = EventDrawerApi.findOne({user: 'anon'});
     if (!anonDrawer){
         let anonAccount = {
@@ -66,7 +66,18 @@ if (Meteor.isServer) {
 
 
     Meteor.methods({
-        // TODO Needs Security Measure for these methods, e.g. checking this.userID
+        getEventsOnUserID: async () => {
+            let accountID;
+            if (Meteor.userId()){ // if logged in
+                accountID = getAnonAccountID();
+            } else {
+                accountID = getUserAccountID();
+            }
+            return await EventDrawerApi.findOne({_id: accountID})
+        },
+
+
+
         saveEventToDrawer: async (eventToBeSaved) => {
             try {
                 // console.log(`the current user id is ${Meteor.userId()}`);
@@ -77,7 +88,6 @@ if (Meteor.isServer) {
             } catch (err) {
                 throw new Meteor.Error("Unable to insert", `${err.message}`);
             }
-
         },
         removeEventFromDrawer: async (eventID) => {
             try {
