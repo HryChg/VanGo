@@ -14,6 +14,8 @@ import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import {containAll} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
+import getDayEvents from "../../../api/clientEvents";
+import {updateEvents} from "../../actions/datePickerActions";
 
 class HomePage extends React.Component {
 
@@ -34,6 +36,10 @@ class HomePage extends React.Component {
             .sidebar('setting', 'dimPage', false)
             .sidebar('toggle');
     };
+
+    componentWillMount = async () => {
+        await getDayEvents(new Date()).then(res => updateEvents(res));
+    }
 
     componentWillUnmount() {
         $('.ui.right.sidebar').detach();

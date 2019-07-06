@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Calendar from 'react-calendar';
-import { changeDate, updateEvents } from '../../actions/datePickerActions';
+import { changeDate} from '../../actions/datePickerActions';
 import CurrentEvents from '../../../api/CurrentEvents';
 import getDayEvents from '../../../api/clientEvents';
 import YelpAttractionsApi, { convertBusinessesToAttractions } from "../../../api/YelpAttractionsApi";
+import {updateEvents} from "../../../api/CurrentEvents";
 
 
 class DatePicker extends React.Component {
@@ -16,7 +17,8 @@ class DatePicker extends React.Component {
     // update selected date in store, call yelp api for that date & update CurrentEvents db
     onChange = async (value) => {
         this.props.changeDate(value);
-        this.props.updateEvents(await getDayEvents(value));
+        // this.props.updateEvents(await getDayEvents(value));
+        updateEvents(value);
     };
 
     render() {
@@ -36,4 +38,4 @@ const mapStateToProps = (state) => {
     return { datePicker: state.datePicker };
 };
 
-export default connect(mapStateToProps, { changeDate, updateEvents })(DatePicker);
+export default connect(mapStateToProps, { changeDate })(DatePicker);

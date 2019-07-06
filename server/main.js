@@ -10,6 +10,7 @@ import getEventsInDay from './../imports/api/getDayEvents';
 import GooglePlacesApi, { convertPlacesToAttractions } from "../imports/api/GooglePlacesApi";
 import { convertPlaceToAttraction } from "../imports/api/GooglePlacesApi";
 import YelpAttractionsApi, { convertBusinessesToAttractions } from "../imports/api/YelpAttractionsApi";
+// can't access VanGoStore b/c on client only?
 
 let event1 = {
   id: 1,
@@ -125,17 +126,19 @@ Meteor.startup(async () => {
     console.log(`Current Events has less than 30 items. Added ${attractions.length} events from Yelp[`);
   }
 
-    let eventsToday = await getEventsInDay(new Date());
-    for (event of eventsToday.events) {
+  let eventsToday = await getEventsInDay(new Date());
+  for (event of eventsToday.events) {
+    CurrentEvents.insert(event);
+  }
+  // await Promise.resolve(getEventsInDay(new Date())).then(res => updateEvents(res));
+  // running but store not updating on time
+
+  if (CurrentEvents.find().count() === 0) {
+    for (let event of PreLoadedEvents) {
       CurrentEvents.insert(event);
     }
-    
-    if (CurrentEvents.find().count() === 0) {
-      for (let event of PreLoadedEvents) {
-        CurrentEvents.insert(event);
-      }
-      console.log(`The Current Events is empty.  Will Preload with new Events. `);
-    }
+    console.log(`The Current Events is empty.  Will Preload with new Events. `);
+  }
 
   if (Itineraries.find().count() === 0) {
     insertItineraries([event1, event2, event3], "Jan 12, 2019");
