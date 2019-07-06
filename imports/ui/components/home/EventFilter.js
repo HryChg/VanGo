@@ -16,28 +16,15 @@ class EventFilter extends React.Component {
     //          If toggleText exist in either categories or price points,
     //          remove it. If not, add it.
     handleToggle = (toggleText) => {
-        let toggleType = this.getToggleType(toggleText);
-        if (toggleType === 'CATEGORY') {
-            const currentCategoriesInStore = VanGoStore.getState().eventFilter.categories;
-            let newCategories = toggleItemInArray(currentCategoriesInStore, toggleText);
-            this.props.updateCategories(newCategories);
-
-        } else if (toggleType === 'PRICE_POINT') {
-            const currentPricePointsInStore = VanGoStore.getState().eventFilter.pricePoints;
-            let newPricePoints = toggleItemInArray(currentPricePointsInStore, toggleText);
-            this.props.updatePricePoints(newPricePoints);
-        }
+        const currentCategoriesInStore = VanGoStore.getState().eventFilter.categories;
+        let newCategories = toggleItemInArray(currentCategoriesInStore, toggleText);
+        this.props.updateCategories(newCategories);
     };
 
-    // EFFECTS: determine if the toggleText is a PricePoint or a Category
-    getToggleType(toggleText) {
-        return containOneOf([toggleText], ['Free', '$', '$$', '$$$', '$$$$']) ? 'PRICE_POINT' : 'CATEGORY'
-    }
-
-    filterEventPrice(value) {
-        const currentPricePointsInStore = VanGoStore.getState().eventFilter.pricePoints;
-        let newPricePoints = toggleItemInArray(currentPricePointsInStore, toggleText);
-        this.props.updatePricePoints(newPricePoints);
+    //TODO: Get max price in events for the day
+    getMaxPrice() {
+        // Math.max.apply(Math, this.props.currentEvents.map(e => { return o.y })), 
+        return 100;
     }
 
     render() {
@@ -45,36 +32,26 @@ class EventFilter extends React.Component {
             <div className={""}>
                 <h2 className={"ui header"}>Event Filter</h2>
                 <div className={"ui grid"}>
-                    <div className={"eight wide column"}>
+                    <div className={"sixteen wide column"}>
                         <div className="container">
                             <Toggle content={"Music"} sendData={this.handleToggle} />
                             <Toggle content={"Food"} sendData={this.handleToggle} />
                             <Toggle content={"Sightseeing"} sendData={this.handleToggle} />
-
-                        </div>
-                    </div>
-                    <div className={"eight wide column"}>
-                        <div className={"container"}>
-                            <Toggle content={"Free"} sendData={this.handleToggle} />
-                            <Toggle content={"$"} sendData={this.handleToggle} />
-                            <Toggle content={"$$"} sendData={this.handleToggle} />
-                            <Toggle content={"$$$"} sendData={this.handleToggle} />
-                            <Toggle content={"$$$$"} sendData={this.handleToggle} />
                         </div>
                     </div>
                 </div>
                 <div className={"ui grid"}>
                     <div className={"two wide column"}>Price: </div>
                     <div className={"fourteen wide column"}>
-                        <Slider color="red" settings={{ 
-                        start: 0, 
-                        min: 0, 
-                        max: 100,
-                        // Math.max.apply(Math, this.props.currentEvents.map(e => { return o.y })), 
-                        step: 1, 
-                        onChange: (value) => {
-                            this.props.filterPrice(value);
-                        }}} />  
+                        <Slider color="red" settings={{
+                            start: 0,
+                            min: 0,
+                            max: this.getMaxPrice(),
+                            step: 1,
+                            onChange: (value) => {
+                                this.props.filterPrice(value);
+                            }
+                        }} />
                     </div>
                 </div>
                 <br />
