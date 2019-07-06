@@ -9,23 +9,25 @@ const CurrentEvents = new Mongo.Collection('currentEvents');
 if (Meteor.isServer) {
     Meteor.publish('currentEvents', function () {
         return CurrentEvents.find();
-    })
+    });
+
+    Meteor.methods({
+        'updateEvents': async (date) => {
+            CurrentEvents.remove({});
+            var newEvents = await getEventsInDay(date);
+            console.log(newEvents);
+            for (event of newEvents.events) {
+                CurrentEvents.insert(event)
+            }
+        }
+    });
 }
 
 if (Meteor.isClient) {
     Meteor.subscribe('currentEvents');
 }
 
-Meteor.methods({
-    'updateEvents': async (date) => {
-        CurrentEvents.remove({});
-        var newEvents = await getEventsInDay(date);
-        console.log(newEvents);
-        for (event of newEvents.events) {
-            CurrentEvents.insert(event)
-        }
-    }
-});
+
 
 // function makeMethod(name, fn) {
 //   Meteor.methods({ [name]: fn });
