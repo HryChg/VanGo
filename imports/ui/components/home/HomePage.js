@@ -109,34 +109,10 @@ class HomePage extends React.Component {
             matchCategory = containAll(filterCategories, [item.category]);
         }
 
-        // let matchPricePoints;
-        // if (filterPricePoints.length === 0) {
-        //     matchPricePoints = true;
-        // } else {
-        //     let eventPricePoint = this.extractPricePoint(item);
-        //     matchPricePoints = containAll(filterPricePoints, [eventPricePoint]);
-        // }
-
         let matchPricePoints = item.price <= this.props.eventFilter.sliderPrice;
 
         return matchCategory && matchPricePoints;
     };
-
-    // EFFECTS: extract the price point category for the item
-    extractPricePoint = (item) => {
-        if (item.price === 0) {
-            return 'Free';
-        } else if (item.price <= 10) {
-            return '$';
-        } else if (item.price <= 25) {
-            return '$$';
-        } else if (item.price <= 50) {
-            return '$$$';
-        } else {
-            return '$$$$';
-        }
-    };
-
 
     render() {
         return (

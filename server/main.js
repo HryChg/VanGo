@@ -115,27 +115,6 @@ function insertItineraries(events, date) {
 Meteor.startup(async () => {
   CurrentEvents.remove({});
 
-  let eventsToday = await getEventsInDay(new Date());
-  for (event of eventsToday.events) {
-    CurrentEvents.insert(event);
-  }
-
-  if (Itineraries.find().count() === 0) {
-    insertItineraries([event1, event2, event3], "Jan 12, 2019");
-    insertItineraries([event4, event5, event6], "Jan 13, 2019");
-  }
-
-  if (CurrentEvents.find().count() === 0) {
-    for (let event of PreLoadedEvents) {
-      CurrentEvents.insert(event);
-    }
-    console.log(`The Current Events is empty.  Will Preload with new Events. `);
-  }
-
-  if (EventDrawerApi.find().count() === 0) {
-    console.log(`EventDrawer is Empty`);
-  }
-
   let yelp = new YelpAttractionsApi();
   if (CurrentEvents.find().count() < 30) {
     let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
@@ -145,6 +124,28 @@ Meteor.startup(async () => {
     }
     console.log(`Current Events has less than 30 items. Added ${attractions.length} events from Yelp[`);
   }
+
+    let eventsToday = await getEventsInDay(new Date());
+    for (event of eventsToday.events) {
+      CurrentEvents.insert(event);
+    }
+    
+    if (CurrentEvents.find().count() === 0) {
+      for (let event of PreLoadedEvents) {
+        CurrentEvents.insert(event);
+      }
+      console.log(`The Current Events is empty.  Will Preload with new Events. `);
+    }
+
+  if (Itineraries.find().count() === 0) {
+    insertItineraries([event1, event2, event3], "Jan 12, 2019");
+    insertItineraries([event4, event5, event6], "Jan 13, 2019");
+  }
+
+  if (EventDrawerApi.find().count() === 0) {
+    console.log(`EventDrawer is Empty`);
+  }
+
 });
 
 

@@ -4,3 +4,10 @@ export const changeDate = (date) => {
         payload: date
     };
 };
+
+export const updateEvents = (newEvents) => {
+    return {
+        type: 'UPDATE_EVENTS',
+        payload: newEvents
+    }
+}
