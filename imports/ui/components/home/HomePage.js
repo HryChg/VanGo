@@ -100,7 +100,7 @@ class HomePage extends React.Component {
 
         let filterCategories = this.props.eventFilter.categories;
         let filterPricePoints = this.props.eventFilter.pricePoints;
-        if (filterCategories.length === 0 && filterPricePoints.length === 0) return true;
+        // if (filterCategories.length === 0 && filterPricePoints.length === 0) return true; 
 
         let matchCategory;
         if (filterCategories.length === 0) {
@@ -109,13 +109,15 @@ class HomePage extends React.Component {
             matchCategory = containAll(filterCategories, [item.category]);
         }
 
-        let matchPricePoints;
-        if (filterPricePoints.length === 0) {
-            matchPricePoints = true;
-        } else {
-            let eventPricePoint = this.extractPricePoint(item);
-            matchPricePoints = containAll(filterPricePoints, [eventPricePoint]);
-        }
+        // let matchPricePoints;
+        // if (filterPricePoints.length === 0) {
+        //     matchPricePoints = true;
+        // } else {
+        //     let eventPricePoint = this.extractPricePoint(item);
+        //     matchPricePoints = containAll(filterPricePoints, [eventPricePoint]);
+        // }
+
+        let matchPricePoints = item.price <= this.props.eventFilter.sliderPrice;
 
         return matchCategory && matchPricePoints;
     };
@@ -154,7 +156,7 @@ class HomePage extends React.Component {
                         <div className={"sidenav-options-container"}>
                             <div className="ui large vertical menu fluid">
                                 <a className="item" onClick={this.props.toggleNearbyAttractions}>
-                                    <div className="ui small teal label">1</div>
+                                    <div className="ui small teal label">31</div>
                                     {this.props.homePage.toggleNearbyAttractions?'Hide Attractions':'Show Nearby Attractions'}
                                 </a>
                                 <a className="item" onClick={this.toggleEventDrawer}>
@@ -188,6 +190,7 @@ class HomePage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        maxPrice: state.maxPrice,
         homePage: state.homePage,
         eventFilter: state.eventFilter
     };

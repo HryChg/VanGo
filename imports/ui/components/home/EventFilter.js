@@ -2,14 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Toggle from "../Toggle";
-import { updateCategories, updatePricePoints } from "../../actions/eventFilterActions";
+import { updateCategories, updatePricePoints, filterPrice } from "../../actions/eventFilterActions";
 import { VanGoStore } from "../../../../client/main";
 import { containOneOf, toggleItemInArray } from "../../../util/util";
 import { Slider } from "react-semantic-ui-range";
+import CurrentEvents from '../../../api/CurrentEvents';
 
 //https://www.npmjs.com/package/react-semantic-ui-range
 
 class EventFilter extends React.Component {
+
     // EFFECTS: handle value sent from the toggles.
     //          If toggleText exist in either categories or price points,
     //          remove it. If not, add it.
@@ -30,6 +32,12 @@ class EventFilter extends React.Component {
     // EFFECTS: determine if the toggleText is a PricePoint or a Category
     getToggleType(toggleText) {
         return containOneOf([toggleText], ['Free', '$', '$$', '$$$', '$$$$']) ? 'PRICE_POINT' : 'CATEGORY'
+    }
+
+    filterEventPrice(value) {
+        const currentPricePointsInStore = VanGoStore.getState().eventFilter.pricePoints;
+        let newPricePoints = toggleItemInArray(currentPricePointsInStore, toggleText);
+        this.props.updatePricePoints(newPricePoints);
     }
 
     render() {
@@ -61,22 +69,11 @@ class EventFilter extends React.Component {
                         <Slider color="red" settings={{ 
                         start: 0, 
                         min: 0, 
-                        max: 100, 
+                        max: 100,
+                        // Math.max.apply(Math, this.props.currentEvents.map(e => { return o.y })), 
                         step: 1, 
                         onChange: (value) => {
-                            let priceText;
-                            if (value === 0) {
-                                priceText = "Free";
-                            } else if (value <= 10) {
-                                priceText = "$"
-                            } else if (value <= 25) {
-                                priceText = "$$"
-                            } else if (value <= 50) {
-                                priceText = "$$$"
-                            } else {
-                                priceText = "$$$$"
-                            }
-                            this.handleToggle(priceText)
+                            this.props.filterPrice(value);
                         }}} />  
                     </div>
                 </div>
@@ -92,5 +89,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     updateCategories: updateCategories,
-    updatePricePoints: updatePricePoints
+    updatePricePoints: updatePricePoints,
+    filterPrice: filterPrice
 })(EventFilter);

@@ -7,9 +7,9 @@ import CurrentEvents from '../imports/api/CurrentEvents';
 import EventDrawerApi from '../imports/api/EventDrawerApi';
 import PreLoadedEvents from './PreLoadedEvents';
 import getEventsInDay from './../imports/api/getDayEvents';
-import GooglePlacesApi, {convertPlacesToAttractions} from "../imports/api/GooglePlacesApi";
-import {convertPlaceToAttraction} from "../imports/api/GooglePlacesApi";
-import YelpAttractionsApi, {convertBusinessesToAttractions} from "../imports/api/YelpAttractionsApi";
+import GooglePlacesApi, { convertPlacesToAttractions } from "../imports/api/GooglePlacesApi";
+import { convertPlaceToAttraction } from "../imports/api/GooglePlacesApi";
+import YelpAttractionsApi, { convertBusinessesToAttractions } from "../imports/api/YelpAttractionsApi";
 
 let event1 = {
   id: 1,
@@ -137,11 +137,10 @@ Meteor.startup(async () => {
   }
 
   let yelp = new YelpAttractionsApi();
-  if (CurrentEvents.find().count() < 30){
+  if (CurrentEvents.find().count() < 30) {
     let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
-    console.log(res);
     let attractions = convertBusinessesToAttractions(res);
-    for (let attraction of attractions){
+    for (let attraction of attractions) {
       CurrentEvents.insert(attraction);
     }
     console.log(`Current Events has less than 30 items. Added ${attractions.length} events from Yelp[`);

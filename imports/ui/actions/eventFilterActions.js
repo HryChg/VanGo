@@ -11,3 +11,11 @@ export const updatePricePoints = (selectedPricePoints) => {
         payload: selectedPricePoints
     }
 };
+
+export const filterPrice = (price) => {
+    return {
+        type: 'FILTER_PRICE',
+        payload: price
+    };
+};
+
