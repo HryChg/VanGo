@@ -18,7 +18,8 @@ class DatePicker extends React.Component {
     onChange = async (value) => {
         this.props.changeDate(value);
         // this.props.updateEvents(await getDayEvents(value));
-        updateEvents(value);
+        // updateEvents(value);
+        Meteor.call('updateEvents', value)
     };
 
     render() {

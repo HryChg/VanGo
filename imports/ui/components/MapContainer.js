@@ -39,7 +39,6 @@ export class MapContainer extends Component {
             } else {
                 alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`)
             }
-
         })
     };
 
