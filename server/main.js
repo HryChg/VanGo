@@ -136,15 +136,15 @@ Meteor.startup(async () => {
     console.log(`EventDrawer is Empty`);
   }
 
-  let yelp = new YelpAttractionsApi();
-  if (CurrentEvents.find().count() < 30) {
-    let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
-    let attractions = convertBusinessesToAttractions(res);
-    for (let attraction of attractions) {
-      CurrentEvents.insert(attraction);
-    }
-    console.log(`Current Events has less than 30 items. Added ${attractions.length} events from Yelp[`);
-  }
+  // let yelp = new YelpAttractionsApi();
+  // if (CurrentEvents.find().count() < 30) {
+  //   let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
+  //   let attractions = convertBusinessesToAttractions(res);
+  //   for (let attraction of attractions) {
+  //     CurrentEvents.insert(attraction);
+  //   }
+  //   console.log(`Current Events has less than 30 items. Added ${attractions.length} events from Yelp[`);
+  // }
 });
 
 

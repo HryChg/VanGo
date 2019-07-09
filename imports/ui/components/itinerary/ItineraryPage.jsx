@@ -3,6 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
+import { Grid, Icon, Button, Menu, Sidebar } from 'semantic-ui-react';
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import { withTracker } from 'meteor/react-meteor-data';
 
@@ -13,7 +14,7 @@ import ItineraryList from './ItineraryList';
 import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
-import { selectID } from './../../actions/itineraryActions';
+import { selectID, showItineraryPanel, hideItineraryPanel } from './../../actions/itineraryActions';
 
 class ItineraryPage extends React.Component {
     // EFFECTS: returns itinerary with the selectedID, if none selected, choose first if available, else null
@@ -110,35 +111,68 @@ class ItineraryPage extends React.Component {
 
     render() {
         return(
-            <div className="ui grid">
-            <div className="four wide column">
-                <div className="it-panel-bkgd">
-                    <div className="it-panel sidenav">
-                        <h2>VanGo</h2>
-                        <ItineraryDatePanel itineraries={this.props.itineraries}><h2>VanGo</h2></ItineraryDatePanel>
-                    </div>
-                </div>
-            </div>
-            <div className="twelve wide column">
-                <div
-                    className={"container"}
-                    style={{width: '500px', height:'50vh'}}
+            <div>
+                <Sidebar.Pushable>
+                <Sidebar
+                    as={Menu}
+                    animation='overlay'
+                    direction='left'
+                    icon='labeled'
+                    inverted
+                    onHide={this.props.hideItineraryPanel}
+                    vertical
+                    visible={this.props.visible}
+                    width="thin"
                 >
-                    <h1>{this.getDisplayName(this.props.selectedID)}</h1>
-                    <MapContainer width={'95%'} height={'50%'}>
-                        {this.displayMarkers()}
-                        {this.displayPolyLine()}
-                    </MapContainer>
-                    <div><ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/></div>
-                </div>
+                    <ItineraryDatePanel itineraries={this.props.itineraries}><h2>Itineraries</h2></ItineraryDatePanel>
+                </Sidebar>
+
+                <Sidebar.Pusher>
+                    <Grid stackable divided='vertically'>
+                        <Grid.Row columns={2}>
+                            <Grid.Column>
+                            {/* <Sidebar.Pusher> */}
+                                <div id="it-date-toggle">
+                                    <Menu inverted attached left fixed icon>
+                                        <Menu.Item 
+                                            onClick={this.props.showItineraryPanel}>
+                                            <Icon name="calendar"/>
+                                        </Menu.Item>
+                                    </Menu>
+                                </div>
+                                <div id="itinerary-name">
+                                    <h1>{this.getDisplayName(this.props.selectedID)}</h1>
+                                </div>
+                            {/* </Sidebar.Pusher> */}
+                                <div id="it-list">
+                                    <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/>  
+                                </div>
+                            </Grid.Column>
+
+                            <Grid.Column>
+                            <div
+                                // className={"container"}
+                                style={{width: '50vw', height:'96vh'}}
+                            >
+                                <MapContainer width={'97.5%'} height={'99.5%'}>
+                                    {this.displayMarkers()}
+                                    {this.displayPolyLine()}
+                                </MapContainer>
+                            </div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Sidebar.Pusher>
+                </Sidebar.Pushable>
             </div>
-        </div>);
+        );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        selectedID: state.itineraryStore.selectedID
+        selectedID: state.itineraryStore.selectedID,
+        visible: state.itineraryPanel.visible
     };
 }
 
@@ -152,4 +186,4 @@ const ItineraryPageContainer = withTracker(() => {
     }
 })(ItineraryPage);
 
-export default connect(mapStateToProps, { handleOnMarkerClick, selectID })(ItineraryPageContainer);
+export default connect(mapStateToProps, { handleOnMarkerClick, selectID, showItineraryPanel, hideItineraryPanel })(ItineraryPageContainer);

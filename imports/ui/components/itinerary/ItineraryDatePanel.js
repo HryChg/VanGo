@@ -1,12 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ItineraryDate from './ItineraryDate.js';
+import { selectID } from './../../actions/itineraryActions';
+import { Menu } from 'semantic-ui-react';
 
-export default class ItineraryDatePanel extends React.Component {
+class ItineraryDatePanel extends React.Component {
+    getDisplayName(itinerary) {
+        let displayName = itinerary.name ? itinerary.date + ": " + itinerary.name : itinerary.date;
+        return displayName;
+    }
+
     render() {
         const mappedDates = this.props.itineraries.map(itinerary => 
-        <ItineraryDate date={ itinerary.date } name={ itinerary.name } key={ itinerary._id } id={ itinerary._id }/>)
-        return(<div>
+            <Menu.Item 
+                fitted='horizontally'
+                onClick={() => {this.props.selectID(itinerary._id);}}>{this.getDisplayName(itinerary)}
+            </Menu.Item>    
+        )
+        return(<Menu large compact inverted vertical>
             { mappedDates }
-        </div>);
+        </Menu>);
     }
 }
+
+export default connect(null, { selectID })(ItineraryDatePanel);

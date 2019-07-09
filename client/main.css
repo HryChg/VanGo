@@ -159,11 +159,21 @@ a:hover {
 /* ---------------------------------------- */
 /* ------  Itinerary: Event Section ------- */
 /* ---------------------------------------- */
-.itinerary {
-    position: relative;
-    top: 50vh;
+#it-list {
     display: inline-block;
-    width: 135%;
+    margin-left: 36px;
+}
+
+#it-date-toggle {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#itinerary-name {
+    display: inline-block;
+    margin-top: 24px;
+    margin-left: 24px;
+    vertical-align: bottom;
 }
 
 .event-block {

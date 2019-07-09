@@ -13,6 +13,7 @@ import eventDrawerReducer from './EventDrawerReducer';
 import mapContainerReducer from './MapContainerReducer';
 import draggableItemsReducer from './DraggableItemsReducers';
 import HomePageReducer from "./HomePageReducer";
+import ItineraryDatePanelReducer from './ItineraryDatePanelReducer.js';
 
 export default combineReducers({
     datePicker: datePickerReducer,
@@ -27,5 +28,6 @@ export default combineReducers({
     eventDrawer: eventDrawerReducer,
     mapContainer: mapContainerReducer,
     draggableItems: draggableItemsReducer,
-    homePage: HomePageReducer
+    homePage: HomePageReducer,
+    itineraryPanel: ItineraryDatePanelReducer
 });

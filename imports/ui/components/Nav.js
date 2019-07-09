@@ -4,7 +4,7 @@ import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 import { logout, setLoginState } from '../actions/userActions.js';
 import { connect } from 'react-redux';
 import { Meteor } from 'meteor/meteor';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
 
 import LoginPage from './user/LoginPage'; 
 import ItineraryPageContainer from './itinerary/ItineraryPage';
@@ -37,8 +37,8 @@ class AppRouter extends React.Component {
     render() {
         return (
             <Router>
-                <Menu>
-                    <NavLink to="/"><Menu.Item><i class="street view icon"></i>VANGO</Menu.Item></NavLink>
+                <Menu inverted attached>
+                    <NavLink to="/"><Menu.Item> <Icon name="street view"/>VANGO</Menu.Item></NavLink>
                     <NavLink to="/edit/"><Menu.Item>Edit</Menu.Item></NavLink>
                     <NavLink to="/itinerary/"><Menu.Item>Itinerary</Menu.Item></NavLink>    
                     {this.toggleUserView()}

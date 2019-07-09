@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CircleButton from './CircleButton';
 import { selectID } from './../../actions/itineraryActions';
+import { Menu } from 'semantic-ui-react';
 
 class ItineraryDate extends React.Component {
     render() {
         let displayName = this.props.name ? this.props.date + ": " + this.props.name : this.props.date;
-        return(<div className="it-date-circ">
-        <span className="it-date">{displayName}</span>
-        <CircleButton onClick={() => {this.props.selectID(this.props.id);}}/>
-        </div>);
+        return(
+            <Menu.Item className="it-date" onClick={() => {this.props.selectID(this.props.id);}}>{displayName}</Menu.Item>
+        );
     }
 }
 
