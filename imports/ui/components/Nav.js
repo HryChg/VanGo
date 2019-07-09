@@ -38,7 +38,7 @@ class AppRouter extends React.Component {
         return (
             <Router>
                 <Menu>
-                    <NavLink to="/"><Menu.Item>VANGO</Menu.Item></NavLink>
+                    <NavLink to="/"><Menu.Item><i class="street view icon"></i>VANGO</Menu.Item></NavLink>
                     <NavLink to="/edit/"><Menu.Item>Edit</Menu.Item></NavLink>
                     <NavLink to="/itinerary/"><Menu.Item>Itinerary</Menu.Item></NavLink>    
                     {this.toggleUserView()}
