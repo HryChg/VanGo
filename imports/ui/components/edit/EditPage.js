@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
 import { Redirect } from 'react-router-dom';
-import uniqid from 'uniqid';
 
 import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
@@ -86,7 +85,6 @@ class EditPage extends React.Component {
 
         let events = this.props.draggableItems.items;
         let itin = {
-            id: uniqid(),
             name: itineraryName,
             date: this.props.datePicker.selectedDate.toDateString(), // TODO: Convert to uniform format
             events: events
