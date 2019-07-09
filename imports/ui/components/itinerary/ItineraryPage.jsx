@@ -131,7 +131,6 @@ class ItineraryPage extends React.Component {
                     <Grid stackable divided='vertically'>
                         <Grid.Row columns={2}>
                             <Grid.Column>
-                            {/* <Sidebar.Pusher> */}
                                 <div id="it-date-toggle">
                                     <Menu inverted attached left fixed icon>
                                         <Menu.Item 
@@ -143,7 +142,6 @@ class ItineraryPage extends React.Component {
                                 <div id="itinerary-name">
                                     <h1>{this.getDisplayName(this.props.selectedID)}</h1>
                                 </div>
-                            {/* </Sidebar.Pusher> */}
                                 <div id="it-list">
                                     <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/>  
                                 </div>
@@ -151,7 +149,6 @@ class ItineraryPage extends React.Component {
 
                             <Grid.Column>
                             <div
-                                // className={"container"}
                                 style={{width: '50vw', height:'96vh'}}
                             >
                                 <MapContainer width={'97.5%'} height={'99.5%'}>

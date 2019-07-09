@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ItineraryDate from './ItineraryDate.js';
 import { selectID } from './../../actions/itineraryActions';
 import { Menu } from 'semantic-ui-react';
 
