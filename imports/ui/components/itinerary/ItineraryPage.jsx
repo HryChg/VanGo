@@ -149,7 +149,7 @@ class ItineraryPage extends React.Component {
 
                             <Grid.Column>
                             <div
-                                style={{width: '50vw', height:'96vh'}}
+                                style={{width: '50vw', height:'100vh'}}
                             >
                                 <MapContainer width={'97.5%'} height={'99.5%'}>
                                     {this.displayMarkers()}
