@@ -153,7 +153,7 @@ class ItineraryPage extends React.Component {
                         <Grid.Row columns={2}>
                             <Grid.Column>
                                 <div id="it-date-toggle">
-                                    <Menu inverted attached left fixed icon>
+                                    <Menu inverted attached icon>
                                         <Menu.Item 
                                             onClick={this.props.showItineraryPanel}>
                                             <Icon name="calendar"/>

@@ -26,11 +26,13 @@ class AppRouter extends React.Component {
     toggleUserView() {
         if (!this.props.loggedIn) {
             return (
-                <NavLink to="/login/"><Menu.Item>Login</Menu.Item></NavLink>   
+                <Menu.Item as={NavLink} to="/login/">
+                    Login
+                </Menu.Item>
             );
         } else {
             return (
-                <NavLink to="/logout/"><Menu.Item onClick={() => {this.props.logout()}}>Logout</Menu.Item></NavLink>   
+                <Menu.Item as={NavLink} to="/logout/" onClick={() => {this.props.logout()}}>Logout</Menu.Item>
             );
         }
     }
@@ -38,9 +40,9 @@ class AppRouter extends React.Component {
         return (
             <Router>
                 <Menu inverted attached>
-                    <NavLink to="/"><Menu.Item> <Icon name="street view"/>VANGO</Menu.Item></NavLink>
-                    <NavLink to="/edit/"><Menu.Item>Edit</Menu.Item></NavLink>
-                    <NavLink to="/itinerary/"><Menu.Item>Itinerary</Menu.Item></NavLink>    
+                    <Menu.Item as={NavLink} exact to="/"> <Icon name="street view"/>VANGO</Menu.Item>
+                    <Menu.Item as={NavLink} to="/edit/">Edit</Menu.Item>
+                    <Menu.Item as={NavLink} to="/itinerary/">Itinerary</Menu.Item>
                     {this.toggleUserView()}
                 </Menu>
                 <Route path="/" exact component={HomePage}/>

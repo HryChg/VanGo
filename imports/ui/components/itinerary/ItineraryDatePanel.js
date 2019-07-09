@@ -16,7 +16,7 @@ class ItineraryDatePanel extends React.Component {
                 onClick={() => {this.props.selectID(itinerary._id);}}>{this.getDisplayName(itinerary)}
             </Menu.Item>    
         )
-        return(<Menu large compact inverted vertical>
+        return(<Menu compact inverted vertical>
             { mappedDates }
         </Menu>);
     }
