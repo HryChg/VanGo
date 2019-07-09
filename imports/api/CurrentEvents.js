@@ -15,7 +15,6 @@ if (Meteor.isServer) {
         'updateEvents': async (date) => {
             CurrentEvents.remove({});
             var newEvents = await getEventsInDay(date);
-            console.log(newEvents);
             for (event of newEvents.events) {
                 CurrentEvents.insert(event)
             }
