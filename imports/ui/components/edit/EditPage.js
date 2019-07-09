@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
 import { Redirect } from 'react-router-dom';
-import uniqid from 'uniqid';
 
 import SideNav from "../SideNav";
 import MapContainer from "../MapContainer";
@@ -10,6 +9,7 @@ import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {getDrawerItems} from "../../actions/draggableItemsActions";
 import { saveItinerary, resetEditPage } from "../../actions/editPageActions";
+import { formatAMPM } from "../../../util/util";
 
 
 class EditPage extends React.Component {
@@ -19,22 +19,42 @@ class EditPage extends React.Component {
 
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
-        let markers = this.props.draggableItems.items.map((event) => {
-            if (event) {
+        let markers = this.props.draggableItems.items.map((item) => {
+            if (item.type === 'Attraction') {
                 return <Marker
-                    key={event._id}
-                    id={event._id}
-                    name={event.name}
-                    start_time={(event.start_time) ? event.start_time.toDateString() : 'n/a'}
-                    end_time={(event.end_time) ? event.end_time.toDateString() : 'n/a'}
-                    price={event.price}
-                    link={event.link}
-                    position={{
-                        lat: event.latitude,
-                        lng: event.longitude
-                    }}
-                    description={event.description}
-                    onClick={this.props.handleOnMarkerClick}/>
+                key={item._id}
+                id={item._id}
+                name={item.name}
+                start_time={(item.start_time) ? formatAMPM(new Date(item.start_time.toString())) : 'n/a'}
+                end_time=  {(item.end_time) ? formatAMPM(new Date(item.end_time.toString())): 'n/a'}
+                price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
+                location={item.location.display_address[0]}
+                link={item.link}
+                position={{
+                    lat: item.latitude,
+                    lng: item.longitude
+                }}
+                icon={{
+                    url: "http://maps.google.com/mapfiles/kml/pal4/icon46.png"
+                  }}
+                description={(item.description)?item.description:'No Description Available'}
+                onClick={this.props.handleOnMarkerClick}/>
+            } else {
+                return <Marker
+                key={item._id}
+                id={item._id}
+                name={item.name}
+                start_time={(item.start_time) ? formatAMPM(new Date(item.start_time)) : 'n/a'}
+                end_time=  {(item.end_time) ? formatAMPM(new Date(item.end_time)) : 'n/a'}
+                price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
+                location={item.location.display_address[0]}
+                link={item.link}
+                position={{
+                    lat: item.latitude,
+                    lng: item.longitude
+                }}
+                description={item.description}
+                onClick={this.props.handleOnMarkerClick}/>
             }
         });
         return markers;
@@ -65,7 +85,6 @@ class EditPage extends React.Component {
 
         let events = this.props.draggableItems.items;
         let itin = {
-            id: uniqid(),
             name: itineraryName,
             date: this.props.datePicker.selectedDate.toDateString(), // TODO: Convert to uniform format
             events: events

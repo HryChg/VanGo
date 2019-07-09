@@ -15,6 +15,7 @@ import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
 import { selectID, showItineraryPanel, hideItineraryPanel } from './../../actions/itineraryActions';
+import { formatAMPM } from "../../../util/util";
 
 class ItineraryPage extends React.Component {
     // EFFECTS: returns itinerary with the selectedID, if none selected, choose first if available, else null
@@ -68,22 +69,42 @@ class ItineraryPage extends React.Component {
     displayMarkers = () => {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
-            let markers = selectedItinerary.events.map((event) => {
-                if (event) {
+            let markers = selectedItinerary.events.map((item) => {
+                if (item.type === 'Attraction') {
                     return <Marker
-                        key={event.id}
-                        id={event.id}
-                        name={event.name}
-                        start_time={event.start_time.toDateString()}
-                        end_time={event.end_time.toDateString()}
-                        price={event.price}
-                        link={event.link}
-                        position={{
-                            lat: event.latitude,
-                            lng: event.longitude
+                    key={item._id}
+                    id={item._id}
+                    name={item.name}
+                    start_time={(item.start_time) ? formatAMPM(new Date(item.start_time.toString())) : 'n/a'}
+                    end_time=  {(item.end_time) ? formatAMPM(new Date(item.end_time.toString())): 'n/a'}
+                    price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
+                    location={item.location.display_address[0]}
+                    link={item.link}
+                    position={{
+                        lat: item.latitude,
+                        lng: item.longitude
+                    }}
+                    icon={{
+                        url: "http://maps.google.com/mapfiles/kml/pal4/icon46.png"
                         }}
-                        description={event.description}
-                        onClick={this.props.handleOnMarkerClick}/>
+                    description={(item.description)?item.description:'No Description Available'}
+                    onClick={this.props.handleOnMarkerClick}/>
+                } else {
+                    return <Marker
+                    key={item._id}
+                    id={item._id}
+                    name={item.name}
+                    start_time={(item.start_time) ? formatAMPM(new Date(item.start_time)) : 'n/a'}
+                    end_time=  {(item.end_time) ? formatAMPM(new Date(item.end_time)) : 'n/a'}
+                    price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
+                    location={item.location.display_address[0]}
+                    link={item.link}
+                    position={{
+                        lat: item.latitude,
+                        lng: item.longitude
+                    }}
+                    description={item.description}
+                    onClick={this.props.handleOnMarkerClick}/>
                 }
             });
             return markers;
