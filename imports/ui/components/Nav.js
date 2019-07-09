@@ -4,8 +4,8 @@ import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 import { logout, setLoginState } from '../actions/userActions.js';
 import { connect } from 'react-redux';
 import { Meteor } from 'meteor/meteor';
+import { Menu } from 'semantic-ui-react';
 
-// sub with TemplateLoginPage for Meteor template
 import LoginPage from './user/LoginPage'; 
 import ItineraryPageContainer from './itinerary/ItineraryPage';
 import EditPage from "./edit/EditPage";
@@ -26,36 +26,30 @@ class AppRouter extends React.Component {
     toggleUserView() {
         if (!this.props.loggedIn) {
             return (
-                <li className="nav-link" id="login-link"><NavLink to="/login/">Login</NavLink></li>
+                <NavLink to="/login/"><Menu.Item>Login</Menu.Item></NavLink>   
             );
         } else {
             return (
-                <li className="nav-link" id="logout-link" onClick={() => {this.props.logout()}}>
-                    <NavLink to="/logout/">Logout</NavLink>
-                </li>
+                <NavLink to="/logout/"><Menu.Item onClick={() => {this.props.logout()}}>Logout</Menu.Item></NavLink>   
             );
         }
     }
     render() {
         return (
             <Router>
-                <div>
-                    <nav>
-                        <ul className="nav-bar">
-                            <li className="nav-link" id="vango-link"><NavLink to="/">VANGO</NavLink></li>
-                            <li className="nav-link" id="edit-link"><NavLink to="/edit/">Edit</NavLink></li>
-                            <li className="nav-link" id="itinerary-link"><NavLink to="/itinerary/">Itinerary</NavLink></li>
-                            {this.toggleUserView()}
-                        </ul>
-                    </nav>
-                    <Route path="/" exact component={HomePage}/>
-                    <Route path="/profile/" component={ProfilePage}/>
-                    <Route path="/edit/" component={EditPage}/>
-                    <Route path="/itinerary/" component={ItineraryPageContainer}/>
-                    <Route path="/login/" component={LoginPage}/>
-                    <Route path="/register/" component={RegistrationPage}/>
-                    <Route path="/logout/" component={HomePage}/>
-                </div>
+                <Menu>
+                    <NavLink to="/"><Menu.Item>VANGO</Menu.Item></NavLink>
+                    <NavLink to="/edit/"><Menu.Item>Edit</Menu.Item></NavLink>
+                    <NavLink to="/itinerary/"><Menu.Item>Itinerary</Menu.Item></NavLink>    
+                    {this.toggleUserView()}
+                </Menu>
+                <Route path="/" exact component={HomePage}/>
+                <Route path="/profile/" component={ProfilePage}/>
+                <Route path="/edit/" component={EditPage}/>
+                <Route path="/itinerary/" component={ItineraryPageContainer}/>
+                <Route path="/login/" component={LoginPage}/>
+                <Route path="/register/" component={RegistrationPage}/>
+                <Route path="/logout/" component={HomePage}/>
             </Router>
         );
     }
