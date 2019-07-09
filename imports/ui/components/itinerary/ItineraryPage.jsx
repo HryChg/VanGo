@@ -151,7 +151,7 @@ class ItineraryPage extends React.Component {
                             <div
                                 style={{width: '50vw', height:'100vh'}}
                             >
-                                <MapContainer width={'97.5%'} height={'99.5%'}>
+                                <MapContainer width={'97.5%'} height={'101.5%'}>
                                     {this.displayMarkers()}
                                     {this.displayPolyLine()}
                                 </MapContainer>
