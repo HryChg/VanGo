@@ -230,6 +230,7 @@ a:hover {
 /* ----  Login, Registration Block -------- */
 /* ---------------------------------------- */
 #login-block, #register-block {
+    margin-top: 3%;
     padding: 20px;
 }
 
