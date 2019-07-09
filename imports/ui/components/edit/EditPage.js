@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
 import { Redirect } from 'react-router-dom';
 
-import SideNav from "../SideNav";
+import { Grid } from 'semantic-ui-react';
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
@@ -101,40 +101,41 @@ class EditPage extends React.Component {
         } else {
             let selectedDateString = this.props.datePicker.selectedDate.toDateString();
             return (
-                <div className="ui grid">
-                    <div className="four wide column">
-                        <SideNav>
-                            <div className={"container"}>
-                                <h2 className={"ui header"}>VanGo</h2>
-                                <h3 className={"ui header"}>Edit Itinerary for <br/>{selectedDateString}</h3>
-                                <DraggableItems/>
-                                <div className={"container"}>
-                                    <div className="ui action input mini fluid">
-                                        <input className={"edit-page-path-name"} type="text" placeholder={"Give it a name..."}/>
-                                        <button className="ui button" onClick={this.createItinerary}>
-                                            <i className="heart icon"/>
-                                            Save
+                <Grid stackable divided='vertically'>
+                    <Grid.Row columns={2}>
+                            <Grid.Column width={4}>
+                                <div className={"edit-panel"}>
+                                    <h2 className={"ui header"}>Edit Itinerary</h2>
+                                    <h3>{selectedDateString}</h3>
+                                    <DraggableItems/>
+                                    <div className={"container"}>
+                                        <div className="ui action input mini fluid">
+                                            <input className={"edit-page-path-name"} type="text" placeholder={"Give it a name..."}/>
+                                            <button className="ui button" onClick={this.createItinerary}>
+                                                <i className="heart icon"/>
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className={"container"}>
+                                        <button className="ui button fluid" onClick={() => {alert('Work in Progress')}}>
+                                            <i className="envelope outline icon"/>
+                                            Email
                                         </button>
                                     </div>
                                 </div>
-                                <div className={"container"}>
-                                    <button className="ui button fluid" onClick={() => {alert('Work in Proegress')}}>
-                                        <i className="envelope outline icon"/>
-                                        Email
-                                    </button>
-                                </div>
+                            </Grid.Column>
+
+                            <Grid.Column width={12}>
+                            <div style={{height: '100vh'}}>
+                                <MapContainer width={'98%'} height={'100%'}>
+                                    {this.displayMarkers()}
+                                    {this.displayPolyLine()}
+                                </MapContainer>
                             </div>
-                        </SideNav>
-                    </div>
-                    <div className="twelve wide column">
-                        <div style={{height: '90vh'}}>
-                            <MapContainer width={'95%'} height={'95%'}>
-                                {this.displayMarkers()}
-                                {this.displayPolyLine()}
-                            </MapContainer>
-                        </div>
-                    </div>
-                </div>
+                            </Grid.Column>
+                        </Grid.Row>
+                </Grid>
             );
         }
     }
