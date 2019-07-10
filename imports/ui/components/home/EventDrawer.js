@@ -16,7 +16,7 @@ class EventDrawer extends React.Component {
                     className={"item"}
                     key={selectedEvent._id}
                 >
-                    {maskString(selectedEvent.name, 25)}
+                    {maskString(selectedEvent.name, 22)}
                     <i className="trash icon" onClick={() => {
                         Meteor.call('removeEventFromDrawer', selectedEvent._id, (error, result)=>{
                             if (error) {
