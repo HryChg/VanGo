@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {Link} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
+import { Grid } from 'semantic-ui-react';
 
-import SideNav from "../SideNav";
 import SearchBar from "../SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
@@ -128,48 +128,48 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <div className="ui grid">
-                <div className="four wide column">
-                    <SideNav>
+            <div>
+            <Grid stackable divided='vertically'>
+                <Grid.Row columns={2}>
+                    <Grid.Column width={4}>
+                        <div>
+                            <h2 className={"ui header"}>VanGo</h2>
+                            <SearchBar/>
+                            <div className={"DatePickerContainer"}>
+                                <DatePicker/>
+                            </div>
+                            <div className={"EventFilterContainer"}>
+                                <EventFilter/>
+                            </div>
 
-                        <h2 className={"ui header"}>VanGo</h2>
-                        <SearchBar/>
-                        <div className={"DatePickerContainer"}>
-                            <DatePicker/>
-                        </div>
-                        <div className={"EventFilterContainer"}>
-                            <EventFilter/>
-                        </div>
-
-                        <div className={"sidenav-options-container"}>
-                            <div className="ui large vertical menu fluid">
-                                <a className="item" onClick={this.props.toggleNearbyAttractions}>
-                                    <div className="ui small teal label">31</div>
-                                    {this.props.homePage.toggleNearbyAttractions?'Hide Attractions':'Show Nearby Attractions'}
-                                </a>
-                                <a className="item" onClick={this.toggleEventDrawer}>
-                                    <div className="ui small label">1</div>
-                                    Show Current Selection
-                                </a>
-                                <Link className="item" to="/edit">
-                                    <div className="ui small label">51</div>
-                                    Make Your Itinerary
-                                </Link>
+                            <div className={"sidenav-options-container"}>
+                                <div className="ui large vertical menu fluid">
+                                    <a className="item" onClick={this.props.toggleNearbyAttractions}>
+                                        <div className="ui small teal label">31</div>
+                                        {this.props.homePage.toggleNearbyAttractions?'Hide Attractions':'Show Nearby Attractions'}
+                                    </a>
+                                    <a className="item" onClick={this.toggleEventDrawer}>
+                                        <div className="ui small label">1</div>
+                                        Show Current Selection
+                                    </a>
+                                    <Link className="item" to="/edit">
+                                        <div className="ui small label">51</div>
+                                        Make Your Itinerary
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-
-                    </SideNav>
-                </div>
-                <div className="twelve wide column">
-                    <div style={{height: '90vh'}}>
-                        <MapContainer width={'95%'} height={'95%'} initialCenter={{lat: 49.2820, lng: -123.1171}}>
-                            {this.displayMarkers()}
-                        </MapContainer>
-                    </div>
-                </div>
-
-                <EventDrawer/>
-
+                    </Grid.Column>
+                    <Grid.Column width={12}>
+                        <div style={{height: '94vh'}}>
+                            <MapContainer width={'95%'} height={'95%'} initialCenter={{lat: 49.2820, lng: -123.1171}}>
+                                {this.displayMarkers()}
+                            </MapContainer>
+                        </div>
+                    </Grid.Column>
+                {/* <EventDrawer/> */}
+                </Grid.Row>
+            </Grid>
             </div>
         );
     }

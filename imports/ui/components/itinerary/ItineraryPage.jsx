@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
-import { Grid, Icon, Button, Menu, Sidebar } from 'semantic-ui-react';
+import { Grid, Icon, Menu, Sidebar } from 'semantic-ui-react';
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import { withTracker } from 'meteor/react-meteor-data';
 
