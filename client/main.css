@@ -167,6 +167,10 @@ i.caret.square.right.large.icon.next-button {
     margin: -3px;
 }
 
+.toggles {
+    display: inline-block;
+}
+
 /* ---------------------------------------- */
 /* -----------  Edit: Side Panel ---------- */
 /* ---------------------------------------- */

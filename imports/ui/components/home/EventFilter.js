@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Toggle from "../Toggle";
 import { updateCategories, filterPrice } from "../../actions/eventFilterActions";
-import { containOneOf, toggleItemInArray } from "../../../util/util";
+import { containOneOf, toggleCategoryInArray } from "../../../util/util";
 import { Slider } from "react-semantic-ui-range";
 import CurrentEvents from '../../../api/CurrentEvents';
 
@@ -11,12 +11,34 @@ import CurrentEvents from '../../../api/CurrentEvents';
 
 class EventFilter extends React.Component {
 
+    // REQUIRES: input must be a valid Yelp category
     // EFFECTS: handle value sent from the toggles.
     //          If toggleText exist in either categories or price range,
     //          remove it. If not, add it.
     handleToggle = (toggleText) => {
+        let categories;
+        switch(toggleText) {
+            case "Art & Music": 
+                categories = ["music", "visual-arts", "performing-arts", "film", "fashion"];
+                break;
+            case "Education":
+                categories = ["lectures-books"];
+                break;
+            case "Food":
+                categories = ["food-and-drink"];
+                break;
+            case "Festivals":
+                categories = ["festivals-fairs"];
+                break;
+            case "Family":
+                categories = ["kids-family"];
+                break;
+            case "Other":
+                categories = ["charities", "sports-active-life", "nightlife", "other"];
+                break;
+        }
         const currentCategoriesInStore = this.props.eventFilter.categories;
-        let newCategories = toggleItemInArray(currentCategoriesInStore, toggleText);
+        let newCategories = toggleCategoryInArray(currentCategoriesInStore, categories);
         this.props.updateCategories(newCategories);
     };
 
@@ -32,10 +54,15 @@ class EventFilter extends React.Component {
                 <div className={"ui grid"}>
                     <div className={"sixteen wide column"}>
                     <h4 className={"filter-margin"} id={"filter-name"}>Filters:</h4>
-                        <div className="container">
-                            <Toggle content={"Music"} sendData={this.handleToggle} />
+                        <div className="container toggles">
+                            <Toggle content={"Art & Music"} sendData={this.handleToggle} />
                             <Toggle content={"Food"} sendData={this.handleToggle} />
-                            <Toggle content={"Sightseeing"} sendData={this.handleToggle} />
+                            <Toggle content={"Education"} sendData={this.handleToggle} />
+                        </div>
+                        <div className="container toggles">
+                            <Toggle content={"Festivals"} sendData={this.handleToggle} />
+                            <Toggle content={"Family"} sendData={this.handleToggle} />
+                            <Toggle content={"Other"} sendData={this.handleToggle} />
                         </div>
                     </div>
                 </div>

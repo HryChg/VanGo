@@ -25,19 +25,19 @@ export const containOneOf = (listA, listB) => {
     return result;
 };
 
-
-// EFFECTS: toggle an item in the array
-//          If it exist in arr, return a copy of the array without that item
-//          If not exist in arr, return a copy of the array with that item
-//          Note item's index in the array is not preserved
-export const toggleItemInArray = (originalArray, item) => {
+// REQUIRES: categoryGroup is a list
+// EFFECTS: toggle category in the array
+//          If it exist in arr, return a copy of the array without that category
+//          If not exist in arr, return a copy of the array with that category
+//          Note category's index in the array is not preserved
+export const toggleCategoryInArray = (originalArray, categoryGroup) => {
     let newArray = null;
-    if (originalArray.includes(item)) {
+    if (containOneOf(originalArray, categoryGroup)) {
         newArray = originalArray.filter((category) => {
-            return category !== item
+            return categoryGroup.includes(category);
         });
     } else {
-        newArray = [...originalArray, item];
+        newArray = originalArray.concat(categoryGroup);
     }
     return newArray;
 };

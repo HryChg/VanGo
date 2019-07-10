@@ -93,8 +93,6 @@ class HomePage extends React.Component {
 
         let withinPriceRange = item.price >= this.props.eventFilter.priceRange[0] && 
                                item.price <= this.props.eventFilter.priceRange[1];
-        console.log(matchCategory);
-        console.log(withinPriceRange);
         return matchCategory && withinPriceRange;
     };
 
