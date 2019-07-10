@@ -132,7 +132,7 @@ class HomePage extends React.Component {
             <Grid stackable divided='vertically'>
                 <Grid.Row columns={2}>
                     <Grid.Column width={4}>
-                        <div>
+                        <div className={"home-panel"}>
                             <h2 className={"ui header"}>VanGo</h2>
                             <SearchBar/>
                             <div className={"DatePickerContainer"}>

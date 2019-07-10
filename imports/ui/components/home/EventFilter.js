@@ -30,9 +30,9 @@ class EventFilter extends React.Component {
     render() {
         return (
             <div className={""}>
-                <h2 className={"ui header"}>Event Filter</h2>
                 <div className={"ui grid"}>
                     <div className={"sixteen wide column"}>
+                    <h4 className={"filter-margin"} id={"filter-name"}>Filters:</h4>
                         <div className="container">
                             <Toggle content={"Music"} sendData={this.handleToggle} />
                             <Toggle content={"Food"} sendData={this.handleToggle} />

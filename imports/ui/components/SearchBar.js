@@ -2,6 +2,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {search} from "../actions/SearchBarActions";
+import { Input, Button } from 'semantic-ui-react';
 
 class SearchBar extends React.Component {
     constructor(props){
@@ -17,15 +18,12 @@ class SearchBar extends React.Component {
 
     render() {
         return (
-            <div className="ui form container">
-                <div className="fields">
-                    <div className="twelve wide field">
-                        <input id={"searchInput"} type="text" placeholder="Search Events Here..."/>
-                    </div>
-                    <button className="ui icon button three wide field" onClick={this.onClickSearch}>
-                        <i className="search icon"/>
-                    </button>
-                </div>
+            <div id={"searchInputContainer"} >
+                <Input 
+                    id={"searchInput"} 
+                    action={<Button icon='search' onClick={this.onClickSearch} />}  
+                    placeholder="Search Events Here..." 
+                />
             </div>
         );
     }

@@ -131,10 +131,46 @@ a:hover {
     outline: none;
 }
 
+
+/* ---------------------------------------- */
+/* ---------------  Home Page ------------- */
+/* ---------------------------------------- */
+#searchInputContainer { /*TODO: This doesn't work*/
+    margin-bottom: 17px;
+    width: 100%;
+}
+
+.react-calendar__tile.react-calendar__month-view__days__day {
+    font-size: 14px;
+    padding: 7px;
+}
+
+.react-calendar__navigation > button,
+.react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
+.react-calendar__navigation__arrow.react-calendar__navigation__prev-button,
+.react-calendar__navigation__arrow.react-calendar__navigation__next-button,
+.react-calendar__navigation__arrow.react-calendar__navigation__next2-button,
+.react-calendar__navigation__arrow.react-calendar__navigation__label {
+    margin: 0px !important;
+    min-width: 26px !important; 
+    padding: 0px !important;
+}
+
+.react-calendar__navigation {
+    margin-bottom: 0px !important;
+}
+
+
+
+.filter-margin, #filter-name {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 /* ---------------------------------------- */
 /* -----------  Edit: Side Panel ---------- */
 /* ---------------------------------------- */
-.edit-panel {
+.edit-panel, .home-panel {
     margin-top: 24px;
     margin-left: 24px;
 }
