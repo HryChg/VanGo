@@ -162,9 +162,9 @@ a {
 }
 
 /* Home Page: Play Button */
-i.play.circle.large.icon.next-button {
+i.caret.square.right.large.icon.next-button {
+    float: right;
     margin: -3px;
-    text-align: right;
 }
 
 /* ---------------------------------------- */

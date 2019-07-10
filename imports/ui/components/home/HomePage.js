@@ -164,7 +164,7 @@ class HomePage extends React.Component {
                                     </a>
                                     <Link className="item" to="/edit">
                                         Plan Your Itinerary
-                                        <Icon className="next-button" name="play circle" size="large"/>
+                                        <Icon className="next-button" name="caret square right" size="large"/>
                                     </Link>
                                 </div>
                             </div>
