@@ -40,7 +40,7 @@ class AppRouter extends React.Component {
         return (
             <Router>
                 <Menu inverted attached>
-                    <Menu.Item as={NavLink} exact to="/"> <Icon name="street view"/>VANGO</Menu.Item>
+                    <Menu.Item as={NavLink} exact to="/"> <Icon name="street view"/>VanGo</Menu.Item>
                     <Menu.Item as={NavLink} to="/edit/">Edit</Menu.Item>
                     <Menu.Item as={NavLink} to="/itinerary/">Itinerary</Menu.Item>
                     {this.toggleUserView()}

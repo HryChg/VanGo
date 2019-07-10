@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {Link} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
-import { Grid, Sidebar, Menu } from 'semantic-ui-react';
+import { Grid, Sidebar, Menu, Icon } from 'semantic-ui-react';
 
 import SearchBar from "../SearchBar";
 import DatePicker from "./DatePicker";
@@ -17,7 +17,7 @@ import {containAll, formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 
 class HomePage extends React.Component {
-    
+
     // TODO toDateString should be reformatted to yyyy/mm/dd hh:mm
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
@@ -139,7 +139,10 @@ class HomePage extends React.Component {
                 <Grid.Row columns={2}>
                     <Grid.Column width={4}>
                         <div className={"home-panel"}>
-                            <h2 className={"ui header"}>VanGo</h2>
+                            <h2>
+                                <Icon className="logo" name="street view"/> 
+                                VanGo
+                            </h2>
                             <SearchBar/>
                             <div className={"DatePickerContainer"}>
                                 <DatePicker/>
@@ -159,8 +162,7 @@ class HomePage extends React.Component {
                                         Show Current Selection
                                     </a>
                                     <Link className="item" to="/edit">
-                                        <div className="ui small label">51</div>
-                                        Make Your Itinerary
+                                        Plan Your Itinerary
                                     </Link>
                                 </div>
                             </div>

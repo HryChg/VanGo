@@ -41,7 +41,9 @@ class EventFilter extends React.Component {
                     </div>
                 </div>
                 <div className={"ui grid"}>
-                    <div className={"two wide column"}>Price: </div>
+                    <div className={"two wide column"}>
+                        <h4>Price:</h4> 
+                    </div>
                     <div className={"fourteen wide column"}>
                         <Slider color="red" settings={{
                             start: 0,

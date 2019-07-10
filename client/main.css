@@ -7,25 +7,9 @@ body {
     padding: 6px;
 }
 
-
-a {
-    color: darkslateblue;
-}
-
-a:hover {
-    color: slateblue;
-}
-
 /* ---------------------------------------- */
 /* ------------    TopNav   -------------- */
 /* ---------------------------------------- */
-#vango-link, #edit-link, #itinerary-link, #login-link {
-    color: darkslateblue;
-}
-
-#vango-link:hover, #edit-link:hover, #itinerary-link:hover, #login-link:hover {
-    color: slateblue;
-}
 
 .nav-bar {
     list-style-type: none;
@@ -47,6 +31,10 @@ a:hover {
 
 .nav-link:hover {
     color: slateblue;
+}
+
+a {
+    font-size: 16px;
 }
 
 /* ---------------------------------------- */
@@ -78,8 +66,6 @@ a:hover {
 .DatePickerContainer{
     max-width: 100%;
 }
-
-
 
 
 /* ---------------------------------------- */
@@ -135,7 +121,11 @@ a:hover {
 /* ---------------------------------------- */
 /* ---------------  Home Page ------------- */
 /* ---------------------------------------- */
-.ui.action.input { /*TODO: This doesn't work*/
+.logo {
+    padding: 0px;
+}
+
+.ui.action.input {
     margin-bottom: 17px;
     width: 100%;
 }
@@ -161,10 +151,14 @@ a:hover {
 }
 
 
-
 .filter-margin, #filter-name {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+/* Side Panel */
+.item.item {
+    font-size: 16px;
 }
 
 /* ---------------------------------------- */
@@ -193,11 +187,11 @@ a:hover {
 }
 
 .it-date {
-    position: relative;
-    top: 35%;
-    left: 19%;
-    height: 5rem;
-    font-size: 18px;
+    font-size: 16px;
+    font-family: 'Lato','Helvetica Neue',Arial,Helvetica,sans-serif;
+    padding: 10px;
+    text-align: left;
+    color: white;
 }
 
 /* ---------------------------------------- */

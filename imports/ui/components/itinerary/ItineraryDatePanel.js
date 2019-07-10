@@ -13,7 +13,9 @@ class ItineraryDatePanel extends React.Component {
         const mappedDates = this.props.itineraries.map(itinerary => 
             <Menu.Item 
                 fitted='horizontally'
-                onClick={() => {this.props.selectID(itinerary._id);}}>{this.getDisplayName(itinerary)}
+                onClick={() => {this.props.selectID(itinerary._id);}}
+            >
+                <div className="it-date">{this.getDisplayName(itinerary)}</div>
             </Menu.Item>    
         )
         return(<Menu compact inverted vertical>

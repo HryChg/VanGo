@@ -144,7 +144,6 @@ class ItineraryPage extends React.Component {
                     onHide={this.props.hidePanel}
                     vertical
                     visible={this.props.visible}
-                    width="thin"
                 >
                     <ItineraryDatePanel itineraries={this.props.itineraries}><h2>Itineraries</h2></ItineraryDatePanel>
                 </Sidebar>
