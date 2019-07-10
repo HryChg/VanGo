@@ -161,6 +161,12 @@ a {
     font-size: 16px;
 }
 
+/* Home Page: Play Button */
+i.play.circle.large.icon.next-button {
+    margin: -3px;
+    text-align: right;
+}
+
 /* ---------------------------------------- */
 /* -----------  Edit: Side Panel ---------- */
 /* ---------------------------------------- */

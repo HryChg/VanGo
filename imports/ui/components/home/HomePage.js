@@ -15,6 +15,7 @@ import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import { showPanel, hidePanel } from './../../actions/panelActions';
 import {containAll, formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
+import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
 
@@ -158,11 +159,12 @@ class HomePage extends React.Component {
                                         {this.props.homePage.toggleNearbyAttractions?'Hide Attractions':'Show Nearby Attractions'}
                                     </a>
                                     <a className="item" onClick={this.props.showPanel}>
-                                        <div className="ui small label">1</div>
+                                        <div className="ui small label">{ this.props.dataReadySaved ? this.props.savedEvents.length : 0 }</div>
                                         Show Current Selection
                                     </a>
                                     <Link className="item" to="/edit">
                                         Plan Your Itinerary
+                                        <Icon className="next-button" name="play circle" size="large"/>
                                     </Link>
                                 </div>
                             </div>
@@ -201,10 +203,15 @@ const mapStateToProps = (state) => {
 const HomePageContainer = withTracker(()=>{
     const handle = Meteor.subscribe('currentEvents');
     const currentEvents = CurrentEvents.find().fetch();
+    
+    const handleSaved = Meteor.subscribe('eventDrawer');
+    const savedEvents = EventDrawerApi.find().fetch();
 
     return {
         dataReady: handle.ready(),
-        currentEvents: currentEvents
+        currentEvents: currentEvents,
+        dataReadySaved: handleSaved.ready(),
+        savedEvents: savedEvents
     }
 })(HomePage);
 
