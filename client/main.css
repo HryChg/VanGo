@@ -135,7 +135,7 @@ a:hover {
 /* ---------------------------------------- */
 /* ---------------  Home Page ------------- */
 /* ---------------------------------------- */
-#searchInputContainer { /*TODO: This doesn't work*/
+.ui.action.input { /*TODO: This doesn't work*/
     margin-bottom: 17px;
     width: 100%;
 }

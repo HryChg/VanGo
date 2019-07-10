@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {Link} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Sidebar, Menu } from 'semantic-ui-react';
 
 import SearchBar from "../SearchBar";
 import DatePicker from "./DatePicker";
@@ -12,21 +12,12 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
+import { showPanel, hidePanel } from './../../actions/panelActions';
 import {containAll, formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 
 class HomePage extends React.Component {
-    toggleEventDrawer = () => {
-        $('.ui.right.sidebar')
-            .sidebar('setting', 'transition', 'overlay')
-            .sidebar('setting', 'dimPage', false)
-            .sidebar('toggle');
-    };
-
-    componentWillUnmount() {
-        $('.ui.right.sidebar').detach();
-    }
-
+    
     // TODO toDateString should be reformatted to yyyy/mm/dd hh:mm
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
@@ -129,6 +120,21 @@ class HomePage extends React.Component {
     render() {
         return (
             <div>
+            <Sidebar.Pushable>
+            <Sidebar
+                as={Menu}
+                animation='overlay'
+                direction='right'
+                inverted
+                onHide={this.props.hidePanel}
+                vertical
+                visible={this.props.visible}
+            >
+                <EventDrawer/>
+            </Sidebar>
+
+            <Sidebar.Pusher>
+            <div>
             <Grid stackable divided='vertically'>
                 <Grid.Row columns={2}>
                     <Grid.Column width={4}>
@@ -148,7 +154,7 @@ class HomePage extends React.Component {
                                         <div className="ui small teal label">31</div>
                                         {this.props.homePage.toggleNearbyAttractions?'Hide Attractions':'Show Nearby Attractions'}
                                     </a>
-                                    <a className="item" onClick={this.toggleEventDrawer}>
+                                    <a className="item" onClick={this.props.showPanel}>
                                         <div className="ui small label">1</div>
                                         Show Current Selection
                                     </a>
@@ -160,17 +166,22 @@ class HomePage extends React.Component {
                             </div>
                         </div>
                     </Grid.Column>
+
                     <Grid.Column width={12}>
                         <div style={{height: '94vh'}}>
-                            <MapContainer width={'95%'} height={'95%'} initialCenter={{lat: 49.2820, lng: -123.1171}}>
+                            <MapContainer width={'98%'} height={'100%'} initialCenter={{lat: 49.2820, lng: -123.1171}}>
                                 {this.displayMarkers()}
                             </MapContainer>
                         </div>
                     </Grid.Column>
-                {/* <EventDrawer/> */}
+                
                 </Grid.Row>
             </Grid>
             </div>
+            </Sidebar.Pusher>
+            </Sidebar.Pushable>
+        </div>
+            
         );
     }
 }
@@ -180,7 +191,8 @@ const mapStateToProps = (state) => {
     return {
         maxPrice: state.maxPrice,
         homePage: state.homePage,
-        eventFilter: state.eventFilter
+        eventFilter: state.eventFilter,
+        visible: state.panel.visible
     };
 };
 
@@ -195,6 +207,8 @@ const HomePageContainer = withTracker(()=>{
 })(HomePage);
 
 export default connect(mapStateToProps, {
-    handleOnMarkerClick: handleOnMarkerClick,
-    toggleNearbyAttractions: toggleNearbyAttractions
+    handleOnMarkerClick,
+    toggleNearbyAttractions,
+    showPanel, 
+    hidePanel 
 })(HomePageContainer);

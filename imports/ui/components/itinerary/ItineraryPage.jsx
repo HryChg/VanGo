@@ -14,7 +14,8 @@ import ItineraryList from './ItineraryList';
 import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
-import { selectID, showItineraryPanel, hideItineraryPanel } from './../../actions/itineraryActions';
+import { selectID } from './../../actions/itineraryActions';
+import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM } from "../../../util/util";
 
 class ItineraryPage extends React.Component {
@@ -140,7 +141,7 @@ class ItineraryPage extends React.Component {
                     direction='left'
                     icon='labeled'
                     inverted
-                    onHide={this.props.hideItineraryPanel}
+                    onHide={this.props.hidePanel}
                     vertical
                     visible={this.props.visible}
                     width="thin"
@@ -155,7 +156,7 @@ class ItineraryPage extends React.Component {
                                 <div id="it-date-toggle">
                                     <Menu inverted attached icon>
                                         <Menu.Item 
-                                            onClick={this.props.showItineraryPanel}>
+                                            onClick={this.props.showPanel}>
                                             <Icon name="calendar"/>
                                         </Menu.Item>
                                     </Menu>
@@ -190,7 +191,7 @@ class ItineraryPage extends React.Component {
 const mapStateToProps = (state) => {
     return {
         selectedID: state.itineraryStore.selectedID,
-        visible: state.itineraryPanel.visible
+        visible: state.panel.visible
     };
 }
 
@@ -204,4 +205,4 @@ const ItineraryPageContainer = withTracker(() => {
     }
 })(ItineraryPage);
 
-export default connect(mapStateToProps, { handleOnMarkerClick, selectID, showItineraryPanel, hideItineraryPanel })(ItineraryPageContainer);
+export default connect(mapStateToProps, { handleOnMarkerClick, selectID, showPanel, hidePanel })(ItineraryPageContainer);
