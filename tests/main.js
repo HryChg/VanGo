@@ -1,4 +1,6 @@
 import assert from "assert";
+import "../imports/api/sample.tests";
+import "./sample2.test";
 
 describe("VanGo", function () {
   it("package.json has correct name", async function () {
