@@ -5,13 +5,6 @@ export const updateCategories = (selectedCategories) => {
     };
 };
 
-export const updatePricePoints = (selectedPricePoints) => {
-    return {
-        type: 'UPDATE_PRICE_RANGE',
-        payload: selectedPricePoints
-    }
-};
-
 export const filterPrice = (price) => {
     return {
         type: 'FILTER_PRICE',

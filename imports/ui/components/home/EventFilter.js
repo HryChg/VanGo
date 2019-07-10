@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Toggle from "../Toggle";
-import { updateCategories, updatePricePoints, filterPrice } from "../../actions/eventFilterActions";
-import { VanGoStore } from "../../../../client/main";
+import { updateCategories, filterPrice } from "../../actions/eventFilterActions";
 import { containOneOf, toggleItemInArray } from "../../../util/util";
 import { Slider } from "react-semantic-ui-range";
 import CurrentEvents from '../../../api/CurrentEvents';
@@ -13,18 +12,18 @@ import CurrentEvents from '../../../api/CurrentEvents';
 class EventFilter extends React.Component {
 
     // EFFECTS: handle value sent from the toggles.
-    //          If toggleText exist in either categories or price points,
+    //          If toggleText exist in either categories or price range,
     //          remove it. If not, add it.
     handleToggle = (toggleText) => {
-        const currentCategoriesInStore = VanGoStore.getState().eventFilter.categories;
+        const currentCategoriesInStore = this.props.eventFilter.categories;
         let newCategories = toggleItemInArray(currentCategoriesInStore, toggleText);
         this.props.updateCategories(newCategories);
     };
 
-    //TODO: Get max price in events for the day
+    //EFFECTS: Returns the max price of all loaded events for the day
     getMaxPrice() {
-        // Math.max.apply(Math, this.props.currentEvents.map(e => { return o.y })), 
-        return 100;
+        let maxPrice = Math.max.apply(Math, this.props.events.map(event => { return event.price }));
+        return maxPrice;
     }
 
     render() {
@@ -45,12 +44,12 @@ class EventFilter extends React.Component {
                         <h4>Price:</h4> 
                     </div>
                     <div className={"fourteen wide column"}>
-                        <Slider color="red" settings={{
-                            start: 0,
+                        <Slider multiple color="red" settings={{
+                            start: [-1, 0],
                             min: 0,
                             max: this.getMaxPrice(),
                             step: 1,
-                            onChange: (value) => {
+                            onChange: (value) => { // TODO: See if onMouseUp can be integrated
                                 this.props.filterPrice(value);
                             }
                         }} />
@@ -68,6 +67,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     updateCategories: updateCategories,
-    updatePricePoints: updatePricePoints,
     filterPrice: filterPrice
 })(EventFilter);
