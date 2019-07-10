@@ -5,7 +5,7 @@ export default class ItineraryList extends React.Component {
     render() {
         if (this.props.itinerary != null) {
             const events = this.props.itinerary.events;
-            const mappedEvents = events.map(event => <ItineraryItem key={event.id} event={event} />);
+            const mappedEvents = events.map(event => <ItineraryItem key={event._id} event={event} />);
             return(<div className="itinerary">
                 <ol id="itinerary-list">
                     { mappedEvents }
