@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { Menu } from 'semantic-ui-react';
 
 import {deleteEvent} from '../../actions/eventDrawerActions';
 import {maskString} from "../../../util/util";
@@ -11,9 +12,11 @@ class EventDrawer extends React.Component {
         let savedEventsInStore = this.props.drawerItems;
         return savedEventsInStore.map((selectedEvent, index) => {
             return (
-                <a className={"item"}
-                   key={selectedEvent._id}
-                   className="item">
+                <Menu.Item
+                    className={"item"}
+                    key={selectedEvent._id}
+                >
+                    {maskString(selectedEvent.name, 22)}
                     <i className="trash icon" onClick={() => {
                         Meteor.call('removeEventFromDrawer', selectedEvent._id, (error, result)=>{
                             if (error) {
@@ -23,8 +26,7 @@ class EventDrawer extends React.Component {
                             }
                         })
                     }}/>
-                    {maskString(selectedEvent.name, 25)}
-                </a>
+                </Menu.Item>
             );
         });
     };
@@ -32,11 +34,7 @@ class EventDrawer extends React.Component {
     render() {
         return (
             <div>
-                <div
-                    className="ui right sidebar inverted vertical menu"
-                >
-                    {this.displaySavedEvents()}
-                </div>
+                {this.displaySavedEvents()}
             </div>
         );
     }

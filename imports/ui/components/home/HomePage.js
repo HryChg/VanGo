@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {Link} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
+import { Grid, Sidebar, Menu, Icon } from 'semantic-ui-react';
 
-import SideNav from "../SideNav";
 import SearchBar from "../SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
@@ -12,20 +12,12 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
+import { showPanel, hidePanel } from './../../actions/panelActions';
 import {containAll, formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
+import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
-    toggleEventDrawer = () => {
-        $('.ui.right.sidebar')
-            .sidebar('setting', 'transition', 'overlay')
-            .sidebar('setting', 'dimPage', false)
-            .sidebar('toggle');
-    };
-
-    componentWillUnmount() {
-        $('.ui.right.sidebar').detach();
-    }
 
     // TODO toDateString should be reformatted to yyyy/mm/dd hh:mm
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
@@ -128,49 +120,72 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <div className="ui grid">
-                <div className="four wide column">
-                    <SideNav>
+            <div>
+            <Sidebar.Pushable>
+            <Sidebar
+                as={Menu}
+                animation='overlay'
+                direction='right'
+                inverted
+                onHide={this.props.hidePanel}
+                vertical
+                visible={this.props.visible}
+            >
+                <EventDrawer/>
+            </Sidebar>
 
-                        <h2 className={"ui header"}>VanGo</h2>
-                        <SearchBar/>
-                        <div className={"DatePickerContainer"}>
-                            <DatePicker/>
-                        </div>
-                        <div className={"EventFilterContainer"}>
-                            <EventFilter/>
-                        </div>
+            <Sidebar.Pusher>
+            <div>
+            <Grid stackable divided='vertically'>
+                <Grid.Row columns={2}>
+                    <Grid.Column width={4}>
+                        <div className={"home-panel"}>
+                            <h2>
+                                <Icon className="logo" name="street view"/> 
+                                VanGo
+                            </h2>
+                            <SearchBar/>
+                            <div className={"DatePickerContainer"}>
+                                <DatePicker/>
+                            </div>
+                            <div className={"EventFilterContainer"}>
+                                <EventFilter/>
+                            </div>
 
-                        <div className={"sidenav-options-container"}>
-                            <div className="ui large vertical menu fluid">
-                                <a className="item" onClick={this.props.toggleNearbyAttractions}>
-                                    <div className="ui small teal label">31</div>
-                                    {this.props.homePage.toggleNearbyAttractions?'Hide Attractions':'Show Nearby Attractions'}
-                                </a>
-                                <a className="item" onClick={this.toggleEventDrawer}>
-                                    <div className="ui small label">1</div>
-                                    Show Current Selection
-                                </a>
-                                <Link className="item" to="/edit">
-                                    <div className="ui small label">51</div>
-                                    Make Your Itinerary
-                                </Link>
+                            <div className={"sidenav-options-container"}>
+                                <div className="ui large vertical menu fluid">
+                                    <a className="item" onClick={this.props.toggleNearbyAttractions}>
+                                        <div className="ui small teal label">31</div>
+                                        {this.props.homePage.toggleNearbyAttractions?'Hide Attractions':'Show Nearby Attractions'}
+                                    </a>
+                                    <a className="item" onClick={this.props.showPanel}>
+                                        <div className="ui small label">{ this.props.dataReadySaved ? this.props.savedEvents.length : 0 }</div>
+                                        Show Current Selection
+                                    </a>
+                                    <Link className="item" to="/edit">
+                                        Plan Your Itinerary
+                                        <Icon className="next-button" name="caret square right" size="large"/>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
+                    </Grid.Column>
 
-                    </SideNav>
-                </div>
-                <div className="twelve wide column">
-                    <div style={{height: '90vh'}}>
-                        <MapContainer width={'95%'} height={'95%'} initialCenter={{lat: 49.2820, lng: -123.1171}}>
-                            {this.displayMarkers()}
-                        </MapContainer>
-                    </div>
-                </div>
-
-                <EventDrawer/>
-
+                    <Grid.Column width={12}>
+                        <div style={{height: '94vh'}}>
+                            <MapContainer width={'98%'} height={'100%'} initialCenter={{lat: 49.2820, lng: -123.1171}}>
+                                {this.displayMarkers()}
+                            </MapContainer>
+                        </div>
+                    </Grid.Column>
+                
+                </Grid.Row>
+            </Grid>
             </div>
+            </Sidebar.Pusher>
+            </Sidebar.Pushable>
+        </div>
+            
         );
     }
 }
@@ -180,21 +195,29 @@ const mapStateToProps = (state) => {
     return {
         maxPrice: state.maxPrice,
         homePage: state.homePage,
-        eventFilter: state.eventFilter
+        eventFilter: state.eventFilter,
+        visible: state.panel.visible
     };
 };
 
 const HomePageContainer = withTracker(()=>{
     const handle = Meteor.subscribe('currentEvents');
     const currentEvents = CurrentEvents.find().fetch();
+    
+    const handleSaved = Meteor.subscribe('eventDrawer');
+    const savedEvents = EventDrawerApi.find().fetch();
 
     return {
         dataReady: handle.ready(),
-        currentEvents: currentEvents
+        currentEvents: currentEvents,
+        dataReadySaved: handleSaved.ready(),
+        savedEvents: savedEvents
     }
 })(HomePage);
 
 export default connect(mapStateToProps, {
-    handleOnMarkerClick: handleOnMarkerClick,
-    toggleNearbyAttractions: toggleNearbyAttractions
+    handleOnMarkerClick,
+    toggleNearbyAttractions,
+    showPanel, 
+    hidePanel 
 })(HomePageContainer);
