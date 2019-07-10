@@ -47,21 +47,6 @@ export default class YelpAttractionsApi {
     }
 }
 
-approximatePrice = (dollarSign) => {
-    switch (dollarSign) {
-        case '$':
-            return 10;
-        case '$$':
-            return 30;
-        case '$$$':
-            return 60;
-        case '$$$$':
-            return 100;
-        default:
-            return 0;
-    }
-}
-
 export const convertBusinessToAttraction = (business) => {
     let attraction = {};
     attraction.name = business.name;
