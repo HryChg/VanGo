@@ -2,15 +2,35 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { Menu } from 'semantic-ui-react';
 
-import {deleteEvent} from '../../actions/eventDrawerActions';
+import {deleteEvent, updateEventDrawer} from '../../actions/eventDrawerActions';
 import {maskString} from "../../../util/util";
 import {withTracker} from "meteor/react-meteor-data";
 import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class EventDrawer extends React.Component {
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    fetchData = () => {
+        Meteor.call('getCurrentUserData', (err, res)=>{
+            if (err){
+                console.log(`Error loading user data to event drawer: ${err.message}`)
+            }
+            this.props.updateEventDrawer(res);
+        });
+    };
+
     displaySavedEvents = () => {
-        let savedEventsInStore = this.props.drawerItems;
-        return savedEventsInStore.map((selectedEvent, index) => {
+        if (this.props.userData.user === "reducerInitialState"){
+            return <Menu.Item>No data available. Displaying Reducer Initial State</Menu.Item>
+        }
+
+        if (this.props.userData.items.length === 0){
+            return <Menu.Item>User has not saved events</Menu.Item>
+        }
+
+        return this.props.userData.items.map((selectedEvent, index) => {
             return (
                 <Menu.Item
                     className={"item"}
@@ -18,6 +38,7 @@ class EventDrawer extends React.Component {
                 >
                     {maskString(selectedEvent.name, 22)}
                     <i className="trash icon" onClick={() => {
+                        // TODO Fix this
                         Meteor.call('removeEventFromDrawer', selectedEvent._id, (error, result)=>{
                             if (error) {
                                 alert(error);
@@ -40,11 +61,11 @@ class EventDrawer extends React.Component {
     }
 }
 
-
 const mapStateToProps = (state) => {
-    return {eventDrawer: state.eventDrawer};
+    return {userData: state.eventDrawer.userData};
 };
 
+// NOT USED
 const EventDrawerContainer = withTracker(()=>{
     const handle = Meteor.subscribe('eventDrawer');
     const drawerItems = EventDrawerApi.find().fetch();
@@ -56,5 +77,6 @@ const EventDrawerContainer = withTracker(()=>{
 
 
 export default connect(mapStateToProps, {
-    deleteEvent: deleteEvent
+    deleteEvent: deleteEvent,
+    updateEventDrawer: updateEventDrawer
 })(EventDrawerContainer);

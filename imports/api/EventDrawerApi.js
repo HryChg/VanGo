@@ -80,7 +80,7 @@ if (Meteor.isServer) {
 
 
     Meteor.methods({
-        getCurrentUserID: async ()=>{
+        getCurrentUserData: async ()=>{
             let accountID;
             if (Meteor.userId() === null){
                 accountID = await getAnonAccountID();
