@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { selectID } from './../../actions/itineraryActions';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
 
 class ItineraryDatePanel extends React.Component {
     getDisplayName(itinerary) {
@@ -16,7 +16,13 @@ class ItineraryDatePanel extends React.Component {
                 fitted='horizontally'
                 onClick={() => {this.props.selectID(itinerary._id);}}
             >
-                <div className="it-date">{this.getDisplayName(itinerary)}</div>
+                <div className="it-date">{this.getDisplayName(itinerary)}
+                <Icon name="trash" onClick={() => {
+                    Meteor.call('deleteItinerary', itinerary._id, (error, result)=>{
+                        error ? alert(error) : alert('Itinerary Deleted!');
+                    })
+                }}/>
+                </div>
             </Menu.Item>    
         )
         return(<Menu compact inverted vertical>

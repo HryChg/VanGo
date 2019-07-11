@@ -294,12 +294,16 @@ i.caret.square.right.large.icon.next-button {
     margin: 0 auto;
 }
 /* ---------------------------------------- */
-/* ----        Event Drawer        -------- */
+/* ---- ToggleDrawer (Event, Itinerary) --- */
 /* ---------------------------------------- */
 .trash.icon:active {
     transform: translateY(2px);
 }
 
+i.trash.icon {
+    float: right;
+    margin: 0 0 0 .5rem;
+}
 
 /* ---------------------------------------- */
 /* ----    EventFilterContainer    -------- */
