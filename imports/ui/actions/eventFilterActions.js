@@ -12,3 +12,10 @@ export const filterPrice = (price) => {
     };
 };
 
+export const filterPriceByEntry = (e) => {
+    return {
+        type: 'FILTER_PRICE_BY_ENTRY',
+        payload: e.target.value
+    };
+};
+

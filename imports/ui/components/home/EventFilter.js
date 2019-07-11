@@ -1,16 +1,14 @@
+//Reference: https://www.npmjs.com/package/react-semantic-ui-range
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Slider } from "react-semantic-ui-range";
-import { Grid } from 'semantic-ui-react';
+import { Grid, Input } from 'semantic-ui-react';
 
 import Toggle from "../Toggle";
-import { updateCategories, filterPrice } from "../../actions/eventFilterActions";
+import { updateCategories, filterPrice, filterPriceByEntry } from "../../actions/eventFilterActions";
 import { toggleCategoryInArray } from "../../../util/util";
 import { debounce } from 'lodash';
-
-import CurrentEvents from '../../../api/CurrentEvents';
-
-//https://www.npmjs.com/package/react-semantic-ui-range
 
 class EventFilter extends React.Component {
 
@@ -51,6 +49,17 @@ class EventFilter extends React.Component {
         return maxPrice;
     }
 
+    //EFFECTS: formats and displays price range
+    // if the lower and upper bounds are equal, display one value
+    displayPrice(priceRange) {
+        let lowerBound = priceRange[0] < 0 ? 0 : priceRange[0];
+        let upperBound = priceRange[1];
+        if (lowerBound === upperBound) {
+            return "$" + lowerBound;
+        }
+        return "$" + lowerBound + " to $" + upperBound;
+    }
+
     render() {
         return (
             <div className={""}>
@@ -70,20 +79,23 @@ class EventFilter extends React.Component {
                             </div>
                         </Grid.Column>
                     </Grid.Row>
-                </Grid>
-                <Grid>
                     <Grid.Row>
-                        <Grid.Column width={2}>
-                            <h4>Price:</h4> 
-                        </Grid.Column>
-                        <Grid.Column width={14}>
+                        <Grid.Column>
+                            <h4>{"Price:  "}
+                                <span style={{fontWeight: "normal"}}>
+                                    {this.displayPrice(this.props.eventFilter.priceRange)}
+                                </span>
+                            </h4>
+                            {/* <Input placeholder="Enter Value" onChange={(e) => {this.props.filterPriceByEntry(e)}} />
+                                to
+                            <Input placeholder="Enter Value" onChange={(e) => {this.props.filterPriceByEntry(e)}} /> */}
                             <Slider multiple color="red" settings={{
                                 start: [-1, 0],
                                 min: 0,
                                 max: this.getMaxPrice(),
                                 step: 1,
                                 onChange: debounce((value) => {
-                                    (this.props.filterPrice(value))
+                                    this.props.filterPrice(value)
                                 }, 500)
                             }} />
                         </Grid.Column>
@@ -100,6 +112,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-    updateCategories: updateCategories,
-    filterPrice: filterPrice
+    updateCategories,
+    filterPrice,
+    filterPriceByEntry
 })(EventFilter);
