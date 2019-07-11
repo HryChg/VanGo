@@ -35,7 +35,7 @@ class EditPage extends React.Component {
                     lng: item.longitude
                 }}
                 icon={{
-                    url: "http://maps.google.com/mapfiles/kml/pal4/icon46.png"
+                    url: "https://img.icons8.com/color/43/000000/compact-camera.png"
                   }}
                 description={(item.description)?item.description:'No Description Available'}
                 onClick={this.props.handleOnMarkerClick}/>

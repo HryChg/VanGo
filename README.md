@@ -59,7 +59,8 @@ Semantic UI
 https://semantic-ui.com/modules/modal.html
 
 Marker Icons
-https://sites.google.com/site/gmapsdevelopment/
+https://icons8.com/
+https://img.icons8.com/color/48/000000/compact-camera.png
 
 ##### Navigation Bar
 React-Router Quick Start
