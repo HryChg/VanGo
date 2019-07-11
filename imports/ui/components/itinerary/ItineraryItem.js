@@ -39,7 +39,7 @@ export default class ItineraryItem extends React.Component {
                 </div>
                 <div className="event-detail" id="event-description">{ this.props.event.description }</div>
                 <div className="event-detail" id="event-url"><a href={ this.props.event.link }>More Details</a></div>
-                <div className="event-detail" id="event-price">Price: ${ this.props.event.price ? this.props.event.price : 'N/A' }</div>
+                <div className="event-detail" id="event-price">Price: { this.props.event.price ? "$" + this.props.event.price : 'N/A' }</div>
             </div>);
     }
 }

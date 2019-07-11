@@ -18,7 +18,6 @@ import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
-
     // TODO toDateString should be reformatted to yyyy/mm/dd hh:mm
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
@@ -40,7 +39,7 @@ class HomePage extends React.Component {
                         lng: item.longitude
                     }}
                     icon={{
-                        url: "http://maps.google.com/mapfiles/kml/pal4/icon46.png"
+                        url: "https://img.icons8.com/color/43/000000/compact-camera.png"
                       }}
                     description={(item.description)?item.description:'No Description Available'}
                     onClick={this.props.handleOnMarkerClick}/>
@@ -66,11 +65,12 @@ class HomePage extends React.Component {
         return markers;
     };
 
-    // EFFECTS: return true if the item meets one of the selected categories and one of the price points
+    // EFFECTS: return true if the item meets one of the selected categories and is within the price range
     //          return false if user decides not to show nearby attraction and this item is an attraction
+    //          
     //          If no category selected, items of all categories are considered
-    //          If no price point selected, items of all price points are considered
-    //          If no price point and no category selected, return true by default
+    //          If a category has been selected and the item price is within the price range, it may be shown 
+    //          Price range is always in effect.
     filterItems = (item) => {
         let showAttractions = this.props.homePage.toggleNearbyAttractions;
         let isAttraction = item.type==='Attraction';
@@ -79,44 +79,17 @@ class HomePage extends React.Component {
         }
 
         let filterCategories = this.props.eventFilter.categories;
-        let filterPricePoints = this.props.eventFilter.pricePoints;
-        // if (filterCategories.length === 0 && filterPricePoints.length === 0) return true; 
-
         let matchCategory;
         if (filterCategories.length === 0) {
             matchCategory = true;
         } else {
-            matchCategory = containAll(filterCategories, [item.category]);
+            matchCategory = filterCategories.includes(item.category);
         }
 
-        // let matchPricePoints;
-        // if (filterPricePoints.length === 0) {
-        //     matchPricePoints = true;
-        // } else {
-        //     let eventPricePoint = this.extractPricePoint(item);
-        //     matchPricePoints = containAll(filterPricePoints, [eventPricePoint]);
-        // }
-
-        let matchPricePoints = item.price <= this.props.eventFilter.sliderPrice;
-
-        return matchCategory && matchPricePoints;
+        let withinPriceRange = item.price >= this.props.eventFilter.priceRange[0] && 
+                               item.price <= this.props.eventFilter.priceRange[1];
+        return matchCategory && withinPriceRange;
     };
-
-    // EFFECTS: extract the price point category for the item
-    extractPricePoint = (item) => {
-        if (item.price === 0) {
-            return 'Free';
-        } else if (item.price <= 10) {
-            return '$';
-        } else if (item.price <= 25) {
-            return '$$';
-        } else if (item.price <= 50) {
-            return '$$$';
-        } else {
-            return '$$$$';
-        }
-    };
-
 
     render() {
         return (
@@ -149,7 +122,7 @@ class HomePage extends React.Component {
                                 <DatePicker/>
                             </div>
                             <div className={"EventFilterContainer"}>
-                                <EventFilter/>
+                                <EventFilter events={this.props.currentEvents}/>
                             </div>
 
                             <div className={"sidenav-options-container"}>
