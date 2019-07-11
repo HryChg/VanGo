@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Slider } from "react-semantic-ui-range";
+import { Grid } from 'semantic-ui-react';
 
 import Toggle from "../Toggle";
 import { updateCategories, filterPrice } from "../../actions/eventFilterActions";
-import { containOneOf, toggleCategoryInArray } from "../../../util/util";
-import { Slider } from "react-semantic-ui-range";
+import { toggleCategoryInArray } from "../../../util/util";
+import { debounce } from 'lodash';
+
 import CurrentEvents from '../../../api/CurrentEvents';
 
 //https://www.npmjs.com/package/react-semantic-ui-range
@@ -51,37 +54,41 @@ class EventFilter extends React.Component {
     render() {
         return (
             <div className={""}>
-                <div className={"ui grid"}>
-                    <div className={"sixteen wide column"}>
-                    <h4 className={"filter-margin"} id={"filter-name"}>Filters:</h4>
-                        <div className="container toggles">
-                            <Toggle content={"Art & Music"} sendData={this.handleToggle} />
-                            <Toggle content={"Food"} sendData={this.handleToggle} />
-                            <Toggle content={"Education"} sendData={this.handleToggle} />
-                        </div>
-                        <div className="container toggles">
-                            <Toggle content={"Festivals"} sendData={this.handleToggle} />
-                            <Toggle content={"Family"} sendData={this.handleToggle} />
-                            <Toggle content={"Other"} sendData={this.handleToggle} />
-                        </div>
-                    </div>
-                </div>
-                <div className={"ui grid"}>
-                    <div className={"two wide column"}>
-                        <h4>Price:</h4> 
-                    </div>
-                    <div className={"fourteen wide column"}>
-                        <Slider multiple color="red" settings={{
-                            start: [-1, 0],
-                            min: 0,
-                            max: this.getMaxPrice(),
-                            step: 1,
-                            onChange: (value) => { // TODO: See if onMouseUp can be integrated
-                                this.props.filterPrice(value);
-                            }
-                        }} />
-                    </div>
-                </div>
+                <Grid>
+                    <Grid.Row>
+                        <Grid.Column width={16}>
+                        <h4 className={"filter-margin"} id={"filter-name"}>Filters:</h4>
+                            <div className="container toggles">
+                                <Toggle content={"Art & Music"} sendData={this.handleToggle} />
+                                <Toggle content={"Food"} sendData={this.handleToggle} />
+                                <Toggle content={"Education"} sendData={this.handleToggle} />
+                            </div>
+                            <div className="container toggles">
+                                <Toggle content={"Festivals"} sendData={this.handleToggle} />
+                                <Toggle content={"Family"} sendData={this.handleToggle} />
+                                <Toggle content={"Other"} sendData={this.handleToggle} />
+                            </div>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+                <Grid>
+                    <Grid.Row>
+                        <Grid.Column width={2}>
+                            <h4>Price:</h4> 
+                        </Grid.Column>
+                        <Grid.Column width={14}>
+                            <Slider multiple color="red" settings={{
+                                start: [-1, 0],
+                                min: 0,
+                                max: this.getMaxPrice(),
+                                step: 1,
+                                onChange: debounce((value) => {
+                                    (this.props.filterPrice(value))
+                                }, 500)
+                            }} />
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
                 <br />
             </div>
         );

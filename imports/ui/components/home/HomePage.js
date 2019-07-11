@@ -84,14 +84,7 @@ class HomePage extends React.Component {
         if (filterCategories.length === 0) {
             matchCategory = true;
         } else {
-            // TODO: Get the list of Yelp categories that we pull from events. 
-            // Our filter is currently:
-            // - case sensitive
-            // - toggle text does not match yelp api categories
-            console.log(filterCategories);
-            console.log(item.category);
             matchCategory = filterCategories.includes(item.category);
-            console.log(matchCategory);
         }
 
         let withinPriceRange = item.price >= this.props.eventFilter.priceRange[0] && 

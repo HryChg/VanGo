@@ -1,6 +1,4 @@
 // EFFECTS: return true if listA contains every element in listB
-import {VanGoStore} from "../../client/main";
-
 export const containAll = (listA, listB) => {
     let result = true;
     for (let item of listB){
