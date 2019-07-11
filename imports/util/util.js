@@ -34,7 +34,7 @@ export const toggleCategoryInArray = (originalArray, categoryGroup) => {
     let newArray = null;
     if (containOneOf(originalArray, categoryGroup)) {
         newArray = originalArray.filter((category) => {
-            return categoryGroup.includes(category);
+            return !categoryGroup.includes(category);
         });
     } else {
         newArray = originalArray.concat(categoryGroup);

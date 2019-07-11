@@ -88,7 +88,10 @@ class HomePage extends React.Component {
             // Our filter is currently:
             // - case sensitive
             // - toggle text does not match yelp api categories
+            console.log(filterCategories);
+            console.log(item.category);
             matchCategory = filterCategories.includes(item.category);
+            console.log(matchCategory);
         }
 
         let withinPriceRange = item.price >= this.props.eventFilter.priceRange[0] && 
