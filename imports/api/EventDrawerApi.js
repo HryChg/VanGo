@@ -32,7 +32,7 @@ const updateAnonAccount = async (item) => {
     }
 };
 
-const getUserAccountID = async () => {
+export const getUserAccountID = async () => {
     let userDrawerID = EventDrawerApi.findOne({user: Meteor.userId()});
     if (!userDrawerID){
         let userAccount = {
@@ -57,25 +57,38 @@ const updateExistingAccount = async (item) => {
     }
 };
 
+const getEventsOnUserID = async () => {
+    let accountID;
+    if (Meteor.userId()){ // if logged in
+        accountID = await getAnonAccountID();
+    } else {
+        accountID = await getUserAccountID();
+    }
+    return accountID;
+};
 
-// TODO: This will need some restrictions
+
+
 if (Meteor.isServer) {
     Meteor.publish('eventDrawer', function () {
         return EventDrawerApi.find();
     });
 
+    Meteor.publish('eventDrawerWithUserID',function () {
+        return EventDrawerApi.find();
+    });
+
 
     Meteor.methods({
-        getEventsOnUserID: async () => {
+        getCurrentUserID: async ()=>{
             let accountID;
-            if (Meteor.userId()){ // if logged in
-                accountID = getAnonAccountID();
+            if (Meteor.userId() === null){
+                accountID = await getAnonAccountID();
             } else {
-                accountID = getUserAccountID();
+                accountID = await getUserAccountID();
             }
             return await EventDrawerApi.findOne({_id: accountID})
         },
-
 
 
         saveEventToDrawer: async (eventToBeSaved) => {
