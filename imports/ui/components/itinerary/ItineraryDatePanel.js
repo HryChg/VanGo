@@ -17,7 +17,8 @@ class ItineraryDatePanel extends React.Component {
                 onClick={() => {this.props.selectID(itinerary._id);}}
             >
                 <div className="it-date">{this.getDisplayName(itinerary)}
-                <Icon name="trash" onClick={() => {
+                <Icon name="trash" onClick={(e) => {
+                    e.stopPropagation();
                     Meteor.call('deleteItinerary', itinerary._id, (error, result)=>{
                         error ? alert(error) : alert('Itinerary Deleted!');
                     })
