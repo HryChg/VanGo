@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
 import { Grid, Sidebar, Menu, Icon } from 'semantic-ui-react';
 
-import SearchBar from "../SearchBar";
+import SearchBar from "./SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
@@ -13,12 +13,12 @@ import EventDrawer from "./EventDrawer";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import { showPanel, hidePanel } from './../../actions/panelActions';
-import {containAll, formatAMPM} from "../../../util/util";
+import {formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
-    // TODO toDateString should be reformatted to yyyy/mm/dd hh:mm
+
     // EFFECTS: render markers based on information from currEvents.events in Redux Store
     // Note store.start_time and end_time are date object, need to convert them to strings
     displayMarkers = () => {
@@ -67,9 +67,9 @@ class HomePage extends React.Component {
 
     // EFFECTS: return true if the item meets one of the selected categories and is within the price range
     //          return false if user decides not to show nearby attraction and this item is an attraction
-    //          
+    //
     //          If no category selected, items of all categories are considered
-    //          If a category has been selected and the item price is within the price range, it may be shown 
+    //          If a category has been selected and the item price is within the price range, it may be shown
     //          Price range is always in effect.
     filterItems = (item) => {
         let showAttractions = this.props.homePage.toggleNearbyAttractions;
@@ -86,7 +86,7 @@ class HomePage extends React.Component {
             matchCategory = filterCategories.includes(item.category);
         }
 
-        let withinPriceRange = item.price >= this.props.eventFilter.priceRange[0] && 
+        let withinPriceRange = item.price >= this.props.eventFilter.priceRange[0] &&
                                item.price <= this.props.eventFilter.priceRange[1];
         return matchCategory && withinPriceRange;
     };
@@ -114,7 +114,7 @@ class HomePage extends React.Component {
                     <Grid.Column width={4}>
                         <div className={"home-panel"}>
                             <h2>
-                                <Icon className="logo" name="street view"/> 
+                                <Icon className="logo" name="street view"/>
                                 VanGo
                             </h2>
                             <SearchBar/>
@@ -151,14 +151,14 @@ class HomePage extends React.Component {
                             </MapContainer>
                         </div>
                     </Grid.Column>
-                
+
                 </Grid.Row>
             </Grid>
             </div>
             </Sidebar.Pusher>
             </Sidebar.Pushable>
         </div>
-            
+
         );
     }
 }
@@ -176,7 +176,7 @@ const mapStateToProps = (state) => {
 const HomePageContainer = withTracker(()=>{
     const handle = Meteor.subscribe('currentEvents');
     const currentEvents = CurrentEvents.find().fetch();
-    
+
     const handleSaved = Meteor.subscribe('eventDrawer');
     const savedEvents = EventDrawerApi.find().fetch();
 
@@ -191,6 +191,6 @@ const HomePageContainer = withTracker(()=>{
 export default connect(mapStateToProps, {
     handleOnMarkerClick,
     toggleNearbyAttractions,
-    showPanel, 
-    hidePanel 
+    showPanel,
+    hidePanel
 })(HomePageContainer);
