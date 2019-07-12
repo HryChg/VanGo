@@ -10,6 +10,7 @@ import getEventsInDay from './../imports/api/getDayEvents';
 import GooglePlacesApi, { convertPlacesToAttractions } from "../imports/api/GooglePlacesApi";
 import { convertPlaceToAttraction } from "../imports/api/GooglePlacesApi";
 import YelpAttractionsApi, { convertBusinessesToAttractions } from "../imports/api/YelpAttractionsApi";
+import eventDrawerData from './PreLoadedEventDrawer';
 
 let event1 = {
   id: 1,
@@ -133,7 +134,10 @@ Meteor.startup(async () => {
   }
 
   if (EventDrawerApi.find().count() === 0) {
-    console.log(`EventDrawer is Empty`);
+    console.log(`EventDrawer is Empty. Added two user data`);
+      for (let userData of eventDrawerData){
+          EventDrawerApi.insert(userData);
+      }
   }
 
   let yelp = new YelpAttractionsApi();

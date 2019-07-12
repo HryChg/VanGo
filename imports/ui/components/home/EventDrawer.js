@@ -12,8 +12,13 @@ class EventDrawer extends React.Component {
         this.fetchData();
     }
 
+    // componentDidUpdate() {
+    //     console.log(`Event Drawer Updated`);
+    //     this.fetchData();
+    // }
+
     fetchData = () => {
-        Meteor.call('getCurrentUserData', (err, res)=>{
+        Meteor.call('getCurrentUserDrawer', (err, res)=>{
             if (err){
                 console.log(`Error loading user data to event drawer: ${err.message}`)
             }
@@ -38,8 +43,7 @@ class EventDrawer extends React.Component {
                 >
                     {maskString(selectedEvent.name, 22)}
                     <i className="trash icon" onClick={() => {
-                        // TODO Fix this
-                        Meteor.call('removeEventFromDrawer', selectedEvent._id, (error, result)=>{
+                        Meteor.call('deleteFromCurrentUserDrawer', selectedEvent, (error, result)=>{
                             if (error) {
                                 alert(error);
                             } else {
