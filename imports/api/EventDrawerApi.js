@@ -60,11 +60,6 @@ if (Meteor.isServer) {
         return EventDrawerApi.find();
     });
 
-
-    Meteor.publish('singleUserDrawer', function (drawerID) {
-        return EventDrawerApi.find({_id: drawerID});
-    });
-
     Meteor.methods({
         // EFFECTS: initialize eventDrawer so that that it has the anonymous userDrawer or the userDrawer for current user ready
         initializeEventDrawerApi: async () => {
