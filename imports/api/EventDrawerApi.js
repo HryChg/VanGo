@@ -11,10 +11,10 @@ const EventDrawerApi = new Mongo.Collection('eventDrawer');
 //          If not such document exist in eventDrawerCollection, create one and return its _id
 const getAnonDrawerID = async () => {
     let anonDrawer = EventDrawerApi.findOne({user: 'anon'});
-    if (!anonDrawer){
+    if (!anonDrawer) {
         let anonDrawer = {
             user: 'anon',
-            items:[]
+            items: []
         };
         console.log(`EventDrawerApi: no anonymous drawer found. Will insert one into collection`);
         return await EventDrawerApi.insert(anonDrawer);
@@ -25,10 +25,10 @@ const getAnonDrawerID = async () => {
 // EFFECTS: return the document _id for the user drawer related to currently logged-in user
 const getUserDrawerID = async () => {
     let userDrawerID = EventDrawerApi.findOne({user: Meteor.userId()});
-    if (!userDrawerID){
+    if (!userDrawerID) {
         let userDrawer = {
             user: Meteor.userId(),
-            items:[]
+            items: []
         };
         console.log(`EventDrawerApi: drawer for user ${Meteor.userId()} NOT found. Will insert one into collection`);
         return await EventDrawerApi.insert(userDrawer);
@@ -47,8 +47,8 @@ async function getDrawerID() {
 }
 
 // EFFECTS: check if items contains an element with the same "name" as item
-function containsItem(items, item){
-    for (let i of items){
+function containsItem(items, item) {
+    for (let i of items) {
         if (i.name === item.name)
             return true;
     }
@@ -60,26 +60,24 @@ if (Meteor.isServer) {
         return EventDrawerApi.find();
     });
 
-    // TODO Fix This
-    Meteor.publish('eventDrawerWithUserID',function () {
-        return EventDrawerApi.find();
+
+    Meteor.publish('singleUserDrawer', function (drawerID) {
+        return EventDrawerApi.find({_id: drawerID});
     });
 
-
     Meteor.methods({
-        // EFFECTS: return the drawer content from the appropriate drawer ID
-        getCurrentUserDrawer: async ()=>{
-            let drawerID = await getDrawerID();
-            return await EventDrawerApi.findOne({_id: drawerID})
+        // EFFECTS: initialize eventDrawer so that that it has the anonymous userDrawer or the userDrawer for current user ready
+        initializeEventDrawerApi: async () => {
+            return await getDrawerID();
         },
 
-        // EFFECTS: save the item to user rrawer based on the current Drawer ID. Repeated Items will not be added
-        saveToCurrentUserDrawer: async (itemToBeSaved)=>{
+        // EFFECTS: save the item to user drawer based on the current Drawer ID. Repeated Items will not be added
+        saveToCurrentUserDrawer: async (itemToBeSaved) => {
             let accountID = await getDrawerID();
             let userData = await EventDrawerApi.findOne({_id: accountID});
             let items = userData.items;
 
-            if (containsItem(items, itemToBeSaved)){
+            if (containsItem(items, itemToBeSaved)) {
                 throw new Meteor.Error(`saveToCurrentUserData(): item "${itemToBeSaved.name}}" is already in user's event drawer. Will not be added again`);
             } else {
                 items.push(itemToBeSaved);
@@ -90,16 +88,15 @@ if (Meteor.isServer) {
         },
 
         // EFFECTS: deleted the item from userDrawer based on the current Drawer ID. If item does not already exist, an error is thrown.
-        deleteFromCurrentUserDrawer: async(itemToBeDeleted)=>{
+        deleteFromCurrentUserDrawer: async (itemToBeDeleted) => {
             let accountID = await getDrawerID();
             let userData = await EventDrawerApi.findOne({_id: accountID});
             let items = userData.items;
 
-            if (!containsItem(items, itemToBeDeleted)){
-                console.log(`deleteFromCurrentUserData(): item "${itemToBeDeleted.name}}" is NOT in user's event drawer. No action taken.`);
+            if (!containsItem(items, itemToBeDeleted)) {
                 throw new Meteor.Error(`deleteFromCurrentUserData(): item "${itemToBeDeleted.name}}" is NOT in user's event drawer. No action taken.`);
             } else {
-                let newItems = items.filter((item)=>{
+                let newItems = items.filter((item) => {
                     return item._id !== itemToBeDeleted._id
                 });
                 let newUserData = {

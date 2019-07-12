@@ -9,33 +9,16 @@ import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class EventDrawer extends React.Component {
     componentDidMount() {
-        this.fetchData();
+        Meteor.call('initializeEventDrawerApi', (err, res)=>{
+            if (err) console.log(`Error loading user data to event drawer: ${err.message}`);
+        });
     }
 
-    // componentDidUpdate() {
-    //     console.log(`Event Drawer Updated`);
-    //     this.fetchData();
-    // }
-
-    fetchData = () => {
-        Meteor.call('getCurrentUserDrawer', (err, res)=>{
-            if (err){
-                console.log(`Error loading user data to event drawer: ${err.message}`)
-            }
-            this.props.updateEventDrawer(res);
-        });
-    };
-
     displaySavedEvents = () => {
-        if (this.props.userData.user === "reducerInitialState"){
-            return <Menu.Item>No data available. Displaying Reducer Initial State</Menu.Item>
+        if (!this.props.drawerItems){
+            return <Menu.Item>User Data not ready yet</Menu.Item>
         }
-
-        if (this.props.userData.items.length === 0){
-            return <Menu.Item>User has not saved events</Menu.Item>
-        }
-
-        return this.props.userData.items.map((selectedEvent, index) => {
+        return this.props.drawerItems.items.map((selectedEvent, index) => {
             return (
                 <Menu.Item
                     className={"item"}
@@ -69,18 +52,25 @@ const mapStateToProps = (state) => {
     return {userData: state.eventDrawer.userData};
 };
 
-// NOT USED
 const EventDrawerContainer = withTracker(()=>{
-    const handle = Meteor.subscribe('eventDrawer');
-    const drawerItems = EventDrawerApi.find().fetch();
-    return {
-        dataReady: handle.ready(),
-        drawerItems: drawerItems
+    if (Meteor.userId()){
+        const handle = Meteor.subscribe('eventDrawer', Meteor.userId());
+        const drawerItems = EventDrawerApi.findOne({user: Meteor.userId()});
+        return {
+            dataReady: handle.ready(),
+            drawerItems: drawerItems
+        }
+    } else {
+        const handle = Meteor.subscribe('eventDrawer', 'anon');
+        const drawerItems = EventDrawerApi.findOne({user: 'anon'});
+        return {
+            dataReady: handle.ready(),
+            drawerItems: drawerItems
+        }
     }
 })(EventDrawer);
 
 
 export default connect(mapStateToProps, {
     deleteEvent: deleteEvent,
-    updateEventDrawer: updateEventDrawer
 })(EventDrawerContainer);
