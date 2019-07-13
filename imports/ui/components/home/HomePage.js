@@ -19,22 +19,27 @@ import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
 
-    filterMarkersOnSearch(markers){
+    // TODO get the index of the marker instead
+    // EFFECTS: return marker component if it matches the selected ID from searchBar reducer
+    //          return undefined if no marker found
+    filterMarkersOnSearch(markers) {
         let selectedID = this.props.searchBar.selected;
-        if (selectedID === ''){
-            console.log(`selected ID is empty string`);
+        if (selectedID === '') {
             return;
         }
-
-        for (let marker of markers){
-            console.log(markers.props.id);
-            if (marker.props.id === selectedID){
+        for (let marker of markers) {
+            console.log(marker.props.id);
+            if (marker.props.id === selectedID) {
                 return marker;
             }
         }
     }
 
+    // EFFECTS: create a marker based on an attraction
+    //          Set marker to invisible if user choose to hide attractions
+    //              or the attraction did not pass event filter (this.showMarker())
     createAttractionMarker(attraction) {
+        let showAttraction = this.props.homePage.toggleNearbyAttractions;
         return <Marker
             key={attraction._id}
             id={attraction._id}
@@ -53,10 +58,12 @@ class HomePage extends React.Component {
             }}
             description={(attraction.description) ? attraction.description : 'No Description Available'}
             onClick={this.props.handleOnMarkerClick}
-            visible={true}
+            visible={showAttraction && this.showMarker(attraction)}
         />
     }
 
+    // EFFECTS: create a marker based on an event
+    //          Set marker to invisible if the event did not pass event filter (this.showMarker())
     createEventMarker(event) {
         return <Marker
             key={event._id}
@@ -73,36 +80,36 @@ class HomePage extends React.Component {
             }}
             description={event.description}
             onClick={this.props.handleOnMarkerClick}
-            visible={true}
+            visible={this.showMarker(event)}
         />
     }
 
     // EFFECTS: render markers based on currentEvents Collection
     displayMarkers = () => {
-        let currentEvents = this.props.currentEvents;
-        let filteredItems = currentEvents.filter((item) => this.filterItems(item));
-        let markers = filteredItems.map((item) => {
+        let markers = this.props.currentEvents.map((item) => {
             if (item.type === 'Attraction') {
                 return this.createAttractionMarker(item);
             } else {
                 return this.createEventMarker(item);
             }
         });
+        console.log(`there are a total of ${markers.length} markers`);
+
+        // TODO Search Thru Marker to find a one that matches the search bar
+        let searchedMarker = this.filterMarkersOnSearch(markers);
+        if (searchedMarker){
+            console.log(`found a matched marker`);
+            console.log(`the search bar wanted: ${this.props.searchBar.selected}`);
+            console.log(`found the marker with the id ${searchedMarker.props.id}`);
+        }
         return markers;
     };
 
     // EFFECTS: return true if the item meets one of the selected categories and is within the price range
-    //          return false if user decides not to show nearby attraction and this item is an attraction
-    //
     //          If no category selected, items of all categories are considered
     //          If a category has been selected and the item price is within the price range, it may be shown
     //          Price range is always in effect.
-    filterItems = (item) => {
-        let shouldShowAttraction = this.props.homePage.toggleNearbyAttractions;
-        let isItemAttraction = item.type === 'Attraction';
-        if (!shouldShowAttraction && isItemAttraction) {
-            return false;
-        }
+    showMarker = (item) => {
         let filterCategories = this.props.eventFilter.categories;
         let itemMatchCategory;
         if (filterCategories.length === 0) {
