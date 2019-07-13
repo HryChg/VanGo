@@ -142,7 +142,7 @@ a {
 .react-calendar__navigation__arrow.react-calendar__navigation__next2-button,
 .react-calendar__navigation__arrow.react-calendar__navigation__label {
     margin: 0px !important;
-    min-width: 26px !important; 
+    min-width: 26px !important;
     padding: 0px !important;
 }
 
@@ -316,4 +316,12 @@ i.caret.square.right.large.icon.next-button {
 .EventFilterContainer .ui.grid{
     /*margin-top: -2rem;*/
     text-align: left;
+}
+
+/* ---------------------------------------- */
+/*  Search Bar including Rendered Results - */
+/* ---------------------------------------- */
+.search .results {
+    overflow-y: auto;
+    max-height: 400px;
 }
