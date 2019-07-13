@@ -77,7 +77,7 @@ const source = convertItemsToSearchables(items);
 
 
 class SearchBar extends Component {
-    state = initialState;
+    state = this.props.searchBar;
 
     componentDidMount() {
         console.log(this.props);
@@ -123,7 +123,7 @@ class SearchBar extends Component {
 
 
 const mapStateToProps = (state) => {
-    return {search: state.searchBar}
+    return {searchBar: state.searchBar}
 };
 
 export default connect(mapStateToProps, {
