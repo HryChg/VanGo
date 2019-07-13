@@ -96,15 +96,30 @@ class HomePage extends React.Component {
 
         // TODO Search Thru Marker to find a one that matches the search bar
         let searchedMarkerIdx = this.filterMarkersOnSearch(markers);
-        if (searchedMarkerIdx){
-            console.log(`found a matched marker`);
-            console.log(`the search bar wanted: ${this.props.searchBar.selected}`);
-            console.log(`found the marker with the id ${markers[searchedMarkerIdx].props.id}`);
+        if (searchedMarkerIdx) {
+            // console.log(`found a matched marker`);
+            // console.log(`the search bar wanted: ${this.props.searchBar.selected}`);
+            // console.log(`found the marker with the id ${markers[searchedMarkerIdx].props.id}`);
+
+            this.modifyMarker(markers, searchedMarkerIdx);
+
         }
 
 
         return markers;
     };
+
+    // EFFECTS: given an index, modify the corresponding marker so that it is set to visible again
+    // MODIFIES: markers (i.e. the marker at the idx)
+    // NOTE: each element in markers are read only objects,
+    //          therefore a new object is produced to replace the original
+    modifyMarker(markers, idx) {
+        let oldMarker = markers[idx];
+        let copied = Object.assign({}, oldMarker.props); // copy the read-only object, extract only the property of the react component
+        copied.visible = true; // set the new marker's property to include true
+        let newMarker = (<Marker key={copied.id} {...copied}/>);
+        markers[idx] = newMarker;
+    }
 
     // EFFECTS: return true if the item meets one of the selected categories and is within the price range
     //          If no category selected, items of all categories are considered
