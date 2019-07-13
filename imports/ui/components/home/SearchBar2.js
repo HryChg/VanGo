@@ -4,6 +4,7 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
 import {Search} from 'semantic-ui-react'
+import {connect} from "react-redux";
 
 const initialState = {isLoading: false, results: [], value: ''};
 
@@ -58,7 +59,6 @@ const items = [{
         "description": "Theatre Under the Stars (TUTS) invites audiences to a summer of inspiration with Mamma Mia! and Disney's Newsies, running alternate evenings from July..."
     }
 ];
-
 const convertItemsToSearchables = (items) => {
     let searchables = [];
     for (let item of items) {
@@ -72,12 +72,10 @@ const convertItemsToSearchables = (items) => {
     }
     return searchables;
 };
-
-
 const source = convertItemsToSearchables(items);
 
 
-export default class SearchExampleStandard extends Component {
+class SearchBar extends Component {
     state = initialState;
 
     handleResultSelect = (e, {result}) => {
@@ -104,6 +102,7 @@ export default class SearchExampleStandard extends Component {
     render() {
         const {isLoading, value, results} = this.state;
 
+
         return (
             <Search
                 loading={isLoading}
@@ -114,8 +113,18 @@ export default class SearchExampleStandard extends Component {
                 results={results}
                 value={value}
                 {...this.props}
-
             />
         )
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return {search: state.searchBar}
+};
+
+
+// export default SearchBar;
+export default connect(mapStateToProps, {
+
+})(SearchBar);
