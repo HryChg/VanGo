@@ -4,6 +4,8 @@ import React, {Component} from 'react'
 import {Search} from 'semantic-ui-react'
 import {connect} from "react-redux";
 import {setSelected, setValue, setIsLoadingTrue, setIsLoadingFalse, setResults} from "../../actions/SearchBarActions";
+import {withTracker} from 'meteor/react-meteor-data';
+import CurrentEvents from '../../../api/CurrentEvents';
 
 const items = [{
     "_id": "QPTgFcGk7zHfRneJ3",
@@ -76,6 +78,10 @@ class SearchBar extends Component {
         this.props.setResults(source)
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // console.log(this.props.currentEvents);
+    }
+
     handleResultSelect = (e, {result}) => {
         this.props.setValue(result.title);
         this.props.setSelected(result._id);
@@ -123,10 +129,19 @@ const mapStateToProps = (state) => {
     return {searchBar: state.searchBar}
 };
 
+const SearchBarContainer = withTracker(()=>{
+    const handle = Meteor.subscribe('currentEvents');
+    const currentEvents = CurrentEvents.find().fetch();
+    return {
+        dataReady: handle.ready(),
+        currentEvents: currentEvents,
+    }
+})(SearchBar);
+
 export default connect(mapStateToProps, {
     setValue: setValue,
     setSelected: setSelected,
     setIsLoadingTrue: setIsLoadingTrue,
     setIsLoadingFalse: setIsLoadingFalse,
     setResults: setResults
-})(SearchBar);
+})(SearchBarContainer);
