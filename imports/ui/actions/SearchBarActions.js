@@ -4,3 +4,11 @@ export const search = (keyword) => {
         payload: keyword
     };
 };
+
+
+export const sendResultToMap = (itemID) => {
+    return {
+        type: 'OPEN_SELECTED_RESULT_ON_MAP',
+        payload: itemID
+    }
+};

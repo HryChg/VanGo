@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
 import { Grid, Sidebar, Menu, Icon } from 'semantic-ui-react';
 
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar2";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
