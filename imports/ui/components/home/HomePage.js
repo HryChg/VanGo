@@ -19,6 +19,20 @@ import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
 
+    filterMarkersOnSearch(markers){
+        let selectedID = this.props.searchBar.selected;
+        if (selectedID === ''){
+            console.log(`selected ID is empty string`);
+            return;
+        }
+
+        for (let marker of markers){
+            console.log(markers.props.id);
+            if (marker.props.id === selectedID){
+                return marker;
+            }
+        }
+    }
 
     createAttractionMarker(attraction) {
         return <Marker
@@ -38,25 +52,29 @@ class HomePage extends React.Component {
                 url: "https://img.icons8.com/color/43/000000/compact-camera.png"
             }}
             description={(attraction.description) ? attraction.description : 'No Description Available'}
-            onClick={this.props.handleOnMarkerClick}/>
+            onClick={this.props.handleOnMarkerClick}
+            visible={true}
+        />
     }
 
-    createEventMarker(item) {
+    createEventMarker(event) {
         return <Marker
-            key={item._id}
-            id={item._id}
-            name={item.name}
-            start_time={(item.start_time) ? formatAMPM(new Date(item.start_time)) : 'n/a'}
-            end_time={(item.end_time) ? formatAMPM(new Date(item.end_time)) : 'n/a'}
-            price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
-            location={item.location.display_address[0]}
-            link={item.link}
+            key={event._id}
+            id={event._id}
+            name={event.name}
+            start_time={(event.start_time) ? formatAMPM(new Date(event.start_time)) : 'n/a'}
+            end_time={(event.end_time) ? formatAMPM(new Date(event.end_time)) : 'n/a'}
+            price={event.free ? 'Free' : ((event.price) ? '$'.concat(event.price.toString()) : 'n/a')}
+            location={event.location.display_address[0]}
+            link={event.link}
             position={{
-                lat: item.latitude,
-                lng: item.longitude
+                lat: event.latitude,
+                lng: event.longitude
             }}
-            description={item.description}
-            onClick={this.props.handleOnMarkerClick}/>
+            description={event.description}
+            onClick={this.props.handleOnMarkerClick}
+            visible={true}
+        />
     }
 
     // EFFECTS: render markers based on currentEvents Collection
@@ -70,7 +88,6 @@ class HomePage extends React.Component {
                 return this.createEventMarker(item);
             }
         });
-        // TODO: trigger a marker to open by checking the SearchBarReducer's selected itme
         return markers;
     };
 
@@ -181,7 +198,8 @@ const mapStateToProps = (state) => {
         maxPrice: state.maxPrice,
         homePage: state.homePage,
         eventFilter: state.eventFilter,
-        visible: state.panel.visible
+        visible: state.panel.visible,
+        searchBar: state.searchBar
     };
 };
 const HomePageContainer = withTracker(() => {
