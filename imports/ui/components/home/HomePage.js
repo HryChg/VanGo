@@ -19,18 +19,17 @@ import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
 
-    // TODO get the index of the marker instead
-    // EFFECTS: return marker component if it matches the selected ID from searchBar reducer
-    //          return undefined if no marker found
+    // EFFECTS: return index of the marker component if it matches the selected ID from searchBar reducer
+    //          return undefined if no match found
     filterMarkersOnSearch(markers) {
         let selectedID = this.props.searchBar.selected;
         if (selectedID === '') {
             return;
         }
-        for (let marker of markers) {
-            console.log(marker.props.id);
+        for (let idx = 0; idx < markers.length; idx++) {
+            let marker = markers[idx];
             if (marker.props.id === selectedID) {
-                return marker;
+                return idx;
             }
         }
     }
@@ -96,12 +95,14 @@ class HomePage extends React.Component {
         console.log(`there are a total of ${markers.length} markers`);
 
         // TODO Search Thru Marker to find a one that matches the search bar
-        let searchedMarker = this.filterMarkersOnSearch(markers);
-        if (searchedMarker){
+        let searchedMarkerIdx = this.filterMarkersOnSearch(markers);
+        if (searchedMarkerIdx){
             console.log(`found a matched marker`);
             console.log(`the search bar wanted: ${this.props.searchBar.selected}`);
-            console.log(`found the marker with the id ${searchedMarker.props.id}`);
+            console.log(`found the marker with the id ${markers[searchedMarkerIdx].props.id}`);
         }
+
+
         return markers;
     };
 
