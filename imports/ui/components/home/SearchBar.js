@@ -1,7 +1,7 @@
 // https://react.semantic-ui.com/modules/search/#types-standard
 import _ from 'lodash'
 import React, {Component} from 'react'
-import {Search} from 'semantic-ui-react'
+import {Search, Input, Button} from 'semantic-ui-react'
 import {connect} from "react-redux";
 import {withTracker} from 'meteor/react-meteor-data';
 
@@ -43,6 +43,8 @@ class SearchBar extends Component {
             source = this.fetchSearchables();
             this.props.setResults(source);
         }, 300)
+
+
     }
 
     // EFFECTS: set the text value and the _id of the selected items in the search bar reducer
@@ -74,16 +76,20 @@ class SearchBar extends Component {
 
     render() {
         const {isLoading, value, results} = this.props.searchBar;
-        return (
-            <Search
-                loading={isLoading}
-                onResultSelect={this.handleResultSelect}
-                onSearchChange={_.debounce(this.handleSearchChange, 500, {
-                    leading: true,
-                })}
-                results={results}
-                value={value}
-            />
+        return (<div>
+                <Search
+                    loading={isLoading}
+                    onResultSelect={this.handleResultSelect}
+                    onSearchChange={_.debounce(this.handleSearchChange, 500, {
+                        leading: true,
+                    })}
+                    results={results}
+                    value={value}
+                    input={{ fluid: true }} // maximize search bar width
+                    fluid={true} // maximize result menu width
+                />
+            </div>
+
         )
     }
 }

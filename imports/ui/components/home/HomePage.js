@@ -118,7 +118,9 @@ class HomePage extends React.Component {
                                 <Icon className="logo" name="street view"/>
                                 VanGo
                             </h2>
-                            <SearchBar/>
+                            <div className={"SearchBarContainer"}>
+                                <SearchBar/>
+                            </div>
                             <div className={"DatePickerContainer"}>
                                 <DatePicker/>
                             </div>

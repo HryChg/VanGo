@@ -55,7 +55,7 @@ a {
     margin-bottom: -0.05em;
 }
 
-.sidenav h2{
+.sidenav h2 {
     text-align: center;
 }
 
@@ -63,7 +63,7 @@ a {
 /* ---------------------------------------- */
 /* ------------  DatePicker  -------------- */
 /* ---------------------------------------- */
-.DatePickerContainer{
+.DatePickerContainer {
     max-width: 100%;
 }
 
@@ -78,7 +78,6 @@ a {
 .ui.toggle.checkbox label {
     padding-left: 3.8rem;
 }
-
 
 
 /* ---------------------------------------- */
@@ -198,7 +197,7 @@ i.caret.square.right.large.icon.next-button {
 
 .it-date {
     font-size: 16px;
-    font-family: 'Lato','Helvetica Neue',Arial,Helvetica,sans-serif;
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     padding: 10px;
     text-align: left;
     color: white;
@@ -268,7 +267,7 @@ i.caret.square.right.large.icon.next-button {
 }
 
 /*font size of the draggable item*/
-.ui.label.DraggableItem{
+.ui.label.DraggableItem {
     font-size: 1.1rem;
 }
 
@@ -293,6 +292,7 @@ i.caret.square.right.large.icon.next-button {
     display: table;
     margin: 0 auto;
 }
+
 /* ---------------------------------------- */
 /* ----        Event Drawer        -------- */
 /* ---------------------------------------- */
@@ -304,25 +304,30 @@ i.caret.square.right.large.icon.next-button {
 /* ---------------------------------------- */
 /* ----    EventFilterContainer    -------- */
 /* ---------------------------------------- */
-.EventFilterContainer{
+.EventFilterContainer {
     margin: 6px;
     text-align: center;
 }
 
-.EventFilterContainer h2{
+.EventFilterContainer h2 {
     text-align: left;
 }
 
-.EventFilterContainer .ui.grid{
+.EventFilterContainer .ui.grid {
     /*margin-top: -2rem;*/
     text-align: left;
 }
 
 /* ---------------------------------------- */
-/*  Search Bar including Rendered Results - */
+/* -----    SearchBar             ----------*/
 /* ---------------------------------------- */
+/* limit the result length */
 /* https://github.com/Semantic-Org/Semantic-UI-React/issues/946#issuecomment-336258518 */
 .search .results {
     overflow-y: auto;
     max-height: 400px;
+}
+
+.SearchBarContainer{
+    margin-bottom: 15px;
 }
