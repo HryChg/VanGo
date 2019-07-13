@@ -1,13 +1,9 @@
 // https://react.semantic-ui.com/modules/search/#types-standard
-
-
 import _ from 'lodash'
 import React, {Component} from 'react'
 import {Search} from 'semantic-ui-react'
 import {connect} from "react-redux";
 import {setSelected, setValue, setIsLoadingTrue, setIsLoadingFalse, setResults} from "../../actions/SearchBarActions";
-
-const initialState = {isLoading: false, results: [], value: ''};
 
 const items = [{
     "_id": "QPTgFcGk7zHfRneJ3",
@@ -75,46 +71,39 @@ const convertItemsToSearchables = (items) => {
 };
 const source = convertItemsToSearchables(items);
 
-
 class SearchBar extends Component {
-    state = this.props.searchBar;
-
-    // componentDidMount() {
-    //     console.log(this.props);
-    // }
+    componentDidMount() {
+        this.props.setResults(source)
+    }
 
     handleResultSelect = (e, {result}) => {
-        this.setState({value: result.title});
         this.props.setValue(result.title);
         this.props.setSelected(result._id);
     };
 
     handleSearchChange = (e, {value}) => {
-        this.setState({isLoading: true, value});
         this.props.setValue(value);
         this.props.setIsLoadingTrue();
 
 
         setTimeout(() => {
-            if (this.state.value.length < 1) return this.setState(initialState);
+            // Handle Cases when the search text bar contins empty str
+            if (this.props.searchBar.value.length < 1){
+                this.props.setSelected('');
+                this.props.setIsLoadingFalse();
+                this.props.setResults([]);
+                return;
+            }
 
-            const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
+            const re = new RegExp(_.escapeRegExp(this.props.searchBar.value), 'i');
             const isMatch = result => re.test(result.title);
-
-            this.setState({
-                isLoading: false,
-                results: _.filter(source, isMatch),
-            });
-
             this.props.setIsLoadingFalse();
             this.props.setResults(_.filter(source, isMatch));
         }, 300)
     };
 
     render() {
-        const {isLoading, value, results} = this.state;
-
-
+        const {isLoading, value, results} = this.props.searchBar;
         return (
             <Search
                 loading={isLoading}
