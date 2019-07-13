@@ -19,8 +19,7 @@ import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
 
-    // EFFECTS: render markers based on information from currEvents.events in Redux Store
-    // Note store.start_time and end_time are date object, need to convert them to strings
+    // EFFECTS: render markers based on currentEvents Collection
     displayMarkers = () => {
         let markers = this.props.currentEvents.map((item) => {
             if (this.filterItems(item)) {
@@ -62,6 +61,8 @@ class HomePage extends React.Component {
                 }
             }
         });
+
+        // TODO: trigger a marker to open by checking the SearchBarReducer's selected itme
         return markers;
     };
 

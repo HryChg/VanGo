@@ -321,6 +321,7 @@ i.caret.square.right.large.icon.next-button {
 /* ---------------------------------------- */
 /*  Search Bar including Rendered Results - */
 /* ---------------------------------------- */
+/* https://github.com/Semantic-Org/Semantic-UI-React/issues/946#issuecomment-336258518 */
 .search .results {
     overflow-y: auto;
     max-height: 400px;
