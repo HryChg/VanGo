@@ -19,45 +19,56 @@ import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
 
+
+    createAttractionMarker(attraction){
+        return <Marker
+            key={attraction._id}
+            id={attraction._id}
+            name={attraction.name}
+            start_time={(attraction.start_time) ? formatAMPM(new Date(attraction.start_time.toString())) : 'n/a'}
+            end_time=  {(attraction.end_time) ? formatAMPM(new Date(attraction.end_time.toString())): 'n/a'}
+            price={attraction.free ? 'Free' : ((attraction.price) ? '$'.concat(attraction.price.toString()) : 'n/a')}
+            location={attraction.location.display_address[0]}
+            link={attraction.link}
+            position={{
+                lat: attraction.latitude,
+                lng: attraction.longitude
+            }}
+            icon={{
+                url: "https://img.icons8.com/color/43/000000/compact-camera.png"
+            }}
+            description={(attraction.description)?attraction.description:'No Description Available'}
+            onClick={this.props.handleOnMarkerClick}/>
+    }
+
+    createEventMarker(item) {
+        return <Marker
+            key={item._id}
+            id={item._id}
+            name={item.name}
+            start_time={(item.start_time) ? formatAMPM(new Date(item.start_time)) : 'n/a'}
+            end_time={(item.end_time) ? formatAMPM(new Date(item.end_time)) : 'n/a'}
+            price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
+            location={item.location.display_address[0]}
+            link={item.link}
+            position={{
+                lat: item.latitude,
+                lng: item.longitude
+            }}
+            description={item.description}
+            onClick={this.props.handleOnMarkerClick}/>
+    }
+
     // EFFECTS: render markers based on currentEvents Collection
     displayMarkers = () => {
-        let markers = this.props.currentEvents.map((item) => {
+        let currentEvents = this.props.currentEvents;
+
+        let markers = currentEvents.map((item) => {
             if (this.filterItems(item)) {
                 if (item.type === 'Attraction') {
-                    return <Marker
-                    key={item._id}
-                    id={item._id}
-                    name={item.name}
-                    start_time={(item.start_time) ? formatAMPM(new Date(item.start_time.toString())) : 'n/a'}
-                    end_time=  {(item.end_time) ? formatAMPM(new Date(item.end_time.toString())): 'n/a'}
-                    price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
-                    location={item.location.display_address[0]}
-                    link={item.link}
-                    position={{
-                        lat: item.latitude,
-                        lng: item.longitude
-                    }}
-                    icon={{
-                        url: "https://img.icons8.com/color/43/000000/compact-camera.png"
-                      }}
-                    description={(item.description)?item.description:'No Description Available'}
-                    onClick={this.props.handleOnMarkerClick}/>
+                    return this.createAttractionMarker(item);
                 } else {
-                    return <Marker
-                    key={item._id}
-                    id={item._id}
-                    name={item.name}
-                    start_time={(item.start_time) ? formatAMPM(new Date(item.start_time)) : 'n/a'}
-                    end_time=  {(item.end_time) ? formatAMPM(new Date(item.end_time)) : 'n/a'}
-                    price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
-                    location={item.location.display_address[0]}
-                    link={item.link}
-                    position={{
-                        lat: item.latitude,
-                        lng: item.longitude
-                    }}
-                    description={item.description}
-                    onClick={this.props.handleOnMarkerClick}/>
+                    return this.createEventMarker(item);
                 }
             }
         });
@@ -66,7 +77,9 @@ class HomePage extends React.Component {
         return markers;
     };
 
-    // EFFECTS: return true if the item meets one of the selected categories and is within the price range
+
+
+// EFFECTS: return true if the item meets one of the selected categories and is within the price range
     //          return false if user decides not to show nearby attraction and this item is an attraction
     //
     //          If no category selected, items of all categories are considered
@@ -175,7 +188,6 @@ const mapStateToProps = (state) => {
         visible: state.panel.visible
     };
 };
-
 const HomePageContainer = withTracker(()=>{
     const handle = Meteor.subscribe('currentEvents');
     const currentEvents = CurrentEvents.find().fetch();
@@ -190,7 +202,6 @@ const HomePageContainer = withTracker(()=>{
         savedEvents: savedEvents
     }
 })(HomePage);
-
 export default connect(mapStateToProps, {
     handleOnMarkerClick,
     toggleNearbyAttractions,
