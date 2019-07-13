@@ -3,98 +3,62 @@ import _ from 'lodash'
 import React, {Component} from 'react'
 import {Search} from 'semantic-ui-react'
 import {connect} from "react-redux";
-import {setSelected, setValue, setIsLoadingTrue, setIsLoadingFalse, setResults} from "../../actions/SearchBarActions";
 import {withTracker} from 'meteor/react-meteor-data';
+
+
+import {setSelected, setValue, setIsLoadingTrue, setIsLoadingFalse, setResults} from "../../actions/SearchBarActions";
 import CurrentEvents from '../../../api/CurrentEvents';
 
-const items = [{
-    "_id": "QPTgFcGk7zHfRneJ3",
-    "name": "Toast to the Coast",
-    "start_time": "2019-07-12T19:00:00-07:00",
-    "end_time": null,
-    "price": 150,
-    "free": false,
-    "location": {
-        "address1": "845 Avison Way",
-        "address2": "",
-        "address3": "",
-        "city": "Vancouver",
-        "zip_code": "V6G 3E2",
-        "country": "CA",
-        "state": "BC",
-        "display_address": ["845 Avison Way", "Vancouver, BC V6G 3E2", "Canada"],
-        "cross_streets": ""
-    },
-    "latitude": 49.3007944919085,
-    "longitude": -123.130930028311,
-    "link": "https://www.yelp.com/events/vancouver-toast-to-the-coast-2?adjust_creative=4oRgfQ6rHoWhvQRa5T88mg&utm_campaign=yelp_api_v3&utm_medium=api_v3_event_search&utm_source=4oRgfQ6rHoWhvQRa5T88mg",
-    "category": "food-and-drink",
-    "type": "Event",
-    "description": "This summer, step out and support the oceans as you enjoy gourmet bites and sip signature blends at the 13th annual Toast to the Coast fundraiser. For the..."
-},
-    {
-        "_id": "NA9psaaJJaRfWWFe2",
-        "name": "Theatre Under the Stars presents Mamma Mia! and Disney's Newsies: July 5-August 17, 2019",
-        "start_time": "2019-07-05T20:00:00-07:00",
-        "end_time": "2019-07-12T22:00:00-07:00",
-        "price": null,
-        "free": false,
-        "location": {
-            "address1": "610 Pipeline Rd,",
-            "address2": "",
-            "address3": "",
-            "city": "Vancouver",
-            "zip_code": "V6G 3E2",
-            "country": "CA",
-            "state": "BC",
-            "display_address": ["610 Pipeline Rd,", "Vancouver, BC V6G 3E2", "Canada"],
-            "cross_streets": ""
-        },
-        "latitude": 49.2997083,
-        "longitude": -123.1339011,
-        "link": "https://www.yelp.com/events/vancouver-theatre-under-the-stars-presents-mamma-mia-and-disneys-newsies-july-5-august-17-2019?adjust_creative=4oRgfQ6rHoWhvQRa5T88mg&utm_campaign=yelp_api_v3&utm_medium=api_v3_event_search&utm_source=4oRgfQ6rHoWhvQRa5T88mg",
-        "category": "performing-arts",
-        "type": "Event",
-        "description": "Theatre Under the Stars (TUTS) invites audiences to a summer of inspiration with Mamma Mia! and Disney's Newsies, running alternate evenings from July..."
-    }
-];
-const convertItemsToSearchables = (items) => {
-    let searchables = [];
-    for (let item of items) {
-        let searchable = {
-            title: item.name,
-            description: item.description,
-            price: (item.price) ? '$' + item.price : '$ n/a',
-            _id: item._id
-        };
-        searchables.push(searchable);
-    }
-    return searchables;
-};
-const source = convertItemsToSearchables(items);
+
+let source = []; // DO NOT DELETE. SearchBar component will modify this.
 
 class SearchBar extends Component {
+
+    // EFFECTS: convert items from currentEvent collection to searchable items in the search bar
+    convertItemsToSearchables(items) {
+        let searchables = [];
+        for (let item of items) {
+            let searchable = {
+                title: item.name,
+                description: item.description,
+                price: (item.price) ? '$' + item.price : '$ n/a',
+                _id: item._id,
+                key: item._id
+            };
+            searchables.push(searchable);
+        }
+        return searchables;
+    };
+
+    // EFFECTS: get the searchable item for the search bar
+    fetchSearchables() {
+        let currentEvents = this.props.currentEvents;
+        return this.convertItemsToSearchables(currentEvents);
+    }
+
+    // EFFECTS: get the searchable items ready for the search bar.
+    //          Delayed 0.3 seconds to ensure the entire collections is fetched before sending it to SearchBarReducer
     componentDidMount() {
-        this.props.setResults(source)
+        setTimeout(() => {
+            source = this.fetchSearchables();
+            this.props.setResults(source);
+        }, 300)
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        // console.log(this.props.currentEvents);
-    }
-
+    // EFFECTS: set the text value and the _id of the selected items in the search bar reducer
     handleResultSelect = (e, {result}) => {
         this.props.setValue(result.title);
         this.props.setSelected(result._id);
     };
 
+    // EFFECTS:  perform the search logic in the search bar
+    //           wait 0.3 sec for the spinner animation before performing the search
     handleSearchChange = (e, {value}) => {
         this.props.setValue(value);
-        this.props.setIsLoadingTrue();
-
+        this.props.setIsLoadingTrue(); // trigger the loading spinner
 
         setTimeout(() => {
-            // Handle Cases when the search text bar contins empty str
-            if (this.props.searchBar.value.length < 1){
+            if (this.props.searchBar.value.length < 1) { // when the search bar contains empty str
                 this.props.setSelected('');
                 this.props.setIsLoadingFalse();
                 this.props.setResults([]);
@@ -104,7 +68,7 @@ class SearchBar extends Component {
             const re = new RegExp(_.escapeRegExp(this.props.searchBar.value), 'i');
             const isMatch = result => re.test(result.title);
             this.props.setIsLoadingFalse();
-            this.props.setResults(_.filter(source, isMatch));
+            this.props.setResults(_.filter(source, isMatch)); // filter based on searchable title
         }, 300)
     };
 
@@ -129,7 +93,7 @@ const mapStateToProps = (state) => {
     return {searchBar: state.searchBar}
 };
 
-const SearchBarContainer = withTracker(()=>{
+const SearchBarContainer = withTracker(() => {
     const handle = Meteor.subscribe('currentEvents');
     const currentEvents = CurrentEvents.find().fetch();
     return {
