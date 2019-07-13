@@ -10,12 +10,13 @@ import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
-import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import {handleOnMarkerClick, popUpInfoWindow} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {containOneOf, formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
+
 
 class HomePage extends React.Component {
 
@@ -92,21 +93,27 @@ class HomePage extends React.Component {
                 return this.createEventMarker(item);
             }
         });
-        console.log(`there are a total of ${markers.length} markers`);
+        // console.log(`there are a total of ${markers.length} markers`);
 
         // TODO Search Thru Marker to find a one that matches the search bar
         let searchedMarkerIdx = this.filterMarkersOnSearch(markers);
         if (searchedMarkerIdx) {
-            // console.log(`found a matched marker`);
-            // console.log(`the search bar wanted: ${this.props.searchBar.selected}`);
-            // console.log(`found the marker with the id ${markers[searchedMarkerIdx].props.id}`);
-
             this.modifyMarker(markers, searchedMarkerIdx);
-
+            // let temp = markers[searchedMarkerIdx];
+            // this.props.popUpInfoWindow(temp.props, temp);
         }
 
-
         return markers;
+    };
+
+    // Trigger an action once a marker is mounted on the map
+    onMarkerMounted = element => {
+        console.log(element);
+
+
+        // TODO Add MapContainer State
+        // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
+        // this.props.popUpInfoWindow(element.props, element.marker);
     };
 
     // EFFECTS: given an index, modify the corresponding marker so that it is set to visible again
@@ -117,7 +124,11 @@ class HomePage extends React.Component {
         let oldMarker = markers[idx];
         let copied = Object.assign({}, oldMarker.props); // copy the read-only object, extract only the property of the react component
         copied.visible = true; // set the new marker's property to include true
-        let newMarker = (<Marker key={copied.id} {...copied}/>);
+        let newMarker = (<Marker
+            ref={this.onMarkerMounted}
+            key={copied.id}
+            {...copied}
+        />);
         markers[idx] = newMarker;
     }
 
@@ -222,7 +233,8 @@ const mapStateToProps = (state) => {
         homePage: state.homePage,
         eventFilter: state.eventFilter,
         visible: state.panel.visible,
-        searchBar: state.searchBar
+        searchBar: state.searchBar,
+        mapContainer: state.mapContainer
     };
 };
 const HomePageContainer = withTracker(() => {
@@ -243,5 +255,6 @@ export default connect(mapStateToProps, {
     handleOnMarkerClick,
     toggleNearbyAttractions,
     showPanel,
-    hidePanel
+    hidePanel,
+    popUpInfoWindow
 })(HomePageContainer);
