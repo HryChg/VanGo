@@ -5,7 +5,7 @@ import _ from 'lodash'
 import React, {Component} from 'react'
 import {Search} from 'semantic-ui-react'
 import {connect} from "react-redux";
-import {search} from "../../actions/SearchBarActions";
+import {setSelected, setValue, setIsLoadingTrue, setIsLoadingFalse, setResults} from "../../actions/SearchBarActions";
 
 const initialState = {isLoading: false, results: [], value: ''};
 
@@ -79,16 +79,21 @@ const source = convertItemsToSearchables(items);
 class SearchBar extends Component {
     state = this.props.searchBar;
 
-    componentDidMount() {
-        console.log(this.props);
-    }
+    // componentDidMount() {
+    //     console.log(this.props);
+    // }
 
     handleResultSelect = (e, {result}) => {
         this.setState({value: result.title});
+        this.props.setValue(result.title);
+        this.props.setSelected(result._id);
     };
 
     handleSearchChange = (e, {value}) => {
         this.setState({isLoading: true, value});
+        this.props.setValue(value);
+        this.props.setIsLoadingTrue();
+
 
         setTimeout(() => {
             if (this.state.value.length < 1) return this.setState(initialState);
@@ -99,7 +104,10 @@ class SearchBar extends Component {
             this.setState({
                 isLoading: false,
                 results: _.filter(source, isMatch),
-            })
+            });
+
+            this.props.setIsLoadingFalse();
+            this.props.setResults(_.filter(source, isMatch));
         }, 300)
     };
 
@@ -127,5 +135,9 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-    search: search
+    setValue: setValue,
+    setSelected: setSelected,
+    setIsLoadingTrue: setIsLoadingTrue,
+    setIsLoadingFalse: setIsLoadingFalse,
+    setResults: setResults
 })(SearchBar);
