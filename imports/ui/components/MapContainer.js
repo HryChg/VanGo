@@ -50,6 +50,9 @@ export class MapContainer extends Component {
             position: 'fixed'
         };
         const mapContainerStore = VanGoStore.getState().mapContainer;
+
+
+        console.log(mapContainerStore);
         return (
             <Map
                 google={this.props.google}

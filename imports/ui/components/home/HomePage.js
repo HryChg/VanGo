@@ -109,11 +109,10 @@ class HomePage extends React.Component {
     // Trigger an action once a marker is mounted on the map
     onMarkerMounted = element => {
         console.log(element);
-
-
         // TODO Add MapContainer State
         // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
-        // this.props.popUpInfoWindow(element.props, element.marker);
+        console.log(element);
+        this.props.handleOnMarkerClick(element.props, element.marker);
     };
 
     // EFFECTS: given an index, modify the corresponding marker so that it is set to visible again
