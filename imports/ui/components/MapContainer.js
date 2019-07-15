@@ -10,11 +10,15 @@ import {connect} from 'react-redux';
 import {withTracker} from 'meteor/react-meteor-data';
 
 import {googleMapsApiKey} from "../config";
-import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
+import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue} from "../actions/mapContainerActions";
 import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
 import CurrentEvents from '../../api/CurrentEvents';
 
 export class MapContainer extends Component {
+    handleMapIdle = () => {
+        this.props.setMapLoadedTrue();
+    };
+
     // EFFECTS: close InfoWindow when clicking on map area
     onMapClicked = (props) => {
         if (this.props.mapContainer.showingInfoWindow) {
@@ -49,8 +53,10 @@ export class MapContainer extends Component {
             position: 'fixed'
         };
         const mapContainerStore = this.props.mapContainer;
+        // console.log(this.props);
         return (
             <Map
+                onIdle={this.handleMapIdle}
                 google={this.props.google}
                 zoom={14}
                 style={mapStyle}
@@ -110,4 +116,5 @@ const MeteorMapContainer = withTracker(() => {
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
     handleOnMarkerClick: handleOnMarkerClick,
+    setMapLoadedTrue: setMapLoadedTrue
 })(MeteorMapContainer);
