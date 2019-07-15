@@ -99,6 +99,9 @@ class HomePage extends React.Component {
         let searchedMarkerIdx = this.filterMarkersOnSearch(markers);
         if (searchedMarkerIdx) {
             this.modifyMarker(markers, searchedMarkerIdx);
+
+            // TODO: does not work here. Invariant Violation: Maximum update depth
+            // this.props.handleOnMarkerClick(markers[searchedMarkerIdx].props, markers[searchedMarkerIdx].marker);
             // let temp = markers[searchedMarkerIdx];
             // this.props.popUpInfoWindow(temp.props, temp);
         }
@@ -108,11 +111,15 @@ class HomePage extends React.Component {
 
     // Trigger an action once a marker is mounted on the map
     onMarkerMounted = element => {
+        // TODO ERROR Cannot read property 'props' of null
         console.log(element);
-        // TODO Add MapContainer State
-        // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
-        console.log(element);
-        this.props.handleOnMarkerClick(element.props, element.marker);
+
+        if (element){
+            // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
+            console.log(element);
+            this.props.handleOnMarkerClick(element.props, element.marker);
+            // Kind of working. Only able to show the content if it is already open
+        }
     };
 
     // EFFECTS: given an index, modify the corresponding marker so that it is set to visible again
