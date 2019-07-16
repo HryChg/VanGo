@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
-import {Link} from 'react-router-dom';
+import {Link, Redirect, NavLink} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
-import {Grid, Sidebar, Menu, Icon} from 'semantic-ui-react';
+import {Grid, Sidebar, Menu, Icon, Button} from 'semantic-ui-react';
 
 import SearchBar from "./SearchBar";
 import DatePicker from "./DatePicker";
@@ -202,13 +202,12 @@ class HomePage extends React.Component {
                                                             className="ui small label">{this.props.dataReadySaved ? this.props.savedEvents.length : 0}</div>
                                                         Show Current Selection
                                                     </a>
-                                                    <Link className="item" to="/edit">
-                                                        Plan Your Itinerary
-                                                        <Icon className="next-button" name="caret square right"
-                                                              size="large"/>
-                                                    </Link>
                                                 </div>
                                             </div>
+
+                                            <Button className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
+                                                Next
+                                            </Button>
                                         </div>
                                     </Grid.Column>
 

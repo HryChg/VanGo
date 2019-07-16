@@ -37,6 +37,11 @@ a {
     font-size: 16px;
 }
 
+a.ui.button.redirect-to-itinerary {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
 /* ---------------------------------------- */
 /* ------------    SideNav   -------------- */
 /* ---------------------------------------- */
@@ -87,35 +92,6 @@ a {
 .form-item {
     margin-bottom: 1rem;
 }
-
-/* ---------------------------------------- */
-/* -------------Circle Button-------------- */
-/* ---------------------------------------- */
-
-.circle-button {
-    background-color: darkslateblue;
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
-    float: right;
-    margin-right: -17px;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-    border: none;
-}
-
-.circle-button:hover {
-    background-color: slateblue;
-}
-
-.circle-button:focus {
-    background-color: slateblue;
-    box-shadow: 0 0 0 2pt lightblue;
-    outline: none;
-}
-
 
 /* ---------------------------------------- */
 /* ---------------  Home Page ------------- */
@@ -294,12 +270,16 @@ i.caret.square.right.large.icon.next-button {
 }
 
 /* ---------------------------------------- */
-/* ----        Event Drawer        -------- */
+/* ---- ToggleDrawer (Event, Itinerary) --- */
 /* ---------------------------------------- */
 .trash.icon:active {
     transform: translateY(2px);
 }
 
+i.trash.icon {
+    float: right;
+    margin: 0 0 0 .5rem;
+}
 
 /* ---------------------------------------- */
 /* ----    EventFilterContainer    -------- */
