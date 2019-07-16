@@ -11,7 +11,7 @@ import {withTracker} from 'meteor/react-meteor-data';
 
 import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue} from "../actions/mapContainerActions";
-import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
+import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import CurrentEvents from '../../api/CurrentEvents';
 
 export class MapContainer extends Component {
