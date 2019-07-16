@@ -2,8 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
 import { Redirect } from 'react-router-dom';
+import { Grid, Icon } from 'semantic-ui-react';
 
-import { Grid } from 'semantic-ui-react';
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
@@ -112,14 +112,14 @@ class EditPage extends React.Component {
                                         <div className="ui action input mini fluid">
                                             <input className={"edit-page-path-name"} type="text" placeholder={"Give it a name..."}/>
                                             <button className="ui button" onClick={this.createItinerary}>
-                                                <i className="heart icon"/>
+                                                <Icon name="heart"/>
                                                 Save
                                             </button>
                                         </div>
                                     </div>
                                     <div className={"container"}>
                                         <button className="ui button fluid" onClick={() => {alert('Work in Progress')}}>
-                                            <i className="envelope outline icon"/>
+                                            <Icon name="envelope outline"/>
                                             Email
                                         </button>
                                     </div>
