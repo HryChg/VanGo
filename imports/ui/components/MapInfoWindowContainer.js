@@ -4,8 +4,9 @@
 import React from 'react';
 import {InfoWindow} from 'google-maps-react';
 import * as ReactDOM from "react-dom";
+import {connect} from "react-redux";
 
-export class MapInfoWindowContainer extends React.Component {
+class MapInfoWindowContainer extends React.Component {
     constructor(props) {
         super(props);
         this.infoWindowRef = React.createRef();
@@ -24,11 +25,20 @@ export class MapInfoWindowContainer extends React.Component {
     }
 
     render() {
-        return <InfoWindow
+        return (<InfoWindow
             onOpen={this.onInfoWindowOpen}
             ref={this.infoWindowRef}
             {...this.props}
-        />
+        />)
     }
 }
+
+
+const mapStateToProps = state => {
+    return {
+        mapContainer: state.mapContainer
+    };
+};
+
+export default connect(mapStateToProps, {})(MapInfoWindowContainer);
 
