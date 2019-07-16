@@ -3,162 +3,225 @@ import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {Link} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
-import { Grid, Sidebar, Menu, Icon } from 'semantic-ui-react';
+import {Grid, Sidebar, Menu, Icon} from 'semantic-ui-react';
 
-import SearchBar from "../SearchBar";
+import SearchBar from "./SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
-import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import {handleOnMarkerClick, popUpInfoWindow} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
-import { showPanel, hidePanel } from './../../actions/panelActions';
-import {containAll, formatAMPM} from "../../../util/util";
+import {showPanel, hidePanel} from './../../actions/panelActions';
+import {containOneOf, formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
 
+
 class HomePage extends React.Component {
-    // TODO toDateString should be reformatted to yyyy/mm/dd hh:mm
-    // EFFECTS: render markers based on information from currEvents.events in Redux Store
-    // Note store.start_time and end_time are date object, need to convert them to strings
+
+    // EFFECTS: return index of the marker component if it matches the selected ID from searchBar reducer
+    //          return undefined if no match found
+    filterMarkersOnSearch(markers) {
+        let selectedID = this.props.searchBar.selected;
+        if (selectedID === '') {
+            return;
+        }
+        for (let idx = 0; idx < markers.length; idx++) {
+            let marker = markers[idx];
+            if (marker.props.id === selectedID) {
+                return idx;
+            }
+        }
+    }
+
+    // EFFECTS: create a marker based on an attraction
+    //          Set marker to invisible if user choose to hide attractions
+    //              or the attraction did not pass event filter (this.showMarker())
+    createAttractionMarker(attraction) {
+        let showAttraction = this.props.homePage.toggleNearbyAttractions;
+        return <Marker
+            key={attraction._id}
+            id={attraction._id}
+            name={attraction.name}
+            start_time={(attraction.start_time) ? formatAMPM(new Date(attraction.start_time.toString())) : 'n/a'}
+            end_time={(attraction.end_time) ? formatAMPM(new Date(attraction.end_time.toString())) : 'n/a'}
+            price={attraction.free ? 'Free' : ((attraction.price) ? '$'.concat(attraction.price.toString()) : 'n/a')}
+            location={attraction.location.display_address[0]}
+            link={attraction.link}
+            position={{
+                lat: attraction.latitude,
+                lng: attraction.longitude
+            }}
+            icon={{
+                url: "https://img.icons8.com/color/43/000000/compact-camera.png"
+            }}
+            description={(attraction.description) ? attraction.description : 'No Description Available'}
+            onClick={this.props.handleOnMarkerClick}
+            visible={showAttraction && this.showMarker(attraction)}
+        />
+    }
+
+    // EFFECTS: create a marker based on an event
+    //          Set marker to invisible if the event did not pass event filter (this.showMarker())
+    createEventMarker(event) {
+        return <Marker
+            key={event._id}
+            id={event._id}
+            name={event.name}
+            start_time={(event.start_time) ? formatAMPM(new Date(event.start_time)) : 'n/a'}
+            end_time={(event.end_time) ? formatAMPM(new Date(event.end_time)) : 'n/a'}
+            price={event.free ? 'Free' : ((event.price) ? '$'.concat(event.price.toString()) : 'n/a')}
+            location={event.location.display_address[0]}
+            link={event.link}
+            position={{
+                lat: event.latitude,
+                lng: event.longitude
+            }}
+            description={event.description}
+            onClick={this.props.handleOnMarkerClick}
+            visible={this.showMarker(event)}
+        />
+    }
+
+    // EFFECTS: render markers based on currentEvents Collection
     displayMarkers = () => {
         let markers = this.props.currentEvents.map((item) => {
-            if (this.filterItems(item)) {
-                if (item.type === 'Attraction') {
-                    return <Marker
-                    key={item._id}
-                    id={item._id}
-                    name={item.name}
-                    start_time={(item.start_time) ? formatAMPM(new Date(item.start_time.toString())) : 'n/a'}
-                    end_time=  {(item.end_time) ? formatAMPM(new Date(item.end_time.toString())): 'n/a'}
-                    price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
-                    location={item.location.display_address[0]}
-                    link={item.link}
-                    position={{
-                        lat: item.latitude,
-                        lng: item.longitude
-                    }}
-                    icon={{
-                        url: "https://img.icons8.com/color/43/000000/compact-camera.png"
-                      }}
-                    description={(item.description)?item.description:'No Description Available'}
-                    onClick={this.props.handleOnMarkerClick}/>
-                } else {
-                    return <Marker
-                    key={item._id}
-                    id={item._id}
-                    name={item.name}
-                    start_time={(item.start_time) ? formatAMPM(new Date(item.start_time)) : 'n/a'}
-                    end_time=  {(item.end_time) ? formatAMPM(new Date(item.end_time)) : 'n/a'}
-                    price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
-                    location={item.location.display_address[0]}
-                    link={item.link}
-                    position={{
-                        lat: item.latitude,
-                        lng: item.longitude
-                    }}
-                    description={item.description}
-                    onClick={this.props.handleOnMarkerClick}/>
-                }
+            if (item.type === 'Attraction') {
+                return this.createAttractionMarker(item);
+            } else {
+                return this.createEventMarker(item);
             }
         });
+        // console.log(`there are a total of ${markers.length} markers`);
+
+        // TODO Search Thru Marker to find a one that matches the search bar
+        let searchedMarkerIdx = this.filterMarkersOnSearch(markers);
+        if (searchedMarkerIdx) {
+            this.modifyMarker(markers, searchedMarkerIdx);
+            // let temp = markers[searchedMarkerIdx];
+            // this.props.popUpInfoWindow(temp.props, temp);
+        }
+
         return markers;
     };
 
+    // Trigger an action once a marker is mounted on the map
+    onMarkerMounted = element => {
+        console.log(element);
+
+
+        // TODO Add MapContainer State
+        // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
+        // this.props.popUpInfoWindow(element.props, element.marker);
+    };
+
+    // EFFECTS: given an index, modify the corresponding marker so that it is set to visible again
+    // MODIFIES: markers (i.e. the marker at the idx)
+    // NOTE: each element in markers are read only objects,
+    //          therefore a new object is produced to replace the original
+    modifyMarker(markers, idx) {
+        let oldMarker = markers[idx];
+        let copied = Object.assign({}, oldMarker.props); // copy the read-only object, extract only the property of the react component
+        copied.visible = true; // set the new marker's property to include true
+        let newMarker = (<Marker
+            ref={this.onMarkerMounted}
+            key={copied.id}
+            {...copied}
+        />);
+        markers[idx] = newMarker;
+    }
+
     // EFFECTS: return true if the item meets one of the selected categories and is within the price range
-    //          return false if user decides not to show nearby attraction and this item is an attraction
-    //          
     //          If no category selected, items of all categories are considered
-    //          If a category has been selected and the item price is within the price range, it may be shown 
+    //          If a category has been selected and the item price is within the price range, it may be shown
     //          Price range is always in effect.
-    filterItems = (item) => {
-        let showAttractions = this.props.homePage.toggleNearbyAttractions;
-        let isAttraction = item.type==='Attraction';
-        if (isAttraction && !showAttractions){
-            return false;
-        }
-
+    showMarker = (item) => {
         let filterCategories = this.props.eventFilter.categories;
-        let matchCategory;
+        let itemMatchCategory;
         if (filterCategories.length === 0) {
-            matchCategory = true;
+            itemMatchCategory = true;
         } else {
-            matchCategory = filterCategories.includes(item.category);
+            itemMatchCategory = filterCategories.includes(item.category);
         }
-
-        let withinPriceRange = item.price >= this.props.eventFilter.priceRange[0] && 
-                               item.price <= this.props.eventFilter.priceRange[1];
-        return matchCategory && withinPriceRange;
+        let withinPriceRange = item.price >= this.props.eventFilter.priceRange[0] &&
+            item.price <= this.props.eventFilter.priceRange[1];
+        return itemMatchCategory && withinPriceRange;
     };
 
     render() {
         return (
             <div>
-            <Sidebar.Pushable>
-            <Sidebar
-                as={Menu}
-                animation='overlay'
-                direction='right'
-                inverted
-                onHide={this.props.hidePanel}
-                vertical
-                visible={this.props.visible}
-            >
-                <EventDrawer/>
-            </Sidebar>
+                <Sidebar.Pushable>
+                    <Sidebar
+                        as={Menu}
+                        animation='overlay'
+                        direction='right'
+                        inverted
+                        onHide={this.props.hidePanel}
+                        vertical
+                        visible={this.props.visible}
+                    >
+                        <EventDrawer/>
+                    </Sidebar>
 
-            <Sidebar.Pusher>
-            <div>
-            <Grid stackable divided='vertically'>
-                <Grid.Row columns={2}>
-                    <Grid.Column width={4}>
-                        <div className={"home-panel"}>
-                            <h2>
-                                <Icon className="logo" name="street view"/> 
-                                VanGo
-                            </h2>
-                            <SearchBar/>
-                            <div className={"DatePickerContainer"}>
-                                <DatePicker/>
-                            </div>
-                            <div className={"EventFilterContainer"}>
-                                <EventFilter events={this.props.currentEvents}/>
-                            </div>
+                    <Sidebar.Pusher>
+                        <div>
+                            <Grid stackable divided='vertically'>
+                                <Grid.Row columns={2}>
+                                    <Grid.Column width={4}>
+                                        <div className={"home-panel"}>
+                                            <h2>
+                                                <Icon className="logo" name="street view"/>
+                                                VanGo
+                                            </h2>
+                                            <div className={"SearchBarContainer"}>
+                                                <SearchBar/>
+                                            </div>
+                                            <div className={"DatePickerContainer"}>
+                                                <DatePicker/>
+                                            </div>
+                                            <div className={"EventFilterContainer"}>
+                                                <EventFilter events={this.props.currentEvents}/>
+                                            </div>
 
-                            <div className={"sidenav-options-container"}>
-                                <div className="ui large vertical menu fluid">
-                                    <a className="item" onClick={this.props.toggleNearbyAttractions}>
-                                        <div className="ui small teal label">31</div>
-                                        {this.props.homePage.toggleNearbyAttractions?'Hide Attractions':'Show Nearby Attractions'}
-                                    </a>
-                                    <a className="item" onClick={this.props.showPanel}>
-                                        <div className="ui small label">{ this.props.dataReadySaved ? this.props.savedEvents.length : 0 }</div>
-                                        Show Current Selection
-                                    </a>
-                                    <Link className="item" to="/edit">
-                                        Plan Your Itinerary
-                                        <Icon className="next-button" name="caret square right" size="large"/>
-                                    </Link>
-                                </div>
-                            </div>
+                                            <div className={"sidenav-options-container"}>
+                                                <div className="ui large vertical menu fluid">
+                                                    <a className="item" onClick={this.props.toggleNearbyAttractions}>
+                                                        <div className="ui small teal label">31</div>
+                                                        {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
+                                                    </a>
+                                                    <a className="item" onClick={this.props.showPanel}>
+                                                        <div
+                                                            className="ui small label">{this.props.dataReadySaved ? this.props.savedEvents.length : 0}</div>
+                                                        Show Current Selection
+                                                    </a>
+                                                    <Link className="item" to="/edit">
+                                                        Plan Your Itinerary
+                                                        <Icon className="next-button" name="caret square right"
+                                                              size="large"/>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Grid.Column>
+
+                                    <Grid.Column width={12}>
+                                        <div style={{height: '94vh'}}>
+                                            <MapContainer width={'98%'} height={'100%'}
+                                                          initialCenter={{lat: 49.2820, lng: -123.1171}}>
+                                                {this.displayMarkers()}
+                                            </MapContainer>
+                                        </div>
+                                    </Grid.Column>
+
+                                </Grid.Row>
+                            </Grid>
                         </div>
-                    </Grid.Column>
-
-                    <Grid.Column width={12}>
-                        <div style={{height: '94vh'}}>
-                            <MapContainer width={'98%'} height={'100%'} initialCenter={{lat: 49.2820, lng: -123.1171}}>
-                                {this.displayMarkers()}
-                            </MapContainer>
-                        </div>
-                    </Grid.Column>
-                
-                </Grid.Row>
-            </Grid>
+                    </Sidebar.Pusher>
+                </Sidebar.Pushable>
             </div>
-            </Sidebar.Pusher>
-            </Sidebar.Pushable>
-        </div>
-            
+
         );
     }
 }
@@ -169,14 +232,15 @@ const mapStateToProps = (state) => {
         maxPrice: state.maxPrice,
         homePage: state.homePage,
         eventFilter: state.eventFilter,
-        visible: state.panel.visible
+        visible: state.panel.visible,
+        searchBar: state.searchBar,
+        mapContainer: state.mapContainer
     };
 };
-
-const HomePageContainer = withTracker(()=>{
+const HomePageContainer = withTracker(() => {
     const handle = Meteor.subscribe('currentEvents');
     const currentEvents = CurrentEvents.find().fetch();
-    
+
     const handleSaved = Meteor.subscribe('eventDrawer');
     const savedEvents = EventDrawerApi.find().fetch();
 
@@ -187,10 +251,10 @@ const HomePageContainer = withTracker(()=>{
         savedEvents: savedEvents
     }
 })(HomePage);
-
 export default connect(mapStateToProps, {
     handleOnMarkerClick,
     toggleNearbyAttractions,
-    showPanel, 
-    hidePanel 
+    showPanel,
+    hidePanel,
+    popUpInfoWindow
 })(HomePageContainer);

@@ -33,13 +33,12 @@ export class MapContainer extends Component {
             return element._id === eventID;
         });
 
-        Meteor.call('saveEventToDrawer', eventToBeSaved, (error, result) => {
+        Meteor.call('saveToCurrentUserDrawer', eventToBeSaved, (error, result) => {
             if (error) {
-                alert(error);
+                alert(error.message);
             } else {
                 alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`)
             }
-
         })
     };
 

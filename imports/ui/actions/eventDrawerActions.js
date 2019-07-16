@@ -11,3 +11,10 @@ export const deleteEvent = (event) => {
         payload: event
     };
 };
+
+export const updateEventDrawer = (res) => {
+    return {
+        type: 'LOAD_EVENT_DRAWER',
+        payload: res
+    };
+};

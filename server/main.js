@@ -10,6 +10,7 @@ import getEventsInDay from './../imports/api/getDayEvents';
 import GooglePlacesApi, { convertPlacesToAttractions } from "../imports/api/GooglePlacesApi";
 import { convertPlaceToAttraction } from "../imports/api/GooglePlacesApi";
 import YelpAttractionsApi, { convertBusinessesToAttractions } from "../imports/api/YelpAttractionsApi";
+import eventDrawerData from './PreLoadedEventDrawer';
 
 let event1 = {
   id: 1,
@@ -120,10 +121,11 @@ Meteor.startup(async () => {
     CurrentEvents.insert(event);
   }
 
-  if (Itineraries.find().count() === 0) {
-    insertItineraries([event1, event2, event3], "Jan 12, 2019");
-    insertItineraries([event4, event5, event6], "Jan 13, 2019");
-  }
+  // TODO Are these event still update to date? They dont have the most update to date property and often leads to undefined errors
+  // if (Itineraries.find().count() === 0) {
+  //   insertItineraries([event1, event2, event3], "Jan 12, 2019");
+  //   insertItineraries([event4, event5, event6], "Jan 13, 2019");
+  // }
 
   if (CurrentEvents.find().count() === 0) {
     for (let event of PreLoadedEvents) {
@@ -133,7 +135,10 @@ Meteor.startup(async () => {
   }
 
   if (EventDrawerApi.find().count() === 0) {
-    console.log(`EventDrawer is Empty`);
+    console.log(`EventDrawer is Empty. Added two user data`);
+      for (let userData of eventDrawerData){
+          EventDrawerApi.insert(userData);
+      }
   }
 
   let yelp = new YelpAttractionsApi();

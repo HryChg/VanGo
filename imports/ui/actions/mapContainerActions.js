@@ -19,3 +19,15 @@ export const handleOnMapClicked = () => {
         type: 'ON_MAP_CLICKED'
     }
 };
+
+
+export const popUpInfoWindow = (props, marker) => {
+    return {
+        type: 'POP_UP_INFO_WINDOW',
+        payload: {
+            selectedPlace: props,
+            activeMarker: marker,
+            showingInfoWindow: true
+        }
+    }
+};
