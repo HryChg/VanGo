@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 // import getDayEvents from './clientEvents';
-import getEventsInDay from './clientEvents';
+import getEventsInDay from './getDayEvents';
 
 const CurrentEvents = new Mongo.Collection('currentEvents');
 
