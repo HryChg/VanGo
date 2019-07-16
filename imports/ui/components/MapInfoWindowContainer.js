@@ -40,7 +40,5 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {
-
-})(MapInfoWindowContainer);
+export default connect(mapStateToProps, {})(MapInfoWindowContainer);
 

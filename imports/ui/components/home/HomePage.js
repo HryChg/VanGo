@@ -217,6 +217,23 @@ class HomePage extends React.Component {
                                             <MapContainer width={'98%'} height={'100%'}
                                                           initialCenter={{lat: 49.2820, lng: -123.1171}}>
                                                 {this.displayMarkers()}
+                                                <Marker
+                                                    ref={this.props.handleOnMarkerClick}
+                                                    key={'000'}
+                                                    name={'UBC Marker'}
+                                                    start_time={'n/a'}
+                                                    end_time={'n/a'}
+                                                    price={'n/a'}
+                                                    location={'dddddddd'}
+                                                    link={''}
+                                                    position={{
+                                                        lat: 49.2606,
+                                                        lng: -123.2460
+                                                    }}
+                                                    description={'This is UBC'}
+                                                    onClick={this.props.handleOnMarkerClick}
+                                                    visible={true}
+                                                />
                                             </MapContainer>
                                         </div>
                                     </Grid.Column>
