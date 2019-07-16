@@ -1,21 +1,22 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Marker} from "google-maps-react";
-import {Link, Redirect, NavLink} from 'react-router-dom';
-import {withTracker} from 'meteor/react-meteor-data';
-import {Grid, Sidebar, Menu, Icon, Button} from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Marker } from "google-maps-react";
+import { Link, Redirect, NavLink } from 'react-router-dom';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Grid, Sidebar, Menu, Icon, Button } from 'semantic-ui-react';
 
 import SearchBar from "./SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
-import {handleOnMarkerClick, popUpInfoWindow} from "../../actions/mapContainerActions";
-import {toggleNearbyAttractions} from "../../actions/homePageActions";
-import {showPanel, hidePanel} from './../../actions/panelActions';
-import {containOneOf, formatAMPM} from "../../../util/util";
+import { handleOnMarkerClick, popUpInfoWindow } from "../../actions/mapContainerActions";
+import { toggleNearbyAttractions } from "../../actions/homePageActions";
+import { showPanel, hidePanel } from './../../actions/panelActions';
+import { containOneOf, formatAMPM } from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
+import { VanGoStore } from "../../../../client/main";
 
 
 class HomePage extends React.Component {
@@ -87,11 +88,13 @@ class HomePage extends React.Component {
     // EFFECTS: render markers based on currentEvents Collection
     displayMarkers = () => {
         let markers = this.props.currentEvents.map((item) => {
-            if (item.type === 'Attraction') {
-                return this.createAttractionMarker(item);
-            } else {
-                return this.createEventMarker(item);
-            }
+            // if (VanGoStore.getState().datePicker.selectedDate) {
+                if (item.type === 'Attraction') {
+                    return this.createAttractionMarker(item);
+                } else {
+                    return this.createEventMarker(item);
+                }
+            // }
         });
         // console.log(`there are a total of ${markers.length} markers`);
 
@@ -162,7 +165,7 @@ class HomePage extends React.Component {
                         vertical
                         visible={this.props.visible}
                     >
-                        <EventDrawer/>
+                        <EventDrawer />
                     </Sidebar>
 
                     <Sidebar.Pusher>
@@ -172,17 +175,17 @@ class HomePage extends React.Component {
                                     <Grid.Column width={4}>
                                         <div className={"home-panel"}>
                                             <h2>
-                                                <Icon className="logo" name="street view"/>
+                                                <Icon className="logo" name="street view" />
                                                 VanGo
                                             </h2>
                                             <div className={"SearchBarContainer"}>
-                                                <SearchBar/>
+                                                <SearchBar />
                                             </div>
                                             <div className={"DatePickerContainer"}>
-                                                <DatePicker/>
+                                                <DatePicker />
                                             </div>
                                             <div className={"EventFilterContainer"}>
-                                                <EventFilter events={this.props.currentEvents}/>
+                                                <EventFilter events={this.props.currentEvents} />
                                             </div>
 
                                             <div className={"sidenav-options-container"}>
@@ -206,9 +209,9 @@ class HomePage extends React.Component {
                                     </Grid.Column>
 
                                     <Grid.Column width={12}>
-                                        <div style={{height: '94vh'}}>
+                                        <div style={{ height: '94vh' }}>
                                             <MapContainer width={'98%'} height={'100%'}
-                                                          initialCenter={{lat: 49.2820, lng: -123.1171}}>
+                                                initialCenter={{ lat: 49.2820, lng: -123.1171 }}>
                                                 {this.displayMarkers()}
                                             </MapContainer>
                                         </div>

@@ -13,7 +13,6 @@ class DatePicker extends React.Component {
     onChange = value => {
         this.props.changeDate(value);
         Meteor.call('updateEvents', value);
-        // getDayEvents(value) call yelp api from server with value param?
     };
 
     render() {
