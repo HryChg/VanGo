@@ -17,6 +17,16 @@ class EditPage extends React.Component {
         this.props.resetEditPage();
     }
 
+    // EFFECCTS: renders date or, if editing, date: name
+    toggleEditHeader() {
+        if (this.props.editing) {
+            return (<h3>Fake Name Right Now</h3>) // TODO
+        } else {
+            let selectedDateString = this.props.datePicker.selectedDate.toDateString();
+            return (<h3>{selectedDateString}</h3>);
+        }
+    }
+
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
         let markers = this.props.draggableItems.items.map((item) => {
@@ -99,14 +109,13 @@ class EditPage extends React.Component {
         if (this.props.saved) {
             return (<Redirect exact to='/itinerary'/>);
         } else {
-            let selectedDateString = this.props.datePicker.selectedDate.toDateString();
             return (
                 <Grid stackable divided='vertically'>
                     <Grid.Row columns={2}>
                             <Grid.Column width={4}>
                                 <div className={"edit-panel"}>
-                                    <h2 className={"ui header"}>Edit Itinerary</h2>
-                                    <h3>{selectedDateString}</h3>
+                                    <h2 className={"ui header"}>Reorder Itinerary</h2>
+                                    {this.toggleEditHeader()}
                                     <DraggableItems/>
                                     <div className={"container"}>
                                         <div className="ui action input mini fluid">
@@ -145,7 +154,8 @@ const mapStateToProps = (state) => {
     return {
         draggableItems: state.draggableItems,
         datePicker: state.datePicker,
-        saved: state.draggableItems.saved
+        saved: state.draggableItems.saved,
+        editing: state.itineraryStore.editing
     };
 };
 

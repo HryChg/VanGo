@@ -21,9 +21,9 @@ import { formatAMPM } from "../../../util/util";
 
 class ItineraryPage extends React.Component {
     // EFFECTS: revert back to non-editing state to allow for user to navigate to itinerary page
-    componentWillUnmount() {
-        this.props.editingItinerary(false);
-    }
+    // componentWillUnmount() {
+    //     this.props.editingItinerary(false);
+    // }
 
     // EFFECTS: returns itinerary with the selectedID, if none selected, choose first if available, else null
     getSelectedItinerary(selectedID) {

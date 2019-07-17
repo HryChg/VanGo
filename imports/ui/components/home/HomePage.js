@@ -19,6 +19,17 @@ import EventDrawerApi from "../../../api/EventDrawerApi";
 
 
 class HomePage extends React.Component {
+    // EFFECTS: renders name and logo; if edit state, renders editing title
+    toggleEditHeader() {
+        if (this.props.editing) {
+            return (<h2>Add/Remove Itinerary Items</h2>)
+        } else {
+            return (<h2>
+                <Icon className="logo" name="street view"/>
+                VanGo
+            </h2>);
+        }
+    }
 
     // EFFECTS: return index of the marker component if it matches the selected ID from searchBar reducer
     //          return undefined if no match found
@@ -171,10 +182,7 @@ class HomePage extends React.Component {
                                 <Grid.Row columns={2}>
                                     <Grid.Column width={4}>
                                         <div className={"home-panel"}>
-                                            <h2>
-                                                <Icon className="logo" name="street view"/>
-                                                VanGo
-                                            </h2>
+                                            {this.toggleEditHeader()}
                                             <div className={"SearchBarContainer"}>
                                                 <SearchBar/>
                                             </div>
@@ -233,7 +241,8 @@ const mapStateToProps = (state) => {
         eventFilter: state.eventFilter,
         visible: state.panel.visible,
         searchBar: state.searchBar,
-        mapContainer: state.mapContainer
+        mapContainer: state.mapContainer,
+        editing: state.itineraryStore.editing
     };
 };
 const HomePageContainer = withTracker(() => {
