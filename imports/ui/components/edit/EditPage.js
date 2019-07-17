@@ -93,11 +93,11 @@ class EditPage extends React.Component {
             return null;
         }
 
-        let events = this.props.draggableItems.items;
+        let items = this.props.draggableItems.items;
         let itin = {
             name: itineraryName,
             date: this.props.datePicker.selectedDate.toDateString(), // TODO: Convert to uniform format
-            events: events
+            items: items
         };
 
         console.log(itin);

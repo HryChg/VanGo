@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import Itineraries from '../../imports/api/itineraries';
+import EventDrawerApi from '../../imports/api/EventDrawerApi';
 
 Meteor.methods({
     // EFFECTS: adds itinerary to collection; throws error if not logged in
@@ -11,7 +12,7 @@ Meteor.methods({
         Itineraries.insert({
             id: itinerary.id,
             name: itinerary.name,
-            events: itinerary.events, 
+            items: itinerary.items, 
             date: itinerary.date,
             user: Meteor.userId()
         }, (err) => {
@@ -26,8 +27,21 @@ Meteor.methods({
             if (err) throw new Meteor.Error(err, err);
         })
     },
-    // Template for an update
+    // EFFECTS: deletes items stored in current event drawer for given id
+    //          and overwrites the data with selected itinerary items
     'updateItinerary': function(id) {
+        EventDrawerApi.remove({_id: id}, () => {
+            let items = Itineraries.find({_id: id}, {fields: {items: 1}});
+            EventDrawerApi.insert({
+                id: itinerary.id,
+                name: itinerary.name,
+                items: itinerary.items, 
+                date: itinerary.date,
+                user: Meteor.userId()
+            }, (err) => {
+                if (err) throw new Meteor.Error(err, err);
+            });
+        });
         // Add itinerary to Event Drawer
         console.log("calling updateItinerary");
         // Itineraries.update({

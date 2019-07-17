@@ -190,7 +190,7 @@ class HomePage extends React.Component {
                                                 <DatePicker/>
                                             </div>
                                             <div className={"EventFilterContainer"}>
-                                                <EventFilter events={this.props.currentEvents}/>
+                                                <EventFilter items={this.props.currentEvents}/>
                                             </div>
 
                                             <div className={"sidenav-options-container"}>

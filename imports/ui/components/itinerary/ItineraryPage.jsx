@@ -72,11 +72,11 @@ class ItineraryPage extends React.Component {
         }
     }
 
-    // EFFECTS: display markers base on events in draggable items
+    // EFFECTS: display markers base on items in draggable items
     displayMarkers = () => {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
-            let markers = selectedItinerary.events.map((item) => {
+            let markers = selectedItinerary.items.map((item) => {
                 if (item.type === 'Attraction') {
                     return <Marker
                     key={item._id}
@@ -119,12 +119,12 @@ class ItineraryPage extends React.Component {
         return null;
     };
 
-    // EFFECTS: display path based on the order of events in DraggableItems
+    // EFFECTS: display path based on the order of items in DraggableItems
     displayPolyLine = () => {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
-            let coordinates = selectedItinerary.events.map((event, index) => {
-                return {lat: event.latitude, lng: event.longitude};
+            let coordinates = selectedItinerary.items.map((item, index) => {
+                return {lat: item.latitude, lng: item.longitude};
             });
     
             return (<Polyline
