@@ -6,8 +6,6 @@ import Itineraries from '../imports/api/itineraries';
 import CurrentEvents from '../imports/api/CurrentEvents';
 import EventDrawerApi from '../imports/api/EventDrawerApi';
 import getEventsInDay from './../imports/api/getDayEvents';
-import GooglePlacesApi, { convertPlacesToAttractions } from "../imports/api/GooglePlacesApi";
-import { convertPlaceToAttraction } from "../imports/api/GooglePlacesApi";
 import YelpAttractionsApi, { convertBusinessesToAttractions } from "../imports/api/YelpAttractionsApi";
 import eventDrawerData from './PreLoadedEventDrawer';
 import CalledDates from '../imports/api/CalledDates';
