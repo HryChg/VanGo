@@ -17,25 +17,39 @@ class EventFilter extends React.Component {
     //          If toggleText exist in either categories or price range,
     //          remove it. If not, add it.
     handleToggle = (toggleText) => {
-        let categories;
+        let categories = [];
+        let eventTypes = [];
+        let attractionTypes = [];
         switch(toggleText) {
-            case "Art & Music": 
-                categories = ["music", "visual-arts", "performing-arts", "film", "fashion"];
+            case "Entertainment": 
+                eventTypes = ["music", "visual-arts", "performing-arts", "film", "fashion"];
+                attractionTypes = ["publicart", "museums", "whalewatchingtours", "artmuseums"]
+                categories = categories.concat(eventTypes, attractionTypes);
                 break;
             case "Education":
-                categories = ["lectures-books"];
+                eventTypes = ["lectures-books"];
+                attractionTypes = []
+                categories = categories.concat(eventTypes, attractionTypes);
                 break;
             case "Food":
-                categories = ["food-and-drink"];
+                eventTypes = ["food-and-drink"];
+                attractionTypes = ["foodtours", "beertours"]
+                categories = categories.concat(eventTypes, attractionTypes);
                 break;
             case "Festivals":
-                categories = ["festivals-fairs"];
+                eventTypes = ["festivals-fairs"];
+                attractionTypes = []
+                categories = categories.concat(eventTypes, attractionTypes);
                 break;
             case "Family":
-                categories = ["kids-family"];
+                eventTypes = ["kids-family"];
+                attractionTypes = []
+                categories = categories.concat(eventTypes, attractionTypes);
                 break;
             case "Other":
-                categories = ["charities", "sports-active-life", "nightlife", "other"];
+                eventTypes = ["charities", "sports-active-life", "nightlife", "other"];
+                attractionTypes = ["landmarks", "tours", "parks", "libraries", "walkingtours", "localflavor", "bustours"]
+                categories = categories.concat(eventTypes, attractionTypes);
                 break;
         }
         const currentCategoriesInStore = this.props.eventFilter.categories;
@@ -68,7 +82,7 @@ class EventFilter extends React.Component {
                         <Grid.Column width={16}>
                         <h4 className={"filter-margin"} id={"filter-name"}>Filters:</h4>
                             <div className="container toggles">
-                                <Toggle content={"Art & Music"} sendData={this.handleToggle} />
+                                <Toggle content={"Entertainment"} sendData={this.handleToggle} />
                                 <Toggle content={"Food"} sendData={this.handleToggle} />
                                 <Toggle content={"Education"} sendData={this.handleToggle} />
                             </div>

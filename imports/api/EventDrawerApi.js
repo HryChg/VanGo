@@ -9,6 +9,7 @@ const EventDrawerApi = new Mongo.Collection('eventDrawer');
 
 // EFFECTS: return the _id of an anonymous user in the event drawer.
 //          If not such document exist in eventDrawerCollection, create one and return its _id
+// TODO: This might cause issues if multiple anon users are concurrently on the app !!!
 const getAnonDrawerID = async () => {
     let anonDrawer = EventDrawerApi.findOne({user: 'anon'});
     if (!anonDrawer) {
