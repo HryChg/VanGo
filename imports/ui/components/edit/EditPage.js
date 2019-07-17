@@ -7,7 +7,6 @@ import { Grid, Icon } from 'semantic-ui-react';
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
-import {getDrawerItems} from "../../actions/draggableItemsActions";
 import { saveItinerary, resetEditPage } from "../../actions/editPageActions";
 import { formatAMPM } from "../../../util/util";
 
@@ -95,6 +94,7 @@ class EditPage extends React.Component {
 
         let items = this.props.draggableItems.items;
         let itin = {
+            _id: this.props.draggableItems._id,
             name: itineraryName,
             date: this.props.datePicker.selectedDate.toDateString(), // TODO: Convert to uniform format
             items: items
@@ -163,5 +163,4 @@ export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     saveItinerary: saveItinerary,
     resetEditPage: resetEditPage,
-    getDrawerItems: getDrawerItems
 })(EditPage);
