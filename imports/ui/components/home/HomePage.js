@@ -85,6 +85,7 @@ class HomePage extends React.Component {
 
     // EFFECTS: render markers based on currentEvents Collection
     displayMarkers = () => {
+        // TODO: Ask Mary is the commented out section is still needed
         let markers = this.props.currentEvents.map((item) => {
             // if (VanGoStore.getState().datePicker.selectedDate) {
                 if (item.type === 'Attraction') {
@@ -94,28 +95,19 @@ class HomePage extends React.Component {
                 }
             // }
         });
-        // console.log(`there are a total of ${markers.length} markers`);
 
-        // TODO Search Thru Marker to find a one that matches the search bar
         let searchedMarkerIdx = this.filterMarkersOnSearch(markers);
+
         if (searchedMarkerIdx) {
             this.modifyMarker(markers, searchedMarkerIdx);
-
-            // TODO: does not work here. Invariant Violation: Maximum update depth
-            // this.props.handleOnMarkerClick(markers[searchedMarkerIdx].props, markers[searchedMarkerIdx].marker);
-            // let temp = markers[searchedMarkerIdx];
-            // this.props.popUpInfoWindow(temp.props, temp);
         }
 
         return markers;
     };
 
-    // Trigger an action once a marker is mounted on the map
+    // TODO Trigger an action once a marker is mounted on the map
     onMarkerMounted = element => {
-        // if (element){
-        //     // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
-        //     this.props.handleOnMarkerClick(element.props, element.marker);
-        // }
+        // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
         // stub
     };
 
