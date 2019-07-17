@@ -42,6 +42,7 @@ class SearchBar extends Component {
         setTimeout(() => {
             source = this.fetchSearchables();
             this.props.setResults(source);
+            console.log(source);
         }, 300)
 
 

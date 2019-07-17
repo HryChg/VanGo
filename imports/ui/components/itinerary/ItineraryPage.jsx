@@ -162,6 +162,10 @@ class ItineraryPage extends React.Component {
                                 </div>
                                 <div id="itinerary-name">
                                     <h1>{this.getDisplayName(this.props.selectedID)}</h1>
+                                    <Icon name="pencil" onClick={() => {
+                                        Meteor.call('');
+                                        return (<Redirect to='/itinerary'/>);
+                                        }}/>
                                 </div>
                                 <div id="it-list">
                                     <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/>  

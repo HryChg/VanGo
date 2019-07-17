@@ -34,6 +34,6 @@ Meteor.methods({
             // What needs to be updated
         }, (err) => {
             if (err) throw new Meteor.Error(err, err);
-        })
+        });
     }
 });
