@@ -53,7 +53,6 @@ export class MapContainer extends Component {
             position: 'fixed'
         };
         const mapContainerStore = this.props.mapContainer;
-        // console.log(this.props);
         return (
             <Map
                 onIdle={this.handleMapIdle}

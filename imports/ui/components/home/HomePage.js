@@ -10,14 +10,12 @@ import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
-import { handleOnMarkerClick, popUpInfoWindow } from "../../actions/mapContainerActions";
+import { handleOnMarkerClick } from "../../actions/mapContainerActions";
 import { toggleNearbyAttractions } from "../../actions/homePageActions";
 import { showPanel, hidePanel } from './../../actions/panelActions';
-import { containOneOf, formatAMPM } from "../../../util/util";
+import { formatAMPM } from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
-import { VanGoStore } from "../../../../client/main";
-
 
 class HomePage extends React.Component {
 
@@ -114,15 +112,11 @@ class HomePage extends React.Component {
 
     // Trigger an action once a marker is mounted on the map
     onMarkerMounted = element => {
-        // TODO ERROR Cannot read property 'props' of null
-        console.log(element);
-
-        if (element){
-            // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
-            console.log(element);
-            this.props.handleOnMarkerClick(element.props, element.marker);
-            // Kind of working. Only able to show the content if it is already open
-        }
+        // if (element){
+        //     // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
+        //     this.props.handleOnMarkerClick(element.props, element.marker);
+        // }
+        // stub
     };
 
     // EFFECTS: given an index, modify the corresponding marker so that it is set to visible again
@@ -219,23 +213,6 @@ class HomePage extends React.Component {
                                             <MapContainer width={'98%'} height={'100%'}
                                                 initialCenter={{ lat: 49.2820, lng: -123.1171 }}>
                                                 {this.displayMarkers()}
-                                                <Marker
-                                                    ref={this.props.handleOnMarkerClick}
-                                                    key={'000'}
-                                                    name={'UBC Marker'}
-                                                    start_time={'n/a'}
-                                                    end_time={'n/a'}
-                                                    price={'n/a'}
-                                                    location={'dddddddd'}
-                                                    link={''}
-                                                    position={{
-                                                        lat: 49.2606,
-                                                        lng: -123.2460
-                                                    }}
-                                                    description={'This is UBC'}
-                                                    onClick={this.props.handleOnMarkerClick}
-                                                    visible={true}
-                                                />
                                             </MapContainer>
                                         </div>
                                     </Grid.Column>
@@ -281,5 +258,4 @@ export default connect(mapStateToProps, {
     toggleNearbyAttractions,
     showPanel,
     hidePanel,
-    popUpInfoWindow
 })(HomePageContainer);

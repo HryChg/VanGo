@@ -12,6 +12,10 @@ if (Meteor.isServer) {
     });
 
     Meteor.methods({
+        'getCurrentEvents': async ()=>{
+            return await CurrentEvents.find().fetch();
+        },
+
         'updateEvents': async (date) => {
             // var dbEvents = CurrentEvents.find();
             // for (event of eventsToday.events) {
