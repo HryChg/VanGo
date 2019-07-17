@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { Menu } from 'semantic-ui-react';
 
-import {deleteEvent, updateEventDrawer} from '../../actions/eventDrawerActions';
 import {maskString} from "../../../util/util";
 import {withTracker} from "meteor/react-meteor-data";
 import EventDrawerApi from "../../../api/EventDrawerApi";
@@ -72,5 +71,5 @@ const EventDrawerContainer = withTracker(()=>{
 
 
 export default connect(mapStateToProps, {
-    deleteEvent: deleteEvent,
+
 })(EventDrawerContainer);
