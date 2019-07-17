@@ -4,3 +4,10 @@ export const selectID = (id) => {
 		payload: id
 	}
 }
+
+export const editingItinerary = (state) => {
+	return {
+		type: 'EDITING_ITINERARY',
+		payload: state
+	}
+}

@@ -3,7 +3,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
-import { Grid, Icon, Menu, Sidebar } from 'semantic-ui-react';
+import { Redirect, NavLink } from 'react-router-dom';
+import { Grid, Icon, Menu, Sidebar, Button } from 'semantic-ui-react';
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import { withTracker } from 'meteor/react-meteor-data';
 
@@ -14,11 +15,16 @@ import ItineraryList from './ItineraryList';
 import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
-import { selectID } from './../../actions/itineraryActions';
+import { selectID, editingItinerary } from './../../actions/itineraryActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM } from "../../../util/util";
 
 class ItineraryPage extends React.Component {
+    // EFFECTS: revert back to non-editing state to allow for user to navigate to itinerary page
+    componentWillUnmount() {
+        this.props.editingItinerary(false);
+    }
+
     // EFFECTS: returns itinerary with the selectedID, if none selected, choose first if available, else null
     getSelectedItinerary(selectedID) {
         if (this.props.dataReady) {
@@ -131,7 +137,11 @@ class ItineraryPage extends React.Component {
         return null;
     };
 
+    // EFFECTS: If itinerary is being edited, redirect to home page; otherwise, display itinerary page
     render() {
+        if (this.props.editing) {
+            return (<Redirect exact to='/'/>);
+        }
         return(
             <div>
                 <Sidebar.Pushable>
@@ -162,10 +172,12 @@ class ItineraryPage extends React.Component {
                                 </div>
                                 <div id="itinerary-name">
                                     <h1>{this.getDisplayName(this.props.selectedID)}</h1>
-                                    <Icon name="pencil" onClick={() => {
-                                        Meteor.call('');
-                                        return (<Redirect to='/itinerary'/>);
-                                        }}/>
+                                    <Button onClick={() => {
+                                        Meteor.call('updateItinerary', this.props.selectedID);
+                                        this.props.editingItinerary(true);
+                                    }}>
+                                        <Icon name='pencil'/>
+                                    </Button>
                                 </div>
                                 <div id="it-list">
                                     <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/>  
@@ -194,6 +206,7 @@ class ItineraryPage extends React.Component {
 const mapStateToProps = (state) => {
     return {
         selectedID: state.itineraryStore.selectedID,
+        editing: state.itineraryStore.editing,
         visible: state.panel.visible
     };
 }
@@ -208,4 +221,6 @@ const ItineraryPageContainer = withTracker(() => {
     }
 })(ItineraryPage);
 
-export default connect(mapStateToProps, { handleOnMarkerClick, selectID, showPanel, hidePanel })(ItineraryPageContainer);
+export default connect(mapStateToProps, 
+    { handleOnMarkerClick, selectID, editingItinerary, showPanel, hidePanel }
+    )(ItineraryPageContainer);

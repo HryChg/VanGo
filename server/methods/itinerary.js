@@ -28,12 +28,15 @@ Meteor.methods({
     },
     // Template for an update
     'updateItinerary': function(id) {
-        Itineraries.update({
-            _id: id
-        }, {
-            // What needs to be updated
-        }, (err) => {
-            if (err) throw new Meteor.Error(err, err);
-        });
+        // Add itinerary to Event Drawer
+        console.log("calling updateItinerary");
+        // Itineraries.update({
+        //     _id: id
+        // }, {
+        //     // What needs to be updated
+        // }, (err) => {
+        //     if (err) throw new Meteor.Error(err, err);
+        // });
     }
 });
+

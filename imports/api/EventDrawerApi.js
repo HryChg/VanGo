@@ -103,6 +103,12 @@ if (Meteor.isServer) {
                 console.log(`deleteFromCurrentUserData(): item "${itemToBeDeleted.name}}" deleted from user drawer`);
                 return;
             }
+        },
+
+        // EFFECTS: Overwrites existing drawer data with selected itinerary
+        saveItineraryToDrawer: async (itinerary) => {
+            let userData = await EventDrawerApi.update({_id: this.userId}, itinerary);
+            return;
         }
     });
 }
