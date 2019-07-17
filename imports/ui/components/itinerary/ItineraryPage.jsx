@@ -171,13 +171,13 @@ class ItineraryPage extends React.Component {
                                     </Menu>
                                 </div>
                                 <div id="itinerary-name">
-                                    <h1>{this.getDisplayName(this.props.selectedID)}</h1>
-                                    <Button onClick={() => {
-                                        Meteor.call('updateItinerary', this.props.selectedID);
-                                        this.props.editingItinerary(true);
-                                    }}>
-                                        <Icon name='pencil'/>
-                                    </Button>
+                                    <h1>
+                                        <span className="it-header">{this.getDisplayName(this.props.selectedID)}</span>
+                                        <Button className="it-edit" icon="pencil large black" onClick={() => {
+                                            Meteor.call('updateItinerary', this.props.selectedID);
+                                            this.props.editingItinerary(true);
+                                        }}/>
+                                    </h1>
                                 </div>
                                 <div id="it-list">
                                     <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/>  
