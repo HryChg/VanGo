@@ -17,6 +17,7 @@
     "lodash": "latest",
     "meteor-node-stubs": "^0.4.1",
     "meteor-redux-middlewares": "^3.0.7",
+    "nodemailer": "^6.3.0",
     "react": "^16.8.6",
     "react-calendar": "^2.19.0",
     "react-dom": "^16.8.6",
