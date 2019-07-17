@@ -17,17 +17,19 @@ Meteor.methods({
             date: itinerary.date,
             user: Meteor.userId()
         }, (err) => {
-            if (err.errmsg.includes("E11000 duplicate key error")) {
-                Itineraries.update({
-                    _id: itinerary._id
-                },
-                {
-                    name: itinerary.name,
-                    items: itinerary.items, 
-                    date: itinerary.date,
-                    user: Meteor.userId()
-                },
-                (err) => {if (err) throw new Meteor.Error(err, err)});
+            if (err.errmsg) {
+                if (err.errmsg.includes("E11000 duplicate key error")) {
+                    Itineraries.update({
+                        _id: itinerary._id
+                    },
+                    {
+                        name: itinerary.name,
+                        items: itinerary.items, 
+                        date: itinerary.date,
+                        user: Meteor.userId()
+                    },
+                    (err) => {if (err) throw new Meteor.Error(err, err)});    
+                }
             } else if (err) {
                 throw new Meteor.Error(err, err);
             }
@@ -42,29 +44,18 @@ Meteor.methods({
         })
     },
     // EFFECTS: deletes items stored in current event drawer for given id
-    //          and overwrites the data with selected itinerary items
+    //          and overwrites the data with selected itinerary
     'updateItinerary': function(id) {
+        if (!id) return;
         EventDrawerApi.remove({_id: id}, () => {
-            let items = Itineraries.find({_id: id}, {fields: {items: 1}});
-            EventDrawerApi.insert({
-                id: itinerary.id,
-                name: itinerary.name,
-                items: itinerary.items, 
-                date: itinerary.date,
-                user: Meteor.userId()
-            }, (err) => {
+            let itinerary = Itineraries.find({_id: id});
+            console.log("id:   -----------------------") //TODO: For testing only
+            console.log(id);
+            console.log(itinerary);
+            EventDrawerApi.insert(itinerary, (err) => {
                 if (err) throw new Meteor.Error(err, err);
             });
         });
-        // Add itinerary to Event Drawer
-        console.log("calling updateItinerary");
-        // Itineraries.update({
-        //     _id: id
-        // }, {
-        //     // What needs to be updated
-        // }, (err) => {
-        //     if (err) throw new Meteor.Error(err, err);
-        // });
     }
 });
 

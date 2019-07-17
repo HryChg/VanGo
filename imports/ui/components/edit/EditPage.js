@@ -8,6 +8,7 @@ import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import { saveItinerary, resetEditPage } from "../../actions/editPageActions";
+import { editingItinerary } from "../../actions/itineraryActions";
 import { formatAMPM } from "../../../util/util";
 
 
@@ -120,7 +121,10 @@ class EditPage extends React.Component {
                                     <div className={"container"}>
                                         <div className="ui action input mini fluid">
                                             <input className={"edit-page-path-name"} type="text" placeholder={"Give it a name..."}/>
-                                            <button className="ui button" onClick={this.createItinerary}>
+                                            <button className="ui button" onClick={() => {
+                                                this.createItinerary();
+                                                this.props.editingItinerary(false);
+                                                }}>
                                                 <Icon name="heart"/>
                                                 Save
                                             </button>
@@ -163,4 +167,5 @@ export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     saveItinerary: saveItinerary,
     resetEditPage: resetEditPage,
+    editingItinerary: editingItinerary
 })(EditPage);
