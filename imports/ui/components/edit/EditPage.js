@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
 import { Redirect } from 'react-router-dom';
 import { Grid, Icon } from 'semantic-ui-react';
+import { uniqid } from 'uniqid';
 
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
@@ -22,8 +23,10 @@ class EditPage extends React.Component {
     selectItems() {
         let items;
         if (this.props.editing) {
+            console.log("itineraryEdit.items?")
             items = this.props.draggableItems.itineraryEdit.items;
         } else {
+            console.log("items?")
             items = this.props.draggableItems.items;
         }
         return items;
@@ -110,15 +113,14 @@ class EditPage extends React.Component {
         }
         let items = this.selectItems();
         let itin = {
-            _id: this.props.draggableItems._id,
+            _id: this.props.editing? this.props.draggableItems.itineraryEdit._id : uniqid(),
             name: itineraryName,
             date: this.props.datePicker.selectedDate.toDateString(), // TODO: Convert to uniform format
             items: items
         };
 
         console.log(itin);
-        this.props.saveItinerary(itin);
-        this.props.editingItinerary(false);
+        this.props.saveItinerary(itin, this.props.editing);
     };
 
 

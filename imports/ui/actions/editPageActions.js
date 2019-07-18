@@ -10,9 +10,9 @@ export const resetEditPage = () => {
 	}
 };
 
-export const saveItinerary = (itinerary) => {
+export const saveItinerary = (itinerary, editing) => {
 	return async dispatch => {
-		Meteor.call('saveItinerary', itinerary, (err) => {
+		Meteor.call('saveItinerary', itinerary, editing, (err) => {
 			if (err) {
 				alert(err.reason);
 			} else {

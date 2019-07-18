@@ -5,35 +5,33 @@ import EventDrawerApi from '../../imports/api/EventDrawerApi';
 Meteor.methods({
     // EFFECTS: adds itinerary to collection; throws error if not logged in
     //          if itinerary already exists, update itinerary instead
-    'saveItinerary': function(itinerary) {
+    'saveItinerary': function(itinerary, editing) {
         if (!Meteor.userId()) {
             const err = 'Not Authorized: Must be logged in to save itinerary.';
             throw new Meteor.Error(err, err);
         }
-        Itineraries.insert({
-            _id: itinerary._id,
-            name: itinerary.name,
-            items: itinerary.items, 
-            date: itinerary.date,
-            user: Meteor.userId()
-        }, (err) => {
-            if (err.errmsg) {
-                if (err.errmsg.includes("E11000 duplicate key error")) {
-                    Itineraries.update({
-                        _id: itinerary._id
-                    },
-                    {
-                        name: itinerary.name,
-                        items: itinerary.items, 
-                        date: itinerary.date,
-                        user: Meteor.userId()
-                    },
-                    (err) => {if (err) throw new Meteor.Error(err, err)});    
-                }
-            } else if (err) {
-                throw new Meteor.Error(err, err);
-            }
-        });
+        if (editing) {
+            console.log(itinerary);
+            Itineraries.update({
+                _id: itinerary._id
+            },
+            {
+                _id: itinerary._id,
+                name: itinerary.name,
+                items: itinerary.items, 
+                date: itinerary.date,
+                user: Meteor.userId()
+            },
+            (err) => {if (err) throw new Meteor.Error(err, err)});   
+        } else {
+            Itineraries.insert({
+                _id: itinerary._id,
+                name: itinerary.name,
+                items: itinerary.items, 
+                date: itinerary.date,
+                user: Meteor.userId()
+            }, (err) => {if (err) throw new Meteor.Error(err, err)});   
+        }
     },
 
     // EFFECTS: deletes an itinerary with given id; does nothing if ID not found
