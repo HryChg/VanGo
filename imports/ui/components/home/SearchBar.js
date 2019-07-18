@@ -37,15 +37,8 @@ class SearchBar extends Component {
             source = this.convertItemsToSearchables(res);
             this.props.setValue('');
             this.props.setResults(source);
-<<<<<<< HEAD
-            console.log(source);
-        }, 300)
-
-
-=======
             this.props.setIsLoadingFalse();
         })
->>>>>>> master
     }
 
     // EFFECTS: set the text value and the _id of the selected items in the search bar reducer

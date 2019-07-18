@@ -177,14 +177,7 @@ class HomePage extends React.Component {
                                 <Grid.Row columns={2}>
                                     <Grid.Column width={4}>
                                         <div className={"home-panel"}>
-<<<<<<< HEAD
                                             {this.toggleEditHeader()}
-=======
-                                            <h2>
-                                                <Icon className="logo" name="street view" />
-                                                VanGo
-                                            </h2>
->>>>>>> master
                                             <div className={"SearchBarContainer"}>
                                                 <SearchBar />
                                             </div>
@@ -192,11 +185,7 @@ class HomePage extends React.Component {
                                                 <DatePicker />
                                             </div>
                                             <div className={"EventFilterContainer"}>
-<<<<<<< HEAD
                                                 <EventFilter items={this.props.currentEvents}/>
-=======
-                                                <EventFilter events={this.props.currentEvents} />
->>>>>>> master
                                             </div>
 
                                             <div className={"sidenav-options-container"}>
