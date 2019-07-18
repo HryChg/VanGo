@@ -1,17 +1,15 @@
 // https://react.semantic-ui.com/modules/search/#types-standard
 import _ from 'lodash'
 import React, {Component} from 'react'
-import {Search, Input, Button} from 'semantic-ui-react'
+import {Search} from 'semantic-ui-react'
 import {connect} from "react-redux";
 import {withTracker} from 'meteor/react-meteor-data';
-
 
 import {setSelected, setValue, setIsLoadingTrue, setIsLoadingFalse, setResults} from "../../actions/SearchBarActions";
 import CurrentEvents from '../../../api/CurrentEvents';
 
 
 let source = []; // DO NOT DELETE. SearchBar component will modify this.
-
 class SearchBar extends Component {
 
     // EFFECTS: convert items from currentEvent collection to searchable items in the search bar
@@ -30,22 +28,24 @@ class SearchBar extends Component {
         return searchables;
     };
 
-    // EFFECTS: get the searchable item for the search bar
-    fetchSearchables() {
-        let currentEvents = this.props.currentEvents;
-        return this.convertItemsToSearchables(currentEvents);
-    }
-
     // EFFECTS: get the searchable items ready for the search bar.
-    //          Delayed 0.3 seconds to ensure the entire collections is fetched before sending it to SearchBarReducer
+    //          Display "Loading..." until results from meteor call back is ready
     componentDidMount() {
-        setTimeout(() => {
-            source = this.fetchSearchables();
+        this.props.setIsLoadingTrue();
+        this.props.setValue('Loading...');
+        Meteor.call('getCurrentEvents', (err, res)=>{
+            source = this.convertItemsToSearchables(res);
+            this.props.setValue('');
             this.props.setResults(source);
+<<<<<<< HEAD
             console.log(source);
         }, 300)
 
 
+=======
+            this.props.setIsLoadingFalse();
+        })
+>>>>>>> master
     }
 
     // EFFECTS: set the text value and the _id of the selected items in the search bar reducer

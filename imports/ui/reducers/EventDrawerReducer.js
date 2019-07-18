@@ -1,6 +1,4 @@
-let initialState = {
-    toggleState: false // TODO Needed?
-};
+let initialState = {};
 
 export default function EventDrawerReducer(state = initialState, action) {
     return state;

@@ -1,22 +1,21 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Marker} from "google-maps-react";
-import {Link, Redirect, NavLink} from 'react-router-dom';
-import {withTracker} from 'meteor/react-meteor-data';
-import {Grid, Sidebar, Menu, Icon, Button} from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Marker } from "google-maps-react";
+import { Link, Redirect, NavLink } from 'react-router-dom';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Grid, Sidebar, Menu, Icon, Button } from 'semantic-ui-react';
 
 import SearchBar from "./SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
-import {handleOnMarkerClick, popUpInfoWindow} from "../../actions/mapContainerActions";
-import {toggleNearbyAttractions} from "../../actions/homePageActions";
-import {showPanel, hidePanel} from './../../actions/panelActions';
-import {containOneOf, formatAMPM} from "../../../util/util";
+import { handleOnMarkerClick } from "../../actions/mapContainerActions";
+import { toggleNearbyAttractions } from "../../actions/homePageActions";
+import { showPanel, hidePanel } from './../../actions/panelActions';
+import { formatAMPM } from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
-
 
 class HomePage extends React.Component {
     // EFFECTS: renders name and logo; if edit state, renders editing title
@@ -97,34 +96,30 @@ class HomePage extends React.Component {
 
     // EFFECTS: render markers based on currentEvents Collection
     displayMarkers = () => {
+        // TODO: Ask Mary is the commented out section is still needed
         let markers = this.props.currentEvents.map((item) => {
-            if (item.type === 'Attraction') {
-                return this.createAttractionMarker(item);
-            } else {
-                return this.createEventMarker(item);
-            }
+            // if (VanGoStore.getState().datePicker.selectedDate) {
+                if (item.type === 'Attraction') {
+                    return this.createAttractionMarker(item);
+                } else {
+                    return this.createEventMarker(item);
+                }
+            // }
         });
-        // console.log(`there are a total of ${markers.length} markers`);
 
-        // TODO Search Thru Marker to find a one that matches the search bar
         let searchedMarkerIdx = this.filterMarkersOnSearch(markers);
+
         if (searchedMarkerIdx) {
             this.modifyMarker(markers, searchedMarkerIdx);
-            // let temp = markers[searchedMarkerIdx];
-            // this.props.popUpInfoWindow(temp.props, temp);
         }
 
         return markers;
     };
 
-    // Trigger an action once a marker is mounted on the map
+    // TODO Trigger an action once a marker is mounted on the map
     onMarkerMounted = element => {
-        console.log(element);
-
-
-        // TODO Add MapContainer State
         // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
-        // this.props.popUpInfoWindow(element.props, element.marker);
+        // stub
     };
 
     // EFFECTS: given an index, modify the corresponding marker so that it is set to visible again
@@ -173,7 +168,7 @@ class HomePage extends React.Component {
                         vertical
                         visible={this.props.visible}
                     >
-                        <EventDrawer/>
+                        <EventDrawer />
                     </Sidebar>
 
                     <Sidebar.Pusher>
@@ -182,15 +177,26 @@ class HomePage extends React.Component {
                                 <Grid.Row columns={2}>
                                     <Grid.Column width={4}>
                                         <div className={"home-panel"}>
+<<<<<<< HEAD
                                             {this.toggleEditHeader()}
+=======
+                                            <h2>
+                                                <Icon className="logo" name="street view" />
+                                                VanGo
+                                            </h2>
+>>>>>>> master
                                             <div className={"SearchBarContainer"}>
-                                                <SearchBar/>
+                                                <SearchBar />
                                             </div>
                                             <div className={"DatePickerContainer"}>
-                                                <DatePicker/>
+                                                <DatePicker />
                                             </div>
                                             <div className={"EventFilterContainer"}>
+<<<<<<< HEAD
                                                 <EventFilter items={this.props.currentEvents}/>
+=======
+                                                <EventFilter events={this.props.currentEvents} />
+>>>>>>> master
                                             </div>
 
                                             <div className={"sidenav-options-container"}>
@@ -214,9 +220,9 @@ class HomePage extends React.Component {
                                     </Grid.Column>
 
                                     <Grid.Column width={12}>
-                                        <div style={{height: '94vh'}}>
+                                        <div style={{ height: '94vh' }}>
                                             <MapContainer width={'98%'} height={'100%'}
-                                                          initialCenter={{lat: 49.2820, lng: -123.1171}}>
+                                                initialCenter={{ lat: 49.2820, lng: -123.1171 }}>
                                                 {this.displayMarkers()}
                                             </MapContainer>
                                         </div>
@@ -264,5 +270,4 @@ export default connect(mapStateToProps, {
     toggleNearbyAttractions,
     showPanel,
     hidePanel,
-    popUpInfoWindow
 })(HomePageContainer);

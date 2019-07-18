@@ -9,16 +9,19 @@ import {GoogleApiWrapper, Map} from 'google-maps-react';
 import {connect} from 'react-redux';
 import {withTracker} from 'meteor/react-meteor-data';
 
-import {VanGoStore} from "../../../client/main";
 import {googleMapsApiKey} from "../config";
-import {handleOnMapClicked, handleOnMarkerClick} from "../actions/mapContainerActions";
-import {MapInfoWindowContainer} from "./MapInfoWindowContainer";
+import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue} from "../actions/mapContainerActions";
+import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import CurrentEvents from '../../api/CurrentEvents';
 
 export class MapContainer extends Component {
+    handleMapIdle = () => {
+        this.props.setMapLoadedTrue();
+    };
+
     // EFFECTS: close InfoWindow when clicking on map area
     onMapClicked = (props) => {
-        if (VanGoStore.getState().mapContainer.showingInfoWindow) {
+        if (this.props.mapContainer.showingInfoWindow) {
             this.props.handleOnMapClicked();
         }
     };
@@ -49,13 +52,14 @@ export class MapContainer extends Component {
             height: this.props.height,
             position: 'fixed'
         };
-        const mapContainerStore = VanGoStore.getState().mapContainer;
+        const mapContainerStore = this.props.mapContainer;
         return (
             <Map
+                onIdle={this.handleMapIdle}
                 google={this.props.google}
                 zoom={14}
                 style={mapStyle}
-                initialCenter={(this.props.initialCenter)? this.props.initialCenter : {lat: 49.2820, lng: -123.1171}}
+                initialCenter={(this.props.initialCenter) ? this.props.initialCenter : {lat: 49.2820, lng: -123.1171}}
                 onClick={this.onMapClicked}
             >
                 {this.props.children}
@@ -91,14 +95,13 @@ export class MapContainer extends Component {
     }
 }
 
-const mapStateToProps = state => {return {mapContainer: state.mapContainer};};
+const mapStateToProps = state => {
+    return {
+        mapContainer: state.mapContainer
+    };
+};
 const apiWrapper = GoogleApiWrapper({apiKey: googleMapsApiKey})(MapContainer);
-// export default connect(mapStateToProps, {
-//     handleOnMapClicked: handleOnMapClicked,
-//     handleOnMarkerClick: handleOnMarkerClick,
-// })(
-//     apiWrapper
-// );
+
 const MeteorMapContainer = withTracker(() => {
     const currentEventsHandle = Meteor.subscribe('currentEvents');
     const currentEvents = CurrentEvents.find().fetch();
@@ -112,4 +115,5 @@ const MeteorMapContainer = withTracker(() => {
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
     handleOnMarkerClick: handleOnMarkerClick,
+    setMapLoadedTrue: setMapLoadedTrue
 })(MeteorMapContainer);

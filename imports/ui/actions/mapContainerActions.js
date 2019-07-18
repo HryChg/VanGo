@@ -31,3 +31,9 @@ export const popUpInfoWindow = (props, marker) => {
         }
     }
 };
+
+export const setMapLoadedTrue = () => {
+    return {
+        type: 'SET_MAP_LOADED_TRUE'
+    }
+};
