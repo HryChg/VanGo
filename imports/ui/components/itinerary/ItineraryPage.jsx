@@ -3,7 +3,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
-import { Grid, Icon, Menu, Sidebar } from 'semantic-ui-react';
+import { Redirect, NavLink } from 'react-router-dom';
+import { Grid, Icon, Menu, Sidebar, Button } from 'semantic-ui-react';
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import { withTracker } from 'meteor/react-meteor-data';
 
@@ -14,7 +15,7 @@ import ItineraryList from './ItineraryList';
 import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
-import { selectID } from './../../actions/itineraryActions';
+import { selectID, editingItinerary } from './../../actions/itineraryActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM } from "../../../util/util";
 
@@ -29,7 +30,7 @@ class ItineraryPage extends React.Component {
                 if (selectedID === "") {
                     let firstID = itineraries[0] ? itineraries[0]._id : "";
                     if (firstID) {
-                        selectID(firstID);
+                        this.props.selectID(firstID);
                         selectedID = firstID;
                     } else {
                         return null;
@@ -66,11 +67,11 @@ class ItineraryPage extends React.Component {
         }
     }
 
-    // EFFECTS: display markers base on events in draggable items
+    // EFFECTS: display markers base on items in draggable items
     displayMarkers = () => {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
-            let markers = selectedItinerary.events.map((item) => {
+            let markers = selectedItinerary.items.map((item) => {
                 if (item.type === 'Attraction') {
                     return <Marker
                     key={item._id}
@@ -113,12 +114,12 @@ class ItineraryPage extends React.Component {
         return null;
     };
 
-    // EFFECTS: display path based on the order of events in DraggableItems
+    // EFFECTS: display path based on the order of items in DraggableItems
     displayPolyLine = () => {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
-            let coordinates = selectedItinerary.events.map((event, index) => {
-                return {lat: event.latitude, lng: event.longitude};
+            let coordinates = selectedItinerary.items.map((item, index) => {
+                return {lat: item.latitude, lng: item.longitude};
             });
     
             return (<Polyline
@@ -131,7 +132,11 @@ class ItineraryPage extends React.Component {
         return null;
     };
 
+    // EFFECTS: If itinerary is being edited, redirect to home page; otherwise, display itinerary page
     render() {
+        if (this.props.editing) {
+            return (<Redirect exact to='/'/>);
+        }
         return(
             <div>
                 <Sidebar.Pushable>
@@ -161,7 +166,13 @@ class ItineraryPage extends React.Component {
                                     </Menu>
                                 </div>
                                 <div id="itinerary-name">
-                                    <h1>{this.getDisplayName(this.props.selectedID)}</h1>
+                                    <h1>
+                                        <span className="it-header">{this.getDisplayName(this.props.selectedID)}</span>
+                                        <Button className="it-edit" icon="pencil large black" onClick={() => {
+                                            Meteor.call('updateItinerary', this.props.selectedID);
+                                            this.props.editingItinerary(true);
+                                        }}/>
+                                    </h1>
                                 </div>
                                 <div id="it-list">
                                     <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/>  
@@ -190,6 +201,7 @@ class ItineraryPage extends React.Component {
 const mapStateToProps = (state) => {
     return {
         selectedID: state.itineraryStore.selectedID,
+        editing: state.itineraryStore.editing,
         visible: state.panel.visible
     };
 }
@@ -204,4 +216,6 @@ const ItineraryPageContainer = withTracker(() => {
     }
 })(ItineraryPage);
 
-export default connect(mapStateToProps, { handleOnMarkerClick, selectID, showPanel, hidePanel })(ItineraryPageContainer);
+export default connect(mapStateToProps, 
+    { handleOnMarkerClick, selectID, editingItinerary, showPanel, hidePanel }
+    )(ItineraryPageContainer);

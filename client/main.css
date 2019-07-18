@@ -7,6 +7,10 @@ body {
     padding: 6px;
 }
 
+.inline {
+    display: inline-block;
+}
+
 /* ---------------------------------------- */
 /* ------------    TopNav   -------------- */
 /* ---------------------------------------- */
@@ -16,21 +20,6 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-}
-
-.nav-link {
-    display: block;
-    color: darkslateblue;
-    text-align: center;
-    padding: .5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    text-decoration: none;
-    float: left;
-}
-
-.nav-link:hover {
-    color: slateblue;
 }
 
 a {
@@ -157,20 +146,6 @@ i.caret.square.right.large.icon.next-button {
 /* ---------------------------------------- */
 /* --------  Itinerary: Side Panel -------- */
 /* ---------------------------------------- */
-.it-panel {
-    border-right: 2px solid darkslateblue;
-    width: 79%;
-}
-
-.it-panel-bkgd {
-    background: #eee;
-}
-
-.it-date-circ {
-    position: initial;
-    height: 5rem;
-}
-
 .it-date {
     font-size: 16px;
     font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
@@ -192,10 +167,18 @@ i.caret.square.right.large.icon.next-button {
     margin-top: 20px;
 }
 
+button.ui.icon.button.it-edit {
+    background: none;
+}
+
 #itinerary-name {
     display: inline-block;
     margin-top: 24px;
     margin-left: 24px;
+    vertical-align: bottom;
+}
+
+.it-header {
     vertical-align: bottom;
 }
 

@@ -36,7 +36,7 @@ export class MapContainer extends Component {
             return element._id === eventID;
         });
 
-        Meteor.call('saveToCurrentUserDrawer', eventToBeSaved, (error, result) => {
+        Meteor.call('saveToCurrentUserDrawer', eventToBeSaved, this.props.editing, (error, result) => {
             if (error) {
                 alert(error.message);
             } else {
@@ -97,7 +97,8 @@ export class MapContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        mapContainer: state.mapContainer
+        mapContainer: state.mapContainer,
+        editing: state.itineraryStore.editing,
     };
 };
 const apiWrapper = GoogleApiWrapper({apiKey: googleMapsApiKey})(MapContainer);

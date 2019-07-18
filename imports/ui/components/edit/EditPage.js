@@ -3,23 +3,54 @@ import {connect} from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
 import { Redirect } from 'react-router-dom';
 import { Grid, Icon } from 'semantic-ui-react';
+import uniqid from 'uniqid';
 
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
-import {getDrawerItems} from "../../actions/draggableItemsActions";
 import { saveItinerary, resetEditPage } from "../../actions/editPageActions";
+import { editingItinerary } from "../../actions/itineraryActions";
+import {getEventDrawer} from "../../actions/draggableItemsActions";
 import { formatAMPM } from "../../../util/util";
 
 
 class EditPage extends React.Component {
+    componentWillMount() {
+        this.props.getEventDrawer();
+    }
+
     componentWillUnmount() {
         this.props.resetEditPage();
+        this.props.editingItinerary(false);
+    }
+
+    // EFFECTS: if editing returns selected itinerary items, otherwise returns unsaved items
+    selectItems() {
+        let items;
+        if (this.props.editing) {
+            items = this.props.draggableItems.itineraryEdit.items;
+        } else {
+            items = this.props.draggableItems.items;
+        }
+        return items;
+    }
+
+    // EFFECCTS: renders date or, if editing, date: name
+    toggleEditHeader() {
+        if (this.props.editing) {
+            let date = this.props.draggableItems.itineraryEdit.date;
+            let name = this.props.draggableItems.itineraryEdit.name;
+            return (<h3>{date + ": " + name}</h3>)
+        } else {
+            let selectedDateString = this.props.datePicker.selectedDate.toDateString();
+            return (<h3>{selectedDateString}</h3>);
+        }
     }
 
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
-        let markers = this.props.draggableItems.items.map((item) => {
+        let items = this.selectItems();
+        let markers = items.map((item) => {
             if (item.type === 'Attraction') {
                 return <Marker
                 key={item._id}
@@ -62,7 +93,8 @@ class EditPage extends React.Component {
 
     // EFFECTS: display path based on the order of events in DraggableItems
     displayPolyLine = () => {
-        let coordinates = this.props.draggableItems.items.map((item, index) => {
+        let items = this.selectItems();
+        let coordinates = items.map((item, index) => {
             return {lat: item.latitude, lng: item.longitude};
         });
 
@@ -82,16 +114,16 @@ class EditPage extends React.Component {
             alert("Please enter a name for this Itinerary");
             return null;
         }
-
-        let events = this.props.draggableItems.items;
+        let items = this.selectItems();
         let itin = {
+            _id: this.props.editing? this.props.draggableItems.itineraryEdit._id : uniqid(),
             name: itineraryName,
             date: this.props.datePicker.selectedDate.toDateString(), // TODO: Convert to uniform format
-            events: events
+            items: items
         };
 
         console.log(itin);
-        this.props.saveItinerary(itin);
+        this.props.saveItinerary(itin, this.props.editing);
     };
 
 
@@ -99,19 +131,20 @@ class EditPage extends React.Component {
         if (this.props.saved) {
             return (<Redirect exact to='/itinerary'/>);
         } else {
-            let selectedDateString = this.props.datePicker.selectedDate.toDateString();
             return (
                 <Grid stackable divided='vertically'>
                     <Grid.Row columns={2}>
                             <Grid.Column width={4}>
                                 <div className={"edit-panel"}>
-                                    <h2 className={"ui header"}>Edit Itinerary</h2>
-                                    <h3>{selectedDateString}</h3>
+                                    <h2 className={"ui header"}>Reorder Itinerary</h2>
+                                    {this.toggleEditHeader()}
                                     <DraggableItems/>
                                     <div className={"container"}>
                                         <div className="ui action input mini fluid">
                                             <input className={"edit-page-path-name"} type="text" placeholder={"Give it a name..."}/>
-                                            <button className="ui button" onClick={this.createItinerary}>
+                                            <button className="ui button" onClick={() => {
+                                                this.createItinerary();
+                                                }}>
                                                 <Icon name="heart"/>
                                                 Save
                                             </button>
@@ -145,7 +178,8 @@ const mapStateToProps = (state) => {
     return {
         draggableItems: state.draggableItems,
         datePicker: state.datePicker,
-        saved: state.draggableItems.saved
+        saved: state.draggableItems.saved,
+        editing: state.itineraryStore.editing
     };
 };
 
@@ -153,5 +187,6 @@ export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     saveItinerary: saveItinerary,
     resetEditPage: resetEditPage,
-    getDrawerItems: getDrawerItems
+    editingItinerary: editingItinerary,
+    getEventDrawer: getEventDrawer
 })(EditPage);

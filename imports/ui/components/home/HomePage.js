@@ -18,6 +18,17 @@ import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
+    // EFFECTS: renders name and logo; if edit state, renders editing title
+    toggleEditHeader() {
+        if (this.props.editing) {
+            return (<h2>Add/Remove Itinerary Items</h2>)
+        } else {
+            return (<h2>
+                <Icon className="logo" name="street view"/>
+                VanGo
+            </h2>);
+        }
+    }
 
     // EFFECTS: return index of the marker component if it matches the selected ID from searchBar reducer
     //          return undefined if no match found
@@ -166,10 +177,7 @@ class HomePage extends React.Component {
                                 <Grid.Row columns={2}>
                                     <Grid.Column width={4}>
                                         <div className={"home-panel"}>
-                                            <h2>
-                                                <Icon className="logo" name="street view" />
-                                                VanGo
-                                            </h2>
+                                            {this.toggleEditHeader()}
                                             <div className={"SearchBarContainer"}>
                                                 <SearchBar />
                                             </div>
@@ -177,13 +185,12 @@ class HomePage extends React.Component {
                                                 <DatePicker />
                                             </div>
                                             <div className={"EventFilterContainer"}>
-                                                <EventFilter events={this.props.currentEvents} />
+                                                <EventFilter items={this.props.currentEvents}/>
                                             </div>
 
                                             <div className={"sidenav-options-container"}>
                                                 <div className="ui large vertical menu fluid">
                                                     <a className="item" onClick={this.props.toggleNearbyAttractions}>
-                                                        <div className="ui small teal label">31</div>
                                                         {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
                                                     </a>
                                                     <a className="item" onClick={this.props.showPanel}>
@@ -228,7 +235,8 @@ const mapStateToProps = (state) => {
         eventFilter: state.eventFilter,
         visible: state.panel.visible,
         searchBar: state.searchBar,
-        mapContainer: state.mapContainer
+        mapContainer: state.mapContainer,
+        editing: state.itineraryStore.editing
     };
 };
 const HomePageContainer = withTracker(() => {
