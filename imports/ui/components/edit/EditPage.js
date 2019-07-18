@@ -10,10 +10,15 @@ import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import { saveItinerary, resetEditPage } from "../../actions/editPageActions";
 import { editingItinerary } from "../../actions/itineraryActions";
+import {getEventDrawer} from "../../actions/draggableItemsActions";
 import { formatAMPM } from "../../../util/util";
 
 
 class EditPage extends React.Component {
+    componentWillMount() {
+        this.props.getEventDrawer();
+    }
+
     componentWillUnmount() {
         this.props.resetEditPage();
         this.props.editingItinerary(false);
@@ -182,5 +187,6 @@ export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     saveItinerary: saveItinerary,
     resetEditPage: resetEditPage,
-    editingItinerary: editingItinerary
+    editingItinerary: editingItinerary,
+    getEventDrawer: getEventDrawer
 })(EditPage);
