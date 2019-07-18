@@ -35,6 +35,17 @@ class EditPage extends React.Component {
         return items;
     }
 
+    // EFFECCTS: get date or, if editing, date: name
+    getDate = () => {
+        if (this.props.editing) {
+            let date = this.props.draggableItems.itineraryEdit.date;
+            let name = this.props.draggableItems.itineraryEdit.name;
+            return date + ": " + name;
+        } else {
+            return this.props.datePicker.selectedDate.toDateString();
+        }
+    };
+
     // EFFECCTS: renders date or, if editing, date: name
     toggleEditHeader() {
         if (this.props.editing) {
@@ -131,7 +142,7 @@ class EditPage extends React.Component {
         let items = this.selectItems();
         let userEmail = Meteor.user().emails[0].address;
         let userName = Meteor.user().profile.name;
-        let date = this.toggleEditHeader(); // TODO Fix This
+        let date = this.getDate(); // TODO Fix This
 
         console.log({
             userEmail,
