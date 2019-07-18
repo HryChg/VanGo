@@ -9,10 +9,8 @@ export default function DraggableItemsReducer(state = initialState, action) {
     let newState;
     switch (action.type) {
         case 'UPDATE_EDITED_ITEM':
-            console.log(action.payload);
             if (action.payload.editing) {
                 newState = Object.assign({}, state);
-                newState.itineraryEdit = state.itineraryEdit;
                 newState.itineraryEdit.items = action.payload.newOrder;
                 newState.saved = false;
                 return newState;
@@ -27,7 +25,6 @@ export default function DraggableItemsReducer(state = initialState, action) {
             }
         case 'SAVED_ITINERARY':
             newState = Object.assign({}, state);
-            newState.itineraryEdit = state.itineraryEdit;
             newState.saved = true;
             return newState;
 

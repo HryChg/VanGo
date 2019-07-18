@@ -108,7 +108,14 @@ if (Meteor.isServer) {
                     return item._id !== itemToBeDeleted._id
                 });
                 if (editing) {
-                    EventDrawerApi.update({_id: accountID}, {$set: {itineraryEdit: {items: newItems}}});
+                    let newItineraryEdit = {
+                        _id: userData.itineraryEdit._id,
+                        name: userData.itineraryEdit.name,
+                        items: newItems,
+                        date: userData.itineraryEdit.date,
+                        user: userData.itineraryEdit.user
+                    }
+                    EventDrawerApi.update({_id: accountID}, {$set: {itineraryEdit: newItineraryEdit}});
                 } else {
                     EventDrawerApi.update({_id: accountID}, {$set: {items: newItems}});
                 }

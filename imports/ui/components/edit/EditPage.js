@@ -32,7 +32,9 @@ class EditPage extends React.Component {
     // EFFECCTS: renders date or, if editing, date: name
     toggleEditHeader() {
         if (this.props.editing) {
-            return (<h3>Fake Name Right Now</h3>) // TODO
+            let date = this.props.draggableItems.itineraryEdit.date;
+            let name = this.props.draggableItems.itineraryEdit.name;
+            return (<h3>{date + ": " + name}</h3>)
         } else {
             let selectedDateString = this.props.datePicker.selectedDate.toDateString();
             return (<h3>{selectedDateString}</h3>);
