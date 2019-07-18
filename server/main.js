@@ -9,7 +9,8 @@ import getEventsInDay from './../imports/api/getDayEvents';
 import YelpAttractionsApi, { convertBusinessesToAttractions } from "../imports/api/YelpAttractionsApi";
 import eventDrawerData from './PreLoadedEventDrawer';
 import CalledDates from '../imports/api/CalledDates';
-import './methods/email';
+// import './methods/email';
+import './methods/mailgun';
 
 // TODO: This will need to be moved into a handleSubmit
 // https://github.com/meteor/simple-todos-react/commit/39a066815149de6a1b327fd389278e3c2da93e60
