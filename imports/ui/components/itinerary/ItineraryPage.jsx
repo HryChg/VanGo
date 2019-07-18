@@ -30,7 +30,7 @@ class ItineraryPage extends React.Component {
                 if (selectedID === "") {
                     let firstID = itineraries[0] ? itineraries[0]._id : "";
                     if (firstID) {
-                        selectID(firstID);
+                        this.props.selectID(firstID);
                         selectedID = firstID;
                     } else {
                         return null;

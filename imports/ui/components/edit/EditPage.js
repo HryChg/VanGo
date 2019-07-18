@@ -23,10 +23,8 @@ class EditPage extends React.Component {
     selectItems() {
         let items;
         if (this.props.editing) {
-            console.log("itineraryEdit.items?")
             items = this.props.draggableItems.itineraryEdit.items;
         } else {
-            console.log("items?")
             items = this.props.draggableItems.items;
         }
         return items;
