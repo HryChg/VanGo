@@ -15,6 +15,7 @@ import { formatAMPM } from "../../../util/util";
 class EditPage extends React.Component {
     componentWillUnmount() {
         this.props.resetEditPage();
+        this.props.editingItinerary(false);
     }
 
     // EFFECCTS: renders date or, if editing, date: name
