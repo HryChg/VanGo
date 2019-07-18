@@ -69,10 +69,15 @@ if (Meteor.isServer) {
         },
 
         // EFFECTS: save the item to user drawer based on the current Drawer ID. Repeated Items will not be added
-        saveToCurrentUserDrawer: async (itemToBeSaved) => {
+        saveToCurrentUserDrawer: async (itemToBeSaved, editing) => {
             let accountID = await getDrawerID();
             let userData = await EventDrawerApi.findOne({_id: accountID});
-            let items = userData.items;
+            let items;
+            if (editing) {
+                items = userData.itineraryEdit.items;
+            } else {
+                items = userData.items;
+            }
 
             if (containsItem(items, itemToBeSaved)) {
                 throw new Meteor.Error(`saveToCurrentUserData(): item "${itemToBeSaved.name}}" is already in user's event drawer. Will not be added again`);
@@ -85,10 +90,16 @@ if (Meteor.isServer) {
         },
 
         // EFFECTS: deleted the item from userDrawer based on the current Drawer ID. If item does not already exist, an error is thrown.
-        deleteFromCurrentUserDrawer: async (itemToBeDeleted) => {
+        //          if editing, changes are made to selected itinerary items
+        deleteFromCurrentUserDrawer: async (itemToBeDeleted, editing) => {
             let accountID = await getDrawerID();
             let userData = await EventDrawerApi.findOne({_id: accountID});
-            let items = userData.items;
+            let items;
+            if (editing) {
+                items = userData.itineraryEdit.items;
+            } else {
+                items = userData.items;
+            }
 
             if (!containsItem(items, itemToBeDeleted)) {
                 throw new Meteor.Error(`deleteFromCurrentUserData(): item "${itemToBeDeleted.name}}" is NOT in user's event drawer. No action taken.`);
@@ -96,12 +107,11 @@ if (Meteor.isServer) {
                 let newItems = items.filter((item) => {
                     return item._id !== itemToBeDeleted._id
                 });
-                let newUserData = {
-                    _id: userData._id,
-                    user: userData.user,
-                    items: newItems
-                };
-                EventDrawerApi.update({_id: accountID}, newUserData);
+                if (editing) {
+                    EventDrawerApi.update({_id: accountID}, {$set: {itineraryEdit: {items: newItems}}});
+                } else {
+                    EventDrawerApi.update({_id: accountID}, {$set: {items: newItems}});
+                }
                 console.log(`deleteFromCurrentUserData(): item "${itemToBeDeleted.name}}" deleted from user drawer`);
                 return;
             }

@@ -2,10 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import {startSubscription} from "meteor-redux-middlewares";
 import EventDrawerApi from "../../api/EventDrawerApi";
 
-export const updateDraggableItems = (newOrder) => {
+export const updateDraggableItems = (newOrder, editing) => {
   return {
       type: 'UPDATE_EDITED_ITEM',
-      payload: newOrder
+      payload: {newOrder, editing}
   }
 };
 

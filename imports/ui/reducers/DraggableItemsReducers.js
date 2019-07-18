@@ -3,26 +3,31 @@ import {
     GET_EVENT_DRAWER_SUBSCRIPTION_READY
 } from "../actions/draggableItemsActions";
 
-let initialState = {_id: null, items: [], editItems: [], ready: false, saved: false};
+let initialState = {_id: null, items: [], itineraryEdit: null, ready: false, saved: false};
 
 export default function DraggableItemsReducer(state = initialState, action) {
     let newState;
     switch (action.type) {
         case 'UPDATE_EDITED_ITEM':
-            return {
-                _id: state._id, 
-                items: action.payload, 
-                editItems: state.editItems,
-                ready: state.ready, 
-                saved: false
-            };
-
+            console.log(action.payload);
+            if (action.payload.editing) {
+                newState = Object.assign({}, state);
+                newState.itineraryEdit = state.itineraryEdit;
+                newState.itineraryEdit.items = action.payload.newOrder;
+                newState.saved = false;
+                return newState;
+            } else {
+                return {
+                    _id: state._id, 
+                    items: action.payload.newOrder, 
+                    itineraryEdit: state.itineraryEdit,
+                    ready: state.ready, 
+                    saved: false
+                };
+            }
         case 'SAVED_ITINERARY':
             newState = Object.assign({}, state);
-            newState._id = state._id;
-            newState.items = state.items;
-            newState.editItems = state.editItems;
-            newState.ready = state.ready;
+            newState.itineraryEdit = state.itineraryEdit;
             newState.saved = true;
             return newState;
 
@@ -34,7 +39,7 @@ export default function DraggableItemsReducer(state = initialState, action) {
                 ready: action.payload.ready,
                 _id: state._id,
                 items: state.items,
-                editItems: state.editItems,
+                itineraryEdit: state.itineraryEdit,
                 saved: state.saved
             };
 
@@ -43,7 +48,7 @@ export default function DraggableItemsReducer(state = initialState, action) {
                 ready: state.ready,
                 _id: action.payload._id,
                 items: action.payload.items,
-                editItems: action.payload.itineraryEdit,
+                itineraryEdit: action.payload.itineraryEdit,
                 saved: state.saved
             };
 

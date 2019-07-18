@@ -18,6 +18,17 @@ class EditPage extends React.Component {
         this.props.editingItinerary(false);
     }
 
+    // EFFECTS: if editing returns selected itinerary items, otherwise returns unsaved items
+    selectItems() {
+        let items;
+        if (this.props.editing) {
+            items = this.props.draggableItems.itineraryEdit.items;
+        } else {
+            items = this.props.draggableItems.items;
+        }
+        return items;
+    }
+
     // EFFECCTS: renders date or, if editing, date: name
     toggleEditHeader() {
         if (this.props.editing) {
@@ -30,7 +41,8 @@ class EditPage extends React.Component {
 
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
-        let markers = this.props.draggableItems.items.map((item) => {
+        let items = this.selectItems();
+        let markers = items.map((item) => {
             if (item.type === 'Attraction') {
                 return <Marker
                 key={item._id}
@@ -73,7 +85,8 @@ class EditPage extends React.Component {
 
     // EFFECTS: display path based on the order of events in DraggableItems
     displayPolyLine = () => {
-        let coordinates = this.props.draggableItems.items.map((item, index) => {
+        let items = this.selectItems();
+        let coordinates = items.map((item, index) => {
             return {lat: item.latitude, lng: item.longitude};
         });
 
@@ -93,8 +106,7 @@ class EditPage extends React.Component {
             alert("Please enter a name for this Itinerary");
             return null;
         }
-
-        let items = this.props.draggableItems.items;
+        let items = this.selectItems();
         let itin = {
             _id: this.props.draggableItems._id,
             name: itineraryName,
@@ -104,6 +116,7 @@ class EditPage extends React.Component {
 
         console.log(itin);
         this.props.saveItinerary(itin);
+        this.props.editingItinerary(false);
     };
 
 
@@ -124,7 +137,6 @@ class EditPage extends React.Component {
                                             <input className={"edit-page-path-name"} type="text" placeholder={"Give it a name..."}/>
                                             <button className="ui button" onClick={() => {
                                                 this.createItinerary();
-                                                this.props.editingItinerary(false);
                                                 }}>
                                                 <Icon name="heart"/>
                                                 Save
