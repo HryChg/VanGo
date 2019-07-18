@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
 import { Redirect } from 'react-router-dom';
 import { Grid, Icon } from 'semantic-ui-react';
-import { uniqid } from 'uniqid';
+import uniqid from 'uniqid';
 
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";

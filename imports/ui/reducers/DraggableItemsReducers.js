@@ -25,6 +25,7 @@ export default function DraggableItemsReducer(state = initialState, action) {
             }
         case 'SAVED_ITINERARY':
             newState = Object.assign({}, state);
+            newState.itineraryEdit = null;
             newState.saved = true;
             return newState;
 
