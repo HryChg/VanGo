@@ -4,11 +4,8 @@ import './methods/itinerary';
 import './methods/users';
 import Itineraries from '../imports/api/itineraries';
 import CurrentEvents from '../imports/api/CurrentEvents';
-import EventDrawerApi from '../imports/api/EventDrawerApi';
 import getEventsInDay from './../imports/api/getDayEvents';
 import YelpAttractionsApi, { convertBusinessesToAttractions } from "../imports/api/YelpAttractionsApi";
-import eventDrawerData from './PreLoadedEventDrawer';
-import CalledDates from '../imports/api/CalledDates';
 import './methods/mailgun';
 
 // TODO: This will need to be moved into a handleSubmit
@@ -22,18 +19,13 @@ function insertItineraries(events, date) {
 
 Meteor.startup(async () => {
   CurrentEvents.remove({});
+  console.log(`clear out current events collection`);
 
   let eventsToday = await getEventsInDay(new Date());
   for (event of eventsToday.events) {
     CurrentEvents.insert(event);
   }
-
-  if (EventDrawerApi.find().count() === 0) {
-    console.log(`EventDrawer is Empty. Added two user data`);
-    for (let userData of eventDrawerData) {
-      EventDrawerApi.insert(userData);
-    }
-  }
+  console.log(`Added ${eventsToday.length} events from Yelp`);
 
   let yelp = new YelpAttractionsApi();
   let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
@@ -41,8 +33,7 @@ Meteor.startup(async () => {
   for (let attraction of attractions) {
     CurrentEvents.insert(attraction);
   }
-  console.log(`Current Events has less than 30 items. Added ${attractions.length} events from Yelp[`);
-
+  console.log(`Added ${attractions.length} attraction from Yelp`);
 });
 
 
