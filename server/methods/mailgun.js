@@ -24,7 +24,6 @@ const mailOptions = {
 * https://help.mailgun.com/hc/en-us/articles/217531258-Authorized-Recipients look for beta UI instruction
 * */
 
-
 // transporter.sendMail(mailOptions, (err, data)=>{
 //     if (err){
 //         console.log(err);
