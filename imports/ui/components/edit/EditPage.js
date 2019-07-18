@@ -126,6 +126,9 @@ class EditPage extends React.Component {
         this.props.saveItinerary(itin, this.props.editing);
     };
 
+    shareItinerary(){
+        alert('Work in Progress');
+    };
 
     render() {
         if (this.props.saved) {
@@ -151,7 +154,7 @@ class EditPage extends React.Component {
                                         </div>
                                     </div>
                                     <div className={"container"}>
-                                        <button className="ui button fluid" onClick={() => {alert('Work in Progress')}}>
+                                        <button className="ui button fluid" onClick={this.shareItinerary}>
                                             <Icon name="envelope outline"/>
                                             Email
                                         </button>
