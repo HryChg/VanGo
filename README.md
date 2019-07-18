@@ -74,6 +74,9 @@ https://www.npmjs.com/package/react-calendar
 React Google Map API Tutorial
 https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
 
+Getting the Center Longitude and Latitude
+https://gist.github.com/amites/3718961
+
 ##### Login and Registration Redux
 React + Redux - User Registration and Login Tutorial & Example
 https://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
