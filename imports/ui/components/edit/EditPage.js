@@ -126,8 +126,20 @@ class EditPage extends React.Component {
         this.props.saveItinerary(itin, this.props.editing);
     };
 
-    shareItinerary(){
-        alert('Work in Progress');
+    shareItinerary = () => {
+        console.log('sharing this itinerary...');
+        let items = this.selectItems();
+        let userEmail = Meteor.user().emails[0].address;
+        let userName = Meteor.user().profile.name;
+        let date = this.toggleEditHeader(); // TODO Fix This
+
+        console.log({
+            userEmail,
+            userName,
+            date,
+            items,
+        })
+
     };
 
     render() {
