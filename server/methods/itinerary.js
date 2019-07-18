@@ -35,6 +35,7 @@ Meteor.methods({
             }
         });
     },
+
     // EFFECTS: deletes an itinerary with given id; does nothing if ID not found
     'deleteItinerary': function(id) {
         Itineraries.remove({
@@ -43,19 +44,17 @@ Meteor.methods({
             if (err) throw new Meteor.Error(err, err);
         })
     },
-    // EFFECTS: deletes items stored in current event drawer for given id
-    //          and overwrites the data with selected itinerary
-    'updateItinerary': function(id) {
+
+    // EFFECTS: finds given itinerary and adds it to user's event drawer
+    'updateItinerary': async function(id) {
         if (!id) return;
-        EventDrawerApi.remove({_id: id}, () => {
-            let itinerary = Itineraries.find({_id: id});
-            console.log("id:   -----------------------") //TODO: For testing only
-            console.log(id);
-            console.log(itinerary);
-            EventDrawerApi.insert(itinerary, (err) => {
-                if (err) throw new Meteor.Error(err, err);
-            });
+        let itinerary = await Itineraries.findOne({_id: id});
+        await EventDrawerApi.update({
+            user: itinerary.user
+        },{
+            $set: {itineraryEdit: itinerary}
+        }, (err) => {
+            if (err) throw new Meteor.Error(err, err);
         });
     }
 });
-

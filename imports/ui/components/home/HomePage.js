@@ -191,7 +191,6 @@ class HomePage extends React.Component {
                                             <div className={"sidenav-options-container"}>
                                                 <div className="ui large vertical menu fluid">
                                                     <a className="item" onClick={this.props.toggleNearbyAttractions}>
-                                                        <div className="ui small teal label">31</div>
                                                         {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
                                                     </a>
                                                     <a className="item" onClick={this.props.showPanel}>

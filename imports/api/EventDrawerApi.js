@@ -29,7 +29,8 @@ const getUserDrawerID = async () => {
     if (!userDrawerID) {
         let userDrawer = {
             user: Meteor.userId(),
-            items: []
+            items: [],
+            itineraryEdit: null
         };
         console.log(`EventDrawerApi: drawer for user ${Meteor.userId()} NOT found. Will insert one into collection`);
         return await EventDrawerApi.insert(userDrawer);

@@ -13,11 +13,21 @@ class EventDrawer extends React.Component {
         });
     }
 
+    // EFFECTS: returns menu items for event drawer
+    //          if editing, will return specific itinerary items being edited
+    //          otherwise, return existing items in drawer
     displaySavedEvents = () => {
         if (!this.props.drawerItems){
             return <Menu.Item>User Data not ready yet</Menu.Item>
         }
-        return this.props.drawerItems.items.map((selectedEvent, index) => {
+        let items;
+        if (this.props.editing) {
+            console.log(this.props.drawerItems)
+            items = this.props.drawerItems.itineraryEdit.items;
+        } else {
+            items = this.props.drawerItems.items;
+        }
+        return items.map((selectedEvent, index) => {
             return (
                 <Menu.Item
                     className={"item"}
@@ -48,10 +58,14 @@ class EventDrawer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {userData: state.eventDrawer.userData};
+    return {
+        userData: state.eventDrawer.userData,
+        editing: state.itineraryStore.editing,
+    };
 };
 
 const EventDrawerContainer = withTracker(()=>{
+    // TODO: Subscribing in the client - security issue?
     if (Meteor.userId()){
         const handle = Meteor.subscribe('eventDrawer', Meteor.userId());
         const drawerItems = EventDrawerApi.findOne({user: Meteor.userId()});

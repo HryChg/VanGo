@@ -64,7 +64,12 @@ class DraggableItems extends React.Component {
     * should be unique to the document.
     * */
     render() {
-        let items = this.props.draggableItems.items;
+        let items;
+        if (this.props.editing) {
+            items = this.props.draggableItems.itineraryEdit.items;
+        } else {
+            items = this.props.draggableItems.items;
+        }
         if (items) {
             return (
                 <div className="DraggableItems">
@@ -90,7 +95,8 @@ class DraggableItems extends React.Component {
 const mapStateToProps = (state) => {
     return {
         draggableItems: state.draggableItems,
-        eventDrawer: state.eventDrawer
+        eventDrawer: state.eventDrawer,
+        editing: state.itineraryStore.editing,
     };
 };
 
