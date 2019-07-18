@@ -5,6 +5,7 @@ import nodemailMailgun from 'nodemailer-mailgun-transport';
 import {mailgunAuth} from "../../imports/ui/config";
 
 export default class MailGun {
+    // EFFECTS: Create a Node Mailer Transporter that incorporates MailGun Api
     constructor(){
         let auth = {
             auth: {
@@ -20,6 +21,9 @@ export default class MailGun {
     * To Ensure People can get an email, make sure to add yourself to the authorized recipient on MailGun
     * https://help.mailgun.com/hc/en-us/articles/217531258-Authorized-Recipients look for beta UI instruction
     * */
+    // REQUIRES: "to" must be an authorized recipient on MailGun Dashboard as the current mailgun api is meant for testing
+    // EFFECTS: Set the sender, reciepient, subject, and body
+    // MODIFIES: this
     setMailOptions(from, to, subject, text){
         this.mailOptions = {
             from,
@@ -28,6 +32,9 @@ export default class MailGun {
             text
         }
     }
+
+    // REQUIRES: this.mailOptions must be set
+    // EFFECTS: Send the mail. Log error if necessary.
     async sendMail(){
         try{
             await this.transporter.sendMail(this.mailOptions);
