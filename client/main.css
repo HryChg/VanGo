@@ -94,10 +94,9 @@ a.ui.button.redirect-to-itinerary {
     width: 100%;
 }
 
-.react-calendar{
-    width: 100%;
+.react-calendar, .react-calendar *{
+    border-radius: .28571429rem;
 }
-
 .react-calendar__tile.react-calendar__month-view__days__day {
     font-size: 14px;
     padding: 7px;
