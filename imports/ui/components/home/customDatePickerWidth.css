@@ -1,0 +1,5 @@
+.customDatePickerWidth,
+.customDatePickerWidth > div.react-calendar,
+.customDatePickerWidth > div > div.react-calendar__navigation{
+    width: 100%;
+}

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Calendar from 'react-calendar';
 import {changeDate} from '../../actions/datePickerActions';
 import {CalledDates} from '../../../api/CalledDates';
+import "./customDatePickerWidth.css";
 
 class DatePicker extends React.Component {
     // references: https://www.npmjs.com/package/react-calendar
@@ -19,7 +20,7 @@ class DatePicker extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="customDatePickerWidth">
                 <Calendar
                     onChange={this.onChange}
                     value={this.props.datePicker.selectedDate}
