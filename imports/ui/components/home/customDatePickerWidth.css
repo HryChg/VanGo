@@ -2,4 +2,8 @@
 .customDatePickerWidth > div.react-calendar,
 .customDatePickerWidth > div > div.react-calendar__navigation{
     width: 100%;
+    border-top-color: rgba(34, 36, 38, 0.15);
+    border-bottom-color: rgba(34, 36, 38, 0.15);
+    border-right-color: rgba(34, 36, 38, 0.15);
+    border-left-color: rgba(34, 36, 38, 0.15);
 }
