@@ -84,12 +84,15 @@ export default class MailGun {
 // Sample Usage with HTML Instead
 ////////////////////////////////////////////////////////////////////////
 
-// let mailGun = new MailGun();
-// let from = "Excited user <me@samples.mailgun.org>";
-// let to = 'vrjgik5@gmail.com';
-// let subject = "Welcome to my app!";
-// let html = `<h1>This is a testing html body</h1>`;
-// mailGun.setMailOptionsWithHtml(from, to, subject, html);
+import {emailItineraryTemplate} from "./ItineraryEmailTemplate";
+
+
+let mailGun = new MailGun();
+let from = "Excited user <me@samples.mailgun.org>";
+let to = 'vrjgik5@gmail.com';
+let subject = "Welcome to my app!";
+let html = emailItineraryTemplate;
+mailGun.setMailOptionsWithHtml(from, to, subject, html);
 // mailGun.sendMail().then(
 //     ()=>{
 //         console.log('mailGun.sendMail() Done');
