@@ -121,7 +121,7 @@ class ItineraryPage extends React.Component {
             let coordinates = selectedItinerary.items.map((item, index) => {
                 return {lat: item.latitude, lng: item.longitude};
             });
-    
+
             return (<Polyline
                 path={coordinates}
                 strokeColor={"#3F84CA"}
@@ -159,7 +159,7 @@ class ItineraryPage extends React.Component {
                             <Grid.Column>
                                 <div id="it-date-toggle">
                                     <Menu inverted attached icon>
-                                        <Menu.Item 
+                                        <Menu.Item
                                             onClick={this.props.showPanel}>
                                             <Icon name="calendar"/>
                                         </Menu.Item>
@@ -168,14 +168,16 @@ class ItineraryPage extends React.Component {
                                 <div id="itinerary-name">
                                     <h1>
                                         <span className="it-header">{this.getDisplayName(this.props.selectedID)}</span>
-                                        <Button className="it-edit" icon="pencil large black" onClick={() => {
+                                        <Button className="it-edit" onClick={() => {
                                             Meteor.call('updateItinerary', this.props.selectedID);
                                             this.props.editingItinerary(true);
-                                        }}/>
+                                        }}>
+                                            <Icon name={"pencil"} size={"large"} color={"black"}/>
+                                        </Button>
                                     </h1>
                                 </div>
                                 <div id="it-list">
-                                    <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/>  
+                                    <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/>
                                 </div>
                             </Grid.Column>
 
@@ -216,6 +218,6 @@ const ItineraryPageContainer = withTracker(() => {
     }
 })(ItineraryPage);
 
-export default connect(mapStateToProps, 
+export default connect(mapStateToProps,
     { handleOnMarkerClick, selectID, editingItinerary, showPanel, hidePanel }
     )(ItineraryPageContainer);
