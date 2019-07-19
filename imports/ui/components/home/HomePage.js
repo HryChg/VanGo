@@ -1,19 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Marker } from "google-maps-react";
-import { Link, Redirect, NavLink } from 'react-router-dom';
-import { withTracker } from 'meteor/react-meteor-data';
-import { Grid, Sidebar, Menu, Icon, Button } from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import {Marker} from "google-maps-react";
+import {Link, Redirect, NavLink} from 'react-router-dom';
+import {withTracker} from 'meteor/react-meteor-data';
+import {Grid, Sidebar, Menu, Icon, Button} from 'semantic-ui-react';
 
 import SearchBar from "./SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
-import { handleOnMarkerClick } from "../../actions/mapContainerActions";
-import { toggleNearbyAttractions } from "../../actions/homePageActions";
-import { showPanel, hidePanel } from './../../actions/panelActions';
-import { formatAMPM } from "../../../util/util";
+import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import {toggleNearbyAttractions} from "../../actions/homePageActions";
+import {showPanel, hidePanel} from './../../actions/panelActions';
+import {formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
 
@@ -99,11 +99,11 @@ class HomePage extends React.Component {
         // TODO: Ask Mary is the commented out section is still needed
         let markers = this.props.currentEvents.map((item) => {
             // if (VanGoStore.getState().datePicker.selectedDate) {
-                if (item.type === 'Attraction') {
-                    return this.createAttractionMarker(item);
-                } else {
-                    return this.createEventMarker(item);
-                }
+            if (item.type === 'Attraction') {
+                return this.createAttractionMarker(item);
+            } else {
+                return this.createEventMarker(item);
+            }
             // }
         });
 
@@ -168,7 +168,7 @@ class HomePage extends React.Component {
                         vertical
                         visible={this.props.visible}
                     >
-                        <EventDrawer />
+                        <EventDrawer/>
                     </Sidebar>
 
                     <Sidebar.Pusher>
@@ -179,10 +179,10 @@ class HomePage extends React.Component {
                                         <div className={"home-panel"}>
                                             {this.toggleEditHeader()}
                                             <div className={"SearchBarContainer"}>
-                                                <SearchBar />
+                                                <SearchBar/>
                                             </div>
                                             <div className={"DatePickerContainer"}>
-                                                <DatePicker />
+                                                <DatePicker/>
                                             </div>
                                             <div className={"EventFilterContainer"}>
                                                 <EventFilter items={this.props.currentEvents}/>
@@ -190,27 +190,28 @@ class HomePage extends React.Component {
 
                                             <div className={"sidenav-options-container"}>
                                                 <div className="ui large vertical menu fluid">
-                                                    <a className="item" onClick={this.props.toggleNearbyAttractions}>
+                                                    <a className={this.props.homePage.toggleNearbyAttractions ? "active item" : "item"}
+                                                       onClick={this.props.toggleNearbyAttractions}
+                                                    >
                                                         {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
                                                     </a>
                                                     <a className="item" onClick={this.props.showPanel}>
-                                                        <div
-                                                            className="ui small label">{this.props.dataReadySaved ? this.props.savedEvents.length : 0}</div>
+                                                        <div className="ui small label">{this.props.dataReadySaved ? this.props.savedEvents.length : 0}</div>
                                                         Show Current Selection
                                                     </a>
                                                 </div>
                                             </div>
 
-                                            <Button className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
+                                            <Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
                                                 Next
                                             </Button>
                                         </div>
                                     </Grid.Column>
 
                                     <Grid.Column width={12}>
-                                        <div style={{ height: '94vh' }}>
+                                        <div style={{height: '94vh'}}>
                                             <MapContainer width={'98%'} height={'100%'}
-                                                initialCenter={{ lat: 49.2820, lng: -123.1171 }}>
+                                                          initialCenter={{lat: 49.2820, lng: -123.1171}}>
                                                 {this.displayMarkers()}
                                             </MapContainer>
                                         </div>

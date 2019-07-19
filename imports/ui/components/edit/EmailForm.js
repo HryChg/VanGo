@@ -60,7 +60,13 @@ class EmailForm extends React.Component {
         let subject = this.state.subject;
         let text = JSON.stringify(itinSummary, null, 2); // space level 2 and prettify
 
-        Meteor.call('emailItinerary', from, to, subject, text);
+        Meteor.call('emailItinerary', from, to, subject, text, (err, res)=>{
+            if (err){
+                console.log(err);
+                return;
+            }
+            alert("Your Itinerary has been sent");
+        });
     };
 
     render = () => {
