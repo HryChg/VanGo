@@ -8,7 +8,7 @@ Meteor.methods({
         mailgun.setMailOptionsWithHtml(from, to, subject, html);
         mailgun.sendMail()
             .then(() => {
-                console.log(`${from} has send an itinerary to ${to}: subject: ${subject}`);
+                console.log(`${from} has sent an itinerary to ${to}: subject: ${subject}`);
             })
             .catch((err)=>{
                 console.log(err);
