@@ -3,7 +3,6 @@
 import nodemailer from 'nodemailer';
 import nodemailMailgun from 'nodemailer-mailgun-transport';
 import {mailgunAuth} from "../../imports/ui/config";
-import {emailItineraryTemplate} from "./ItineraryEmailTemplate";
 import {makeItineraryEmail} from "./ItineraryEmailTemplate";
 
 export default class MailGun {
