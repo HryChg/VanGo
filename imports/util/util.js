@@ -1,4 +1,4 @@
-// Reference: 
+// Reference:
 // - Getting Latitude and Longitude Center: https://gist.github.com/amites/3718961
 
 // EFFECTS: return true if listA contains every element in listB
@@ -57,7 +57,7 @@ export const formatAMPM = (date) => {
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
-    hours = hours ? hours : 12; 
+    hours = hours ? hours : 12;
     minutes = minutes < 10 ? '0'+ minutes : minutes;
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
@@ -66,7 +66,7 @@ export const formatAMPM = (date) => {
 // EFFECTS: return the center latitude and longitude,
 //          given a list of latitudes and longitudes
 export const getLatLonCenter = (listOfLatLons) => {
-    let x = 0; y = 0; z = 0;
+    let x = 0, y = 0, z = 0;
     for (let i in listOfLatLons) {
         let lat = listOfLatLons[i][0];
         let lon = listOfLatLons[i][1];
@@ -82,4 +82,4 @@ export const getLatLonCenter = (listOfLatLons) => {
     let center = Math.atan2(z, Math.sqrt(x*x + y*y), Math.atan2(y, x));
     console.log(center);
     return center;
-}
+};
