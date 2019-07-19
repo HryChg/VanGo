@@ -13,6 +13,7 @@ import {editingItinerary} from "../../actions/itineraryActions";
 import {getEventDrawer} from "../../actions/draggableItemsActions";
 import {formatAMPM} from "../../../util/util";
 import Mailgun from "../../../api/Mailgun";
+import EmailForm from "./EmailForm";
 
 
 class EditPage extends React.Component {
@@ -152,7 +153,7 @@ class EditPage extends React.Component {
         };
         console.log(outgoing);
 
-        document.querySelector("#shareItinContainer").innerHTML = 'Place Holder!';
+        // document.querySelector("#shareItinContainer").innerHTML = 'Place Holder!';
 
         let mailgun = new Mailgun();
         // let from = "Excited user <me@samples.mailgun.org>";
@@ -196,7 +197,10 @@ class EditPage extends React.Component {
                                         <Icon name="envelope outline"/>
                                         Email
                                     </button>
-                                    <div id={"shareItinContainer"}></div>
+                                    <div className={"container"}>
+                                        <EmailForm/>
+                                    </div>
+
                                 </div>
                             </div>
                         </Grid.Column>
