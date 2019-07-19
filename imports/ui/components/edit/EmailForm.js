@@ -46,6 +46,7 @@ class EmailForm extends React.Component {
         console.log(mailgun.mailOptions);
         mailgun.sendMail();
         // TODO FIX Request header field authorization is not allowed by access-control-allow-headers in preflight response
+        Meteor.call('sendItinerary');
     };
 
     render = () => {

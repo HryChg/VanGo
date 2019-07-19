@@ -2,6 +2,7 @@ import {Meteor} from 'meteor/meteor';
 import '/imports/api/itineraries';
 import './methods/itinerary';
 import './methods/users';
+import './methods/email';
 import Itineraries from '../imports/api/itineraries';
 import CurrentEvents from '../imports/api/CurrentEvents';
 import getEventsInDay from './../imports/api/getDayEvents';
