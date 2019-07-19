@@ -139,6 +139,23 @@ class EditPage extends React.Component {
         this.props.saveItinerary(itin, this.props.editing);
     };
 
+    toggleEmailForm = () => {
+        if (!Meteor.user()) {
+            return (
+                <div className="ui message">
+                    <div className="header">Warning</div>
+                    <p>Place Log in before sharing your itinerary.</p>
+                </div>
+            )
+        }
+        return (<EmailForm
+            items={this.selectItems()}
+            userEmail={(Meteor.user()) ? Meteor.user().emails[0].address : 'Meteor Loading'}
+            userName={(Meteor.user()) ? Meteor.user().profile.name : 'Meteor Loading'}
+            date={this.getDate()}
+        />);
+    };
+
     render() {
         if (this.props.saved) {
             return (<Redirect exact to='/itinerary'/>);
@@ -158,22 +175,17 @@ class EditPage extends React.Component {
                                                placeholder={"Give it a name..."}/>
                                         <button className="ui button"
                                                 onClick={() => {
-                                            this.createItinerary();
-                                        }}>
+                                                    this.createItinerary();
+                                                }}>
                                             <Icon name="heart"/>
                                             Save
                                         </button>
                                     </div>
                                 </div>
                                 <div className={"container"}>
-                                    <Divider />
+                                    <Divider/>
                                     <h3>Share Your Itinerary With Someone...</h3>
-                                    <EmailForm
-                                        items = {this.selectItems()}
-                                        userEmail = {(Meteor.user()) ? Meteor.user().emails[0].address : 'Meteor Loading'}
-                                        userName = {(Meteor.user()) ? Meteor.user().profile.name : 'Meteor Loading'}
-                                        date = {this.getDate()}
-                                    />
+                                    {this.toggleEmailForm()}
                                 </div>
                             </div>
                         </Grid.Column>
