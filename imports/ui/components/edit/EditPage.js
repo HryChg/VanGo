@@ -14,6 +14,7 @@ import {getEventDrawer} from "../../actions/draggableItemsActions";
 import {formatAMPM} from "../../../util/util";
 import Mailgun from "../../../api/Mailgun";
 import EmailForm from "./EmailForm";
+import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 
 
 class EditPage extends React.Component {
@@ -138,36 +139,6 @@ class EditPage extends React.Component {
         this.props.saveItinerary(itin, this.props.editing);
     };
 
-    shareItinerary = () => {
-        console.log('sharing this itinerary...');
-        let items = this.selectItems();
-        let userEmail = Meteor.user().emails[0].address;
-        let userName = Meteor.user().profile.name;
-        let date = this.getDate(); // TODO Fix This
-
-        let outgoing = {
-            userEmail,
-            userName,
-            date,
-            items,
-        };
-        console.log(outgoing);
-
-        // document.querySelector("#shareItinContainer").innerHTML = 'Place Holder!';
-
-        let mailgun = new Mailgun();
-        // let from = "Excited user <me@samples.mailgun.org>";
-        // let to = 'vrjgik5@gmail.com';
-        // let subject = `Hi, this is ${outgoing.userName}`;
-        // let text = JSON.stringify(itin, null, 2); // space level 2, prettify the json string
-        // mailGun.setMailOptions(from, to, subject, text);
-        // mailGun.sendMail().then(
-        //     () => {
-        //         console.log('mailGun.sendMail() Done');
-        //     }
-        // );
-    };
-
     render() {
         if (this.props.saved) {
             return (<Redirect exact to='/itinerary'/>);
@@ -182,9 +153,11 @@ class EditPage extends React.Component {
                                 <DraggableItems/>
                                 <div className={"container"}>
                                     <div className="ui action input mini fluid">
-                                        <input className={"edit-page-path-name"} type="text"
+                                        <input className={"edit-page-path-name"}
+                                               type="text"
                                                placeholder={"Give it a name..."}/>
-                                        <button className="ui button" onClick={() => {
+                                        <button className="ui button"
+                                                onClick={() => {
                                             this.createItinerary();
                                         }}>
                                             <Icon name="heart"/>
@@ -193,14 +166,14 @@ class EditPage extends React.Component {
                                     </div>
                                 </div>
                                 <div className={"container"}>
-                                    <button className="ui button fluid" onClick={this.shareItinerary}>
-                                        <Icon name="envelope outline"/>
-                                        Email
-                                    </button>
-                                    <div className={"container"}>
-                                        <EmailForm/>
-                                    </div>
-
+                                    <Divider />
+                                    <h3>Share Your Itinerary With Someone...</h3>
+                                    <EmailForm
+                                        items = {this.selectItems()}
+                                        userEmail = {(Meteor.user()) ? Meteor.user().emails[0].address : 'Meteor Loading'}
+                                        userName = {(Meteor.user()) ? Meteor.user().profile.name : 'Meteor Loading'}
+                                        date = {this.getDate()}
+                                    />
                                 </div>
                             </div>
                         </Grid.Column>

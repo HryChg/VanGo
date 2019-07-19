@@ -43,15 +43,6 @@ export default class MailGun {
             console.log(err);
         }
     }
-
-    createItineraryHTML(itinJSON, userEmail) {
-        let itinName = itinJSON.name;
-        let date = itinJSON.date;
-        let userID = itinJSON.user;
-        let items = itinJSON.items;
-
-
-    }
 }
 
 // Sample Usage //
