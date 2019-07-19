@@ -1,36 +1,3 @@
-let senderName = 'Harry';
-let message = 'This is a place holder for the email message';
-let itineraryDateString = 'Fri Jul 19 2019';
-
-
-let json = {
-    "_id": "gTYaPTWp9cXyL7iGX",
-    "name": "West End Summer Art Market",
-    "start_time": "2019-07-01T00:00:00-07:00",
-    "end_time": "2019-07-31T23:30:00-07:00",
-    "price": 0,
-    "free": true,
-    "location": {
-        "address1": "1200 Bute Street",
-        "address2": "",
-        "address3": "",
-        "city": "Vancouver",
-        "zip_code": "V6E 1N1",
-        "country": "CA",
-        "state": "BC",
-        "display_address": [
-            "1200 Bute St, Vancouver, BC V6E 1N1, Canada"
-        ],
-        "cross_streets": ""
-    },
-    "latitude": 49.2815324,
-    "longitude": -123.1333527,
-    "link": "https://www.yelp.com/events/vancouver-west-end-summer-art-market?adjust_creative=4oRgfQ6rHoWhvQRa5T88mg&utm_campaign=yelp_api_v3&utm_medium=api_v3_event_search&utm_source=4oRgfQ6rHoWhvQRa5T88mg",
-    "category": "festivals-fairs",
-    "type": "Event",
-    "description": "WE Arts is a community arts organization whose goal it is to connecting community through arts in Vancouver's West End. \nJoin us for fun, music, art and..."
-};
-
 // EFFECTS: converts date to XX:XX AM or XX:XX PM
 const formatAMPM = (date) => {
     let hours = date.getHours();
@@ -38,13 +5,13 @@ const formatAMPM = (date) => {
     const ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12;
-    minutes = minutes < 10 ? '0'+ minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     return hours + ':' + minutes + ' ' + ampm;
 };
 
 const showLocation = (item) => {
     if (item.location.display_address[1]) {
-        return`<b>${item.location.display_address[0] + " " + item.location.display_address[1]}</b>`;
+        return `<b>${item.location.display_address[0] + " " + item.location.display_address[1]}</b>`;
     } else {
         return `<b>${item.location.display_address[0]}</b>`;
     }
@@ -60,33 +27,47 @@ const showDate = (item) => {
     }
 };
 
-let item1 = `
-    <!-- content -->
-    <div class="content">
-        <table bgcolor="">
-            <tr>
-                <td>
-                    <h4>${json.name}</h4>
-                    <p class="hours">${showDate(json)} </p>
-                    <p class="address">${showLocation(json)} </p>
-                    <p class="description">${json.description} </p>
-                    <p class="price">Price: ${json.price} </p>
-                    <a class="btn" href="${json.link}">More Details &raquo;</a>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <!-- /content -->
-`;
+const makeItem = (json) => {
+    let dateString = showDate(json);
+    let address = showLocation(json);
+    let description = json.description;
+    let price = json.price;
+    let link = json.link;
 
+    return `
+        <!-- content -->
+        <div class="content">
+            <table bgcolor="">
+                <tr>
+                    <td>
+                        <h4>${json.name}</h4>
+                        <p class="hours">${(dateString) ? dateString : 'n/a'} </p>
+                        <p class="address">${(address ? address : 'n/a')} </p>
+                        <p class="description">${description ? description : 'n/a'} </p>
+                        <p class="price">Price: ${price ? price : 'n/a'} </p>
+                        <a class="btn" href="${link ? link : 'n/a'}">More Details &raquo;</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!-- /content -->
+    `;
+}
 
-let itemsInItinerary = `
-${item1}
-`;
+const makeItinerary = (items) => {
+    let out = ``;
+    for (let item of items){
+        out = out + makeItem(item);
+    }
+    return out;
+};
 
-
-export let emailItineraryTemplate =
-    `
+export const makeItineraryEmail = (itinJson, senderMsg) => {
+    let senderName = itinJson.userName;
+    let message = senderMsg;
+    let itineraryDateString = itinJson.date;
+    let itemsInItinerary = makeItinerary(itinJson.items);
+    return`
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
             "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <html>
@@ -459,3 +440,4 @@ export let emailItineraryTemplate =
         </body>
         </html>
     `;
+};
