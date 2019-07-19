@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {Form} from 'semantic-ui-react';
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
+import {makeItineraryEmail} from "../../../api/ItineraryEmailTemplate";
 
 class EmailForm extends React.Component {
     initSubjectValue = `Sharing Itinerary`;
@@ -33,6 +34,7 @@ class EmailForm extends React.Component {
         return /^[A-Z0-9'.1234z_%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email);
     };
 
+    // Read Nodemailer Documentation for formatting parameters
     emailItinerary = () => {
         // prevent empty values
         if (!this.state.recipientEmail || !this.state.subject || !this.state.message){
@@ -51,18 +53,17 @@ class EmailForm extends React.Component {
             userName: this.props.userName,
             date: this.props.date,
             items: this.props.items,
-            message: this.message
         };
 
-        // Read Nodemailer Documentation for formatting parameters
         let from = `${this.props.userName} <${this.props.userEmail}>`;
         let to = 'vrjgik5@gmail.com'; // TODO Either make mailgun into production or add more people for email testing
         let subject = this.state.subject;
-        let text = JSON.stringify(itinSummary, null, 2); // space level 2 and prettify
+        let html = makeItineraryEmail(itinSummary, this.state.message);
 
-        Meteor.call('emailItinerary', from, to, subject, text, (err, res)=>{
+        Meteor.call('emailItinerary', from, to, subject, html, (err, res)=>{
             if (err){
                 console.log(err);
+                alert('Error in sending the email. Check console.');
                 return;
             }
             alert("Your Itinerary has been sent");

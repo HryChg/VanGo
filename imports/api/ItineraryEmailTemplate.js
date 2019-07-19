@@ -41,9 +41,9 @@ const makeItem = (json) => {
                 <tr>
                     <td>
                         <h4>${json.name}</h4>
-                        <p class="hours">${(dateString) ? dateString : 'n/a'} </p>
-                        <p class="address">${(address ? address : 'n/a')} </p>
-                        <p class="description">${description ? description : 'n/a'} </p>
+                        <p class="hours">Hours: ${(dateString) ? dateString : 'n/a'} </p>
+                        <p class="address">Address: ${(address ? address : 'n/a')} </p>
+                        <p class="description">Description: ${description ? description : 'n/a'} </p>
                         <p class="price">Price: ${price ? price : 'n/a'} </p>
                         <a class="btn" href="${link ? link : 'n/a'}">More Details &raquo;</a>
                     </td>
@@ -62,6 +62,14 @@ const makeItinerary = (items) => {
     return out;
 };
 
+
+/*
+REQUIRED:  itinJson should contain:
+            - userEmail: the meteor user email
+            - userName: the meteor user name
+            - date: the date of this particular itinerary
+            - items: an array of events/attractions
+*/
 export const makeItineraryEmail = (itinJson, senderMsg) => {
     let senderName = itinJson.userName;
     let message = senderMsg;
