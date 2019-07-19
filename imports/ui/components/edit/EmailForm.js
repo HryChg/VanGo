@@ -56,7 +56,7 @@ class EmailForm extends React.Component {
         };
 
         let from = `${this.props.userName} <${this.props.userEmail}>`;
-        let to = 'vrjgik5@gmail.com'; // TODO Either make mailgun into production or add more people for email testing
+        let to = this.state.recipientEmail; // TODO: move mailgun api to production so that unauthorized recipient can get email too
         let subject = this.state.subject;
         let html = makeItineraryEmail(itinSummary, this.state.message);
 
@@ -77,7 +77,7 @@ class EmailForm extends React.Component {
                     <Form.Input onChange={this.handleRecipientEmailChange}
                                 fluid
                                 label='Recipient Email'
-                                placeholder='Enter the recipient email here...'/>
+                                placeholder='only VanGo Developer Emails Allowed for now'/>
                     <Form.Input onChange={this.handleSubjectChange}
                                 fluid
                                 label='Subject'
