@@ -37,8 +37,8 @@ export default class MailGun {
     // EFFECTS: Send the mail. Log error if necessary.
     async sendMail() {
         try {
-            await this.transporter.sendMail(this.mailOptions);
-            console.log(`Message Sent to ${this.mailOptions.to}`);
+            let info = await this.transporter.sendMail(this.mailOptions);
+            return info;
         } catch (err) {
             console.log(err);
         }

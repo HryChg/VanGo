@@ -9,11 +9,23 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.5",
+    "atpl": "^0.9.3",
     "axios": "^0.19.0",
     "bcrypt": "^3.0.6",
+    "dust": "^0.3.0",
+    "dustjs-helpers": "^1.7.4",
+    "dustjs-linkedin": "^2.7.5",
+    "eco": "^1.1.0-rc-3",
+    "ejs": "^2.6.2",
     "faker": "^4.1.0",
     "google-maps-react": "^2.0.2",
+    "hamlet": "^0.3.3",
+    "hamljs": "^0.6.2",
+    "jade": "^1.11.0",
+    "jazz": "0.0.18",
+    "jqtpl": "^2.0.16-rc1",
     "jquery": "^3.4.1",
+    "liquor": "0.0.5",
     "lodash": "latest",
     "meteor-node-stubs": "^0.4.1",
     "meteor-redux-middlewares": "^3.0.7",
@@ -29,7 +41,12 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "semantic-ui-react": "^0.87.2",
-    "uniqid": "^5.0.3"
+    "swig": "^1.4.2",
+    "then-jade": "^2.4.4",
+    "tinyliquid": "^0.2.34",
+    "twig": "^1.13.3",
+    "uniqid": "^5.0.3",
+    "whiskers": "^0.4.0"
   },
   "meteor": {
     "mainModule": {
