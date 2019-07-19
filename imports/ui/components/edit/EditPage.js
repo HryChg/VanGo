@@ -144,7 +144,7 @@ class EditPage extends React.Component {
             return (
                 <div className="ui message">
                     <div className="header">Warning</div>
-                    <p>Place Log in before sharing your itinerary.</p>
+                    <p>Please log in before sharing your itinerary.</p>
                 </div>
             )
         }
@@ -184,7 +184,7 @@ class EditPage extends React.Component {
                                 </div>
                                 <div className={"container"}>
                                     <Divider/>
-                                    <h3>Share Your Itinerary With Someone...</h3>
+                                    <h3>Share Your Itinerary</h3>
                                     {this.toggleEmailForm()}
                                 </div>
                             </div>
