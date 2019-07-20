@@ -1,5 +1,8 @@
 # VanGo
-### Project Description:
+### Project Summary:
+VanGo is an itinerary planner for locals and tourists who want to discover events and attractions in Vancouver. Users can find information on events and attractions, organize their plans, and save or share them to better explore the city.
+
+### Project Details:
 VanGo was created to aid locals and tourists in exploring the city by showing them local events and nearby attractions. We will be storing event information, list of itineraries, and user information. Using this data, users will be able to plan and fill their itineraries with events and attractions, generate a path between all their events and attractions, and create a user account to save their itineraries. Some additional functionality we can add are an event filter based on type and cost, Google sign-in to save data to itinerary information, the ability to detect time conflicts between events, the ability to display projected weather, and the ability to display areas with high crime activity. 
 
 ### Project Task Requirements:
