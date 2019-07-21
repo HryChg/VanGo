@@ -21,12 +21,22 @@ class HomePage extends React.Component {
     // EFFECTS: renders name and logo; if edit state, renders editing title
     toggleEditHeader() {
         if (this.props.editing) {
-            return (<h2>Add/Remove Itinerary Items</h2>)
+            return (<h2>Add/Remove Itinerary Items from {this.props.savedEvents.date}</h2>)
         } else {
             return (<h2>
                 <Icon className="logo" name="street view"/>
                 VanGo
             </h2>);
+        }
+    }
+
+    // EFFECTS: renders datepicker; if edit state, hide datepicker
+    toggleDatePicker() {
+        if (!this.props.editing) {
+            return (
+            <div className={"DatePickerContainer"}>
+                <DatePicker/>
+            </div>);
         }
     }
 
@@ -181,9 +191,7 @@ class HomePage extends React.Component {
                                             <div className={"SearchBarContainer"}>
                                                 <SearchBar/>
                                             </div>
-                                            <div className={"DatePickerContainer"}>
-                                                <DatePicker/>
-                                            </div>
+                                            {this.toggleDatePicker()}
                                             <div className={"EventFilterContainer"}>
                                                 <EventFilter items={this.props.currentEvents}/>
                                             </div>

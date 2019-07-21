@@ -30,8 +30,8 @@ class EditPage extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.resetEditPage();
         this.props.editingItinerary(false);
+        this.props.resetEditPage();
     }
 
     // EFFECTS: if editing returns selected itinerary items, otherwise returns unsaved items

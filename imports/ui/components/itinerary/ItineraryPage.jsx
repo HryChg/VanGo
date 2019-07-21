@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Marker, Polyline} from "google-maps-react";
-import { Redirect, NavLink } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Grid, Icon, Menu, Sidebar, Button } from 'semantic-ui-react';
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import { withTracker } from 'meteor/react-meteor-data';
@@ -20,9 +20,7 @@ import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM } from "../../../util/util";
 
 class ItineraryPage extends React.Component {
-    componentDidMount() {
-        this.props.editingItinerary(false);
-    }
+
     // EFFECTS: returns itinerary with the selectedID, if none selected, choose first if available, else null
     getSelectedItinerary(selectedID) {
         if (this.props.dataReady) {
@@ -137,7 +135,7 @@ class ItineraryPage extends React.Component {
 
     // EFFECTS: If itinerary is being edited, redirect to home page; otherwise, display itinerary page
     render() {
-        if (this.props.editing) {
+        if (this.props.editing && this.props.dataReady) {
             return (<Redirect exact to='/'/>);
         }
         return(

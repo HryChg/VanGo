@@ -6,6 +6,7 @@ export const selectID = (id) => {
 }
 
 export const editingItinerary = (state) => {
+	console.log(state)
 	return {
 		type: 'EDITING_ITINERARY',
 		payload: state
