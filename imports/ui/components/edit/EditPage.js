@@ -31,7 +31,8 @@ class EditPage extends React.Component {
     selectItems() {
         let items;
         if (this.props.editing) {
-            items = this.props.draggableItems.itineraryEdit.items;
+            let ready = this.props.draggableItems.itineraryEdit;
+            items = ready? ready.items : [];
         } else {
             items = this.props.draggableItems.items;
         }
@@ -41,20 +42,24 @@ class EditPage extends React.Component {
     // EFFECTS: get date or, if editing, date: name
     getDate = () => {
         if (this.props.editing) {
-            let date = this.props.draggableItems.itineraryEdit.date;
-            let name = this.props.draggableItems.itineraryEdit.name;
-            return date + ": " + name;
+            let ready = this.props.draggableItems.itineraryEdit;
+            let date = ready? ready.date : "";
+            let name = ready? ready.name : "";
+            let header = date || name? date + ": " + name : "";
+            return header;
         } else {
             return this.props.datePicker.selectedDate.toDateString();
         }
     };
 
-    // EFFECCTS: renders date or, if editing, date: name
+    // EFFECTS: renders date or, if editing, date: name
     toggleEditHeader() {
         if (this.props.editing) {
-            let date = this.props.draggableItems.itineraryEdit.date;
-            let name = this.props.draggableItems.itineraryEdit.name;
-            return (<h3>{date + ": " + name}</h3>)
+            let ready = this.props.draggableItems.itineraryEdit;
+            let date = ready? ready.date : "";
+            let name = ready? ready.name : "";
+            let header = date || name? date + ": " + name : "";
+            return (<h3>{header}</h3>);
         } else {
             let selectedDateString = this.props.datePicker.selectedDate.toDateString();
             return (<h3>{selectedDateString}</h3>);

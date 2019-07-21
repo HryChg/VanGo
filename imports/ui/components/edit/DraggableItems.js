@@ -6,15 +6,12 @@ import {maskString} from "../../../util/util";
 
 
 class DraggableItems extends React.Component {
-    // componentDidMount() {
-    //     this.props.getEventDrawer();
-    // }
-
     // EFFECTS: if editing returns selected itinerary items, otherwise returns unsaved items
     selectItems() {
         let items;
         if (this.props.editing) {
-            items = this.props.draggableItems.itineraryEdit.items;
+            let ready = this.props.draggableItems.itineraryEdit;
+            items = ready? ready.items : [];
         } else {
             items = this.props.draggableItems.items;
         }
