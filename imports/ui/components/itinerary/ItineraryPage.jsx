@@ -20,6 +20,9 @@ import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM } from "../../../util/util";
 
 class ItineraryPage extends React.Component {
+    componentDidMount() {
+        this.props.editingItinerary(false);
+    }
     // EFFECTS: returns itinerary with the selectedID, if none selected, choose first if available, else null
     getSelectedItinerary(selectedID) {
         if (this.props.dataReady) {

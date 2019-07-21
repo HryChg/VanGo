@@ -12,6 +12,7 @@ import EditPage from "./edit/EditPage";
 import HomePage from "./home/HomePage";
 import RegistrationPage from './user/RegistrationPage';
 
+import { editingItinerary } from '../actions/itineraryActions';
 
 // This part routes to "different pages"
 function ProfilePage() {
@@ -33,8 +34,16 @@ class AppRouter extends React.Component {
         } else {
             return (
                 <Menu inverted attached>
-                    <Menu.Item as={NavLink} to="/itinerary/">Saved Itineraries</Menu.Item>
-                    <Menu.Item as={NavLink} to="/logout/" onClick={() => {this.props.logout()}}>Logout</Menu.Item>
+                    <Menu.Item as={NavLink} to="/itinerary/" onClick={() => {
+                        this.props.editingItinerary(false);
+                    }}>Saved Itineraries
+                    </Menu.Item>
+                    <Menu.Item as={NavLink} to="/logout/" onClick={() => {
+                        this.props.editingItinerary(false);
+                        this.props.logout();
+                        }}>
+                        Logout
+                    </Menu.Item>
                 </Menu>
             );
         }
@@ -67,4 +76,4 @@ const mapStateToProps = (state) => {
     });
 }
 
-export default connect(mapStateToProps, { logout, setLoginState })(AppRouter);
+export default connect(mapStateToProps, { logout, setLoginState, editingItinerary })(AppRouter);
