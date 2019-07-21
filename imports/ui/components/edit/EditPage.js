@@ -18,6 +18,13 @@ import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 
 
 class EditPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            nameInput: this.getName()
+        }
+    }
+
     componentWillMount() {
         this.props.getEventDrawer();
     }
@@ -52,6 +59,16 @@ class EditPage extends React.Component {
         }
     };
 
+    // EFFECTS: returns name of itinerary (without the date)
+    getName = () => {
+        if (this.props.editing) {
+            let ready = this.props.draggableItems.itineraryEdit;
+            let name = ready? ready.name : "";
+            return name;
+        }
+        return "";
+    }
+
     // EFFECTS: renders date or, if editing, date: name
     toggleEditHeader() {
         if (this.props.editing) {
@@ -63,6 +80,29 @@ class EditPage extends React.Component {
         } else {
             let selectedDateString = this.props.datePicker.selectedDate.toDateString();
             return (<h3>{selectedDateString}</h3>);
+        }
+    }
+
+    // EFFECTS: changes state of name input
+    handleNameChange = (event) => {
+        this.setState({nameInput: event.target.value});
+    }
+
+    // EFFECTS: renders field to save name
+    //          if editing, renders field as rename with default value itinerary name
+    toggleNameInput() {
+        if (this.props.editing) {
+            return (<input className={"edit-page-path-name"}
+            type="text"
+            placeholder={"Give it a name..."}
+            value={this.state.nameInput}
+            onChange={this.handleNameChange}
+            />);
+        } else {
+            return (<input className={"edit-page-path-name"}
+            type="text"
+            placeholder={"Give it a name..."}
+            />);
         }
     }
 
@@ -175,9 +215,7 @@ class EditPage extends React.Component {
                                 <DraggableItems/>
                                 <div className={"container"}>
                                     <div className="ui action input mini fluid">
-                                        <input className={"edit-page-path-name"}
-                                               type="text"
-                                               placeholder={"Give it a name..."}/>
+                                        {this.toggleNameInput()}
                                         <button className="ui button"
                                                 onClick={() => {
                                                     this.createItinerary();

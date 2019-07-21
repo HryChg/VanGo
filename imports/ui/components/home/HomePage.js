@@ -203,7 +203,7 @@ class HomePage extends React.Component {
                                             </div>
 
                                             <Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
-                                                Next
+                                                {"Review & Save"}
                                             </Button>
                                         </div>
                                     </Grid.Column>
