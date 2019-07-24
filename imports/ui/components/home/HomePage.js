@@ -54,6 +54,20 @@ class HomePage extends React.Component {
         }
     }
 
+    // EFFECTS: renders save button when user is logged in and event drawer has at least one item
+    //          otherwise, renders unclickable button
+    toggleSaveButton() {
+        if (Meteor.userId() && this.displaySelectionCount()) {
+            return (<Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
+                {"Review & Save"}
+                </Button>);
+        } else {
+            return (<Button fluid disabled className="redirect-to-itinerary" as={NavLink} to="/edit/">
+                {"Review & Save"}
+                </Button>);
+        }
+    }
+
     // EFFECTS: returns the number of items in the event drawer
     displaySelectionCount() {
         if (this.props.userDataReady) {
@@ -236,10 +250,7 @@ class HomePage extends React.Component {
                                                     </a>
                                                 </div>
                                             </div>
-
-                                            <Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
-                                                {"Review & Save"}
-                                            </Button>
+                                            {this.toggleSaveButton()}
                                         </div>
                                     </Grid.Column>
 
