@@ -1,17 +1,17 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Marker, Polyline} from "google-maps-react";
-import {Redirect} from 'react-router-dom';
-import {Grid, Icon} from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Marker, Polyline } from "google-maps-react";
+import { Redirect } from 'react-router-dom';
+import { Grid, Icon } from 'semantic-ui-react';
 import uniqid from 'uniqid';
 
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
-import {handleOnMarkerClick} from "../../actions/mapContainerActions";
-import {saveItinerary, resetEditPage} from "../../actions/editPageActions";
-import {editingItinerary} from "../../actions/itineraryActions";
-import {getEventDrawer} from "../../actions/draggableItemsActions";
-import {formatAMPM} from "../../../util/util";
+import { handleOnMarkerClick } from "../../actions/mapContainerActions";
+import { saveItinerary, resetEditPage } from "../../actions/editPageActions";
+import { editingItinerary } from "../../actions/itineraryActions";
+import { getEventDrawer } from "../../actions/draggableItemsActions";
+import { formatAMPM } from "../../../util/util";
 import Mailgun from "../../../api/Mailgun";
 import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
@@ -39,7 +39,7 @@ class EditPage extends React.Component {
         let items;
         if (this.props.editing) {
             let ready = this.props.draggableItems.itineraryEdit;
-            items = ready? ready.items : [];
+            items = ready ? ready.items : [];
         } else {
             items = this.props.draggableItems.items;
         }
@@ -50,9 +50,9 @@ class EditPage extends React.Component {
     getDate = () => {
         if (this.props.editing) {
             let ready = this.props.draggableItems.itineraryEdit;
-            let date = ready? ready.date : "";
-            let name = ready? ready.name : "";
-            let header = date || name? date + ": " + name : "";
+            let date = ready ? ready.date : "";
+            let name = ready ? ready.name : "";
+            let header = date || name ? date + ": " + name : "";
             return header;
         } else {
             return this.props.datePicker.selectedDate.toDateString();
@@ -63,7 +63,7 @@ class EditPage extends React.Component {
     getName = () => {
         if (this.props.editing) {
             let ready = this.props.draggableItems.itineraryEdit;
-            let name = ready? ready.name : "";
+            let name = ready ? ready.name : "";
             return name;
         }
         return "";
@@ -73,9 +73,9 @@ class EditPage extends React.Component {
     toggleEditHeader() {
         if (this.props.editing) {
             let ready = this.props.draggableItems.itineraryEdit;
-            let date = ready? ready.date : "";
-            let name = ready? ready.name : "";
-            let header = date || name? date + ": " + name : "";
+            let date = ready ? ready.date : "";
+            let name = ready ? ready.name : "";
+            let header = date || name ? date + ": " + name : "";
             return (<h3>{header}</h3>);
         } else {
             let selectedDateString = this.props.datePicker.selectedDate.toDateString();
@@ -85,7 +85,7 @@ class EditPage extends React.Component {
 
     // EFFECTS: changes state of name input
     handleNameChange = (event) => {
-        this.setState({nameInput: event.target.value});
+        this.setState({ nameInput: event.target.value });
     }
 
     // EFFECTS: renders field to save name
@@ -93,15 +93,15 @@ class EditPage extends React.Component {
     toggleNameInput() {
         if (this.props.editing) {
             return (<input className={"edit-page-path-name"}
-            type="text"
-            placeholder={"Give it a name..."}
-            value={this.state.nameInput}
-            onChange={this.handleNameChange}
+                type="text"
+                placeholder={"Give it a name..."}
+                value={this.state.nameInput}
+                onChange={this.handleNameChange}
             />);
         } else {
             return (<input className={"edit-page-path-name"}
-            type="text"
-            placeholder={"Give it a name..."}
+                type="text"
+                placeholder={"Give it a name..."}
             />);
         }
     }
@@ -128,7 +128,7 @@ class EditPage extends React.Component {
                         url: "https://img.icons8.com/color/43/000000/compact-camera.png"
                     }}
                     description={(item.description) ? item.description : 'No Description Available'}
-                    onClick={this.props.handleOnMarkerClick}/>
+                    onClick={this.props.handleOnMarkerClick} />
             } else {
                 return <Marker
                     key={item._id}
@@ -144,7 +144,7 @@ class EditPage extends React.Component {
                         lng: item.longitude
                     }}
                     description={item.description}
-                    onClick={this.props.handleOnMarkerClick}/>
+                    onClick={this.props.handleOnMarkerClick} />
             }
         });
         return markers;
@@ -154,7 +154,7 @@ class EditPage extends React.Component {
     displayPolyLine = () => {
         let items = this.selectItems();
         let coordinates = items.map((item, index) => {
-            return {lat: item.latitude, lng: item.longitude};
+            return { lat: item.latitude, lng: item.longitude };
         });
 
         return (<Polyline
@@ -190,6 +190,9 @@ class EditPage extends React.Component {
                 <div className="ui message">
                     <div className="header">Warning</div>
                     <p>Please log in before sharing your itinerary.</p>
+                    <button class="ui button">
+                        Download itinerary
+                    </button>
                 </div>
             )
         }
@@ -203,7 +206,7 @@ class EditPage extends React.Component {
 
     render() {
         if (this.props.saved) {
-            return (<Redirect exact to='/itinerary'/>);
+            return (<Redirect exact to='/itinerary' />);
         } else {
             return (
                 <Grid stackable divided='vertically'>
@@ -212,21 +215,21 @@ class EditPage extends React.Component {
                             <div className={"edit-panel"}>
                                 <h2 className={"ui header"}>Reorder Itinerary</h2>
                                 {this.toggleEditHeader()}
-                                <DraggableItems/>
+                                <DraggableItems />
                                 <div className={"container"}>
                                     <div className="ui action input mini fluid">
                                         {this.toggleNameInput()}
                                         <button className="ui button"
-                                                onClick={() => {
-                                                    this.createItinerary();
-                                                }}>
-                                            <Icon name="heart"/>
+                                            onClick={() => {
+                                                this.createItinerary();
+                                            }}>
+                                            <Icon name="heart" />
                                             Save
                                         </button>
                                     </div>
                                 </div>
                                 <div className={"container"}>
-                                    <Divider/>
+                                    <Divider />
                                     <h3>Share Your Itinerary</h3>
                                     {this.toggleEmailForm()}
                                 </div>
@@ -234,7 +237,7 @@ class EditPage extends React.Component {
                         </Grid.Column>
 
                         <Grid.Column width={12}>
-                            <div style={{height: '100vh'}}>
+                            <div style={{ height: '100vh' }}>
                                 <MapContainer width={'98%'} height={'100%'}>
                                     {this.displayMarkers()}
                                     {this.displayPolyLine()}
