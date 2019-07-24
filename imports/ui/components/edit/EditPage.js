@@ -211,7 +211,7 @@ class EditPage extends React.Component {
                                 <div className={"container"}>
                                     <div className="ui action input mini fluid">
                                         {this.toggleNameInput()}
-                                        <button className="ui button"
+                                        <button className="ui blue button"
                                                 onClick={() => {
                                                     this.createItinerary();
                                                 }}>

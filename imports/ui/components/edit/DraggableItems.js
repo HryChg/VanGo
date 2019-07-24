@@ -59,7 +59,7 @@ class DraggableItems extends React.Component {
                     onDragStart={e => this.onDragStart(e, idx)}
                     onDragEnd={this.onDragEnd}
                 >
-                    <div className="ui label blue DraggableItem">
+                    <div className="ui label red DraggableItem">
                         <i className="arrows alternate vertical icon"/>
                         <span className="content">{maskString(item.name, 23)}</span>
                     </div>

@@ -87,7 +87,8 @@ class EmailForm extends React.Component {
                                label='Message'
                                defaultValue={this.initMessageValue}/>
                 <Form.Button onClick={this.handleSubmit}
-                             fluid>
+                             fluid 
+                             color='blue'>
                     <Icon name="envelope outline"/>
                     Email
                 </Form.Button>
