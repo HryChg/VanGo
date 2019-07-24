@@ -26,7 +26,7 @@ class HomePage extends React.Component {
     // EFFECTS: renders name and logo; if edit state, renders editing title
     toggleEditHeader() {
         if (this.props.editing) {
-            return (<h2>Add/Remove Itinerary Items from {this.props.savedEvents.date}</h2>)
+            return (<h2>Add/Remove Itinerary Items {this.props.userDataReady ? "from " + this.props.userDetails.date: ""}</h2>)
         } else {
             return (<h2>
                 <Icon className="logo" name="street view"/>
@@ -42,6 +42,19 @@ class HomePage extends React.Component {
             <div className={"DatePickerContainer"}>
                 <DatePicker/>
             </div>);
+        }
+    }
+
+    // EFFECTS: returns the number of items in the event drawer
+    displaySelectionCount() {
+        if (this.props.userDataReady) {
+            if (this.props.editing) {
+                return this.props.userDetails.itineraryEdit.items.length;
+            } else {
+                return this.props.userDetails.items.length;
+            }
+        } else {
+            return 0;
         }
     }
 
@@ -209,7 +222,7 @@ class HomePage extends React.Component {
                                                         {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
                                                     </a>
                                                     <a className="item" onClick={this.props.showPanel}>
-                                                        <div className="ui small label">{this.props.dataReadySaved ? this.props.savedEvents.length : 0}</div>
+                                                        <div className="ui small label">{this.displaySelectionCount()}</div>
                                                         Show Current Selection
                                                     </a>
                                                 </div>
@@ -258,13 +271,13 @@ const HomePageContainer = withTracker(() => {
     const currentEvents = CurrentEvents.find().fetch();
 
     const handleSaved = Meteor.subscribe('userEventDrawer', Meteor.userId());
-    const savedEvents = EventDrawerApi.find().fetch();
+    const userDetails = EventDrawerApi.findOne();
 
     return {
         dataReady: handle.ready(),
         currentEvents: currentEvents,
-        dataReadySaved: handleSaved.ready(),
-        savedEvents: savedEvents
+        userDataReady: handleSaved.ready(),
+        userDetails: userDetails
     }
 })(HomePage);
 export default connect(mapStateToProps, {
