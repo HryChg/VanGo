@@ -21,12 +21,21 @@ import EventDrawerApi from "../../../api/EventDrawerApi";
 class HomePage extends React.Component {
     componentDidMount() {
         this.props.getEventDrawer();
+        if (this.props.editing) {
+            this.props.showPanel();
+        }
     }
 
     // EFFECTS: renders name and logo; if edit state, renders editing title
     toggleEditHeader() {
         if (this.props.editing) {
-            return (<h2>Add/Remove Itinerary Items {this.props.userDataReady ? "from " + this.props.userDetails.date: ""}</h2>)
+            if (this.props.userDataReady && this.props.userDetails) {
+                return (<h2>Add/Remove Itinerary Items from 
+                    {" " + this.props.userDetails.itineraryEdit.date + ": " + this.props.userDetails.itineraryEdit.name}
+                    </h2>);
+            } else {
+                return (<h2>Add/Remove Itinerary Items</h2>);
+            }
         } else {
             return (<h2>
                 <Icon className="logo" name="street view"/>
