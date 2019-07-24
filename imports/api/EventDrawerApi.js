@@ -58,8 +58,12 @@ function containsItem(items, item) {
 }
 
 if (Meteor.isServer) {
-    Meteor.publish('eventDrawer', function () {
-        return EventDrawerApi.find();
+    Meteor.publish('userEventDrawer', function (user) {
+        if (user) {
+            return EventDrawerApi.find({user: this.userId});
+        } else {
+            return EventDrawerApi.find({user: 'anon'});
+        }
     });
 
     Meteor.methods({

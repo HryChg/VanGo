@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {updateDraggableItems} from "../../actions/draggableItemsActions";
-import {getEventDrawer} from "../../actions/draggableItemsActions";
 import {maskString} from "../../../util/util";
 
 
@@ -106,8 +105,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-    updateDraggableItems: updateDraggableItems,
-    getEventDrawer: getEventDrawer
+    updateDraggableItems: updateDraggableItems
 })(DraggableItems);
 
 

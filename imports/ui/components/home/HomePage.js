@@ -10,6 +10,7 @@ import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
+import {getEventDrawer} from "../../actions/draggableItemsActions";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import {showPanel, hidePanel} from './../../actions/panelActions';
@@ -18,6 +19,10 @@ import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.Component {
+    componentDidMount() {
+        this.props.getEventDrawer();
+    }
+
     // EFFECTS: renders name and logo; if edit state, renders editing title
     toggleEditHeader() {
         if (this.props.editing) {
@@ -252,7 +257,7 @@ const HomePageContainer = withTracker(() => {
     const handle = Meteor.subscribe('currentEvents');
     const currentEvents = CurrentEvents.find().fetch();
 
-    const handleSaved = Meteor.subscribe('eventDrawer');
+    const handleSaved = Meteor.subscribe('userEventDrawer', Meteor.userId());
     const savedEvents = EventDrawerApi.find().fetch();
 
     return {
@@ -267,4 +272,5 @@ export default connect(mapStateToProps, {
     toggleNearbyAttractions,
     showPanel,
     hidePanel,
+    getEventDrawer
 })(HomePageContainer);

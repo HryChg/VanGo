@@ -31,7 +31,8 @@ export default function DraggableItemsReducer(state = initialState, action) {
 
         case 'RESET_EDIT':
             return initialState;
-
+        case 'LOGOUT':
+            return initialState;
         case GET_EVENT_DRAWER_SUBSCRIPTION_READY:
             return {
                 ready: action.payload.ready,

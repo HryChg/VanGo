@@ -16,12 +16,8 @@ export const getEventDrawer = () => {
 	return startSubscription({
 		key: LOAD_EVENT_DRAWER_SUB,
 		get: () => {
-			if (Meteor.userId()){
-				return EventDrawerApi.findOne({user: Meteor.userId()});
-			} else {
-				return EventDrawerApi.findOne({user: 'anon'});
-			}
+			return EventDrawerApi.findOne();
 		},
-		subscribe: () => Meteor.subscribe('eventDrawer')
+		subscribe: () => Meteor.subscribe('userEventDrawer', Meteor.userId())
 	})
 };

@@ -10,7 +10,6 @@ import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {saveItinerary, resetEditPage} from "../../actions/editPageActions";
 import {editingItinerary} from "../../actions/itineraryActions";
-import {getEventDrawer} from "../../actions/draggableItemsActions";
 import {formatAMPM} from "../../../util/util";
 import Mailgun from "../../../api/Mailgun";
 import EmailForm from "./EmailForm";
@@ -23,10 +22,6 @@ class EditPage extends React.Component {
         this.state = {
             nameInput: this.getName()
         }
-    }
-
-    componentWillMount() {
-        this.props.getEventDrawer();
     }
 
     componentWillUnmount() {
@@ -261,6 +256,5 @@ export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     saveItinerary: saveItinerary,
     resetEditPage: resetEditPage,
-    editingItinerary: editingItinerary,
-    getEventDrawer: getEventDrawer
+    editingItinerary: editingItinerary
 })(EditPage);
