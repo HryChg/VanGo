@@ -3,6 +3,11 @@ import Itineraries from '../../imports/api/itineraries';
 import EventDrawerApi from '../../imports/api/EventDrawerApi';
 
 Meteor.methods({
+    // EFFECTS: gets itinerary
+    'fetchItineraries': async () => {
+        return await Itineraries.find().fetch();
+    },
+
     // EFFECTS: adds itinerary to collection; throws error if not logged in
     //          if itinerary already exists, update itinerary instead
     'saveItinerary': function(itinerary, editing) {

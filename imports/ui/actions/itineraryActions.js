@@ -11,3 +11,10 @@ export const editingItinerary = (state) => {
 		payload: state
 	}
 }
+
+export const loadItineraries = (itineraries) => {
+	return {
+		type: 'LOAD_ITINERARIES',
+		payload: itineraries
+	}
+}
