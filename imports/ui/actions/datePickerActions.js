@@ -4,3 +4,23 @@ export const changeDate = (date) => {
         payload: date
     };
 };
+
+export const toggleConfirmWindow = () => {
+    return {
+        type: "TOGGLE_CONFIRM_WINDOW"
+    }
+};
+
+
+export const confirm = () => {
+    return {
+        type: "CONFIRM"
+    }
+};
+
+
+export const cancel = () => {
+    return {
+        type: "CANCEL"
+    }
+};
