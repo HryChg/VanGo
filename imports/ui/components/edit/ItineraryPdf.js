@@ -27,6 +27,24 @@ const showDate = (item) => {
     }
 };
 
+export const showLocationRaw = (item) => {
+    if (item.location.display_address[1]) {
+        return `${item.location.display_address[0] + " " + item.location.display_address[1]}`;
+    } else {
+        return `${item.location.display_address[0]}`;
+    }
+};
+
+export const showDateRaw = (item) => {
+    if (item.start_time && item.end_time) {
+        return `${formatAMPM(new Date(item.start_time.toString())) + ' - ' + formatAMPM(new Date(item.end_time.toString()))}`;
+    } else if (item.start_time) {
+        return `Begins at ${formatAMPM(new Date(item.start_time.toString()))}`;
+    } else if (item.end_time) {
+        return `Until ${formatAMPM(new Date(item.end_time.toString()))}`;
+    }
+};
+
 const makeItem = (json) => {
     let dateString = showDate(json);
     let address = showLocation(json);
@@ -339,6 +357,7 @@ export const makeItinHtml = (itinJson) => {
         <!-- /HEADER -->
         
         <!-- BODY -->
+        <body>
         <table class="body-wrap" bgcolor="">
             <tr>
                 <td></td>
@@ -396,7 +415,7 @@ export const makeItinHtml = (itinJson) => {
                 </td>
                 <td></td>
             </tr>
-        </table><!-- /BODY -->
+        </table></body><!-- /BODY -->
         
         <!-- FOOTER -->
         <table class="footer-wrap">
