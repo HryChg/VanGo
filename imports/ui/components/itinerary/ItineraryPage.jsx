@@ -42,7 +42,7 @@ class ItineraryPage extends React.Component {
                             return itineraries[x];
                         }
                     }
-                    return itineraries[itineraries.length];
+                    return itineraries[itineraries.length-1];
                 } else {
                     for (let x in itineraries) {
                         if (itineraries[x]._id === selectedID) {
