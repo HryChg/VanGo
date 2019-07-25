@@ -107,7 +107,7 @@ class EventFilter extends React.Component {
                             <Slider multiple color="red" settings={{
                                 start: [-1,0],
                                 min: 0,
-                                max: this.getMaxPrice(),
+                                max: this.getMaxPrice() + 10,
                                 step: 1,
                                 onChange: debounce((value) => {
                                     this.props.filterPrice(value)

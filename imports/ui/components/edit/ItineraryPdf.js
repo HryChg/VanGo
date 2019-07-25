@@ -551,7 +551,6 @@ export const downloadPdf = (date, items) => {
         if (link) {
             doc.setTextColor('#0000EE');
             doc.textWithLink('link', x + 13, y, {url: link});
-            // doc.text(link, x + 13, y)
             y += 15;
         } else {
             doc.text('n/a', x + 13, y);
