@@ -79,6 +79,26 @@ class EditPage extends React.Component {
         }
     }
 
+    // EFFECTS: renders save button; disabled when user is not logged in
+    toggleSaveButton() {
+        if (Meteor.userId()) {
+            return (
+            <button className="ui blue button"
+                onClick={() => {
+                    this.createItinerary();
+                }}>
+                <Icon name="heart"/>
+                Save
+            </button>)
+        } else {
+            return (
+            <button className="ui disabled button">
+                <Icon name="heart"/>
+                Save
+            </button>)
+        }
+    }
+
     // EFFECTS: changes state of name input
     handleNameChange = (event) => {
         this.setState({ nameInput: event.target.value });
@@ -187,7 +207,7 @@ class EditPage extends React.Component {
                 <div className="ui message">
                     <div className="header">Notice</div>
                     <p>To share your itinerary via email, please log in.</p>
-                    <button className="ui button" onClick={() => downloadPdf(this.getDate(), this.selectItems())}>Download itinerary for now</button>
+                    <button className="ui button" onClick={() => downloadPdf(this.getDate(), this.selectItems())}>Download Itinerary</button>
                 </div>
             )
         }
@@ -214,13 +234,7 @@ class EditPage extends React.Component {
                                 <div className={"container"}>
                                     <div className="ui action input mini fluid">
                                         {this.toggleNameInput()}
-                                        <button className="ui blue button"
-                                                onClick={() => {
-                                                    this.createItinerary();
-                                                }}>
-                                            <Icon name="heart"/>
-                                            Save
-                                        </button>
+                                        {this.toggleSaveButton()}
                                     </div>
                                 </div>
                                 <div className={"container"}>
