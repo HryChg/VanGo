@@ -11,14 +11,14 @@ export const toggleConfirmWindow = () => {
     }
 };
 
-
+// EFFECTS: confirm and close the confirm window
 export const confirm = () => {
     return {
         type: "CONFIRM"
     }
 };
 
-
+// EFFECTS: cancel and close the confirm window
 export const cancel = () => {
     return {
         type: "CANCEL"

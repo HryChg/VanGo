@@ -9,30 +9,38 @@ import {Confirm} from "semantic-ui-react";
 
 
 class DatePicker extends React.Component {
+    // Holding a temporary date in case user selected OK at the ConfirmWindow
+    state = {tempDate: null};
 
-
+    // EFFECTS: user confirmed the window. Will update the currentEvent collection to the new selected date
     handleConfirm = () => {
         this.props.confirm();
+
+        let value = this.state.tempDate;
+        this.props.changeDate(value);
+        CalledDates.insert({date: value});
+        Meteor.call('updateEvents', value);
     };
 
+    // EFFECTS: user canceled to the window. Nothing Changed.
     handleCancel = () => {
         this.props.cancel();
     };
 
-    // update selected date in store
+    // EFFECTS: given the date value from the Calendar, pop up the confirm window
+    //          while recording a temporary date for later use (in case user confirm to the window)
     onChange = value => {
         this.props.toggleConfirmWindow();
-        this.props.changeDate(value);
-        CalledDates.insert({date: value});
-        Meteor.call('updateEvents', value);
+        this.setState({tempDate: value});
     };
 
     render() {
         return (
             <div className="customDatePickerWidth">
                 <Confirm open={this.props.openConfirmWindow}
-                         onCancel={this.handleConfirm}
-                         onConfirm={this.handleCancel}/>
+                         onConfirm={this.handleConfirm}
+                         onCancel={this.handleCancel}
+                         content={"Choosing a new date will clear out your saved markers for the current date. Are you sure?"}/>
                 <h3>Current Selection: {this.props.selectedDate.toDateString()}</h3>
                 <Calendar
                     onChange={this.onChange}
