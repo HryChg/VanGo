@@ -1,11 +1,11 @@
 const axios = require('axios');
-const apiKey = 'dDfY4JOu4vSBJWZabgu-iYx3INycXIhofarhRe7YNahDQVUp9Oub8KDvFTq-lK5y1HdDhnIF8jSxdl1aOQzTmAjkKceyZJXc5nQbkd97glTL-svXmKw3u0Nof00AXXYx';
+import {yelpApiKey} from '../ui/config';
 // https://medium.com/@chaoyue_zhao/how-to-make-axios-api-calls-with-yelp-fusion-inside-react-js-10755d8485c5
 
 export default async function getEventsInDay(date) {
     return axios.get('https://api.yelp.com/v3/events', {
         headers: {
-            'Authorization': `Bearer ${apiKey}`
+            'Authorization': `Bearer ${yelpApiKey}`
         },
         params: {
             location: 'Vancouver',

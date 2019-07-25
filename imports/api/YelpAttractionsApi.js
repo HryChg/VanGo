@@ -2,7 +2,7 @@
 // https://www.yelp.ca/developers/documentation/v3/business_search
 
 const axios = require('axios');
-import {yelpApi} from '../ui/config'
+import {yelpApiKey} from '../ui/config'
 
 export default class YelpAttractionsApi {
     // EFFECTS: get attraction based on string input of the location
@@ -11,7 +11,7 @@ export default class YelpAttractionsApi {
         try {
             let res = await axios.get('https://api.yelp.com/v3/businesses/search', {
                 headers: {
-                    'Authorization': `Bearer ${yelpApi}`
+                    'Authorization': `Bearer ${yelpApiKey}`
                 },
                 params: {
                     term: 'Tourists Must See List',
@@ -31,7 +31,7 @@ export default class YelpAttractionsApi {
         try {
             let res = await axios.get('https://api.yelp.com/v3/businesses/search', {
                 headers: {
-                    'Authorization': `Bearer ${yelpApi}`
+                    'Authorization': `Bearer ${yelpApiKey}`
                 },
                 params: {
                     term: 'Tourists Must See List',
