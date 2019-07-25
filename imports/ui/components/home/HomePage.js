@@ -46,9 +46,10 @@ class HomePage extends React.Component {
     // EFFECTS: renders datepicker; if edit state, hide datepicker
     toggleDatePicker() {
         if (!this.props.editing) {
+            let eventDrawerCount = this.displaySelectionCount();
             return (
             <div className={"DatePickerContainer"}>
-                <DatePicker/>
+                <DatePicker eventDrawerCount={eventDrawerCount}/>
             </div>);
         }
     }

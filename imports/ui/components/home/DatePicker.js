@@ -31,7 +31,9 @@ class DatePicker extends React.Component {
     // EFFECTS: given the date value from the Calendar, pop up the confirm window
     //          while recording a temporary date for later use (in case user confirm to the window)
     onChange = value => {
-        this.props.toggleConfirmWindow();
+        if (this.props.eventDrawerCount) {
+            this.props.toggleConfirmWindow();
+        }
         this.setState({tempDate: value});
     };
 
