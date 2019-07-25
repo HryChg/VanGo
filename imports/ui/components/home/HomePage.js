@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
-import {Link, Redirect, NavLink} from 'react-router-dom';
+import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
 import {Grid, Sidebar, Menu, Icon, Button} from 'semantic-ui-react';
 
@@ -205,8 +205,10 @@ class HomePage extends React.Component {
 
                                     <Grid.Column width={12}>
                                         <div style={{height: '94vh'}}>
-                                            <MapContainer width={'98%'} height={'100%'}
-                                                          initialCenter={{lat: 49.2820, lng: -123.1171}}>
+                                            <MapContainer width={'98%'}
+                                                          height={'100%'}
+                                                          initialCenter={{lat: 49.2820, lng: -123.1171}}
+                                                          showSaveButton={true}>
                                                 {this.displayMarkers()}
                                             </MapContainer>
                                         </div>
@@ -218,7 +220,6 @@ class HomePage extends React.Component {
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
             </div>
-
         );
     }
 }
