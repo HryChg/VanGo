@@ -23,7 +23,9 @@ class ItineraryDatePanel extends React.Component {
             <Menu.Item 
                 key={itinerary._id}
                 fitted='horizontally'
-                onClick={() => {this.props.selectID(itinerary._id);}}
+                onClick={() => {
+                    this.props.selectID(itinerary._id);
+                }}
             >
                 <div className="it-date">{this.getDisplayName(itinerary)}
                 <Icon name="trash" onClick={(e) => {
