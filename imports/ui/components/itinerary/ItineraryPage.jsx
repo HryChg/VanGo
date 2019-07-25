@@ -81,6 +81,27 @@ class ItineraryPage extends React.Component {
         return "";
     }
 
+    // EFFECTS: renders edit button when itinerary date is not in the past
+    displayEditButton() {
+        let today = getToday();
+        let itineraryDate = this.getDateFromID(this.props.selectedID);
+        if (itineraryDate) {
+            if (itineraryDate.getTime() >= today.getTime()) {
+                return (
+                    <Button className="it-edit" onClick={() => {
+                        Meteor.call('updateItinerary', this.props.selectedID);
+                        this.props.editingItinerary(true);
+                        let date = this.getDateFromID(this.props.selectedID)
+                        this.props.changeDate(date);
+                        Meteor.call('updateEvents', date);
+                    }}>
+                        <Icon name={"pencil"} size={"large"} color={"black"}/>
+                    </Button>
+                );
+            }
+        }
+    }
+
     // EFFECTS: display markers base on items in draggable items
     displayMarkers = () => {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
@@ -182,15 +203,7 @@ class ItineraryPage extends React.Component {
                                 <div id="itinerary-name">
                                     <h1>
                                         <span className="it-header">{this.getDisplayName(this.props.selectedID)}</span>
-                                        <Button className="it-edit" onClick={() => {
-                                            Meteor.call('updateItinerary', this.props.selectedID);
-                                            this.props.editingItinerary(true);
-                                            let date = this.getDateFromID(this.props.selectedID)
-                                            this.props.changeDate(date);
-                                            Meteor.call('updateEvents', date);
-                                        }}>
-                                            <Icon name={"pencil"} size={"large"} color={"black"}/>
-                                        </Button>
+                                        {this.displayEditButton()}
                                     </h1>
                                 </div>
                                 <div id="it-list">
