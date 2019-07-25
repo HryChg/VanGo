@@ -128,6 +128,15 @@ if (Meteor.isServer) {
             }
         },
 
+        // EFFECTS: Clear out the items in current user's drawer, not itineraryEdit
+        clearDrawer: async () => {
+            let accountID = await getDrawerID();
+            let userData = await EventDrawerApi.findOne({_id: accountID});
+            userData.items = [];
+            EventDrawerApi.update({_id: accountID}, userData);
+            console.log(`Due to user choosing a new date in calendar, the user drawer is cleared out`)
+        },
+
         // EFFECTS: Overwrites existing drawer data with selected itinerary
         saveItineraryToDrawer: async (itinerary) => {
             let userData = await EventDrawerApi.update({_id: this.userId}, itinerary);

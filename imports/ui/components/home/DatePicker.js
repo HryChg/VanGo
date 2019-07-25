@@ -20,6 +20,7 @@ class DatePicker extends React.Component {
         this.props.changeDate(value);
         CalledDates.insert({date: value});
         Meteor.call('updateEvents', value);
+        Meteor.call('clearDrawer');
     };
 
     // EFFECTS: user canceled to the window. Nothing Changed.
