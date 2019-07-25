@@ -14,7 +14,7 @@ import {formatAMPM} from "../../../util/util";
 import Mailgun from "../../../api/Mailgun";
 import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
-import { makeItinHtml, showDateRaw, showLocationRaw, downloadPdf } from './ItineraryPdf';
+import { downloadPdf } from './ItineraryPdf';
 
 
 class EditPage extends React.Component {

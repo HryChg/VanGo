@@ -16,7 +16,7 @@ export const saveItinerary = (itinerary, editing) => {
 			if (err) {
 				alert(err.reason);
 			} else {
-				alert('Itinerary has been saved!');
+				// alert('Itinerary has been saved!');
 				dispatch(saveItineraryState());
 			}
 		});
