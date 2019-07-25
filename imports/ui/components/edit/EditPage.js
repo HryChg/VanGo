@@ -16,6 +16,7 @@ import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import { makeItinHtml, showDateRaw, showLocationRaw } from './ItineraryPdf';
 import jsPDF from 'jspdf';
+import banner from './bannerData';
 
 
 class EditPage extends React.Component {
@@ -279,6 +280,7 @@ class EditPage extends React.Component {
             }
             doc.setTextColor('#000000');
         }
+        doc.addImage(banner, 'JPEG', 15, y, 180, 40);
         doc.save("sample-file.pdf");
     }
 
@@ -316,19 +318,11 @@ class EditPage extends React.Component {
                                 <div className={"container"}>
                                     <div className="ui action input mini fluid">
                                         {this.toggleNameInput()}
-<<<<<<< HEAD
-                                        <button className="ui button"
-                                            onClick={() => {
-                                                this.createItinerary();
-                                            }}>
-                                            <Icon name="heart" />
-=======
                                         <button className="ui blue button"
                                                 onClick={() => {
                                                     this.createItinerary();
                                                 }}>
                                             <Icon name="heart"/>
->>>>>>> 9b1077f6035403bf5f7a4c50d8d8d7511d0cc726
                                             Save
                                         </button>
                                     </div>
