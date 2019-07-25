@@ -22,8 +22,7 @@ class EventDrawer extends React.Component {
         }
         let items;
         if (this.props.editing) {
-            console.log(this.props.drawerItems)
-            items = this.props.drawerItems.itineraryEdit.items;
+            items = this.props.drawerItems.itineraryEdit? this.props.drawerItems.itineraryEdit.items: [];
         } else {
             items = this.props.drawerItems.items;
         }
