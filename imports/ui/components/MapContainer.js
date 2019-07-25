@@ -15,6 +15,7 @@ import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import CurrentEvents from '../../api/CurrentEvents';
 import {Button} from "semantic-ui-react";
 
+
 export class MapContainer extends Component {
     handleMapIdle = () => {
         this.props.setMapLoadedTrue();
@@ -41,7 +42,7 @@ export class MapContainer extends Component {
             if (error) {
                 alert(error.message);
             } else {
-                alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`)
+                alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`);
             }
         })
     };

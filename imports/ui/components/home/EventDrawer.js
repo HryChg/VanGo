@@ -39,7 +39,7 @@ class EventDrawer extends React.Component {
                             if (error) {
                                 alert(error);
                             } else {
-                                alert(`Event Deleted!`);
+                                // alert(`Event Deleted!`);
                             }
                         })
                     }}/>

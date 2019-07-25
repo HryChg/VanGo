@@ -56,7 +56,7 @@ class HomePage extends React.Component {
     // EFFECTS: renders save button when user is logged in and event drawer has at least one item
     //          otherwise, renders unclickable button
     toggleSaveButton() {
-        if (Meteor.userId() && this.displaySelectionCount()) {
+        if (this.displaySelectionCount()) {
             return (<Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
                 {"Review & Save"}
                 </Button>);
