@@ -13,6 +13,7 @@ import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue} from "../actions/mapContainerActions";
 import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import CurrentEvents from '../../api/CurrentEvents';
+import {Button} from "semantic-ui-react";
 
 export class MapContainer extends Component {
     handleMapIdle = () => {
@@ -79,14 +80,14 @@ export class MapContainer extends Component {
                                 <div className="description">{mapContainerStore.selectedPlace.description}</div>
                             </div>
 
-                            <button
+                            <Button
                                 className="extra content ui button"
                                 onClick={() => {
                                     this.onSaveEventClick();
                                 }}>
                                 <i className="heart icon"/>
                                 Save to Event Drawer
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </MapInfoWindowContainer>
