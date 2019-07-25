@@ -14,9 +14,7 @@ import {formatAMPM} from "../../../util/util";
 import Mailgun from "../../../api/Mailgun";
 import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
-import { makeItinHtml, showDateRaw, showLocationRaw } from './ItineraryPdf';
-import jsPDF from 'jspdf';
-import banner from './bannerData';
+import { makeItinHtml, showDateRaw, showLocationRaw, downloadPdf } from './ItineraryPdf';
 
 
 class EditPage extends React.Component {
@@ -183,116 +181,13 @@ class EditPage extends React.Component {
         this.props.selectID(itin._id);
     };
 
-    downloadPdf = () => {
-        // let itinSummary = {
-        //     date: this.getDate(),
-        //     items: this.selectItems()
-        // }
-        // let htmlStr = makeItinHtml(itinSummary);
-        // htmlStr = $(htmlStr);
-        // let htmlBody = $('body', htmlStr);
-        // doc.html(htmlBody);
-
-        let items = this.selectItems();
-        let doc = new jsPDF();
-
-        //Title
-        doc.text(`VanGo itinerary for ${this.getDate()}`, 65, 20);
-
-        doc.setFont('helvetica');
-        let y = 35;
-        for (let item of items) {
-            if (y > 280) {
-                doc.addPage();
-                y = 20;
-            }
-            let dateString = showDateRaw(item);
-            let address = showLocationRaw(item);
-            let description = item.description;
-            let price = item.price;
-            let link = item.link;
-
-            // Name
-            doc.setFontSize(12);
-            doc.setFontType('bold');
-            doc.text(`${item.name}`, 20, y);
-            y += 5;
-
-            // Time
-            doc.setFontSize(10);
-            doc.setFontType('normal');
-            if (dateString) {
-                doc.text('Hours: ', 20, y);
-                doc.setFontType('bolditalic');
-                doc.text(dateString, 31, y);
-                y += 5;
-            } else {
-                doc.text('Hours: ', 20, y);
-                doc.setFontType('bolditalic');
-                doc.text('n/a', 31, y);
-                y += 5;
-            }
-
-            // Address
-            doc.setFontType('normal');
-            if (address) {
-                doc.text('Address: ', 20, y);
-                doc.setFontType('bold');
-                doc.text(address, 35, y);
-                y += 5;
-            } else {
-                doc.text('Address: ', 20, y);
-                doc.setFontType('bold');
-                doc.text('n/a', 35, y);
-                y += 5;
-            }
-
-            // Description
-            doc.setFontType('normal');
-            if (description) {
-                let splitDesc = doc.splitTextToSize(description, 170);
-                for (var i = 0; i < splitDesc.length; i++) {
-                    if (i == 0) {
-                        doc.text(`Description: ${splitDesc[i]}`, 20, y);
-                        y += 5;
-                    } else {
-                        doc.text(`${splitDesc[i]}`, 40, y);
-                        y += 5;
-                    }
-                }
-            } else {
-                doc.text('n/a', 20, y);
-                y += 5;
-            }
-
-            // Price
-            doc.text(`Price: ${price ? '$' + price : 'n/a'}`, 20, y);
-            y += 5;
-
-            // Link
-            doc.text('Details: ', 20, y);
-            if (link) {
-                doc.setTextColor('#0000EE');
-                doc.text(link, 33, y)
-                y += 10;
-            } else {
-                doc.text('n/a', 33, y);
-                y += 10;
-            }
-            doc.setTextColor('#000000');
-        }
-        doc.addImage(banner, 'JPEG', 15, y, 180, 40);
-        doc.save("sample-file.pdf");
-    }
-
-
     toggleEmailForm = () => {
         if (!Meteor.user()) {
             return (
                 <div className="ui message">
-                    <div className="header">Warning</div>
-                    <p>Please log in before sharing your itinerary.</p>
-                    <button className="ui button" onClick={this.downloadPdf}>Download itinerary</button>
+                    <div className="header">Notice</div>
+                    <p>Please log in to share your itinerary.</p>
+                    <button className="ui button" onClick={() => downloadPdf(this.getDate(), this.selectItems())}>Download itinerary</button>
                 </div>
             )
         }
