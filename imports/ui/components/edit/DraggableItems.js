@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {updateDraggableItems} from "../../actions/draggableItemsActions";
-import {getEventDrawer} from "../../actions/draggableItemsActions";
 import {maskString} from "../../../util/util";
 
 
@@ -60,7 +59,7 @@ class DraggableItems extends React.Component {
                     onDragStart={e => this.onDragStart(e, idx)}
                     onDragEnd={this.onDragEnd}
                 >
-                    <div className="ui label blue DraggableItem">
+                    <div className="ui label red DraggableItem">
                         <i className="arrows alternate vertical icon"/>
                         <span className="content">{maskString(item.name, 23)}</span>
                     </div>
@@ -106,8 +105,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-    updateDraggableItems: updateDraggableItems,
-    getEventDrawer: getEventDrawer
+    updateDraggableItems: updateDraggableItems
 })(DraggableItems);
 
 

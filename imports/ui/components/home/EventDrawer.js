@@ -65,22 +65,12 @@ const mapStateToProps = (state) => {
 };
 
 const EventDrawerContainer = withTracker(()=>{
-    // TODO: Subscribing in the client - security issue?
-    if (Meteor.userId()){
-        const handle = Meteor.subscribe('eventDrawer', Meteor.userId());
-        const drawerItems = EventDrawerApi.findOne({user: Meteor.userId()});
+        const handle = Meteor.subscribe('userEventDrawer', Meteor.userId());
+        const drawerItems = EventDrawerApi.findOne();
         return {
             dataReady: handle.ready(),
             drawerItems: drawerItems
         }
-    } else {
-        const handle = Meteor.subscribe('eventDrawer', 'anon');
-        const drawerItems = EventDrawerApi.findOne({user: 'anon'});
-        return {
-            dataReady: handle.ready(),
-            drawerItems: drawerItems
-        }
-    }
 })(EventDrawer);
 
 

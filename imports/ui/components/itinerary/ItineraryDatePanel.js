@@ -10,7 +10,16 @@ class ItineraryDatePanel extends React.Component {
     }
 
     render() {
-        const mappedDates = this.props.itineraries.map(itinerary => 
+        let items = this.props.itineraries;
+        let sortedItems = items.sort((a, b) => {
+            let dateA = new Date(a.date);
+            let dateB = new Date(b.date);
+            if (dateA.getTime() === dateB.getTime()) {
+                return a.name < b.name ? -1 : (a.name > b.name ? 1: 0);
+            }
+            return dateA - dateB;
+        });
+        const mappedDates = sortedItems.map(itinerary => 
             <Menu.Item 
                 key={itinerary._id}
                 fitted='horizontally'

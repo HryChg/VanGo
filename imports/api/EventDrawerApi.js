@@ -58,8 +58,12 @@ function containsItem(items, item) {
 }
 
 if (Meteor.isServer) {
-    Meteor.publish('eventDrawer', function () {
-        return EventDrawerApi.find();
+    Meteor.publish('userEventDrawer', function (user) {
+        if (user) {
+            return EventDrawerApi.find({user: this.userId});
+        } else {
+            return EventDrawerApi.find({user: 'anon'});
+        }
     });
 
     Meteor.methods({
@@ -122,6 +126,15 @@ if (Meteor.isServer) {
                 console.log(`deleteFromCurrentUserData(): item "${itemToBeDeleted.name}}" deleted from user drawer`);
                 return;
             }
+        },
+
+        // EFFECTS: Clear out the items in current user's drawer, not itineraryEdit
+        clearDrawer: async () => {
+            let accountID = await getDrawerID();
+            let userData = await EventDrawerApi.findOne({_id: accountID});
+            userData.items = [];
+            EventDrawerApi.update({_id: accountID}, userData);
+            console.log(`Due to user choosing a new date in calendar, the user drawer is cleared out`)
         },
 
         // EFFECTS: Overwrites existing drawer data with selected itinerary
