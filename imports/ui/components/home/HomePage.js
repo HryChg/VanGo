@@ -30,7 +30,7 @@ class HomePage extends React.Component {
     toggleEditHeader() {
         if (this.props.editing) {
             if (this.props.userDataReady && this.props.userDetails) {
-                return (<h2>Add/Remove Itinerary Items from 
+                return (<h2>Add/Remove Itinerary Items from
                     {" " + this.props.userDetails.itineraryEdit.date + ": " + this.props.userDetails.itineraryEdit.name}
                     </h2>);
             } else {
@@ -229,9 +229,6 @@ class HomePage extends React.Component {
                                     <Grid.Column width={4}>
                                         <div className={"home-panel"}>
                                             {this.toggleEditHeader()}
-                                            <div className={"SearchBarContainer"}>
-                                                <SearchBar/>
-                                            </div>
                                             {this.toggleDatePicker()}
                                             <div className={"EventFilterContainer"}>
                                                 <EventFilter items={this.props.currentEvents}/>
