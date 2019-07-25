@@ -18,33 +18,40 @@ import { Meteor } from 'meteor/meteor';
 import { selectID, editingItinerary } from './../../actions/itineraryActions';
 import { changeDate } from './../../actions/datePickerActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
-import { formatAMPM } from "../../../util/util";
+import { formatAMPM, sortByDateName, getToday } from "../../../util/util";
 
 class ItineraryPage extends React.Component {
 
-    // EFFECTS: returns itinerary with the selectedID, if none selected, choose first if available, else null
-    // TODO: What happens here when delete?
+    // EFFECTS: returns itinerary with the selectedID
+    //          if no itineraries, return null
+    //          if no selectedID, choose:
+    //               - first future itinerary
+    //               - if none, choose most recent itinerary
+    //          if selectedID given, return itinerary if it exsits
     getSelectedItinerary(selectedID) {
         if (this.props.dataReady) {
-            let itineraries = this.props.itineraries;
+            let itineraries = sortByDateName(this.props.itineraries);
             if (itineraries === []) {
                 return null;
             } else {
                 if (selectedID === "") {
-                    let firstID = itineraries[0] ? itineraries[0]._id : ""; // TODO: What's the default?
-                    if (firstID) {
-                        this.props.selectID(firstID);
-                        selectedID = firstID;
-                    } else {
-                        return null;
+                    let today = getToday();
+                    for (let x in itineraries) {
+                        let itineraryDate = new Date(itineraries[x].date);
+                        if (itineraryDate.getTime() >= today.getTime()) {
+                            return itineraries[x];
+                        }
                     }
-                }
-                for (let x in itineraries) {
-                    if (itineraries[x]._id === selectedID) {
-                        return itineraries[x];
-                    }
+                    return itineraries[itineraries.length-1];
+                } else {
+                    for (let x in itineraries) {
+                        if (itineraries[x]._id === selectedID) {
+                            return itineraries[x];
+                        }
+                    }    
                 }
             }
+            return null;
         }
     }
 
@@ -62,24 +69,35 @@ class ItineraryPage extends React.Component {
         return "";
     }
 
-    // EFFECTS: returns displayName based on selectedID; if not set, get first
+    // EFFECTS: returns displayName based on selectedID
+    //          if no selected ID, choose:
+    //               - the first future itinerary
+    //               - otherwise, choose last
     getDisplayName(selectedID) {
-        if (this.props.dataReady) {
-            let itineraries = this.props.itineraries;
-            if (selectedID === "") {
-                let i = itineraries[0];
-                if (i) {
-                    return i.name ? i.date + ': ' + i.name : i.date;
-                } else {
-                    return null;
-                }
-            } else {
-                for (let x in itineraries) {
-                    if (itineraries[x]._id === selectedID) {
-                        let i = itineraries[x];
-                        return i.name ? i.date + ': ' + i.name : i.date;
-                    }
-                }
+        let itinerary = this.getSelectedItinerary(selectedID);
+        if (itinerary) {
+            return itinerary.name ? itinerary.date + ': ' + itinerary.name : itinerary.date;
+        }
+        return "";
+    }
+
+    // EFFECTS: renders edit button when itinerary date is not in the past
+    displayEditButton() {
+        let today = getToday();
+        let itineraryDate = this.getDateFromID(this.props.selectedID);
+        if (itineraryDate) {
+            if (itineraryDate.getTime() >= today.getTime()) {
+                return (
+                    <Button className="it-edit" onClick={() => {
+                        Meteor.call('updateItinerary', this.props.selectedID);
+                        this.props.editingItinerary(true);
+                        let date = this.getDateFromID(this.props.selectedID)
+                        this.props.changeDate(date);
+                        Meteor.call('updateEvents', date);
+                    }}>
+                        <Icon name={"pencil"} size={"large"} color={"black"}/>
+                    </Button>
+                );
             }
         }
     }
@@ -185,15 +203,7 @@ class ItineraryPage extends React.Component {
                                 <div id="itinerary-name">
                                     <h1>
                                         <span className="it-header">{this.getDisplayName(this.props.selectedID)}</span>
-                                        <Button className="it-edit" onClick={() => {
-                                            Meteor.call('updateItinerary', this.props.selectedID);
-                                            this.props.editingItinerary(true);
-                                            let date = this.getDateFromID(this.props.selectedID)
-                                            this.props.changeDate(date);
-                                            Meteor.call('updateEvents', date);
-                                        }}>
-                                            <Icon name={"pencil"} size={"large"} color={"black"}/>
-                                        </Button>
+                                        {this.displayEditButton()}
                                     </h1>
                                 </div>
                                 <div id="it-list">

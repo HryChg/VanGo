@@ -83,3 +83,27 @@ export const getLatLonCenter = (listOfLatLons) => {
     console.log(center);
     return center;
 };
+
+// REQUIRES: objects in list must contain attributes: date, name
+// EFFECTS: sorts given itinerary list by date, then name
+export const sortByDateName = (items) => {
+    let sortedItems = items.sort((a, b) => {
+        let dateA = new Date(a.date);
+        let dateB = new Date(b.date);
+        if (dateA.getTime() === dateB.getTime()) {
+            return a.name < b.name ? -1 : (a.name > b.name ? 1: 0);
+        }
+        return dateA - dateB;
+    });
+    return sortedItems;
+}
+
+// EFFECTS: returns today's date with 00:00:00 time
+export const getToday = () => {
+    let date = new Date();
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    return date;
+}

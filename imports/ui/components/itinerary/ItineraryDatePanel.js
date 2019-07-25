@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { selectID } from './../../actions/itineraryActions';
+import { sortByDateName } from '../../../util/util';
 import { Menu, Icon } from 'semantic-ui-react';
 
 class ItineraryDatePanel extends React.Component {
@@ -11,14 +12,7 @@ class ItineraryDatePanel extends React.Component {
 
     render() {
         let items = this.props.itineraries;
-        let sortedItems = items.sort((a, b) => {
-            let dateA = new Date(a.date);
-            let dateB = new Date(b.date);
-            if (dateA.getTime() === dateB.getTime()) {
-                return a.name < b.name ? -1 : (a.name > b.name ? 1: 0);
-            }
-            return dateA - dateB;
-        });
+        let sortedItems = sortByDateName(items);
         const mappedDates = sortedItems.map(itinerary => 
             <Menu.Item 
                 key={itinerary._id}
@@ -33,6 +27,7 @@ class ItineraryDatePanel extends React.Component {
                     Meteor.call('deleteItinerary', itinerary._id, (error, result)=>{
                         error ? alert(error) : alert('Itinerary Deleted!');
                     })
+                    this.props.selectID("");
                 }}/>
                 </div>
             </Menu.Item>    
