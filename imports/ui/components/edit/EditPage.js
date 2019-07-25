@@ -189,8 +189,8 @@ class EditPage extends React.Component {
         if (!Meteor.user()) {
             return (
                 <div className="ui message">
-                    <div className="header">Warning</div>
-                    <p>Please log in before sharing your itinerary.</p>
+                    <div className="header">Notice</div>
+                    <p>Please log in to share your itinerary.</p>
                     <button className="ui button" onClick={() => downloadPdf(this.getDate(), this.selectItems())}>Download itinerary</button>
                 </div>
             )
