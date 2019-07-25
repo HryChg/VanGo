@@ -7,18 +7,10 @@ import uniqid from 'uniqid';
 
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
-<<<<<<< HEAD
-import { handleOnMarkerClick } from "../../actions/mapContainerActions";
-import { saveItinerary, resetEditPage } from "../../actions/editPageActions";
-import { editingItinerary } from "../../actions/itineraryActions";
-import { getEventDrawer } from "../../actions/draggableItemsActions";
-import { formatAMPM } from "../../../util/util";
-=======
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {saveItinerary, resetEditPage} from "../../actions/editPageActions";
 import {editingItinerary} from "../../actions/itineraryActions";
 import {formatAMPM} from "../../../util/util";
->>>>>>> 9b1077f6035403bf5f7a4c50d8d8d7511d0cc726
 import Mailgun from "../../../api/Mailgun";
 import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
