@@ -15,6 +15,8 @@ import { formatAMPM } from "../../../util/util";
 import Mailgun from "../../../api/Mailgun";
 import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
+import { makeItinHtml } from './ItineraryPdf';
+import jsPDF from 'jspdf';
 
 
 class EditPage extends React.Component {
@@ -184,15 +186,25 @@ class EditPage extends React.Component {
         this.props.saveItinerary(itin, this.props.editing);
     };
 
+    downloadPdf = () => {
+         let itinSummary = {
+            date: this.getDate(),
+            items: this.selectItems()
+        }
+        let html = makeItinHtml(itinSummary);
+        let doc = new jsPDF();
+        doc.fromHTML(html);
+        doc.save("sample-file.pdf");
+    }
+
     toggleEmailForm = () => {
         if (!Meteor.user()) {
             return (
                 <div className="ui message">
                     <div className="header">Warning</div>
                     <p>Please log in before sharing your itinerary.</p>
-                    <button class="ui button">
-                        Download itinerary
-                    </button>
+                    <a href="/pdf.pdf" download>Download link</a>
+                    <button className="ui button" onClick={this.downloadPdf}>Download itinerary</button>
                 </div>
             )
         }

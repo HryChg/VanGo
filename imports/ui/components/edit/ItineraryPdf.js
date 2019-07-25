@@ -62,17 +62,12 @@ const makeItinerary = (items) => {
     return out;
 };
 
-
 /*
 REQUIRED:  itinJson should contain:
-            - userEmail: the meteor user email
-            - userName: the meteor user name
             - date: the date of this particular itinerary
             - items: an array of events/attractions
 */
-export const makeItineraryEmail = (itinJson, senderMsg) => {
-    let senderName = itinJson.userName;
-    let message = senderMsg;
+export const makeItinHtml = (itinJson) => { 
     let itineraryDateString = itinJson.date;
     let itemsInItinerary = makeItinerary(itinJson.items);
     return`
@@ -348,20 +343,6 @@ export const makeItineraryEmail = (itinJson, senderMsg) => {
             <tr>
                 <td></td>
                 <td class="container" align="" bgcolor="#FFFFFF">
-        
-                    <!-- content -->
-                    <div class="content">
-                        <table>
-                            <tr>
-                                <td>
-        
-                                    <h1>Hi from ${senderName}!</h1>
-                                    <p class="lead">${message}</p>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <!-- /content -->
                     
                     <!-- content -->
                     <div class="content">
@@ -449,3 +430,4 @@ export const makeItineraryEmail = (itinJson, senderMsg) => {
         </html>
     `;
 };
+

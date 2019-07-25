@@ -36,6 +36,7 @@
     "jazz": "0.0.18",
     "jqtpl": "^2.0.16-rc1",
     "jquery": "^3.4.1",
+    "jspdf": "^1.5.3",
     "just": "^0.1.8",
     "liquor": "0.0.5",
     "lodash": "latest",
