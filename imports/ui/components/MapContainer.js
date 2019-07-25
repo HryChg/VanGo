@@ -13,6 +13,7 @@ import {googleMapsApiKey} from "../config";
 import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue} from "../actions/mapContainerActions";
 import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import CurrentEvents from '../../api/CurrentEvents';
+import {Button} from "semantic-ui-react";
 
 export class MapContainer extends Component {
     handleMapIdle = () => {
@@ -43,6 +44,24 @@ export class MapContainer extends Component {
                 alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`)
             }
         })
+    };
+
+    // EFFECTS: Show save button on the map info window only if specified on the property of MapContainer.
+    //          E.g. in the mapContainer props --> showSaveButton={true}
+    toggleSaveButton = ()=>{
+        let showSaveButton = this.props.showSaveButton;
+        if (showSaveButton){
+            return (<Button
+                className="extra content ui button"
+                onClick={() => {
+                    this.onSaveEventClick();
+                }}>
+                <i className="heart icon"/>
+                Save to Event Drawer
+            </Button>);
+        } else {
+            return <div/>
+        }
     };
 
 
@@ -79,14 +98,15 @@ export class MapContainer extends Component {
                                 <div className="description">{mapContainerStore.selectedPlace.description}</div>
                             </div>
 
-                            <button
-                                className="extra content ui button"
-                                onClick={() => {
-                                    this.onSaveEventClick();
-                                }}>
-                                <i className="heart icon"/>
-                                Save to Event Drawer
-                            </button>
+                            {/*<Button*/}
+                            {/*    className="extra content ui button"*/}
+                            {/*    onClick={() => {*/}
+                            {/*        this.onSaveEventClick();*/}
+                            {/*    }}>*/}
+                            {/*    <i className="heart icon"/>*/}
+                            {/*    Save to Event Drawer*/}
+                            {/*</Button>*/}
+                            {this.toggleSaveButton()}
                         </div>
                     </div>
                 </MapInfoWindowContainer>

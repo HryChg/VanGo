@@ -1,11 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
-import {Link, Redirect, NavLink} from 'react-router-dom';
+import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
 import {Grid, Sidebar, Menu, Icon, Button} from 'semantic-ui-react';
 
-import SearchBar from "./SearchBar";
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
@@ -30,7 +29,7 @@ class HomePage extends React.Component {
     toggleEditHeader() {
         if (this.props.editing) {
             if (this.props.userDataReady && this.props.userDetails) {
-                return (<h2>Add/Remove Itinerary Items from 
+                return (<h2>Add/Remove Itinerary Items from
                     {" " + this.props.userDetails.itineraryEdit.date + ": " + this.props.userDetails.itineraryEdit.name}
                     </h2>);
             } else {
@@ -78,21 +77,6 @@ class HomePage extends React.Component {
             }
         } else {
             return 0;
-        }
-    }
-
-    // EFFECTS: return index of the marker component if it matches the selected ID from searchBar reducer
-    //          return undefined if no match found
-    filterMarkersOnSearch(markers) {
-        let selectedID = this.props.searchBar.selected;
-        if (selectedID === '') {
-            return;
-        }
-        for (let idx = 0; idx < markers.length; idx++) {
-            let marker = markers[idx];
-            if (marker.props.id === selectedID) {
-                return idx;
-            }
         }
     }
 
@@ -147,47 +131,15 @@ class HomePage extends React.Component {
 
     // EFFECTS: render markers based on currentEvents Collection
     displayMarkers = () => {
-        // TODO: Ask Mary is the commented out section is still needed
         let markers = this.props.currentEvents.map((item) => {
-            // if (VanGoStore.getState().datePicker.selectedDate) {
             if (item.type === 'Attraction') {
                 return this.createAttractionMarker(item);
             } else {
                 return this.createEventMarker(item);
             }
-            // }
         });
-
-        let searchedMarkerIdx = this.filterMarkersOnSearch(markers);
-
-        if (searchedMarkerIdx) {
-            this.modifyMarker(markers, searchedMarkerIdx);
-        }
-
         return markers;
     };
-
-    // TODO Trigger an action once a marker is mounted on the map
-    onMarkerMounted = element => {
-        // https://stackoverflow.com/questions/54555963/googlemaps-react-open-infowindow-by-default-not-from-onclick
-        // stub
-    };
-
-    // EFFECTS: given an index, modify the corresponding marker so that it is set to visible again
-    // MODIFIES: markers (i.e. the marker at the idx)
-    // NOTE: each element in markers are read only objects,
-    //          therefore a new object is produced to replace the original
-    modifyMarker(markers, idx) {
-        let oldMarker = markers[idx];
-        let copied = Object.assign({}, oldMarker.props); // copy the read-only object, extract only the property of the react component
-        copied.visible = true; // set the new marker's property to include true
-        let newMarker = (<Marker
-            ref={this.onMarkerMounted}
-            key={copied.id}
-            {...copied}
-        />);
-        markers[idx] = newMarker;
-    }
 
     // EFFECTS: return true if the item meets one of the selected categories and is within the price range
     //          If no category selected, items of all categories are considered
@@ -229,9 +181,6 @@ class HomePage extends React.Component {
                                     <Grid.Column width={4}>
                                         <div className={"home-panel"}>
                                             {this.toggleEditHeader()}
-                                            <div className={"SearchBarContainer"}>
-                                                <SearchBar/>
-                                            </div>
                                             {this.toggleDatePicker()}
                                             <div className={"EventFilterContainer"}>
                                                 <EventFilter items={this.props.currentEvents}/>
@@ -256,8 +205,10 @@ class HomePage extends React.Component {
 
                                     <Grid.Column width={12}>
                                         <div style={{height: '94vh'}}>
-                                            <MapContainer width={'98%'} height={'100%'}
-                                                          initialCenter={{lat: 49.2820, lng: -123.1171}}>
+                                            <MapContainer width={'98%'}
+                                                          height={'100%'}
+                                                          initialCenter={{lat: 49.2820, lng: -123.1171}}
+                                                          showSaveButton={true}>
                                                 {this.displayMarkers()}
                                             </MapContainer>
                                         </div>
@@ -269,7 +220,6 @@ class HomePage extends React.Component {
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
             </div>
-
         );
     }
 }
@@ -281,7 +231,6 @@ const mapStateToProps = (state) => {
         homePage: state.homePage,
         eventFilter: state.eventFilter,
         visible: state.panel.visible,
-        searchBar: state.searchBar,
         mapContainer: state.mapContainer,
         editing: state.itineraryStore.editing
     };
