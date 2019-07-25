@@ -9,7 +9,7 @@ import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {saveItinerary, resetEditPage} from "../../actions/editPageActions";
-import {editingItinerary} from "../../actions/itineraryActions";
+import {selectID, editingItinerary} from "../../actions/itineraryActions";
 import {formatAMPM} from "../../../util/util";
 import Mailgun from "../../../api/Mailgun";
 import EmailForm from "./EmailForm";
@@ -180,6 +180,7 @@ class EditPage extends React.Component {
 
         console.log(itin);
         this.props.saveItinerary(itin, this.props.editing);
+        this.props.selectID(itin._id);
     };
 
     downloadPdf = () => {
@@ -363,5 +364,6 @@ export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     saveItinerary: saveItinerary,
     resetEditPage: resetEditPage,
-    editingItinerary: editingItinerary
+    editingItinerary: editingItinerary,
+    selectID: selectID
 })(EditPage);
