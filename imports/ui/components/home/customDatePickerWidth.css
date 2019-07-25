@@ -8,3 +8,9 @@
     border-right-color: rgba(34, 36, 38, 0.15);
     border-left-color: rgba(34, 36, 38, 0.15);
 }
+
+
+.react-calendar__tile--active {
+    background: #ffffff;
+    color: rgba(0,0,0,.87);
+}
