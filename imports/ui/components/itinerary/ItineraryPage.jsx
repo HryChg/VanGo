@@ -226,13 +226,13 @@ class ItineraryPage extends React.Component {
                                     </div>
                                     <div id="it-list">
                                         <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)} />
-                                        <EmailForm items={
-                                            this.getSelectedItinerary(this.props.selectedID) ? 
-                                            this.getSelectedItinerary(this.props.selectedID).items : null
-                                            }
+                                        <EmailForm
+                                            items={this.getSelectedItinerary(this.props.selectedID) ?
+                                                this.getSelectedItinerary(this.props.selectedID).items : null}
                                             userEmail={(Meteor.user()) ? Meteor.user().emails[0].address : 'Meteor Loading'}
                                             userName={(Meteor.user()) ? Meteor.user().profile.name : 'Meteor Loading'}
-                                            date={new Date().toDateString()} />
+                                            date={this.getDateFromID(this.props.selectedID) ?
+                                                this.getDateFromID(this.props.selectedID).toDateString() : null} />
                                     </div>
                                 </Grid.Column>
 
