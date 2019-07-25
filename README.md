@@ -106,3 +106,4 @@ https://forums.meteor.com/t/solved-meteor-1-3s-createcontainer-and-redux-dispatc
 - accounts-google
 - service-configuration
 - react-semantic-ui-range
+- jsPDF
