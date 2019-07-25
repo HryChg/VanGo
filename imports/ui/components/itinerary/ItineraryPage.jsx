@@ -16,12 +16,14 @@ import Itineraries from '../../../api/itineraries.js';
 import { Meteor } from 'meteor/meteor';
 
 import { selectID, editingItinerary } from './../../actions/itineraryActions';
+import { changeDate } from './../../actions/datePickerActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM } from "../../../util/util";
 
 class ItineraryPage extends React.Component {
 
     // EFFECTS: returns itinerary with the selectedID, if none selected, choose first if available, else null
+    // TODO: What happens here when delete?
     getSelectedItinerary(selectedID) {
         if (this.props.dataReady) {
             let itineraries = this.props.itineraries;
@@ -29,7 +31,7 @@ class ItineraryPage extends React.Component {
                 return null;
             } else {
                 if (selectedID === "") {
-                    let firstID = itineraries[0] ? itineraries[0]._id : "";
+                    let firstID = itineraries[0] ? itineraries[0]._id : ""; // TODO: What's the default?
                     if (firstID) {
                         this.props.selectID(firstID);
                         selectedID = firstID;
@@ -44,6 +46,20 @@ class ItineraryPage extends React.Component {
                 }
             }
         }
+    }
+
+    // EFFECTS: returns date of itinerary given the id
+    //          if not found, return empty string
+    getDateFromID(id) {
+        if (this.props.dataReady) {
+            let itineraries = this.props.itineraries;
+            for (let x in itineraries) {
+                if (itineraries[x]._id === id) {
+                    return new Date(itineraries[x].date);
+                }
+            }
+        }
+        return "";
     }
 
     // EFFECTS: returns displayName based on selectedID; if not set, get first
@@ -172,6 +188,9 @@ class ItineraryPage extends React.Component {
                                         <Button className="it-edit" onClick={() => {
                                             Meteor.call('updateItinerary', this.props.selectedID);
                                             this.props.editingItinerary(true);
+                                            let date = this.getDateFromID(this.props.selectedID)
+                                            this.props.changeDate(date);
+                                            Meteor.call('updateEvents', date);
                                         }}>
                                             <Icon name={"pencil"} size={"large"} color={"black"}/>
                                         </Button>
@@ -220,5 +239,5 @@ const ItineraryPageContainer = withTracker(() => {
 })(ItineraryPage);
 
 export default connect(mapStateToProps,
-    { handleOnMarkerClick, selectID, editingItinerary, showPanel, hidePanel }
+    { handleOnMarkerClick, selectID, editingItinerary, showPanel, hidePanel, changeDate }
     )(ItineraryPageContainer);
