@@ -186,8 +186,8 @@ class EditPage extends React.Component {
             return (
                 <div className="ui message">
                     <div className="header">Notice</div>
-                    <p>Please log in to share your itinerary.</p>
-                    <button className="ui button" onClick={() => downloadPdf(this.getDate(), this.selectItems())}>Download itinerary</button>
+                    <p>To share your itinerary via email, please log in.</p>
+                    <button className="ui button" onClick={() => downloadPdf(this.getDate(), this.selectItems())}>Download itinerary for now</button>
                 </div>
             )
         }
