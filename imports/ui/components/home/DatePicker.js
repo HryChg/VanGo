@@ -33,8 +33,14 @@ class DatePicker extends React.Component {
     onChange = value => {
         if (this.props.eventDrawerCount) {
             this.props.toggleConfirmWindow();
+            this.setState({tempDate: value});
+            return;
+        } else {
+            this.setState({tempDate: value});
+            this.props.changeDate(value);
+            CalledDates.insert({date: value});
+            Meteor.call('updateEvents', value);
         }
-        this.setState({tempDate: value});
     };
 
     render() {
