@@ -14,6 +14,7 @@ import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue} from "../acti
 import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import CurrentEvents from '../../api/CurrentEvents';
 import {Button} from "semantic-ui-react";
+import {showPanel} from '../actions/panelActions';
 
 
 export class MapContainer extends Component {
@@ -42,7 +43,8 @@ export class MapContainer extends Component {
             if (error) {
                 alert(error.message);
             } else {
-                alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`);
+                // alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`);
+                this.props.showPanel();
             }
         })
     };
@@ -137,5 +139,6 @@ const MeteorMapContainer = withTracker(() => {
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
     handleOnMarkerClick: handleOnMarkerClick,
-    setMapLoadedTrue: setMapLoadedTrue
+    setMapLoadedTrue: setMapLoadedTrue,
+    showPanel
 })(MeteorMapContainer);
