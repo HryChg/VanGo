@@ -300,7 +300,7 @@ i.trash.icon {
 
 .emailFormItin {
     width: 70%;
-    /* margin: auto; */
     position: absolute;
     left: 10%;
+    border-width: 5%;
 }
