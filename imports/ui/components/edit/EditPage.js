@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Marker, Polyline } from "google-maps-react";
 import { Redirect } from 'react-router-dom';
-import { Grid, Icon } from 'semantic-ui-react';
+import { Grid, Icon, Popup } from 'semantic-ui-react';
 import uniqid from 'uniqid';
 
 import MapContainer from "../MapContainer";
@@ -92,10 +92,12 @@ class EditPage extends React.Component {
             </button>)
         } else {
             return (
-            <button className="ui disabled button">
-                <Icon name="heart"/>
-                Save
-            </button>)
+                <Popup content='Please login to save.' 
+                    trigger={<button className="ui button">
+                        <Icon name="heart"/>
+                        Save
+                </button>} />
+            )
         }
     }
 

@@ -14,6 +14,8 @@ export default function EventFilterReducer(state = initialState, action) {
                 [state.priceRange[0], action.payload];
             return {categories: state.categories, 
                     priceRange: priceRange};
+        case 'LOGOUT':
+            return initialState;
         default:
             return state;
     }

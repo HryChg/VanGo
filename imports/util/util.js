@@ -87,6 +87,9 @@ export const getLatLonCenter = (listOfLatLons) => {
 // REQUIRES: objects in list must contain attributes: date, name
 // EFFECTS: sorts given itinerary list by date, then name
 export const sortByDateName = (items) => {
+    if (!Array.isArray(items) || !items.length) {
+        return [];
+    }
     let sortedItems = items.sort((a, b) => {
         let dateA = new Date(a.date);
         let dateB = new Date(b.date);
