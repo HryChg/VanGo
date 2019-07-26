@@ -92,11 +92,13 @@ class EditPage extends React.Component {
             </button>)
         } else {
             return (
-                <Popup content='Please login to save.' 
+                <Popup 
+                    content='Please login to save.' 
                     trigger={<button className="ui button">
                         <Icon name="heart"/>
                         Save
-                </button>} />
+                        </button>} 
+                />
             )
         }
     }
