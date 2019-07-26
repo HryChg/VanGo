@@ -1,5 +1,5 @@
 const axios = require('axios');
-import {yelpApiKey} from '../ui/config';
+const yelpApiKey = require('../ui/config').yelpApiKey || process.env.YELP_API_KEY;
 // https://medium.com/@chaoyue_zhao/how-to-make-axios-api-calls-with-yelp-fusion-inside-react-js-10755d8485c5
 
 export default async function getEventsInDay(date) {
@@ -12,12 +12,12 @@ export default async function getEventsInDay(date) {
             start_date: Date.UTC(
                 date.getFullYear(),
                 date.getMonth(),
-                date.getDate(), 
+                date.getDate(),
                 0, 0, 0) / 1000,
             end_date: Date.UTC(
                 date.getFullYear(),
                 date.getMonth(),
-                date.getDate(), 
+                date.getDate(),
                 23, 59, 59) / 1000,
             limit: 50
         }

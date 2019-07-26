@@ -2,7 +2,7 @@
 // https://www.youtube.com/watch?v=i62jmLC15qQ
 import nodemailer from 'nodemailer';
 import nodemailMailgun from 'nodemailer-mailgun-transport';
-import {mailgunAuth} from "../../imports/ui/config";
+const mailgunAuth = require("../../imports/ui/config").mailgunAuth || {api_key: process.env.MAILGUN_AUTH_API_KEY, domain: process.env.MAILGUN_AUTH_API_DOMAIN};
 import {makeItineraryEmail} from "./ItineraryEmailTemplate";
 
 export default class MailGun {

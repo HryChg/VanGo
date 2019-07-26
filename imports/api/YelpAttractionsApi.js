@@ -2,7 +2,7 @@
 // https://www.yelp.ca/developers/documentation/v3/business_search
 
 const axios = require('axios');
-import {yelpApiKey} from '../ui/config'
+const yelpApiKey = require('../ui/config').yelpApiKey || process.env.YELP_API_KEY;
 
 export default class YelpAttractionsApi {
     // EFFECTS: get attraction based on string input of the location
