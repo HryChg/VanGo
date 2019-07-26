@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
-import {Grid, Sidebar, Menu, Icon, Button} from 'semantic-ui-react';
+import {Grid, Sidebar, Menu, Icon, Button, Popup, Divider} from 'semantic-ui-react';
 
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
@@ -36,10 +36,26 @@ class HomePage extends React.Component {
                 return (<h2>Add/Remove Itinerary Items</h2>);
             }
         } else {
-            return (<h2>
-                <Icon className="logo" name="street view"/>
-                VanGo
-            </h2>);
+            return (
+            <div>
+                {/* <h3>
+                    Info:
+                    <Popup
+                        trigger={<Icon className="info circle"/>}
+                    >
+                        {<div>
+                            <p>
+                                VanGo is an itinerary planner for locals and tourists who want to discover events and attractions in Vancouver.
+                            </p>
+                            <p>
+                                <b>To begin, select a date!</b>
+                            </p>
+
+                        </div>}
+                    </Popup>
+                </h3> 
+                <Divider /> */}
+            </div>);
         }
     }
 
