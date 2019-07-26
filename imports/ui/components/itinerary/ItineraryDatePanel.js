@@ -30,12 +30,10 @@ class ItineraryDatePanel extends React.Component {
                                     console.log(err);
                                 } else {
                                     this.props.loadItineraries(res);
+                                    this.props.selectID("");
                                 }
                             })
                         })
-                        this.props.selectID("");
-                        // dispatch to itinerary store
-
                     }
                     } />
                 </div>
