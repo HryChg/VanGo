@@ -26,6 +26,7 @@ class ItineraryPage extends React.Component {
     componentWillMount() {
         Meteor.call('fetchItineraries', (err, res) => {
             if (err) console.log(err);
+            console.log(res);
             this.props.loadItineraries(res);
             this.initializeSelectedID(res);
         });
@@ -58,7 +59,7 @@ class ItineraryPage extends React.Component {
     //               - if none, choose most recent itinerary
     //          if selectedID given, return itinerary if it exsits
     getSelectedItinerary(selectedID) {
-        if (this.props.itineraries === []) {
+        if (!Array.isArray(this.props.itineraries) || !this.props.itineraries.length) {
             return null;
         } else {
             let itineraries = sortByDateName(this.props.itineraries);

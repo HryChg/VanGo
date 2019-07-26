@@ -60,7 +60,7 @@ function containsItem(items, item) {
 if (Meteor.isServer) {
     Meteor.publish('userEventDrawer', function (user) {
         if (user) {
-            return EventDrawerApi.find({user: this.userId});
+            return EventDrawerApi.find({user: Meteor.userId()});
         } else {
             return EventDrawerApi.find({user: 'anon'});
         }

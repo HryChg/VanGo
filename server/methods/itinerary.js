@@ -5,7 +5,7 @@ import EventDrawerApi from '../../imports/api/EventDrawerApi';
 Meteor.methods({
     // EFFECTS: gets itinerary
     'fetchItineraries': async () => {
-        return await Itineraries.find().fetch();
+        return await Itineraries.find({user: Meteor.userId()}).fetch();
     },
 
     // EFFECTS: adds itinerary to collection; throws error if not logged in
