@@ -2,7 +2,8 @@
 // https://www.youtube.com/watch?v=i62jmLC15qQ
 import nodemailer from 'nodemailer';
 import nodemailMailgun from 'nodemailer-mailgun-transport';
-const mailgunAuth = require("../../imports/ui/config").mailgunAuth || {api_key: process.env.MAILGUN_AUTH_API_KEY, domain: process.env.MAILGUN_AUTH_API_DOMAIN};
+let mailgunAuth = Meteor.settings.mailgunAuth;
+// const mailgunAuth = require("../../imports/ui/config").mailgunAuth || {api_key: process.env.MAILGUN_AUTH_API_KEY, domain: process.env.MAILGUN_AUTH_API_DOMAIN};
 import {makeItineraryEmail} from "./ItineraryEmailTemplate";
 
 export default class MailGun {
