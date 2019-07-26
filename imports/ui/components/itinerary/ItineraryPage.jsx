@@ -226,7 +226,9 @@ class ItineraryPage extends React.Component {
                                     </div>
                                     <div id="it-list">
                                         <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)} />
-                                        <EmailForm
+                                    </div>
+                                    <div className={"emailFormItin"}>
+                                    <EmailForm 
                                             items={this.getSelectedItinerary(this.props.selectedID) ?
                                                 this.getSelectedItinerary(this.props.selectedID).items : null}
                                             userEmail={(Meteor.user()) ? Meteor.user().emails[0].address : 'Meteor Loading'}
