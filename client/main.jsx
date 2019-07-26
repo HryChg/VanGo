@@ -15,7 +15,7 @@ import {Tracker} from "meteor/tracker";
 import createReactiveMiddleWares from 'meteor-redux-middlewares';
 
 import '../imports/api/itineraries.js';
-import '../imports/ui/config.js';
+// import '../imports/ui/config.js';
 import App from '/imports/ui/App';
 
 const{
