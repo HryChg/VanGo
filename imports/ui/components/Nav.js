@@ -55,7 +55,8 @@ class AppRouter extends React.Component {
                     <Menu.Item as={NavLink} exact to="/" onClick={() => {
                         this.props.editingItinerary(false);
                     }}> 
-                        <Icon name="street view"/>VanGo
+                        <Icon name="street view"/>
+                        VanGo
                     </Menu.Item>
                     {/* <Menu.Item as={NavLink} to="/edit/">Edit</Menu.Item> */}
                     <Menu.Menu position='right'>

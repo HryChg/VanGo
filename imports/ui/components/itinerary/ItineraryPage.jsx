@@ -186,6 +186,22 @@ class ItineraryPage extends React.Component {
         return null;
     };
 
+    toggleEmailForm = () => {
+        if (this.getSelectedItinerary(this.props.selectedID)) {
+            return (
+                <div className={"emailFormItin"}>
+                    <EmailForm
+                        items={this.getSelectedItinerary(this.props.selectedID) ?
+                            this.getSelectedItinerary(this.props.selectedID).items : null}
+                        userEmail={(Meteor.user()) ? Meteor.user().emails[0].address : 'Meteor Loading'}
+                        userName={(Meteor.user()) ? Meteor.user().profile.name : 'Meteor Loading'}
+                        date={this.getDateFromID(this.props.selectedID) ?
+                            this.getDateFromID(this.props.selectedID).toDateString() : null} />
+                </div>
+            );
+        }
+    };
+
     // EFFECTS: If itinerary is being edited, redirect to home page; otherwise, display itinerary page
     render() {
         if (this.props.editing) {
@@ -228,15 +244,7 @@ class ItineraryPage extends React.Component {
                                     <div id="it-list">
                                         <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)} />
                                     </div>
-                                    <div className={"emailFormItin"}>
-                                    <EmailForm 
-                                            items={this.getSelectedItinerary(this.props.selectedID) ?
-                                                this.getSelectedItinerary(this.props.selectedID).items : null}
-                                            userEmail={(Meteor.user()) ? Meteor.user().emails[0].address : 'Meteor Loading'}
-                                            userName={(Meteor.user()) ? Meteor.user().profile.name : 'Meteor Loading'}
-                                            date={this.getDateFromID(this.props.selectedID) ?
-                                                this.getDateFromID(this.props.selectedID).toDateString() : null} />
-                                    </div>
+                                    {this.toggleEmailForm()}
                                 </Grid.Column>
 
                                 <Grid.Column>

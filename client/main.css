@@ -85,6 +85,10 @@ a.ui.button.redirect-to-itinerary {
 /* ---------------------------------------- */
 /* ---------------  Home Page ------------- */
 /* ---------------------------------------- */
+i.icon.info.circle {
+    padding-left: 8px;
+}
+
 .logo {
     padding: 0px;
 }
@@ -300,7 +304,7 @@ i.trash.icon {
 
 .emailFormItin {
     width: 70%;
-    /* margin: auto; */
     position: absolute;
     left: 10%;
+    border-width: 5%;
 }
