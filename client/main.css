@@ -301,3 +301,10 @@ i.trash.icon {
 .SearchBarContainer{
     margin-bottom: 15px;
 }
+
+.emailFormItin {
+    width: 70%;
+    position: absolute;
+    left: 10%;
+    border-width: 5%;
+}
