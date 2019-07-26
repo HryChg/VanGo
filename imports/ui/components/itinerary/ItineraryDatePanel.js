@@ -22,21 +22,20 @@ class ItineraryDatePanel extends React.Component {
                 }}
             >
                 <div className="it-date">{this.getDisplayName(itinerary)}
-                    <Icon name="trash" onClick={async (e) => {
+                    <Icon name="trash" onClick={(e) => {
                         e.stopPropagation();
                         Meteor.call('deleteItinerary', itinerary._id, (error, result) => {
                             error ? alert(error) : alert('Itinerary Deleted!');
                         })
                         this.props.selectID("");
                         // dispatch to itinerary store
-                        let newItineraries = await Meteor.call('fetchItineraries', (err, res) => {
+                        Meteor.call('fetchItineraries', (err, res) => {
                             if (err) {
                                 console.log(err);
                             } else {
-                                console.log('fetched itineraries');
+                                this.props.loadItineraries(res);
                             }
                         })
-                        this.props.loadItineraries(newItineraries);
                     }
                     } />
                 </div>
