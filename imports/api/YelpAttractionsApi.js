@@ -3,7 +3,7 @@
 
 const axios = require('axios');
 let yelpApiKey = Meteor.settings.yelpApiKey;
-// const yelpApiKey = require('../ui/config').yelpApiKey || process.env.YELP_API_KEY;
+
 
 export default class YelpAttractionsApi {
     // EFFECTS: get attraction based on string input of the location

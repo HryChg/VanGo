@@ -10,7 +10,6 @@ import {connect} from 'react-redux';
 import {withTracker} from 'meteor/react-meteor-data';
 
 const googleMapsApiKey = Meteor.settings.public.googleMapsApiKey;
-// const googleMapsApiKey = require("../config").googleMapsApiKey || process.env.GOOGLE_MAPS_API_KEY;
 import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue} from "../actions/mapContainerActions";
 import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import CurrentEvents from '../../api/CurrentEvents';

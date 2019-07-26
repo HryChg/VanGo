@@ -1,6 +1,5 @@
 const axios = require('axios');
 let yelpApiKey = Meteor.settings.yelpApiKey;
-// const yelpApiKey = require('../ui/config').yelpApiKey || process.env.YELP_API_KEY;
 // https://medium.com/@chaoyue_zhao/how-to-make-axios-api-calls-with-yelp-fusion-inside-react-js-10755d8485c5
 
 export default async function getEventsInDay(date) {
