@@ -72,6 +72,11 @@ if (Meteor.isServer) {
             return await getDrawerID();
         },
 
+        // EFFECTS: loads event
+        getEventDrawer: async () => {
+            return await EventDrawerApi.findOne({user: Meteor.userId()});
+        },
+
         // EFFECTS: save the item to user drawer based on the current Drawer ID. Repeated Items will not be added
         saveToCurrentUserDrawer: async (itemToBeSaved, editing) => {
             let accountID = await getDrawerID();

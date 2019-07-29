@@ -7,6 +7,7 @@ import { changeDate, toggleConfirmWindow, confirm, cancel } from '../../actions/
 import { CalledDates } from '../../../api/CalledDates';
 import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
+import { debounce } from 'lodash';
 
 
 class DatePicker extends React.Component {
@@ -19,7 +20,7 @@ class DatePicker extends React.Component {
 
         let value = this.state.tempDate;
         this.props.changeDate(value);
-        CalledDates.insert({ date: value });
+        CalledDates.insert({ date: value }); // TODO: Security issue + What happens if date already exists?
         Meteor.call('updateEvents', value);
         Meteor.call('clearDrawer');
     };
@@ -37,6 +38,7 @@ class DatePicker extends React.Component {
             this.setState({tempDate: value});
             return;
         } else {
+            // POSSIBLE CAUSE OF THROTTLING
             this.setState({tempDate: value});
             this.props.changeDate(value);
             CalledDates.insert({date: value});

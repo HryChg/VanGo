@@ -1,5 +1,10 @@
-let initialState = {};
+let initialState = {drawerItems: []};
 
 export default function EventDrawerReducer(state = initialState, action) {
-    return state;
+    switch(action.type) {
+        case 'LOAD_EVENTDRAWER':
+            return {drawerItems: action.payload}
+        default:
+            return state;
+    }
 }

@@ -36,26 +36,7 @@ class HomePage extends React.Component {
                 return (<h2>Add/Remove Itinerary Items</h2>);
             }
         } else {
-            return (
-            <div>
-                {/* <h3>
-                    Info:
-                    <Popup
-                        trigger={<Icon className="info circle"/>}
-                    >
-                        {<div>
-                            <p>
-                                VanGo is an itinerary planner for locals and tourists who want to discover events and attractions in Vancouver.
-                            </p>
-                            <p>
-                                <b>To begin, select a date!</b>
-                            </p>
-
-                        </div>}
-                    </Popup>
-                </h3> 
-                <Divider /> */}
-            </div>);
+            return (<div></div>);
         }
     }
 
@@ -176,6 +157,7 @@ class HomePage extends React.Component {
     };
 
     render() {
+        // console.log(this.props)
         return (
             <div>
                 <Sidebar.Pushable>

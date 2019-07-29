@@ -4,7 +4,7 @@
 // Connect google-maps-react to redux
 // https://medium.com/@schlunzk/integrating-google-maps-api-in-react-redux-part-1-6b036014f4a6
 
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {GoogleApiWrapper, Map} from 'google-maps-react';
 import {connect} from 'react-redux';
 import {withTracker} from 'meteor/react-meteor-data';
@@ -15,9 +15,10 @@ import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import CurrentEvents from '../../api/CurrentEvents';
 import {Button} from "semantic-ui-react";
 import {showPanel} from '../actions/panelActions';
+import {loadEventDrawer} from '../actions/eventDrawerActions';
 
 
-export class MapContainer extends Component {
+export class MapContainer extends PureComponent {
     handleMapIdle = () => {
         this.props.setMapLoadedTrue();
     };
@@ -46,6 +47,10 @@ export class MapContainer extends Component {
                 // alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`);
                 this.props.showPanel();
             }
+            Meteor.call('getEventDrawer', (err, res) => {
+                if (err) console.log(err);
+                this.props.loadEventDrawer(res);
+            });
         })
     };
 
@@ -75,6 +80,7 @@ export class MapContainer extends Component {
             position: 'fixed'
         };
         const mapContainerStore = this.props.mapContainer;
+        console.log("rendering map");
         return (
             <Map
                 onIdle={this.handleMapIdle}
@@ -100,15 +106,6 @@ export class MapContainer extends Component {
                                     Website...</a></div>
                                 <div className="description">{mapContainerStore.selectedPlace.description}</div>
                             </div>
-
-                            {/*<Button*/}
-                            {/*    className="extra content ui button"*/}
-                            {/*    onClick={() => {*/}
-                            {/*        this.onSaveEventClick();*/}
-                            {/*    }}>*/}
-                            {/*    <i className="heart icon"/>*/}
-                            {/*    Save to Event Drawer*/}
-                            {/*</Button>*/}
                             {this.toggleSaveButton()}
                         </div>
                     </div>
@@ -140,5 +137,6 @@ export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
     handleOnMarkerClick: handleOnMarkerClick,
     setMapLoadedTrue: setMapLoadedTrue,
+    loadEventDrawer,
     showPanel
 })(MeteorMapContainer);

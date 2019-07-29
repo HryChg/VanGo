@@ -3,13 +3,21 @@ import {connect} from 'react-redux';
 import { Menu } from 'semantic-ui-react';
 
 import {maskString} from "../../../util/util";
-import {withTracker} from "meteor/react-meteor-data";
-import EventDrawerApi from "../../../api/EventDrawerApi";
+import {loadEventDrawer} from '../../actions/eventDrawerActions';
 
 class EventDrawer extends React.Component {
     componentDidMount() {
         Meteor.call('initializeEventDrawerApi', (err, res)=>{
             if (err) console.log(`Error loading user data to event drawer: ${err.message}`);
+        });
+        this.updateEventDrawer();
+    }
+
+    updateEventDrawer() {
+        Meteor.call('getEventDrawer', (err, res) => {
+            if (err) console.log(err);
+            console.log(res)
+            this.props.loadEventDrawer(res);
         });
     }
 
@@ -26,25 +34,28 @@ class EventDrawer extends React.Component {
         } else {
             items = this.props.drawerItems.items;
         }
-        return items.map((selectedEvent, index) => {
-            return (
-                <Menu.Item
-                    className={"item"}
-                    key={selectedEvent._id}
-                >
-                    {maskString(selectedEvent.name, 22)}
-                    <i className="trash icon" onClick={() => {
-                        Meteor.call('deleteFromCurrentUserDrawer', selectedEvent, this.props.editing, (error, result)=>{
-                            if (error) {
-                                alert(error);
-                            } else {
-                                // alert(`Event Deleted!`);
-                            }
-                        })
-                    }}/>
-                </Menu.Item>
-            );
-        });
+        if (items) {
+            return items.map((selectedEvent, index) => {
+                return (
+                    <Menu.Item
+                        className={"item"}
+                        key={selectedEvent._id}
+                    >
+                        {maskString(selectedEvent.name, 22)}
+                        <i className="trash icon" onClick={() => {
+                            Meteor.call('deleteFromCurrentUserDrawer', selectedEvent, this.props.editing, (error, result)=>{
+                                if (error) {
+                                    alert(error);
+                                } else {
+                                    // alert(`Event Deleted!`);
+                                }
+                                this.updateEventDrawer();
+                            });
+                        }}/>
+                    </Menu.Item>
+                );
+            });    
+        }
     };
 
     render() {
@@ -60,19 +71,10 @@ const mapStateToProps = (state) => {
     return {
         userData: state.eventDrawer.userData,
         editing: state.itineraryStore.editing,
+        drawerItems: state.eventDrawer.drawerItems
     };
 };
 
-const EventDrawerContainer = withTracker(()=>{
-        const handle = Meteor.subscribe('userEventDrawer', Meteor.userId());
-        const drawerItems = EventDrawerApi.findOne();
-        return {
-            dataReady: handle.ready(),
-            drawerItems: drawerItems
-        }
-})(EventDrawer);
-
-
 export default connect(mapStateToProps, {
-
-})(EventDrawerContainer);
+loadEventDrawer
+})(EventDrawer);

@@ -6,14 +6,11 @@ import { Marker, Polyline } from "google-maps-react";
 import { Redirect } from 'react-router-dom';
 import { Grid, Icon, Menu, Sidebar, Button } from 'semantic-ui-react';
 import { handleOnMarkerClick } from "../../actions/mapContainerActions";
-import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 
 import ItineraryDatePanel from './ItineraryDatePanel';
 import MapContainer from '../MapContainer';
 import ItineraryList from './ItineraryList';
-
-import Itineraries from '../../../api/itineraries.js';
-import { Meteor } from 'meteor/meteor';
 
 import { selectID, editingItinerary, loadItineraries } from './../../actions/itineraryActions';
 import { changeDate } from './../../actions/datePickerActions';
@@ -26,7 +23,6 @@ class ItineraryPage extends React.Component {
     componentWillMount() {
         Meteor.call('fetchItineraries', (err, res) => {
             if (err) console.log(err);
-            console.log(res);
             this.props.loadItineraries(res);
             this.initializeSelectedID(res);
         });
@@ -204,6 +200,7 @@ class ItineraryPage extends React.Component {
 
     // EFFECTS: If itinerary is being edited, redirect to home page; otherwise, display itinerary page
     render() {
+        // console.log(this.props);
         if (this.props.editing) {
             return (<Redirect exact to='/' />);
         }
