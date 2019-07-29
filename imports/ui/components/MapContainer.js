@@ -8,6 +8,7 @@ import React, {PureComponent} from 'react';
 import {GoogleApiWrapper, Map} from 'google-maps-react';
 import {connect} from 'react-redux';
 import {withTracker} from 'meteor/react-meteor-data';
+import debounceRender from 'react-debounce-render';
 
 const googleMapsApiKey = Meteor.settings.public.googleMapsApiKey;
 import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue} from "../actions/mapContainerActions";
@@ -132,6 +133,9 @@ const MeteorMapContainer = withTracker(() => {
     }
 })(apiWrapper);
 
+// Possible fix but timeout needs to be 750 ms+ (slow)
+// The issue with this is that info window is also slow to load
+// const debouncedMapContainer = debounceRender(MeteorMapContainer, 600);
 
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
