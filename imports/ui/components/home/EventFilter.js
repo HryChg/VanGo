@@ -105,7 +105,7 @@ class EventFilter extends React.Component {
                                 to
                             <Input placeholder="Enter Value" onChange={(e) => {this.props.filterPriceByEntry(e)}} /> */}
                             <Slider multiple color="red" settings={{
-                                start: [-1,0],
+                                start: [0,0],
                                 min: 0,
                                 max: this.getMaxPrice() + 10,
                                 step: 1,
