@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
     return {
         userData: state.eventDrawer.userData,
         editing: state.itineraryStore.editing,
-        drawerItems: state.eventDrawer.drawerItems
+        drawerItems: state.draggableItems
     };
 };
 
