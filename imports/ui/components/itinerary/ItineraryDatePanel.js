@@ -1,13 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { selectID, loadItineraries } from './../../actions/itineraryActions';
-import { sortByDateName } from '../../../util/util';
+import { updateMapCenter } from './../../actions/mapContainerActions';
+import { sortByDateName, getLatLonCenterOfEvents } from '../../../util/util';
 import { Menu, Icon } from 'semantic-ui-react';
 
 class ItineraryDatePanel extends React.Component {
     getDisplayName(itinerary) {
         let displayName = itinerary.name ? itinerary.date + ": " + itinerary.name : itinerary.date;
         return displayName;
+    }
+
+    getSelectedLatLonCenter(itinerary) {
+        if (!itinerary) return null;
+        let center = getLatLonCenterOfEvents(itinerary.items);
+        if (center) {
+            this.props.updateMapCenter(center);
+            return center;
+        }
+        return null;
     }
 
     render() {
@@ -19,6 +30,7 @@ class ItineraryDatePanel extends React.Component {
                 fitted='horizontally'
                 onClick={() => {
                     this.props.selectID(itinerary._id);
+                    this.getSelectedLatLonCenter(itinerary);
                 }}
             >
                 <div className="it-date">{this.getDisplayName(itinerary)}
@@ -45,4 +57,4 @@ class ItineraryDatePanel extends React.Component {
     }
 }
 
-export default connect(null, { selectID, loadItineraries })(ItineraryDatePanel);
+export default connect(null, { selectID, loadItineraries, updateMapCenter })(ItineraryDatePanel);

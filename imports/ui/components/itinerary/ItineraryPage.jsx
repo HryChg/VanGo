@@ -26,6 +26,7 @@ class ItineraryPage extends React.Component {
             if (err) console.log(err);
             this.props.loadItineraries(res);
             this.initializeSelectedID(res);
+            this.getSelectedLatLonCenter();
         });
     }
 
@@ -97,7 +98,7 @@ class ItineraryPage extends React.Component {
         return "";
     }
 
-    // TODO: To use this method somewhere
+    // TODO: How do I get this method called between clicking the button in datepanel and here?
     // EFFECTS: retrieves selected itinerary, finds the center lat and lon, updates state, returning the center
     getSelectedLatLonCenter() {
         console.log('getselectedlatloncenter')

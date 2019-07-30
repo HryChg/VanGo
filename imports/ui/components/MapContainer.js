@@ -95,10 +95,9 @@ export class MapContainer extends PureComponent {
                 google={this.props.google}
                 zoom={14}
                 style={mapStyle}
-                initialCenter={this.props.initialCenter ? this.props.initialCenter : this.props.mapContainer.currentCenter}
-                center={this.props.center}
+                initialCenter={this.props.center ? this.props.center : this.props.mapContainer.currentCenter}
+                center={this.props.center ? this.props.center : this.props.mapContainer.currentCenter}
                 onClick={this.onMapClicked}
-                onChange={this.centerMoved}
                 onDragend={this.centerMoved}
             >
                 {this.props.children}
