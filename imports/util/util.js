@@ -85,8 +85,8 @@ export const getLatLonCenter = (listOfLatLons) => {
     let z = 0.0;
     
     for (let latlon of listOfLatLons) {
-        let latitude = latlon.latitude * Math.PI / 180;
-        let longitude = latlon.longitude * Math.PI / 180;
+        let latitude = latlon[0] * Math.PI / 180;
+        let longitude = latlon[1] * Math.PI / 180;
     
         x += Math.cos(latitude) * Math.cos(longitude);
         y += Math.cos(latitude) * Math.sin(longitude);
@@ -102,7 +102,6 @@ export const getLatLonCenter = (listOfLatLons) => {
     let centralLongitude = Math.atan2(y, x);
     let centralSquareRoot = Math.sqrt(x * x + y * y);
     let centralLatitude = Math.atan2(z, centralSquareRoot);
-    
     let center = {lat: centralLatitude * 180 / Math.PI, 
                   lng: centralLongitude * 180 / Math.PI}
     return center;

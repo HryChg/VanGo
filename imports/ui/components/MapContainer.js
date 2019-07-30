@@ -81,7 +81,6 @@ export class MapContainer extends PureComponent {
         }
     };
 
-
     render() {
         const mapStyle = {
             width: this.props.width,
