@@ -121,6 +121,11 @@ i.icon.info.circle {
     margin-bottom: 0px !important;
 }
 
+.react-calendar__tile:disabled,
+.react-calendar__navigation button[disabled] {
+    border-radius: 0px;
+}
+
 
 .filter-margin, #filter-name {
     margin-top: 5px;

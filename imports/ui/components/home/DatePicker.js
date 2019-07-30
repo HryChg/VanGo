@@ -71,6 +71,7 @@ class DatePicker extends React.Component {
                     className={"react-calendar__tile--active"}
                     onChange={this.onChange}
                     value={this.props.selectedDate}
+                    minDate={new Date()}
                 />
             </div>
 
