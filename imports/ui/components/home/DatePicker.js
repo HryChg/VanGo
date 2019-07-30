@@ -7,7 +7,6 @@ import { changeDate, toggleConfirmWindow, confirm, cancel } from '../../actions/
 import { CalledDates } from '../../../api/CalledDates';
 import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
-import { debounce } from 'lodash';
 
 
 class DatePicker extends React.Component {
@@ -38,7 +37,6 @@ class DatePicker extends React.Component {
             this.setState({tempDate: value});
             return;
         } else {
-            // POSSIBLE CAUSE OF THROTTLING
             this.setState({tempDate: value});
             this.props.changeDate(value);
             CalledDates.insert({date: value});

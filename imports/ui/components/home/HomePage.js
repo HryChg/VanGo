@@ -17,7 +17,7 @@ import {formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
 
-class HomePage extends React.Component {
+class HomePage extends React.PureComponent {
     componentDidMount() {
         this.props.getEventDrawer();
         if (this.props.editing) {
@@ -157,7 +157,7 @@ class HomePage extends React.Component {
     };
 
     render() {
-        // console.log(this.props)
+        console.log(this.props)
         return (
             <div>
                 <Sidebar.Pushable>

@@ -21,18 +21,18 @@ if (Meteor.isServer) {
             // for (event of eventsToday.events) {
             //     CurrentEvents.insert(event);
             //   }
-            CurrentEvents.remove({});
+            CurrentEvents.remove({type: "Event"});
             var newEvents = await getEventsInDay(date);
             for (event of newEvents.events) {
                 CurrentEvents.insert(event)
             }
 
-            let yelp = new YelpAttractionsApi();
-            let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
-            let attractions = convertBusinessesToAttractions(res);
-            for (let attraction of attractions) {
-                CurrentEvents.insert(attraction);
-            }
+            // let yelp = new YelpAttractionsApi();
+            // let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
+            // let attractions = convertBusinessesToAttractions(res);
+            // for (let attraction of attractions) {
+            //     CurrentEvents.insert(attraction);
+            // }
         }
     });
 }

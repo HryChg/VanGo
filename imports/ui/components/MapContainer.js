@@ -81,7 +81,6 @@ export class MapContainer extends PureComponent {
             position: 'fixed'
         };
         const mapContainerStore = this.props.mapContainer;
-        console.log("rendering map");
         return (
             <Map
                 onIdle={this.handleMapIdle}
@@ -135,7 +134,7 @@ const MeteorMapContainer = withTracker(() => {
 
 // Possible fix but timeout needs to be 750 ms+ (slow)
 // The issue with this is that info window is also slow to load
-// const debouncedMapContainer = debounceRender(MeteorMapContainer, 600);
+const debouncedMapContainer = debounceRender(MeteorMapContainer, 300, {leading: false, trailing: true});
 
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
@@ -143,4 +142,4 @@ export default connect(mapStateToProps, {
     setMapLoadedTrue: setMapLoadedTrue,
     loadEventDrawer,
     showPanel
-})(MeteorMapContainer);
+})(debouncedMapContainer);
