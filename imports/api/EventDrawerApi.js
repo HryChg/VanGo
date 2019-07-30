@@ -74,7 +74,11 @@ if (Meteor.isServer) {
 
         // EFFECTS: loads event
         getEventDrawer: async () => {
-            return await EventDrawerApi.findOne({user: Meteor.userId()});
+            if (Meteor.userId()) {
+                return await EventDrawerApi.findOne({user: Meteor.userId()});
+            } else {
+                return await EventDrawerApi.findOne({user: 'anon'});
+            }
         },
 
         // EFFECTS: save the item to user drawer based on the current Drawer ID. Repeated Items will not be added

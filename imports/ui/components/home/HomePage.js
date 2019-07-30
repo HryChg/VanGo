@@ -24,7 +24,6 @@ class HomePage extends React.PureComponent {
         this.props.getEventDrawer();
         Meteor.call('updateEvents', this.props.selectedDate, (err, res) => {
             if (err) console.log(err);
-            console.log(res);
             this.props.loadCurrentEvents(res);
         })
         if (this.props.editing) {
@@ -246,15 +245,10 @@ const mapStateToProps = (state) => {
     };
 };
 const HomePageContainer = withTracker(() => {
-    // const handle = Meteor.subscribe('currentEvents');
-    // const currentEvents = CurrentEvents.find().fetch();
-
     const handleSaved = Meteor.subscribe('userEventDrawer', Meteor.userId());
     const userDetails = EventDrawerApi.findOne();
 
     return {
-        // dataReady: handle.ready(),
-        // currentEvents: currentEvents,
         userDataReady: handleSaved.ready(),
         userDetails: userDetails
     }

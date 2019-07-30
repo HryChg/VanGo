@@ -7,13 +7,11 @@
 import React, {PureComponent} from 'react';
 import {GoogleApiWrapper, Map} from 'google-maps-react';
 import {connect} from 'react-redux';
-import {withTracker} from 'meteor/react-meteor-data';
 import debounceRender from 'react-debounce-render';
 
 const googleMapsApiKey = Meteor.settings.public.googleMapsApiKey;
 import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue, updateMapCenter} from "../actions/mapContainerActions";
 import MapInfoWindowContainer from "./MapInfoWindowContainer";
-import CurrentEvents from '../../api/CurrentEvents';
 import {Button} from "semantic-ui-react";
 import {showPanel} from '../actions/panelActions';
 import {loadEventDrawer} from '../actions/eventDrawerActions';
@@ -128,22 +126,14 @@ const mapStateToProps = state => {
     return {
         mapContainer: state.mapContainer,
         editing: state.itineraryStore.editing,
+        currentEvents: state.currentEventsStore.currentEvents
     };
 };
 const apiWrapper = GoogleApiWrapper({apiKey: googleMapsApiKey})(MapContainer);
 
-const MeteorMapContainer = withTracker(() => {
-    const currentEventsHandle = Meteor.subscribe('currentEvents');
-    const currentEvents = CurrentEvents.find().fetch();
-    return {
-        dataReady: currentEventsHandle.ready(),
-        currentEvents: currentEvents,
-    }
-})(apiWrapper);
-
 // Possible fix but timeout needs to be 750 ms+ (slow)
 // The issue with this is that info window is also slow to load
-const debouncedMapContainer = debounceRender(MeteorMapContainer, 500, {leading: false, trailing: true});
+const debouncedMapContainer = debounceRender(apiWrapper, 300, {leading: false, trailing: true});
 
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,

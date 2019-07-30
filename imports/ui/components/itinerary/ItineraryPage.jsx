@@ -102,13 +102,11 @@ class ItineraryPage extends React.Component {
     // TODO: How do I get this method called between clicking the button in datepanel and here?
     // EFFECTS: retrieves selected itinerary, finds the center lat and lon, updates state, returning the center
     getSelectedLatLonCenter() {
-        console.log('getselectedlatloncenter')
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (!selectedItinerary) return null;
         let center = getLatLonCenterOfEvents(selectedItinerary.items);
         if (center) {
             this.props.updateMapCenter(center);
-            console.log(center)
             return center;
         }
         return null;
