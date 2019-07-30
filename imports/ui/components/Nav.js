@@ -13,7 +13,6 @@ import HomePage from "./home/HomePage";
 import RegistrationPage from './user/RegistrationPage';
 
 import { editingItinerary } from '../actions/itineraryActions';
-import { resetMapCenter } from '../actions/mapContainerActions';
 
 // This part routes to "different pages"
 function ProfilePage() {
@@ -55,7 +54,6 @@ class AppRouter extends React.Component {
                 <Menu inverted attached>
                     <Menu.Item as={NavLink} exact to="/" onClick={() => {
                         this.props.editingItinerary(false);
-                        this.props.resetMapCenter();
                     }}> 
                         <Icon name="street view"/>
                         VanGo
@@ -83,4 +81,4 @@ const mapStateToProps = (state) => {
     });
 }
 
-export default connect(mapStateToProps, { logout, setLoginState, editingItinerary, resetMapCenter })(AppRouter);
+export default connect(mapStateToProps, { logout, setLoginState, editingItinerary })(AppRouter);

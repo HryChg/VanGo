@@ -10,7 +10,7 @@ import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {getEventDrawer} from "../../actions/draggableItemsActions";
-import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import {handleOnMarkerClick, resetMapCenter} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {formatAMPM} from "../../../util/util";
@@ -19,6 +19,7 @@ import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.PureComponent {
     componentDidMount() {
+        this.props.resetMapCenter();
         this.props.getEventDrawer();
         if (this.props.editing) {
             this.props.showPanel();
@@ -253,5 +254,6 @@ export default connect(mapStateToProps, {
     toggleNearbyAttractions,
     showPanel,
     hidePanel,
-    getEventDrawer
+    getEventDrawer,
+    resetMapCenter
 })(HomePageContainer);
