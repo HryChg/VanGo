@@ -20,6 +20,12 @@ export const handleOnMapClicked = () => {
     }
 };
 
+export const updateMapCenter = (center) => {
+    return {
+        type: 'UPDATE_MAP_CENTER',
+        payload: center
+    }
+}
 
 export const popUpInfoWindow = (props, marker) => {
     return {

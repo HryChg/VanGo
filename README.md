@@ -78,7 +78,7 @@ React Google Map API Tutorial
 https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
 
 Getting the Center Longitude and Latitude
-https://gist.github.com/amites/3718961
+https://gist.github.com/tlhunter/0ea604b77775b3e7d7d25ea0f70a23eb
 
 ##### Login and Registration Redux
 React + Redux - User Registration and Login Tutorial & Example

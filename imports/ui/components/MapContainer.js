@@ -11,7 +11,7 @@ import {withTracker} from 'meteor/react-meteor-data';
 import debounceRender from 'react-debounce-render';
 
 const googleMapsApiKey = Meteor.settings.public.googleMapsApiKey;
-import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue} from "../actions/mapContainerActions";
+import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue, updateMapCenter} from "../actions/mapContainerActions";
 import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import CurrentEvents from '../../api/CurrentEvents';
 import {Button} from "semantic-ui-react";
@@ -30,6 +30,14 @@ export class MapContainer extends PureComponent {
             this.props.handleOnMapClicked();
         }
     };
+
+    centerMoved = (props, map) => {
+        let latlng = map.getCenter();
+        if (!latlng) return null;
+        let lat = latlng.lat();
+        let lng = latlng.lng();
+        this.props.updateMapCenter({lat: lat, lng: lng});
+    }
 
     onSaveEventClick = () => {
         // get EventID from marker
@@ -87,8 +95,11 @@ export class MapContainer extends PureComponent {
                 google={this.props.google}
                 zoom={14}
                 style={mapStyle}
-                initialCenter={(this.props.initialCenter) ? this.props.initialCenter : {lat: 49.2820, lng: -123.1171}}
+                initialCenter={this.props.initialCenter ? this.props.initialCenter : this.props.mapContainer.currentCenter}
+                center={this.props.center}
                 onClick={this.onMapClicked}
+                onChange={this.centerMoved}
+                onDragend={this.centerMoved}
             >
                 {this.props.children}
                 <MapInfoWindowContainer
@@ -141,5 +152,6 @@ export default connect(mapStateToProps, {
     handleOnMarkerClick: handleOnMarkerClick,
     setMapLoadedTrue: setMapLoadedTrue,
     loadEventDrawer,
-    showPanel
+    showPanel,
+    updateMapCenter
 })(debouncedMapContainer);

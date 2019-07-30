@@ -12,10 +12,11 @@ import ItineraryDatePanel from './ItineraryDatePanel';
 import MapContainer from '../MapContainer';
 import ItineraryList from './ItineraryList';
 
+import { updateMapCenter } from './../../actions/mapContainerActions';
 import { selectID, editingItinerary, loadItineraries } from './../../actions/itineraryActions';
 import { changeDate } from './../../actions/datePickerActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
-import { formatAMPM, sortByDateName, getToday } from "../../../util/util";
+import { formatAMPM, sortByDateName, getToday, getLatLonCenterOfEvents } from "../../../util/util";
 import EmailForm from "./../edit/EmailForm";
 
 
@@ -94,6 +95,21 @@ class ItineraryPage extends React.Component {
             return itinerary.name ? itinerary.date + ': ' + itinerary.name : itinerary.date;
         }
         return "";
+    }
+
+    // TODO: To use this method somewhere
+    // EFFECTS: retrieves selected itinerary, finds the center lat and lon, updates state, returning the center
+    getSelectedLatLonCenter() {
+        console.log('getselectedlatloncenter')
+        let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
+        if (!selectedItinerary) return null;
+        let center = getLatLonCenterOfEvents(selectedItinerary.items);
+        if (center) {
+            this.props.updateMapCenter(center);
+            console.log(center)
+            return center;
+        }
+        return null;
     }
 
     // EFFECTS: renders edit button when itinerary date is not in the past
@@ -200,7 +216,7 @@ class ItineraryPage extends React.Component {
 
     // EFFECTS: If itinerary is being edited, redirect to home page; otherwise, display itinerary page
     render() {
-        // console.log(this.props);
+        console.log(this.props);
         if (this.props.editing) {
             return (<Redirect exact to='/' />);
         }
@@ -248,7 +264,12 @@ class ItineraryPage extends React.Component {
                                     <div
                                         style={{ width: '50vw', height: '100vh' }}
                                     >
-                                        <MapContainer width={'97.5%'} height={'101.5%'}>
+                                        <MapContainer 
+                                            width={'97.5%'} 
+                                            height={'101.5%'} 
+                                            initialCenter={this.props.currentCenter}
+                                            center={this.props.currentCenter}
+                                        >
                                             {this.displayMarkers()}
                                             {this.displayPolyLine()}
                                         </MapContainer>
@@ -266,12 +287,14 @@ class ItineraryPage extends React.Component {
 const mapStateToProps = (state) => {
     return {
         selectedID: state.itineraryStore.selectedID,
+        selectedItinerary: state.itineraryStore.selectedItinerary,
         editing: state.itineraryStore.editing,
         visible: state.panel.visible,
-        itineraries: state.itineraryStore.itineraries
+        itineraries: state.itineraryStore.itineraries,
+        currentCenter: state.mapContainer.currentCenter 
     };
 }
 
 export default connect(mapStateToProps,
-    { handleOnMarkerClick, selectID, editingItinerary, showPanel, hidePanel, changeDate, loadItineraries }
+    { handleOnMarkerClick, selectID, editingItinerary, showPanel, hidePanel, changeDate, loadItineraries, updateMapCenter }
 )(ItineraryPage);
