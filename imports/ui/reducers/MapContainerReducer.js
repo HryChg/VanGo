@@ -36,6 +36,8 @@ export default function MapContainerReducer(state = initialState, action) {
                 selectedPlace: state.selectedPlace
             }
         case 'CHANGE_DATE':
+        case 'UPDATE_FILTERS':
+        case 'FILTER_PRICE':
             return {
                 mapLoaded: state.mapLoaded,
                 showingInfoWindow: false,
