@@ -11,6 +11,7 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {getEventDrawer} from "../../actions/draggableItemsActions";
 import {handleOnMarkerClick, resetMapCenter} from "../../actions/mapContainerActions";
+import {loadCurrentEvents} from './../../actions/currentEventsActions';
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {formatAMPM} from "../../../util/util";
@@ -21,6 +22,11 @@ class HomePage extends React.PureComponent {
     componentDidMount() {
         this.props.resetMapCenter();
         this.props.getEventDrawer();
+        Meteor.call('updateEvents', this.props.selectedDate, (err, res) => {
+            if (err) console.log(err);
+            console.log(res);
+            this.props.loadCurrentEvents(res);
+        })
         if (this.props.editing) {
             this.props.showPanel();
         }
@@ -29,7 +35,7 @@ class HomePage extends React.PureComponent {
     // EFFECTS: renders name and logo; if edit state, renders editing title
     toggleEditHeader() {
         if (this.props.editing) {
-            if (this.props.userDataReady && this.props.userDetails) {
+            if (this.props.userDataReady && this.props.userDetails && this.props.userDetails.itineraryEdit) {
                 return (<h2>Add/Remove Itinerary Items from
                     {" " + this.props.userDetails.itineraryEdit.date + ": " + this.props.userDetails.itineraryEdit.name}
                     </h2>);
@@ -130,14 +136,16 @@ class HomePage extends React.PureComponent {
 
     // EFFECTS: render markers based on currentEvents Collection
     displayMarkers = () => {
-        let markers = this.props.currentEvents.map((item) => {
-            if (item.type === 'Attraction') {
-                return this.createAttractionMarker(item);
-            } else {
-                return this.createEventMarker(item);
-            }
-        });
-        return markers;
+        if (this.props.currentEvents) {
+            let markers = this.props.currentEvents.map((item) => {
+                if (item.type === 'Attraction') {
+                    return this.createAttractionMarker(item);
+                } else {
+                    return this.createEventMarker(item);
+                }
+            });
+            return markers;
+        }
     };
 
     // EFFECTS: return true if the item meets one of the selected categories and is within the price range
@@ -232,19 +240,21 @@ const mapStateToProps = (state) => {
         eventFilter: state.eventFilter,
         visible: state.panel.visible,
         mapContainer: state.mapContainer,
-        editing: state.itineraryStore.editing
+        editing: state.itineraryStore.editing,
+        selectedDate: state.datePicker.selectedDate,
+        currentEvents: state.currentEventsStore.currentEvents
     };
 };
 const HomePageContainer = withTracker(() => {
-    const handle = Meteor.subscribe('currentEvents');
-    const currentEvents = CurrentEvents.find().fetch();
+    // const handle = Meteor.subscribe('currentEvents');
+    // const currentEvents = CurrentEvents.find().fetch();
 
     const handleSaved = Meteor.subscribe('userEventDrawer', Meteor.userId());
     const userDetails = EventDrawerApi.findOne();
 
     return {
-        dataReady: handle.ready(),
-        currentEvents: currentEvents,
+        // dataReady: handle.ready(),
+        // currentEvents: currentEvents,
         userDataReady: handleSaved.ready(),
         userDetails: userDetails
     }
@@ -255,5 +265,6 @@ export default connect(mapStateToProps, {
     showPanel,
     hidePanel,
     getEventDrawer,
-    resetMapCenter
+    resetMapCenter,
+    loadCurrentEvents
 })(HomePageContainer);

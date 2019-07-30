@@ -14,8 +14,10 @@ import mapContainerReducer from './MapContainerReducer';
 import draggableItemsReducer from './DraggableItemsReducers';
 import HomePageReducer from "./HomePageReducer";
 import PanelReducer from './PanelReducer.js';
+import CurrentEventsReducer from './CurrentEventsReducer.js';
 
 export default combineReducers({
+    currentEventsStore: CurrentEventsReducer,
     datePicker: datePickerReducer,
     itineraryStore: itineraryReducer,
     sidebar: sidebarReducer,

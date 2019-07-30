@@ -59,6 +59,7 @@ class EventFilter extends React.Component {
 
     //EFFECTS: Returns the max price of all loaded events for the day
     getMaxPrice() {
+        if (!this.props.items) return 0;
         let maxPrice = Math.max.apply(Math, this.props.items.map(item => { return item.price }));
         return maxPrice;
     }

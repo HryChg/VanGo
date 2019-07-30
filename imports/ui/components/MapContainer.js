@@ -143,7 +143,7 @@ const MeteorMapContainer = withTracker(() => {
 
 // Possible fix but timeout needs to be 750 ms+ (slow)
 // The issue with this is that info window is also slow to load
-const debouncedMapContainer = debounceRender(MeteorMapContainer, 300, {leading: false, trailing: true});
+const debouncedMapContainer = debounceRender(MeteorMapContainer, 500, {leading: false, trailing: true});
 
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
