@@ -32,6 +32,8 @@ export default function MapContainerReducer(state = initialState, action) {
                 activeMarker: state.activeMarker,
                 selectedPlace: state.selectedPlace
             }
+        case 'RESET_MAP_CENTER':
+            return initialState;
         case 'POP_UP_INFO_WINDOW':
             return {
                 currentCenter: state.currentCenter,

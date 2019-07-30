@@ -27,6 +27,12 @@ export const updateMapCenter = (center) => {
     }
 }
 
+export const resetMapCenter = () => {
+    return {
+        type: 'RESET_MAP_CENTER'
+    }
+}
+
 export const popUpInfoWindow = (props, marker) => {
     return {
         type: 'POP_UP_INFO_WINDOW',
