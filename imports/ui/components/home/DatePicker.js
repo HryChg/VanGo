@@ -10,7 +10,7 @@ import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
 
 
-class DatePicker extends React.Component {
+class DatePicker extends React.PureComponent {
     // Holding a temporary date in case user selected OK at the ConfirmWindow
     state = { tempDate: null };
 
@@ -20,7 +20,6 @@ class DatePicker extends React.Component {
 
         let value = this.state.tempDate;
         this.props.changeDate(value);
-        // CalledDates.insert({ date: value }); // TODO: Security issue + What happens if date already exists?
         Meteor.call('updateEvents', value, (err, res) => {
             if (err) console.log(err);
             this.props.loadCurrentEvents(res);

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 import {Grid, Sidebar, Menu, Button} from 'semantic-ui-react';
+import debounceRender from 'react-debounce-render';
 
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
@@ -15,7 +16,16 @@ import {showPanel, hidePanel} from './../../actions/panelActions';
 import {loadEventDrawer} from './../../actions/draggableItemsActions';
 import {formatAMPM} from "../../../util/util";
 
-class HomePage extends React.PureComponent {
+class HomePage extends React.Component {
+    // Don't update when date changes as If the date doesn't change, don't update
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     componentDidMount() {
         this.props.resetMapCenter();
         Meteor.call('getEventDrawer', (err, res) => {
@@ -166,6 +176,7 @@ class HomePage extends React.PureComponent {
     };
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 <Sidebar.Pushable>
@@ -231,6 +242,7 @@ class HomePage extends React.PureComponent {
     }
 }
 
+const debouncedHomePage = debounceRender(HomePage, 250, {leading: false, trailing: true});
 
 const mapStateToProps = (state) => {
     return {
@@ -254,4 +266,4 @@ export default connect(mapStateToProps, {
     resetMapCenter,
     loadCurrentEvents,
     loadEventDrawer
-})(HomePage);
+})(debouncedHomePage);
