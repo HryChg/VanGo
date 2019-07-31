@@ -69,7 +69,7 @@ class EventDrawer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        userData: state.eventDrawer.userData,
+        drawer: state.eventDrawer.drawer,
         editing: state.itineraryStore.editing,
         drawerItems: state.draggableItems
     };
