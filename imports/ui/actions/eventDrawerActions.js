@@ -1,6 +1,6 @@
-export const loadEventDrawer = (events) => {
+export const loadEventDrawer = (eventDrawer) => {
 	return {
         type: 'LOAD_EVENTDRAWER',
-        payload: events
+        payload: eventDrawer
 	}
 };

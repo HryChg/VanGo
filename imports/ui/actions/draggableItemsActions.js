@@ -18,6 +18,14 @@ export const getEventDrawer = () => {
 		get: () => {
 			return EventDrawerApi.findOne();
 		},
-		subscribe: () => Meteor.subscribe('userEventDrawer', Meteor.userId()) // TODO: Client-side security issue
+		subscribe: () => Meteor.subscribe('userEventDrawer', Meteor.userId()? Meteor.userId() : 'anon') 
+		// TODO: Client-side security issue
 	})
 };
+
+export const loadEventDrawer = (eventDrawer) => {
+	return {
+		type: 'LOAD_EVENT_DRAWER',
+		payload: eventDrawer
+	}
+}

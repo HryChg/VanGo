@@ -99,7 +99,6 @@ class DraggableItems extends React.Component {
 const mapStateToProps = (state) => {
     return {
         draggableItems: state.draggableItems,
-        eventDrawer: state.eventDrawer.drawer,
         editing: state.itineraryStore.editing,
     };
 };

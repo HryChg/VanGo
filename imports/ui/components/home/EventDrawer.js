@@ -25,14 +25,14 @@ class EventDrawer extends React.Component {
     //          if editing, will return specific itinerary items being edited
     //          otherwise, return existing items in drawer
     displaySavedEvents = () => {
-        if (!this.props.drawerItems){
+        if (!this.props.drawer){
             return <Menu.Item>User Data not ready yet</Menu.Item>
         }
         let items;
         if (this.props.editing) {
-            items = this.props.drawerItems.itineraryEdit? this.props.drawerItems.itineraryEdit.items: [];
+            items = this.props.drawer.itineraryEdit? this.props.drawer.itineraryEdit.items: [];
         } else {
-            items = this.props.drawerItems.items;
+            items = this.props.drawer.items;
         }
         if (items) {
             return items.map((selectedEvent, index) => {
@@ -69,9 +69,8 @@ class EventDrawer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        drawer: state.eventDrawer.drawer,
         editing: state.itineraryStore.editing,
-        drawerItems: state.draggableItems
+        drawer: state.draggableItems
     };
 };
 

@@ -38,7 +38,7 @@ class HomePage extends React.PureComponent {
         if (this.props.editing) {
             if (this.props.eventDrawer && this.props.eventDrawer.itineraryEdit) {
                 return (<h2>Add/Remove Itinerary Items from
-                    {" " + this.props.userDetails.itineraryEdit.date + ": " + this.props.userDetails.itineraryEdit.name}
+                    {" " + this.props.eventDrawer.itineraryEdit.date + ": " + this.props.eventDrawer.itineraryEdit.name}
                     </h2>);
             } else {
                 return (<h2>Add/Remove Itinerary Items</h2>);
@@ -77,7 +77,8 @@ class HomePage extends React.PureComponent {
     displaySelectionCount() {
         if (this.props.eventDrawer) {
             if (this.props.editing) {
-                return this.props.eventDrawer.itineraryEdit.items.length;
+                let drawerEdit = this.props.eventDrawer.itineraryEdit;
+                return drawerEdit? drawerEdit.items.length: 0;
             } else {
                 return this.props.eventDrawer.items.length;
             }
@@ -243,7 +244,7 @@ const mapStateToProps = (state) => {
         editing: state.itineraryStore.editing,
         selectedDate: state.datePicker.selectedDate,
         currentEvents: state.currentEventsStore.currentEvents,
-        eventDrawer: state.eventDrawer.drawer
+        eventDrawer: state.draggableItems
     };
 };
 
