@@ -1,4 +1,4 @@
-let initialState = {categories: [], priceRange: [-1,0]};
+let initialState = {categories: [], priceRange: [0,0]};
 
 export default function EventFilterReducer(state = initialState, action) {
     switch (action.type) {

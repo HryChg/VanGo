@@ -176,7 +176,6 @@ class HomePage extends React.Component {
     };
 
     render() {
-        console.log(this.props)
         return (
             <div>
                 <Sidebar.Pushable>
@@ -246,7 +245,6 @@ const debouncedHomePage = debounceRender(HomePage, 250, {leading: false, trailin
 
 const mapStateToProps = (state) => {
     return {
-        maxPrice: state.maxPrice,
         homePage: state.homePage,
         eventFilter: state.eventFilter,
         visible: state.panel.visible,

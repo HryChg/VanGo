@@ -57,9 +57,15 @@ class EventFilter extends React.Component {
         this.props.updateCategories(newCategories);
     };
 
+    // EFFECTS: stores max price range into state
+    setMaxPrice() {
+        maxPrice = this.getMaxPrice();
+        this.props.filterPrice([0, maxPrice]);
+    }
+
     //EFFECTS: Returns the max price of all loaded events for the day
     getMaxPrice() {
-        if (!this.props.items) return 0;
+        if (!Array.isArray(this.props.items) || !this.props.items.length) return 0;
         let maxPrice = Math.max.apply(Math, this.props.items.map(item => { return item.price }));
         return maxPrice;
     }
@@ -68,7 +74,12 @@ class EventFilter extends React.Component {
     // if the lower and upper bounds are equal, display one value
     displayPrice(priceRange) {
         let lowerBound = priceRange[0] < 0 ? 0 : priceRange[0];
-        let upperBound = priceRange[1];
+        let upperBound;
+        if (upperBound < 0) {
+            upperBound = 0;
+        } else {
+            upperBound = this.getMaxPrice();
+        }
         if (lowerBound === upperBound) {
             return "$" + lowerBound;
         }
@@ -76,7 +87,7 @@ class EventFilter extends React.Component {
     }
 
     render() {
-        let maxPrice = this.getMaxPrice();
+        const maxPrice = this.getMaxPrice();
         return (
             <div className={""}>
                 <Grid>
@@ -106,9 +117,9 @@ class EventFilter extends React.Component {
                                 to
                             <Input placeholder="Enter Value" onChange={(e) => {this.props.filterPriceByEntry(e)}} /> */}
                             <Slider multiple color="red" settings={{
-                                start: [0,0],
+                                start: [this.props.eventFilter.priceRange[0], maxPrice +10],
                                 min: 0,
-                                max: this.getMaxPrice() + 10,
+                                max: maxPrice + 10,
                                 step: 1,
                                 onChange: debounce((value) => {
                                     this.props.filterPrice(value)
@@ -124,7 +135,9 @@ class EventFilter extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { eventFilter: state.eventFilter };
+    return { 
+        eventFilter: state.eventFilter,
+    };
 };
 
 export default connect(mapStateToProps, {
