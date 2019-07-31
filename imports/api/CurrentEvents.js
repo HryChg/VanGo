@@ -21,12 +21,11 @@ if (Meteor.isServer) {
             // for (event of eventsToday.events) {
             //     CurrentEvents.insert(event);
             //   }
-            CurrentEvents.remove({type: "Event"}, async ()=> {
-                var newEvents = await getEventsInDay(date);
-                for (event of newEvents.events) {
-                    CurrentEvents.insert(event)
-                }
-            });
+            await CurrentEvents.remove({type: "Event"});
+            var newEvents = await getEventsInDay(date);
+            for (event of newEvents.events) {
+                CurrentEvents.insert(event)
+            }
             return await CurrentEvents.find().fetch();
 
             // let yelp = new YelpAttractionsApi();

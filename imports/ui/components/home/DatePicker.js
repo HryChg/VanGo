@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Calendar from 'react-calendar';
 import { Popup, Icon } from 'semantic-ui-react';
 import { changeDate, toggleConfirmWindow, confirm, cancel } from '../../actions/datePickerActions';
+import {loadCurrentEvents} from './../../actions/currentEventsActions';
 import { CalledDates } from '../../../api/CalledDates';
 import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
@@ -19,8 +20,11 @@ class DatePicker extends React.Component {
 
         let value = this.state.tempDate;
         this.props.changeDate(value);
-        CalledDates.insert({ date: value }); // TODO: Security issue + What happens if date already exists?
-        Meteor.call('updateEvents', value);
+        // CalledDates.insert({ date: value }); // TODO: Security issue + What happens if date already exists?
+        Meteor.call('updateEvents', value, (err, res) => {
+            if (err) console.log(err);
+            this.props.loadCurrentEvents(res);
+        })
         Meteor.call('clearDrawer');
     };
 
@@ -32,16 +36,19 @@ class DatePicker extends React.Component {
     // EFFECTS: given the date value from the Calendar, pop up the confirm window
     //          while recording a temporary date for later use (in case user confirm to the window)
     onChange = value => {
-        if (this.props.eventDrawerCount) {
-            this.props.toggleConfirmWindow();
-            this.setState({tempDate: value});
-            return;
-        } else {
+        // if (this.props.eventDrawerCount) {
+        //     this.props.toggleConfirmWindow();
+        //     this.setState({tempDate: value});
+        //     return;
+        // } else {
             this.setState({tempDate: value});
             this.props.changeDate(value);
             CalledDates.insert({date: value});
-            Meteor.call('updateEvents', value);
-        }
+            Meteor.call('updateEvents', value, (err, res) => {
+                if (err) console.log(err);
+                this.props.loadCurrentEvents(res);
+            })
+        // }
     };
 
     render() {
@@ -91,4 +98,5 @@ export default connect(mapStateToProps, {
     toggleConfirmWindow,
     confirm,
     cancel,
+    loadCurrentEvents
 })(DatePicker);

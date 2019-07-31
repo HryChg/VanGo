@@ -2,8 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
-import {withTracker} from 'meteor/react-meteor-data';
-import {Grid, Sidebar, Menu, Icon, Button, Popup, Divider} from 'semantic-ui-react';
+import {Grid, Sidebar, Menu, Button} from 'semantic-ui-react';
 
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
@@ -15,8 +14,6 @@ import {loadCurrentEvents} from './../../actions/currentEventsActions';
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {formatAMPM} from "../../../util/util";
-import CurrentEvents from '../../../api/CurrentEvents';
-import EventDrawerApi from "../../../api/EventDrawerApi";
 
 class HomePage extends React.PureComponent {
     componentDidMount() {
@@ -34,13 +31,13 @@ class HomePage extends React.PureComponent {
     // EFFECTS: renders name and logo; if edit state, renders editing title
     toggleEditHeader() {
         if (this.props.editing) {
-            if (this.props.userDataReady && this.props.userDetails && this.props.userDetails.itineraryEdit) {
-                return (<h2>Add/Remove Itinerary Items from
-                    {" " + this.props.userDetails.itineraryEdit.date + ": " + this.props.userDetails.itineraryEdit.name}
-                    </h2>);
-            } else {
+            // if (this.props.userDataReady && this.props.userDetails && this.props.userDetails.itineraryEdit) {
+            //     return (<h2>Add/Remove Itinerary Items from
+            //         {" " + this.props.userDetails.itineraryEdit.date + ": " + this.props.userDetails.itineraryEdit.name}
+            //         </h2>);
+            // } else {
                 return (<h2>Add/Remove Itinerary Items</h2>);
-            }
+            // }
         } else {
             return (<div></div>);
         }
@@ -49,7 +46,8 @@ class HomePage extends React.PureComponent {
     // EFFECTS: renders datepicker; if edit state, hide datepicker
     toggleDatePicker() {
         if (!this.props.editing) {
-            let eventDrawerCount = this.displaySelectionCount();
+            // let eventDrawerCount = this.displaySelectionCount();
+            let eventDrawerCount = 0;
             return (
             <div className={"DatePickerContainer"}>
                 <DatePicker eventDrawerCount={eventDrawerCount}/>
@@ -60,29 +58,29 @@ class HomePage extends React.PureComponent {
     // EFFECTS: renders save button when user is logged in and event drawer has at least one item
     //          otherwise, renders unclickable button
     toggleSaveButton() {
-        if (this.displaySelectionCount()) {
+        // if (this.displaySelectionCount()) {
             return (<Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
                 {"Review & Save"}
                 </Button>);
-        } else {
-            return (<Button fluid disabled className="redirect-to-itinerary" as={NavLink} to="/edit/">
-                {"Review & Save"}
-                </Button>);
-        }
+        // } else {
+            // return (<Button fluid disabled className="redirect-to-itinerary" as={NavLink} to="/edit/">
+            //     {"Review & Save"}
+            //     </Button>);
+        // }
     }
 
-    // EFFECTS: returns the number of items in the event drawer
-    displaySelectionCount() {
-        if (this.props.userDataReady) {
-            if (this.props.editing) {
-                return this.props.userDetails.itineraryEdit.items.length;
-            } else {
-                return this.props.userDetails.items.length;
-            }
-        } else {
-            return 0;
-        }
-    }
+    // // EFFECTS: returns the number of items in the event drawer
+    // displaySelectionCount() {
+    //     if (this.props.userDataReady) {
+    //         if (this.props.editing) {
+    //             return this.props.userDetails.itineraryEdit.items.length;
+    //         } else {
+    //             return this.props.userDetails.items.length;
+    //         }
+    //     } else {
+    //         return 0;
+    //     }
+    // }
 
     // EFFECTS: create a marker based on an attraction
     //          Set marker to invisible if user choose to hide attractions
@@ -165,7 +163,6 @@ class HomePage extends React.PureComponent {
     };
 
     render() {
-        // console.log(this.props)
         return (
             <div>
                 <Sidebar.Pushable>
@@ -201,7 +198,7 @@ class HomePage extends React.PureComponent {
                                                         {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
                                                     </a>
                                                     <a className="item" onClick={this.props.showPanel}>
-                                                        <div className="ui small label">{this.displaySelectionCount()}</div>
+                                                        {/* <div className="ui small label">{this.displaySelectionCount()}</div> */}
                                                         Show Current Selection
                                                     </a>
                                                 </div>
@@ -244,15 +241,15 @@ const mapStateToProps = (state) => {
         currentEvents: state.currentEventsStore.currentEvents
     };
 };
-const HomePageContainer = withTracker(() => {
-    const handleSaved = Meteor.subscribe('userEventDrawer', Meteor.userId());
-    const userDetails = EventDrawerApi.findOne();
+// const HomePageContainer = withTracker(() => {
+//     const handleSaved = Meteor.subscribe('userEventDrawer', Meteor.userId());
+//     const userDetails = EventDrawerApi.findOne();
 
-    return {
-        userDataReady: handleSaved.ready(),
-        userDetails: userDetails
-    }
-})(HomePage);
+//     return {
+//         userDataReady: handleSaved.ready(),
+//         userDetails: userDetails
+//     }
+// })(HomePage);
 export default connect(mapStateToProps, {
     handleOnMarkerClick,
     toggleNearbyAttractions,
@@ -261,4 +258,4 @@ export default connect(mapStateToProps, {
     getEventDrawer,
     resetMapCenter,
     loadCurrentEvents
-})(HomePageContainer);
+})(HomePage);

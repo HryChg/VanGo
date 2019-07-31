@@ -1,11 +1,4 @@
-const loadCurrentEvents = (events) => {
-    return {
-        type: 'LOAD_CURRENT_EVENTS',
-        payload: events
-    }
-}
-
-const updateDateState = (date) => {
+export const changeDate = (date) => {
     return {
         type: 'CHANGE_DATE',
         payload: date
@@ -29,15 +22,5 @@ export const confirm = () => {
 export const cancel = () => {
     return {
         type: "CANCEL"
-    }
-};
-
-export function changeDate(date) {
-    return async dispatch => {
-        Meteor.call('updateEvents', date, (err, res) => {
-            if (err) console.log(err);
-            dispatch(loadCurrentEvents(res));
-            dispatch(updateDateState(date));
-        });
     }
 };
