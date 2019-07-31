@@ -248,7 +248,11 @@ class EditPage extends React.Component {
 
                         <Grid.Column width={12}>
                             <div style={{ height: '100vh' }}>
-                                <MapContainer width={'98%'} height={'100%'}>
+                                <MapContainer 
+                                    width={'98%'} 
+                                    height={'100%'}
+                                    ignore={this.state.nameInput}
+                                >
                                     {this.displayMarkers()}
                                     {this.displayPolyLine()}
                                 </MapContainer>

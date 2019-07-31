@@ -4,7 +4,7 @@
 // Connect google-maps-react to redux
 // https://medium.com/@schlunzk/integrating-google-maps-api-in-react-redux-part-1-6b036014f4a6
 
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {GoogleApiWrapper, Map} from 'google-maps-react';
 import {connect} from 'react-redux';
 import debounceRender from 'react-debounce-render';
@@ -17,7 +17,15 @@ import {showPanel} from '../actions/panelActions';
 import {loadEventDrawer} from '../actions/draggableItemsActions';
 
 
-export class MapContainer extends PureComponent {
+export class MapContainer extends React.Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.ignore !== nextProps.ignore) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     handleMapIdle = () => {
         this.props.setMapLoadedTrue();
     };
