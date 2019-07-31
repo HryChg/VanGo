@@ -30,6 +30,7 @@ export default function DatePickerReducer(state = initialState, action) {
                 openConfirmWindow: false,
                 result: 'cancelled'
             };
+        case 'LOGIN_SUCCESS':
         case 'LOGOUT':
             return initialState;
         default:

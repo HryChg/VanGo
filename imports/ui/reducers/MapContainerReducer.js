@@ -60,6 +60,9 @@ export default function MapContainerReducer(state = initialState, action) {
                 activeMarker: state.activeMarker,
                 selectedPlace: state.selectedPlace
             }
+        case 'LOGIN_SUCCESS':
+        case 'LOGOUT':
+            return initialState;
         default:
             return state;
     }

@@ -32,6 +32,7 @@ export default function DraggableItemsReducer(state = initialState, action) {
             return newState;
         case 'RESET_EDIT':
             return initialState;
+        case 'LOGIN_SUCCESS':
         case 'LOGOUT':
             return initialState;
         default:
