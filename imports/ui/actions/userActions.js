@@ -85,6 +85,7 @@ export const logout = () => {
 }
 
 const logoutRequest = () => {
+    console.log('sent logoutrequest')
     return {
         type: "LOGOUT"
     }

@@ -13,7 +13,7 @@ import HomePage from "./home/HomePage";
 import RegistrationPage from './user/RegistrationPage';
 
 import { editingItinerary } from '../actions/itineraryActions';
-import {loadCurrentEvents} from '../actions/currentEventsActions';
+import { changeDate } from '../actions/datePickerActions';
 
 // This part routes to "different pages"
 function ProfilePage() {
@@ -41,10 +41,7 @@ class AppRouter extends React.Component {
                     </Menu.Item>
                     <Menu.Item as={NavLink} to="/logout/" onClick={() => {
                         this.props.editingItinerary(false);
-                        Meteor.call('updateEvents', new Date(), (err, res) => {
-                            if (err) console.log(err);
-                            this.props.loadCurrentEvents(res);
-                        })
+                        this.props.changeDate(new Date());
                         this.props.logout();
                         }}>
                         Logout
@@ -86,4 +83,4 @@ const mapStateToProps = (state) => {
     });
 }
 
-export default connect(mapStateToProps, { logout, setLoginState, editingItinerary, loadCurrentEvents })(AppRouter);
+export default connect(mapStateToProps, { logout, setLoginState, editingItinerary, changeDate })(AppRouter);
