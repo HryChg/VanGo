@@ -11,3 +11,9 @@ export const loadEventDrawer = (eventDrawer) => {
 		payload: eventDrawer
 	}
 }
+
+export const clearDrawerItems = () => {
+  return {
+    type: 'CLEAR_DRAWER_ITEMS'
+  }
+}

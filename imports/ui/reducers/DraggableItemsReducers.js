@@ -30,6 +30,13 @@ export default function DraggableItemsReducer(state = initialState, action) {
             newState.itineraryEdit = action.payload.itineraryEdit;
             newState.saved = state.saved;
             return newState;
+        case 'CLEAR_DRAWER_ITEMS':
+            newState = Object.assign({}, state);
+            newState._id = state._id,
+            newState.items = [];
+            newState.itineraryEdit = state.itineraryEdit;
+            newState.saved = state.saved;
+            return newState;
         case 'EDITING_ITINERARY':
             if (!action.payload) {
                 newState = Object.assign({}, state);

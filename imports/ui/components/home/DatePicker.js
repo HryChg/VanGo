@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Calendar from 'react-calendar';
 import { Popup, Icon } from 'semantic-ui-react';
 import { changeDate, toggleConfirmWindow, confirm, cancel } from '../../actions/datePickerActions';
-import {loadCurrentEvents} from './../../actions/currentEventsActions';
+import {loadCurrentEvents, clearDrawerItems} from './../../actions/currentEventsActions';
 import { CalledDates } from '../../../api/CalledDates';
 import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
@@ -24,7 +24,10 @@ class DatePicker extends React.PureComponent {
             if (err) console.log(err);
             this.props.loadCurrentEvents(res);
         })
-        Meteor.call('clearDrawer');
+        Meteor.call('clearDrawer', (err, res) => {
+            if (err) console.log(err);
+            this.props.clearDrawerItems();
+        });
     };
 
     // EFFECTS: user canceled to the window. Nothing Changed.
@@ -97,5 +100,6 @@ export default connect(mapStateToProps, {
     toggleConfirmWindow,
     confirm,
     cancel,
-    loadCurrentEvents
+    loadCurrentEvents,
+    clearDrawerItems
 })(DatePicker);
