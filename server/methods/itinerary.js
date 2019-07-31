@@ -16,7 +16,6 @@ Meteor.methods({
             throw new Meteor.Error(err, err);
         }
         if (editing) {
-            console.log(itinerary);
             Itineraries.update({
                 _id: itinerary._id
             },

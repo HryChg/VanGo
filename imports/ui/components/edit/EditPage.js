@@ -199,8 +199,6 @@ class EditPage extends React.Component {
             date: this.props.datePicker.selectedDate.toDateString(),
             items: items
         };
-
-        console.log(itin);
         this.props.saveItinerary(itin, this.props.editing);
         this.props.selectID(itin._id);
     };

@@ -241,7 +241,9 @@ class HomePage extends React.Component {
     }
 }
 
-const debouncedHomePage = debounceRender(HomePage, 250, {leading: false, trailing: true});
+// Function: To reduce the amount of re-render
+// To use: Uncomment below and update connect to debouncedHomePage
+// const debouncedHomePage = debounceRender(HomePage, 250, {leading: false, trailing: true});
 
 const mapStateToProps = (state) => {
     return {
@@ -264,4 +266,4 @@ export default connect(mapStateToProps, {
     resetMapCenter,
     loadCurrentEvents,
     loadEventDrawer
-})(debouncedHomePage);
+})(HomePage);
