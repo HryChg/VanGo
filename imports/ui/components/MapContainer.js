@@ -14,7 +14,7 @@ import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue, updateMapCent
 import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import {Button} from "semantic-ui-react";
 import {showPanel} from '../actions/panelActions';
-import {loadEventDrawer} from '../actions/eventDrawerActions';
+import {loadEventDrawer} from '../actions/draggableItemsActions';
 
 
 export class MapContainer extends PureComponent {

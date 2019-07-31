@@ -1,4 +1,5 @@
 export const changeDate = (date) => {
+    console.log(date)
     return {
         type: 'CHANGE_DATE',
         payload: date

@@ -8,18 +8,16 @@ import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
-import {getEventDrawer} from "../../actions/draggableItemsActions";
 import {handleOnMarkerClick, resetMapCenter} from "../../actions/mapContainerActions";
 import {loadCurrentEvents} from './../../actions/currentEventsActions';
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import {showPanel, hidePanel} from './../../actions/panelActions';
-import {loadEventDrawer} from './../../actions/eventDrawerActions';
+import {loadEventDrawer} from './../../actions/draggableItemsActions';
 import {formatAMPM} from "../../../util/util";
 
 class HomePage extends React.PureComponent {
     componentDidMount() {
         this.props.resetMapCenter();
-        this.props.getEventDrawer();
         Meteor.call('getEventDrawer', (err, res) => {
             if (err) console.log(err);
             this.props.loadEventDrawer(res);
@@ -253,7 +251,6 @@ export default connect(mapStateToProps, {
     toggleNearbyAttractions,
     showPanel,
     hidePanel,
-    getEventDrawer,
     resetMapCenter,
     loadCurrentEvents,
     loadEventDrawer

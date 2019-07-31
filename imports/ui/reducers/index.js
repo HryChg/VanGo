@@ -9,7 +9,6 @@ import registerReducer from './RegisterReducer.js';
 import registerFormReducer from './RegisterFormReducer.js';
 import eventFilterReducer from './EventFilterReducer';
 import datePickerReducer from './DatePickerReducer';
-import eventDrawerReducer from './EventDrawerReducer';
 import mapContainerReducer from './MapContainerReducer';
 import draggableItemsReducer from './DraggableItemsReducers';
 import HomePageReducer from "./HomePageReducer";
@@ -27,7 +26,6 @@ export default combineReducers({
     register: registerReducer,
     registerForm: registerFormReducer,
     eventFilter: eventFilterReducer,
-    eventDrawer: eventDrawerReducer,
     mapContainer: mapContainerReducer,
     draggableItems: draggableItemsReducer,
     homePage: HomePageReducer,

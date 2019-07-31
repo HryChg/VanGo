@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { Menu } from 'semantic-ui-react';
 
 import {maskString} from "../../../util/util";
-import {loadEventDrawer} from '../../actions/eventDrawerActions';
+import {loadEventDrawer} from '../../actions/draggableItemsActions';
 
 class EventDrawer extends React.Component {
     componentDidMount() {
@@ -16,7 +16,6 @@ class EventDrawer extends React.Component {
     updateEventDrawer() {
         Meteor.call('getEventDrawer', (err, res) => {
             if (err) console.log(err);
-            console.log(res)
             this.props.loadEventDrawer(res);
         });
     }
