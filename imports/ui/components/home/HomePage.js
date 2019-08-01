@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {NavLink} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
-import {Button, Dimmer, Grid, Menu, Segment, Sidebar, Icon, Label} from 'semantic-ui-react';
+import {Button, Dimmer, Grid, Menu, Segment, Sidebar, Icon, Label, Header} from 'semantic-ui-react';
 
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
@@ -68,12 +68,12 @@ class HomePage extends React.Component {
                     <Dimmer.Dimmable size={"large"} blurring dimmed={this.props.dimmerActive}>
                         <DatePicker eventDrawerCount={eventDrawerCount}/>
                         <Dimmer active={this.props.dimmerActive} onClickOutside={this.props.hideDimmer}>
-                            <div>
+                            <Header as='h4' icon inverted>
+                                <Icon name='info circle' />
                                 VanGo is an itinerary planner for locals and tourists
                                 who want to discover events and attractions in Vancouver.
-                                <br/><br/>
-                                <Button primary onClick={this.props.hideDimmer}><b>To begin, select a date!</b></Button>
-                            </div>
+                            </Header>
+                            <Button primary onClick={this.props.hideDimmer}><b>To begin, select a date!</b></Button>
                         </Dimmer>
                     </Dimmer.Dimmable>
                 </div>);
