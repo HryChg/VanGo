@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
-import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
-import {Grid, Sidebar, Menu, Icon, Button, Popup, Divider} from 'semantic-ui-react';
+import {Button, Dimmer, Grid, Menu, Segment, Sidebar} from 'semantic-ui-react';
 
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
@@ -12,7 +12,7 @@ import EventDrawer from "./EventDrawer";
 import {getEventDrawer} from "../../actions/draggableItemsActions";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {toggleNearbyAttractions} from "../../actions/homePageActions";
-import {showPanel, hidePanel} from './../../actions/panelActions';
+import {hidePanel, showPanel} from './../../actions/panelActions';
 import {formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
 import EventDrawerApi from "../../../api/EventDrawerApi";
@@ -53,7 +53,7 @@ class HomePage extends React.Component {
 
                         </div>}
                     </Popup>
-                </h3> 
+                </h3>
                 <Divider /> */}
             </div>);
         }
@@ -65,7 +65,13 @@ class HomePage extends React.Component {
             let eventDrawerCount = this.displaySelectionCount();
             return (
             <div className={"DatePickerContainer"}>
-                <DatePicker eventDrawerCount={eventDrawerCount}/>
+                <Dimmer.Dimmable as={Segment} blurring dimmed={true}>
+                    <DatePicker eventDrawerCount={eventDrawerCount}/>
+
+                    <Dimmer active={true}>
+                        Dimmed Message!
+                    </Dimmer>
+                </Dimmer.Dimmable>
             </div>);
         }
     }
