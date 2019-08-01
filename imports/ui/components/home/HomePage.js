@@ -65,11 +65,17 @@ class HomePage extends React.Component {
             let eventDrawerCount = this.displaySelectionCount();
             return (
             <div className={"DatePickerContainer"}>
-                <Dimmer.Dimmable as={Segment} blurring dimmed={true}>
+                <Dimmer.Dimmable as={Segment} size={"large"} blurring dimmed={true}>
                     <DatePicker eventDrawerCount={eventDrawerCount}/>
 
                     <Dimmer active={true}>
-                        Dimmed Message!
+                        <div>
+                            VanGo is an itinerary planner for locals and tourists
+                            who want to discover events and attractions in Vancouver.
+                            <br/><br/>
+                            <b>To begin, select a date!</b>
+
+                        </div>
                     </Dimmer>
                 </Dimmer.Dimmable>
             </div>);
