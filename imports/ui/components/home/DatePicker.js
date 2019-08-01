@@ -54,7 +54,7 @@ class DatePicker extends React.Component {
                     content={"Choosing a new date will clear out your saved markers for the current date. Are you sure?"} />
                 <h3>
                     {"Current Selection: " + this.props.selectedDate.toDateString()}
-                    <Icon id={"info-btn"} className="info circle" onClick={this.props.showDimmer} floated={"right"}/>
+                    <Icon id={"info-btn"} className="question circle outline" onClick={this.props.showDimmer} floated={"right"}/>
                 </h3>
                 <Calendar
                     className={"react-calendar__tile--active"}
