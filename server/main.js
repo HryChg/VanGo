@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import '/imports/api/itineraries';
+import '/imports/api/MailgunEmailStats';
 import './methods/itinerary';
 import './methods/users';
 import './methods/email';
