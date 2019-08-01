@@ -73,7 +73,8 @@ class HomePage extends React.Component {
                             VanGo is an itinerary planner for locals and tourists
                             who want to discover events and attractions in Vancouver.
                             <br/><br/>
-                            <b>To begin, select a date!</b>
+
+                            <Button primary><b>To begin, select a date!</b></Button>
 
                         </div>
                     </Dimmer>
