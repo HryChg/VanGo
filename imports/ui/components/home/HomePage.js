@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {NavLink} from 'react-router-dom';
 import {withTracker} from 'meteor/react-meteor-data';
-import {Button, Dimmer, Grid, Menu, Segment, Sidebar} from 'semantic-ui-react';
+import {Button, Dimmer, Grid, Menu, Segment, Sidebar, Icon, Label} from 'semantic-ui-react';
 
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
@@ -31,14 +31,14 @@ class HomePage extends React.Component {
             if (this.props.userDataReady && this.props.userDetails) {
                 return (<h2>Add/Remove Itinerary Items from
                     {" " + this.props.userDetails.itineraryEdit.date + ": " + this.props.userDetails.itineraryEdit.name}
-                    </h2>);
+                </h2>);
             } else {
                 return (<h2>Add/Remove Itinerary Items</h2>);
             }
         } else {
             return (
-            <div>
-                {/* <h3>
+                <div>
+                    {/* <h3>
                     Info:
                     <Popup
                         trigger={<Icon className="info circle"/>}
@@ -55,7 +55,7 @@ class HomePage extends React.Component {
                     </Popup>
                 </h3>
                 <Divider /> */}
-            </div>);
+                </div>);
         }
     }
 
@@ -64,19 +64,19 @@ class HomePage extends React.Component {
         if (!this.props.editing) {
             let eventDrawerCount = this.displaySelectionCount();
             return (
-            <div className={"DatePickerContainer"}>
-                <Dimmer.Dimmable size={"large"} blurring dimmed={this.props.dimmerActive}>
-                    <DatePicker eventDrawerCount={eventDrawerCount}/>
-                    <Dimmer active={this.props.dimmerActive} onClickOutside={this.props.hideDimmer}>
-                        <div>
-                            VanGo is an itinerary planner for locals and tourists
-                            who want to discover events and attractions in Vancouver.
-                            <br/><br/>
-                            <Button primary onClick={this.props.hideDimmer}><b>To begin, select a date!</b></Button>
-                        </div>
-                    </Dimmer>
-                </Dimmer.Dimmable>
-            </div>);
+                <div className={"DatePickerContainer"}>
+                    <Dimmer.Dimmable size={"large"} blurring dimmed={this.props.dimmerActive}>
+                        <DatePicker eventDrawerCount={eventDrawerCount}/>
+                        <Dimmer active={this.props.dimmerActive} onClickOutside={this.props.hideDimmer}>
+                            <div>
+                                VanGo is an itinerary planner for locals and tourists
+                                who want to discover events and attractions in Vancouver.
+                                <br/><br/>
+                                <Button primary onClick={this.props.hideDimmer}><b>To begin, select a date!</b></Button>
+                            </div>
+                        </Dimmer>
+                    </Dimmer.Dimmable>
+                </div>);
         }
     }
 
@@ -86,11 +86,11 @@ class HomePage extends React.Component {
         if (this.displaySelectionCount()) {
             return (<Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
                 {"Review & Save"}
-                </Button>);
+            </Button>);
         } else {
             return (<Button fluid disabled className="redirect-to-itinerary" as={NavLink} to="/edit/">
                 {"Review & Save"}
-                </Button>);
+            </Button>);
         }
     }
 
@@ -213,19 +213,17 @@ class HomePage extends React.Component {
                                                 <EventFilter items={this.props.currentEvents}/>
                                             </div>
 
-                                            <div className={"sidenav-options-container"}>
-                                                <div className="ui large vertical menu fluid">
-                                                    <a className={this.props.homePage.toggleNearbyAttractions ? "active item" : "item"}
-                                                       onClick={this.props.toggleNearbyAttractions}
-                                                    >
-                                                        {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
-                                                    </a>
-                                                    <a className="item" onClick={this.props.showPanel}>
-                                                        <div className="ui small label">{this.displaySelectionCount()}</div>
-                                                        Show Current Selection
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <Menu vertical fluid={true}>
+                                                <Menu.Item active={this.props.homePage.toggleNearbyAttractions}
+                                                           onClick={this.props.toggleNearbyAttractions}>
+                                                    {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
+                                                </Menu.Item>
+                                                <Menu.Item onClick={this.props.showPanel}>
+                                                    <Label>{this.displaySelectionCount()}</Label>
+                                                    Show Current Selection
+                                                </Menu.Item>
+                                            </Menu>
+
                                             {this.toggleSaveButton()}
                                         </div>
                                     </Grid.Column>
