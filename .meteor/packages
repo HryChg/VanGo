@@ -21,4 +21,3 @@ accounts-password
 accounts-google
 service-configuration
 meteortesting:mocha
-aldeed:simple-schema

@@ -9,6 +9,7 @@ import Itineraries from '../imports/api/itineraries';
 import CurrentEvents from '../imports/api/CurrentEvents';
 import getEventsInDay from './../imports/api/getDayEvents';
 import YelpAttractionsApi, {convertBusinessesToAttractions} from "../imports/api/YelpAttractionsApi";
+import {containOneOf} from "../imports/util/util";
 
 
 // TODO: This will need to be moved into a handleSubmit
@@ -37,6 +38,11 @@ Meteor.startup(async () => {
         CurrentEvents.insert(attraction);
     }
     console.log(`Added ${attractions.length} attraction from Yelp`);
+
+    // Meteor.call('getUserEmailStats', (err, res)=>{
+    //     console.log(err);
+    //     console.log(res);
+    // })
 });
 
 
