@@ -11,7 +11,7 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {getEventDrawer} from "../../actions/draggableItemsActions";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
-import {toggleNearbyAttractions} from "../../actions/homePageActions";
+import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/homePageActions";
 import {hidePanel, showPanel} from './../../actions/panelActions';
 import {formatAMPM} from "../../../util/util";
 import CurrentEvents from '../../../api/CurrentEvents';
@@ -68,14 +68,12 @@ class HomePage extends React.Component {
                 <Dimmer.Dimmable as={Segment} size={"large"} blurring dimmed={this.props.dimmerActive}>
                     <DatePicker eventDrawerCount={eventDrawerCount}/>
 
-                    <Dimmer active={this.props.dimmerActive}>
+                    <Dimmer active={this.props.dimmerActive} onClickOutside={this.props.hideDimmer}>
                         <div>
                             VanGo is an itinerary planner for locals and tourists
                             who want to discover events and attractions in Vancouver.
                             <br/><br/>
-
-                            <Button primary><b>To begin, select a date!</b></Button>
-
+                            <Button primary onClick={this.props.hideDimmer}><b>To begin, select a date!</b></Button>
                         </div>
                     </Dimmer>
                 </Dimmer.Dimmable>
@@ -283,6 +281,8 @@ const HomePageContainer = withTracker(() => {
 export default connect(mapStateToProps, {
     handleOnMarkerClick,
     toggleNearbyAttractions,
+    hideDimmer,
+    showDimmer,
     showPanel,
     hidePanel,
     getEventDrawer
