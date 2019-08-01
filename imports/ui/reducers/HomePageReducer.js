@@ -1,5 +1,5 @@
 let initState = {
-    toggleNearbyAttractions: false,
+    toggleNearbyAttractions: true,
     dimmerActive: true
 };
 
