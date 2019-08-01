@@ -65,10 +65,10 @@ class HomePage extends React.Component {
             let eventDrawerCount = this.displaySelectionCount();
             return (
             <div className={"DatePickerContainer"}>
-                <Dimmer.Dimmable as={Segment} size={"large"} blurring dimmed={true}>
+                <Dimmer.Dimmable as={Segment} size={"large"} blurring dimmed={this.props.dimmerActive}>
                     <DatePicker eventDrawerCount={eventDrawerCount}/>
 
-                    <Dimmer active={true}>
+                    <Dimmer active={this.props.dimmerActive}>
                         <div>
                             VanGo is an itinerary planner for locals and tourists
                             who want to discover events and attractions in Vancouver.
@@ -259,6 +259,7 @@ const mapStateToProps = (state) => {
     return {
         maxPrice: state.maxPrice,
         homePage: state.homePage,
+        dimmerActive: state.homePage.dimmerActive,
         eventFilter: state.eventFilter,
         visible: state.panel.visible,
         mapContainer: state.mapContainer,
