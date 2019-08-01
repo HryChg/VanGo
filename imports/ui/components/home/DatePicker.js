@@ -2,11 +2,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Calendar from 'react-calendar';
-import { Popup, Icon } from 'semantic-ui-react';
+import {Popup, Icon, Button} from 'semantic-ui-react';
 import { changeDate, toggleConfirmWindow, confirm, cancel } from '../../actions/datePickerActions';
 import { CalledDates } from '../../../api/CalledDates';
 import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
+import {showDimmer} from "../../actions/homePageActions";
 
 
 class DatePicker extends React.Component {
@@ -53,19 +54,7 @@ class DatePicker extends React.Component {
                     content={"Choosing a new date will clear out your saved markers for the current date. Are you sure?"} />
                 <h3>
                     {"Current Selection: " + this.props.selectedDate.toDateString()}
-                    <Popup
-                        className="vango-info"
-                        trigger={<Icon className="info circle"/>}
-                    >
-                        {<div>
-                            <p>
-                                VanGo is an itinerary planner for locals and tourists who want to discover events and attractions in Vancouver.
-                            </p>
-                            <p>
-                                <b>To begin, select a date!</b>
-                            </p>
-                        </div>}
-                    </Popup>
+                    <Icon id={"info-btn"} className="info circle" onClick={this.props.showDimmer} floated={"right"}/>
                 </h3>
                 <Calendar
                     className={"react-calendar__tile--active"}
@@ -90,4 +79,5 @@ export default connect(mapStateToProps, {
     toggleConfirmWindow,
     confirm,
     cancel,
+    showDimmer
 })(DatePicker);

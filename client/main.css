@@ -315,3 +315,7 @@ i.trash.icon {
 .dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer {
     border-radius: .28571429rem;
 }
+
+#info-btn{
+    float: right;
+}
