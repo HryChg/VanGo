@@ -20,6 +20,8 @@ import { changeDate } from './../../actions/datePickerActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM, sortByDateName, getToday } from "../../../util/util";
 import EmailForm from "./../edit/EmailForm";
+import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
+
 
 
 class ItineraryPage extends React.Component {
@@ -189,14 +191,18 @@ class ItineraryPage extends React.Component {
     toggleEmailForm = () => {
         if (this.getSelectedItinerary(this.props.selectedID)) {
             return (
-                <div className={"emailFormItin"}>
-                    <EmailForm
-                        items={this.getSelectedItinerary(this.props.selectedID) ?
-                            this.getSelectedItinerary(this.props.selectedID).items : null}
-                        userEmail={(Meteor.user()) ? Meteor.user().emails[0].address : 'Meteor Loading'}
-                        userName={(Meteor.user()) ? Meteor.user().profile.name : 'Meteor Loading'}
-                        date={this.getDateFromID(this.props.selectedID) ?
-                            this.getDateFromID(this.props.selectedID).toDateString() : null} />
+                <div className={"container"}>
+                    <Divider />
+                    <div className={"emailFormItin"}>
+                        <h3>Share Your Itinerary</h3>
+                        <EmailForm
+                            items={this.getSelectedItinerary(this.props.selectedID) ?
+                                this.getSelectedItinerary(this.props.selectedID).items : null}
+                            userEmail={(Meteor.user()) ? Meteor.user().emails[0].address : 'Meteor Loading'}
+                            userName={(Meteor.user()) ? Meteor.user().profile.name : 'Meteor Loading'}
+                            date={this.getDateFromID(this.props.selectedID) ?
+                                this.getDateFromID(this.props.selectedID).toDateString() : null} />
+                    </div>
                 </div>
             );
         }
@@ -227,7 +233,7 @@ class ItineraryPage extends React.Component {
                         <Grid stackable divided='vertically'>
                             <Grid.Row columns={2}>
                                 <Grid.Column className="itinPageScroll">
-                                    <div id="it-date-toggle">                                    
+                                    <div id="it-date-toggle">
                                         <Menu inverted attached icon>
                                             <Menu.Item
                                                 onClick={this.props.showPanel}>
@@ -238,6 +244,9 @@ class ItineraryPage extends React.Component {
                                     <div id="itinerary-name">
                                         <h1>
                                             <span className="it-header">{this.getDisplayName(this.props.selectedID)}</span>
+
+                                            <Icon name={"download"} size={"large"} color={"black"} />
+
                                             {this.displayEditButton()}
                                         </h1>
                                     </div>
