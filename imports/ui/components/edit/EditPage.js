@@ -92,12 +92,12 @@ class EditPage extends React.Component {
             </button>)
         } else {
             return (
-                <Popup 
-                    content='Please login to save.' 
+                <Popup
+                    content='Please login to save.'
                     trigger={<button className="ui button">
                         <Icon name="heart"/>
                         Save
-                        </button>} 
+                        </button>}
                 />
             )
         }
@@ -125,6 +125,22 @@ class EditPage extends React.Component {
             />);
         }
     }
+
+    // TODO Still need to work on this
+    assignIconURL = (idx, type, listSize) => {
+        if (idx === 0){
+
+        } else if (idx === listSize-1){
+            return "https://img.icons8.com/ios/50/000000/wind-speed-less-1.png";
+        } else if (type === "Attraction"){
+
+        } else if (type === "Event"){
+
+        } else {
+
+        }
+
+    };
 
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
