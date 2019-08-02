@@ -227,7 +227,7 @@ class ItineraryPage extends React.Component {
                         <Grid stackable divided='vertically'>
                             <Grid.Row columns={2}>
                                 <Grid.Column className="itinPageScroll">
-                                    <div id="it-date-toggle">                                    
+                                    <div id="it-date-toggle">
                                         <Menu inverted attached icon>
                                             <Menu.Item
                                                 onClick={this.props.showPanel}>
@@ -248,10 +248,8 @@ class ItineraryPage extends React.Component {
                                 </Grid.Column>
 
                                 <Grid.Column>
-                                    <div
-                                        style={{ width: '50vw', height: '100vh', position: 'fixed' }}
-                                    >
-                                        <MapContainer width={'97.5vw'} height={'100vh'}>
+                                    <div style={{height: '100vh'}}>
+                                        <MapContainer width={'97%'} height={'95%'}>
                                             {this.displayMarkers()}
                                             {this.displayPolyLine()}
                                         </MapContainer>
