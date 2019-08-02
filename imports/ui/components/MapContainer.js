@@ -142,3 +142,40 @@ export default connect(mapStateToProps, {
     setMapLoadedTrue: setMapLoadedTrue,
     showPanel
 })(MeteorMapContainer);
+
+
+// EFFECTS: given the parameter, determine the icon for the marker at idx position
+export const assignIconImage = (idx, type, listSize) => {
+    let image;
+    let size = 48;
+    if (idx === 0) { // start flag
+        image = {
+            url: `https://img.icons8.com/color/${size}/000000/filled-flag.png`,
+            size: new google.maps.Size(size, size),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(size/3, size)
+        };
+    } else if (idx === listSize - 1) { // end flag
+        image = {
+            url: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAMFBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg3dw3XQE0AAAADnRSTlMAHry7uh/yvly9UPTz/diodF0AAABHSURBVDjLY2CgJmDVNsQuwfTuCXYJnnfPsEsw49LBOrcQh+3rGnBI/P///927d8jkYJBAEwWSg0FiNKxIkHiAI8GNStAKAAB2D73brPu5/AAAAABJRU5ErkJggg==`,
+            size: new google.maps.Size(size, size),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(10, size)
+        };
+    } else if (type === "Attraction") {
+        image = {
+            url: `https://img.icons8.com/color/${size}/000000/compact-camera.png`,
+            size: new google.maps.Size(size, size),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(10, size-10)
+        };
+    } else {
+        image = {
+            url: `https://img.icons8.com/color/${size}/000000/marker.png`,
+            size: new google.maps.Size(size, size),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(size/2, size)
+        };
+    }
+    return image
+};

@@ -6,6 +6,7 @@ import {Grid, Icon, Popup} from 'semantic-ui-react';
 import uniqid from 'uniqid';
 
 import MapContainer from "../MapContainer";
+import {assignIconImage} from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {saveItinerary, resetEditPage} from "../../actions/editPageActions";
@@ -126,53 +127,6 @@ class EditPage extends React.Component {
         }
     }
 
-
-    // EFFECTS: given the parameter, determine the icon for the marker at idx position
-    assignIconURL = (idx, type, listSize) => {
-        let image;
-        let size = 48;
-        if (idx === 0) { // start flag
-            image = {
-                url: `https://img.icons8.com/color/${size}/000000/filled-flag.png`,
-                size: new google.maps.Size(size, size),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(size/3, size)
-            };
-        } else if (idx === listSize - 1) { // end flag
-            image = {
-                url: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAMFBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg3dw3XQE0AAAADnRSTlMAHry7uh/yvly9UPTz/diodF0AAABHSURBVDjLY2CgJmDVNsQuwfTuCXYJnnfPsEsw49LBOrcQh+3rGnBI/P///927d8jkYJBAEwWSg0FiNKxIkHiAI8GNStAKAAB2D73brPu5/AAAAABJRU5ErkJggg==`,
-                size: new google.maps.Size(size, size),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(10, size)
-            };
-        } else if (type === "Attraction") {
-            image = {
-                url: `https://img.icons8.com/color/${size}/000000/compact-camera.png`,
-                size: new google.maps.Size(size, size),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(10, size-10)
-            };
-        } else {
-            image = {
-                url: `https://img.icons8.com/color/${size}/000000/marker.png`,
-                size: new google.maps.Size(size, size),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(size/2, size)
-            };
-        }
-
-        // image = {
-        //     url: url,
-        //     // This marker is 20 pixels wide by 32 pixels high.
-        //     size: new google.maps.Size(size, size),
-        //     // The origin for this image is (0, 0).
-        //     origin: new google.maps.Point(0, 0),
-        //     // The anchor for this image is the base of the flagpole at (0, 32).
-        //     anchor: new google.maps.Point(0, size)
-        // };
-        return image
-    };
-
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
         let items = this.selectItems();
@@ -190,7 +144,7 @@ class EditPage extends React.Component {
                     location={item.location.display_address[0]}
                     link={item.link}
                     position={{lat: item.latitude, lng: item.longitude}}
-                    icon={this.assignIconURL(index, "Attraction", size)}
+                    icon={assignIconImage(index, "Attraction", size)}
                     description={(item.description) ? item.description : 'No Description Available'}
                     onClick={this.props.handleOnMarkerClick}/>
             } else {
@@ -204,7 +158,7 @@ class EditPage extends React.Component {
                     location={item.location.display_address[0]}
                     link={item.link}
                     position={{lat: item.latitude, lng: item.longitude}}
-                    icon={this.assignIconURL(index, "Event", size)}
+                    icon={assignIconImage(index, "Event", size)}
                     description={item.description}
                     onClick={this.props.handleOnMarkerClick}/>
             }
