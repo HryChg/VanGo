@@ -60,14 +60,30 @@ class EmailForm extends React.Component {
         let subject = this.state.subject;
         let html = makeItineraryEmail(itinSummary, this.state.message);
 
-        Meteor.call('emailItinerary', from, to, subject, html, (err, res)=>{
+
+        Meteor.call('reachMax', (err, res)=>{
             if (err){
+                console.log(`Error in meteor method "reachMax()"`);
                 console.log(err);
-                alert('Error in sending the email. Check console.');
+                return
+            }
+
+            if (res === true){
+                alert(`this application has reach max email caps for the month. No email will be sent`);
                 return;
             }
-            alert("Your Itinerary has been sent");
-        });
+
+            Meteor.call('emailItinerary', from, to, subject, html, (err, res)=>{
+                if (err){
+                    console.log(err);
+                    alert('Error in sending the email. Check console.');
+                    return;
+                }
+                alert("Your Itinerary has been sent");
+            });
+        })
+
+
     };
 
     render = () => {
@@ -76,8 +92,7 @@ class EmailForm extends React.Component {
                 <Form.Group widths='equal'>
                     <Form.Input onChange={this.handleRecipientEmailChange}
                                 fluid
-                                label='Recipient Email'
-                                placeholder='only VanGo Developer Emails Allowed for now'/>
+                                label='Recipient Email'/>
                     <Form.Input onChange={this.handleSubjectChange}
                                 fluid
                                 label='Subject'
@@ -87,7 +102,7 @@ class EmailForm extends React.Component {
                                label='Message'
                                defaultValue={this.initMessageValue}/>
                 <Form.Button onClick={this.handleSubmit}
-                             fluid 
+                             fluid
                              color='blue'>
                     <Icon name="envelope outline"/>
                     Email
