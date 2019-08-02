@@ -31,7 +31,8 @@ Meteor.methods({
     addToUserEmailStats: async () => {
         let stats = await getUserEmailStats(Meteor.userId());
         stats.emailCount += 1;
-        return await MailgunEmailStats.update({userId: stats.userId}, stats);
+        await MailgunEmailStats.update({userId: stats.userId}, stats);
+        return true;
     },
 
     getCurrentTotalSent: getCurrentTotalSent,

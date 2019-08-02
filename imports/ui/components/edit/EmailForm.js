@@ -37,13 +37,13 @@ class EmailForm extends React.Component {
     // Read Nodemailer Documentation for formatting parameters
     emailItinerary = () => {
         // prevent empty values
-        if (!this.state.recipientEmail || !this.state.subject || !this.state.message){
+        if (!this.state.recipientEmail || !this.state.subject || !this.state.message) {
             alert(`emailItinerary(): Warning: At least One of the following "recipientEmail, subject, message" is empty`);
             return;
         }
 
         // prevent invalid email format
-        if (!this.checkEmail(this.state.recipientEmail)){
+        if (!this.checkEmail(this.state.recipientEmail)) {
             alert(`emailItinerary(): Warning: Recipient Email is not formatted correctly`);
             return;
         }
@@ -61,26 +61,36 @@ class EmailForm extends React.Component {
         let html = makeItineraryEmail(itinSummary, this.state.message);
 
 
-        Meteor.call('reachMax', (err, res)=>{
-            if (err){
+        Meteor.call('reachMax', (err, res) => {
+            if (err) {
                 console.log(`Error in meteor method "reachMax()"`);
                 console.log(err);
                 return
             }
 
-            if (res === true){
+            if (res === true) {
                 alert(`this application has reach max email caps for the month. No email will be sent`);
                 return;
             }
 
-            Meteor.call('emailItinerary', from, to, subject, html, (err, res)=>{
-                if (err){
+            Meteor.call('addToUserEmailStats', (err, res) => {
+                if (err) {
                     console.log(err);
-                    alert('Error in sending the email. Check console.');
+                    alert('Error in adding count to user email stats. Check console.');
                     return;
                 }
-                alert("Your Itinerary has been sent");
-            });
+
+                Meteor.call('emailItinerary', from, to, subject, html, (err, res) => {
+                    if (err) {
+                        console.log(err);
+                        alert('Error in sending the email. Check console.');
+                        return;
+                    }
+                    alert("Your Itinerary has been sent");
+                });
+            })
+
+
         })
 
 
