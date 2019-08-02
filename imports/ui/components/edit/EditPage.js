@@ -129,16 +129,28 @@ class EditPage extends React.Component {
 
     // EFFECTS: given the parameter, determine the icon for the marker at idx position
     assignIconURL = (idx, type, listSize) => {
-        if (idx === 0) {
-            return "https://img.icons8.com/color/48/000000/f1-race-car-top-veiw.png";
-        } else if (idx === listSize - 1) {
-            return "https://img.icons8.com/color/48/000000/filled-flag.png";
+        let url = '';
+        let size = 48;
+        if (idx === 0) { // start flag
+            url = `https://img.icons8.com/color/${size}/000000/filled-flag.png`;
+        } else if (idx === listSize - 1) { // end flag
+            url = `https://img.icons8.com/ios-filled/${size}/000000/finish-flag.png`;
         } else if (type === "Attraction") {
-            return "https://img.icons8.com/color/48/000000/compact-camera.png";
+            url = `https://img.icons8.com/color/${size}/000000/compact-camera.png`;
         } else {
-            return null; // by default, google maps' red marker for an Event
+            url = `https://img.icons8.com/color/${size}/000000/marker.png`; // by default, google maps' red marker for an Event
         }
 
+        let image = {
+            url: url,
+            // This marker is 20 pixels wide by 32 pixels high.
+            size: new google.maps.Size(size, size),
+            // The origin for this image is (0, 0).
+            origin: new google.maps.Point(0, 0),
+            // The anchor for this image is the base of the flagpole at (0, 32).
+            anchor: new google.maps.Point(0, size)
+        };
+        return image
     };
 
     // EFFECTS: display markers base on events in draggable items
@@ -157,11 +169,8 @@ class EditPage extends React.Component {
                     price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                     location={item.location.display_address[0]}
                     link={item.link}
-                    position={{
-                        lat: item.latitude,
-                        lng: item.longitude
-                    }}
-                    icon={{url: this.assignIconURL(index, "Attraction", size)}}
+                    position={{ lat: item.latitude, lng: item.longitude }}
+                    icon={this.assignIconURL(index, "Attraction", size)}
                     description={(item.description) ? item.description : 'No Description Available'}
                     onClick={this.props.handleOnMarkerClick}/>
             } else {
@@ -174,11 +183,8 @@ class EditPage extends React.Component {
                     price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                     location={item.location.display_address[0]}
                     link={item.link}
-                    position={{
-                        lat: item.latitude,
-                        lng: item.longitude
-                    }}
-                    icon={{url: this.assignIconURL(index, "Event", size)}}
+                    position={{ lat: item.latitude, lng: item.longitude }}
+                    icon={this.assignIconURL(index, "Event", size)}
                     description={item.description}
                     onClick={this.props.handleOnMarkerClick}/>
             }
@@ -268,7 +274,7 @@ class EditPage extends React.Component {
                         </Grid.Column>
 
                         <Grid.Column width={12}>
-                            <div style={{height: '100vh'}}>
+                            <div style={{height: '94vh'}}>
                                 <MapContainer width={'98%'} height={'100%'}>
                                     {this.displayMarkers()}
                                     {this.displayPolyLine()}
