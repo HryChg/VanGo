@@ -19,7 +19,10 @@ import {loadEventDrawer} from '../actions/draggableItemsActions';
 
 export class MapContainer extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.ignore !== nextProps.ignore) {
+        let ignoreParentPropChange = this.props.ignore !== nextProps.ignore;
+        // Current center changes with new page -- may not be a good idea
+        // let ignoreChangeInMapCenter = this.props.mapContainer.currentCenter !== nextProps.mapContainer.currentCenter;
+        if (ignoreParentPropChange) {
             return false;
         } else {
             return true;
