@@ -1,9 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
-import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
-import {Grid, Sidebar, Menu, Button} from 'semantic-ui-react';
-import debounceRender from 'react-debounce-render';
+import {NavLink} from 'react-router-dom';
+import {Button, Dimmer, Grid, Menu, Sidebar, Icon, Label, Header} from 'semantic-ui-react';
 
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
@@ -11,9 +10,9 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {handleOnMarkerClick, resetMapCenter} from "../../actions/mapContainerActions";
 import {loadCurrentEvents} from './../../actions/currentEventsActions';
-import {toggleNearbyAttractions} from "../../actions/homePageActions";
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {loadEventDrawer} from './../../actions/draggableItemsActions';
+import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/homePageActions";
 import {formatAMPM} from "../../../util/util";
 
 class HomePage extends React.Component {
@@ -61,9 +60,19 @@ class HomePage extends React.Component {
         if (!this.props.editing) {
             let eventDrawerCount = this.displaySelectionCount();
             return (
-            <div className={"DatePickerContainer"}>
-                <DatePicker eventDrawerCount={eventDrawerCount}/>
-            </div>);
+                <div className={"DatePickerContainer"}>
+                    <Dimmer.Dimmable size={"large"} blurring dimmed={this.props.dimmerActive}>
+                        <DatePicker eventDrawerCount={eventDrawerCount}/>
+                        <Dimmer active={this.props.dimmerActive} onClickOutside={this.props.hideDimmer}>
+                            <Header as='h4' icon inverted>
+                                <Icon name='info circle' />
+                                VanGo is an itinerary planner for locals and tourists
+                                who want to discover events and attractions in Vancouver.
+                            </Header>
+                            <Button primary onClick={this.props.hideDimmer}><b>To begin, select a date!</b></Button>
+                        </Dimmer>
+                    </Dimmer.Dimmable>
+                </div>);
         }
     }
 
@@ -73,11 +82,11 @@ class HomePage extends React.Component {
         if (this.displaySelectionCount()) {
             return (<Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
                 {"Review & Save"}
-                </Button>);
+            </Button>);
         } else {
             return (<Button fluid disabled className="redirect-to-itinerary" as={NavLink} to="/edit/">
                 {"Review & Save"}
-                </Button>);
+            </Button>);
         }
     }
 
@@ -203,19 +212,17 @@ class HomePage extends React.Component {
                                                 <EventFilter items={this.props.currentEvents}/>
                                             </div>
 
-                                            <div className={"sidenav-options-container"}>
-                                                <div className="ui large vertical menu fluid">
-                                                    <a className={this.props.homePage.toggleNearbyAttractions ? "active item" : "item"}
-                                                       onClick={this.props.toggleNearbyAttractions}
-                                                    >
-                                                        {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
-                                                    </a>
-                                                    <a className="item" onClick={this.props.showPanel}>
-                                                        <div className="ui small label">{this.displaySelectionCount()}</div>
-                                                        Show Current Selection
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            <Menu vertical fluid={true}>
+                                                <Menu.Item active={this.props.homePage.toggleNearbyAttractions}
+                                                           onClick={this.props.toggleNearbyAttractions}>
+                                                    {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
+                                                </Menu.Item>
+                                                <Menu.Item onClick={this.props.showPanel}>
+                                                    <Label>{this.displaySelectionCount()}</Label>
+                                                    Show Current Selection
+                                                </Menu.Item>
+                                            </Menu>
+
                                             {this.toggleSaveButton()}
                                         </div>
                                     </Grid.Column>
@@ -248,6 +255,7 @@ class HomePage extends React.Component {
 const mapStateToProps = (state) => {
     return {
         homePage: state.homePage,
+        dimmerActive: state.homePage.dimmerActive,
         eventFilter: state.eventFilter,
         visible: state.panel.visible,
         mapContainer: state.mapContainer,
@@ -261,6 +269,8 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     handleOnMarkerClick,
     toggleNearbyAttractions,
+    hideDimmer,
+    showDimmer,
     showPanel,
     hidePanel,
     resetMapCenter,

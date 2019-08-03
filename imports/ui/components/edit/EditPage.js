@@ -1,8 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Marker, Polyline } from "google-maps-react";
-import { Redirect } from 'react-router-dom';
-import { Grid, Icon, Popup } from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import {Marker, Polyline} from "google-maps-react";
+import {Redirect} from 'react-router-dom';
+import {Grid, Icon, Popup} from 'semantic-ui-react';
 import uniqid from 'uniqid';
 
 import MapContainer from "../MapContainer";
@@ -13,8 +13,44 @@ import {selectID, editingItinerary} from "../../actions/itineraryActions";
 import {formatAMPM} from "../../../util/util";
 import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
-import { downloadPdf } from './ItineraryPdf';
+import {downloadPdf} from './ItineraryPdf';
 
+
+// EFFECTS: given the parameter, determine the icon for the marker at idx position
+const assignIconImage = (idx, type, listSize) => {
+    let image;
+    let size = 48;
+    if (idx === 0) { // start flag
+        image = {
+            url: `https://img.icons8.com/color/${size}/000000/filled-flag.png`,
+            size: new google.maps.Size(size, size),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(size/3, size)
+        };
+    } else if (idx === listSize - 1) { // end flag
+        image = {
+            url: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAMFBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg3dw3XQE0AAAADnRSTlMAHry7uh/yvly9UPTz/diodF0AAABHSURBVDjLY2CgJmDVNsQuwfTuCXYJnnfPsEsw49LBOrcQh+3rGnBI/P///927d8jkYJBAEwWSg0FiNKxIkHiAI8GNStAKAAB2D73brPu5/AAAAABJRU5ErkJggg==`,
+            size: new google.maps.Size(size, size),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(10, size)
+        };
+    } else if (type === "Attraction") {
+        image = {
+            url: `https://img.icons8.com/color/${size}/000000/compact-camera.png`,
+            size: new google.maps.Size(size, size),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(10, size-10)
+        };
+    } else {
+        image = {
+            url: `https://img.icons8.com/color/${size}/000000/marker.png`,
+            size: new google.maps.Size(size, size),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(size/2, size)
+        };
+    }
+    return image
+};
 
 class EditPage extends React.Component {
     constructor(props) {
@@ -82,21 +118,21 @@ class EditPage extends React.Component {
     toggleSaveButton() {
         if (Meteor.userId()) {
             return (
-            <button className="ui blue button"
-                onClick={() => {
-                    this.createItinerary();
-                }}>
-                <Icon name="heart"/>
-                Save
-            </button>)
+                <button className="ui blue button"
+                        onClick={() => {
+                            this.createItinerary();
+                        }}>
+                    <Icon name="heart"/>
+                    Save
+                </button>)
         } else {
             return (
-                <Popup 
-                    content='Please login to save.' 
+                <Popup
+                    content='Please login to save.'
                     trigger={<button className="ui button">
                         <Icon name="heart"/>
                         Save
-                        </button>} 
+                    </button>}
                 />
             )
         }
@@ -104,7 +140,7 @@ class EditPage extends React.Component {
 
     // EFFECTS: changes state of name input
     handleNameChange = (event) => {
-        this.setState({ nameInput: event.target.value });
+        this.setState({nameInput: event.target.value});
     }
 
     // EFFECTS: renders field to save name
@@ -112,15 +148,15 @@ class EditPage extends React.Component {
     toggleNameInput() {
         if (this.props.editing) {
             return (<input className={"edit-page-path-name"}
-                type="text"
-                placeholder={"Give it a name..."}
-                value={this.state.nameInput}
-                onChange={this.handleNameChange}
+                           type="text"
+                           placeholder={"Give it a name..."}
+                           value={this.state.nameInput}
+                           onChange={this.handleNameChange}
             />);
         } else {
             return (<input className={"edit-page-path-name"}
-                type="text"
-                placeholder={"Give it a name..."}
+                           type="text"
+                           placeholder={"Give it a name..."}
             />);
         }
     }
@@ -128,7 +164,9 @@ class EditPage extends React.Component {
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
         let items = this.selectItems();
-        let markers = items.map((item) => {
+        let size = items.length;
+
+        let markers = items.map((item, index) => {
             if (item.type === 'Attraction') {
                 return <Marker
                     key={item._id}
@@ -139,15 +177,10 @@ class EditPage extends React.Component {
                     price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                     location={item.location.display_address[0]}
                     link={item.link}
-                    position={{
-                        lat: item.latitude,
-                        lng: item.longitude
-                    }}
-                    icon={{
-                        url: "https://img.icons8.com/color/43/000000/compact-camera.png"
-                    }}
+                    position={{lat: item.latitude, lng: item.longitude}}
+                    icon={assignIconImage(index, "Attraction", size)}
                     description={(item.description) ? item.description : 'No Description Available'}
-                    onClick={this.props.handleOnMarkerClick} />
+                    onClick={this.props.handleOnMarkerClick}/>
             } else {
                 return <Marker
                     key={item._id}
@@ -158,12 +191,10 @@ class EditPage extends React.Component {
                     price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                     location={item.location.display_address[0]}
                     link={item.link}
-                    position={{
-                        lat: item.latitude,
-                        lng: item.longitude
-                    }}
+                    position={{lat: item.latitude, lng: item.longitude}}
+                    icon={assignIconImage(index, "Event", size)}
                     description={item.description}
-                    onClick={this.props.handleOnMarkerClick} />
+                    onClick={this.props.handleOnMarkerClick}/>
             }
         });
         return markers;
@@ -173,7 +204,7 @@ class EditPage extends React.Component {
     displayPolyLine = () => {
         let items = this.selectItems();
         let coordinates = items.map((item, index) => {
-            return { lat: item.latitude, lng: item.longitude };
+            return {lat: item.latitude, lng: item.longitude};
         });
 
         return (<Polyline
@@ -208,7 +239,9 @@ class EditPage extends React.Component {
                 <div className="ui message">
                     <div className="header">Notice</div>
                     <p>To share your itinerary via email, please log in.</p>
-                    <button className="ui button" onClick={() => downloadPdf(this.getDate(), this.selectItems())}>Download Itinerary</button>
+                    <button className="ui button"
+                            onClick={() => downloadPdf(this.getDate(), this.selectItems())}>Download Itinerary
+                    </button>
                 </div>
             )
         }
@@ -222,7 +255,7 @@ class EditPage extends React.Component {
 
     render() {
         if (this.props.saved) {
-            return (<Redirect exact to='/itinerary' />);
+            return (<Redirect exact to='/itinerary'/>);
         } else {
             return (
                 <Grid stackable divided='vertically'>
@@ -231,7 +264,7 @@ class EditPage extends React.Component {
                             <div className={"edit-panel"}>
                                 <h2 className={"ui header"}>Reorder Itinerary</h2>
                                 {this.toggleEditHeader()}
-                                <DraggableItems />
+                                <DraggableItems/>
                                 <div className={"container"}>
                                     <div className="ui action input mini fluid">
                                         {this.toggleNameInput()}
@@ -239,7 +272,7 @@ class EditPage extends React.Component {
                                     </div>
                                 </div>
                                 <div className={"container"}>
-                                    <Divider />
+                                    <Divider/>
                                     <h3>Share Your Itinerary</h3>
                                     {this.toggleEmailForm()}
                                 </div>
@@ -247,7 +280,7 @@ class EditPage extends React.Component {
                         </Grid.Column>
 
                         <Grid.Column width={12}>
-                            <div style={{ height: '100vh' }}>
+                            <div style={{height: '94vh'}}>
                                 <MapContainer 
                                     width={'98%'} 
                                     height={'100%'}

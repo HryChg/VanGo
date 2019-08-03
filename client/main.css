@@ -313,3 +313,18 @@ i.trash.icon {
     left: 10%;
     border-width: 5%;
 }
+
+/* ---------------------------------------- */
+/* --- Dimmer on the Homepage Calendar -----*/
+/* ---------------------------------------- */
+.dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer {
+    border-radius: .28571429rem;
+}
+
+
+/* ---------------------------------------- */
+/* --- Questions Button on the Homepage Calendar -----*/
+/* ---------------------------------------- */
+#info-btn{
+    float: right;
+}

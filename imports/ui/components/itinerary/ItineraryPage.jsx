@@ -129,18 +129,60 @@ class ItineraryPage extends React.Component {
                             this.props.loadCurrentEvents(res);
                         })
                     }}>
-                        <Icon name={"pencil"} size={"large"} color={"black"} />
+                        <Icon name={"pencil"} size={"large"} color={"black"}/>
                     </Button>
                 );
             }
         }
     }
 
+    // EFFECTS: given the parameter, determine the icon for the marker at idx position
+    assignIconImage = (idx, type, listSize) => {
+        let size = 48;
+        if (!this.props.mapLoaded){
+            return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
+        }
+
+
+        let image;
+        if (idx === 0) { // start flag
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/filled-flag.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(size / 3, size)
+            };
+        } else if (idx === listSize - 1) { // end flag
+            image = {
+                url: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAMFBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg3dw3XQE0AAAADnRSTlMAHry7uh/yvly9UPTz/diodF0AAABHSURBVDjLY2CgJmDVNsQuwfTuCXYJnnfPsEsw49LBOrcQh+3rGnBI/P///927d8jkYJBAEwWSg0FiNKxIkHiAI8GNStAKAAB2D73brPu5/AAAAABJRU5ErkJggg==`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, size)
+            };
+        } else if (type === "Attraction") {
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/compact-camera.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, size - 10)
+            };
+        } else {
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/marker.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(size / 2, size)
+            };
+        }
+        return image
+    };
+
     // EFFECTS: display markers base on items in draggable items
     displayMarkers = () => {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
-            let markers = selectedItinerary.items.map((item) => {
+            let listSize = selectedItinerary.items.length;
+            let markers = selectedItinerary.items.map((item, index) => {
                 if (item.type === 'Attraction') {
                     return <Marker
                         key={item._id}
@@ -151,15 +193,10 @@ class ItineraryPage extends React.Component {
                         price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                         location={item.location.display_address[0]}
                         link={item.link}
-                        position={{
-                            lat: item.latitude,
-                            lng: item.longitude
-                        }}
-                        icon={{
-                            url: "https://img.icons8.com/color/43/000000/compact-camera.png"
-                        }}
+                        position={{lat: item.latitude, lng: item.longitude}}
+                        icon={this.assignIconImage(index, "Attraction", listSize)}
                         description={(item.description) ? item.description : 'No Description Available'}
-                        onClick={this.props.handleOnMarkerClick} />
+                        onClick={this.props.handleOnMarkerClick}/>
                 } else {
                     return <Marker
                         key={item._id}
@@ -170,12 +207,10 @@ class ItineraryPage extends React.Component {
                         price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                         location={item.location.display_address[0]}
                         link={item.link}
-                        position={{
-                            lat: item.latitude,
-                            lng: item.longitude
-                        }}
+                        position={{lat: item.latitude, lng: item.longitude}}
+                        icon={this.assignIconImage(index, "Event", listSize)}
                         description={item.description}
-                        onClick={this.props.handleOnMarkerClick} />
+                        onClick={this.props.handleOnMarkerClick}/>
                 }
             });
             return markers;
@@ -188,7 +223,7 @@ class ItineraryPage extends React.Component {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
             let coordinates = selectedItinerary.items.map((item, index) => {
-                return { lat: item.latitude, lng: item.longitude };
+                return {lat: item.latitude, lng: item.longitude};
             });
 
             return (<Polyline
@@ -211,7 +246,7 @@ class ItineraryPage extends React.Component {
                         userEmail={(Meteor.user()) ? Meteor.user().emails[0].address : 'Meteor Loading'}
                         userName={(Meteor.user()) ? Meteor.user().profile.name : 'Meteor Loading'}
                         date={this.getDateFromID(this.props.selectedID) ?
-                            this.getDateFromID(this.props.selectedID).toDateString() : null} />
+                            this.getDateFromID(this.props.selectedID).toDateString() : null}/>
                 </div>
             );
         }
@@ -220,7 +255,7 @@ class ItineraryPage extends React.Component {
     // EFFECTS: If itinerary is being edited, redirect to home page; otherwise, display itinerary page
     render() {
         if (this.props.editing) {
-            return (<Redirect exact to='/' />);
+            return (<Redirect exact to='/'/>);
         }
         return (
             <div>
@@ -235,7 +270,8 @@ class ItineraryPage extends React.Component {
                         vertical
                         visible={this.props.visible}
                     >
-                        <ItineraryDatePanel itineraries={this.props.itineraries}><h2>Itineraries</h2></ItineraryDatePanel>
+                        <ItineraryDatePanel itineraries={this.props.itineraries}><h2>Itineraries</h2>
+                        </ItineraryDatePanel>
                     </Sidebar>
 
                     <Sidebar.Pusher>
@@ -246,25 +282,26 @@ class ItineraryPage extends React.Component {
                                         <Menu inverted attached icon>
                                             <Menu.Item
                                                 onClick={this.props.showPanel}>
-                                                <Icon name="calendar" />
+                                                <Icon name="calendar"/>
                                             </Menu.Item>
                                         </Menu>
                                     </div>
                                     <div id="itinerary-name">
                                         <h1>
-                                            <span className="it-header">{this.getDisplayName(this.props.selectedID)}</span>
+                                            <span
+                                                className="it-header">{this.getDisplayName(this.props.selectedID)}</span>
                                             {this.displayEditButton()}
                                         </h1>
                                     </div>
                                     <div id="it-list">
-                                        <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)} />
+                                        <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/>
                                     </div>
                                     {this.toggleEmailForm()}
                                 </Grid.Column>
 
                                 <Grid.Column>
                                     <div
-                                        style={{ width: '50vw', height: '100vh' }}
+                                        style={{width: '50vw', height: '100vh'}}
                                     >
                                         <MapContainer 
                                             width={'97.5%'} 
