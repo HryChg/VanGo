@@ -49,3 +49,9 @@ export const setMapLoadedTrue = () => {
         type: 'SET_MAP_LOADED_TRUE'
     }
 };
+
+export const setMapLoadedFalse = () => {
+    return {
+        type: 'SET_MAP_LOADED_FALSE'
+    }
+}

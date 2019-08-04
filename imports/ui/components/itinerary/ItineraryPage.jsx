@@ -306,8 +306,9 @@ class ItineraryPage extends React.Component {
                                         <MapContainer 
                                             width={'97.5%'} 
                                             height={'101.5%'} 
-                                            initialCenter={this.props.currentCenter}
                                             center={this.props.currentCenter}
+                                            ignore={this.props.visible}
+                                            ignoreCenterChange={this.props.currentCenter}
                                         >
                                             {this.displayMarkers()}
                                             {this.displayPolyLine()}
