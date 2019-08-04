@@ -40,13 +40,11 @@ class HomePage extends React.Component {
         }
     }
 
+    // EFFECTS: Prints which prop was updated
     componentDidUpdate(prevProps, prevState) {
         Object.entries(this.props).forEach(([key, val]) =>
           prevProps[key] !== val && console.log(`Prop '${key}' changed`)
         );
-        // Object.entries(this.state).forEach(([key, val]) =>
-        //   prevState[key] !== val && console.log(`State '${key}' changed`)
-        // );
       }
 
     // EFFECTS: renders name and logo; if edit state, renders editing title
@@ -227,7 +225,7 @@ class HomePage extends React.Component {
                                                            onClick={this.props.toggleNearbyAttractions}>
                                                     {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
                                                 </Menu.Item>
-                                                <Menu.Item onClick={this.props.showPanel}>
+                                                <Menu.Item onClick={this.props.visible ? null : this.props.showPanel}>
                                                     <Label>{this.displaySelectionCount()}</Label>
                                                     Show Current Selection
                                                 </Menu.Item>

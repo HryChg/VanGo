@@ -110,7 +110,7 @@ export class MapContainer extends React.Component {
                 initialCenter={this.props.center ? this.props.center : this.props.mapContainer.currentCenter}
                 center={this.props.center ? this.props.center : this.props.mapContainer.currentCenter}
                 onClick={this.onMapClicked}
-                onDragend={this.centerMoved}
+                onCenterChanged={this.centerMoved}
             >
                 {this.props.children}
                 <MapInfoWindowContainer

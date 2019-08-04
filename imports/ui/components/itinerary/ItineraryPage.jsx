@@ -281,7 +281,7 @@ class ItineraryPage extends React.Component {
                                     <div id="it-date-toggle">
                                         <Menu inverted attached icon>
                                             <Menu.Item
-                                                onClick={this.props.showPanel}>
+                                                onClick={this.props.visible ? null : this.props.showPanel}>
                                                 <Icon name="calendar"/>
                                             </Menu.Item>
                                         </Menu>
