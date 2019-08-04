@@ -30,7 +30,7 @@ class ItineraryDatePanel extends React.Component {
                 fitted='horizontally'
                 onClick={() => {
                     this.props.selectID(itinerary._id);
-                    this.getSelectedLatLonCenter(itinerary);
+                    this.getSelectedLatLonCenter(itinerary); // recenters map when new itinerary is selected
                 }}
             >
                 <div className="it-date">{this.getDisplayName(itinerary)}

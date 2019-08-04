@@ -7,10 +7,10 @@ import uniqid from 'uniqid';
 
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
-import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import {handleOnMarkerClick, updateMapCenter} from "../../actions/mapContainerActions";
 import {saveItinerary, resetEditPage} from "../../actions/editPageActions";
 import {selectID, editingItinerary} from "../../actions/itineraryActions";
-import {formatAMPM} from "../../../util/util";
+import {formatAMPM, getLatLonCenterOfEvents} from "../../../util/util";
 import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import {downloadPdf} from './ItineraryPdf';
@@ -58,6 +58,10 @@ class EditPage extends React.Component {
         this.state = {
             nameInput: this.getName()
         }
+    }
+
+    componentWillMount() {
+        this.getSelectedLatLonCenter();
     }
 
     componentWillUnmount() {
@@ -159,6 +163,18 @@ class EditPage extends React.Component {
                            placeholder={"Give it a name..."}
             />);
         }
+    }
+
+    // EFFECTS: returns center of map based on given itinerary
+    getSelectedLatLonCenter() {
+        let items = this.selectItems();
+        if (!items) return null;
+        let center = getLatLonCenterOfEvents(items);
+        if (center) {
+            this.props.updateMapCenter(center);
+            return center;
+        }
+        return null;
     }
 
     // EFFECTS: display markers base on events in draggable items
@@ -284,6 +300,7 @@ class EditPage extends React.Component {
                                 <MapContainer 
                                     width={'98%'} 
                                     height={'100%'}
+                                    center={this.props.currentCenter}
                                     ignore={this.state.nameInput}
                                 >
                                     {this.displayMarkers()}
@@ -303,7 +320,8 @@ const mapStateToProps = (state) => {
         draggableItems: state.draggableItems,
         datePicker: state.datePicker,
         saved: state.draggableItems.saved,
-        editing: state.itineraryStore.editing
+        editing: state.itineraryStore.editing,
+        currentCenter: state.mapContainer.currentCenter 
     };
 };
 
@@ -312,5 +330,6 @@ export default connect(mapStateToProps, {
     saveItinerary: saveItinerary,
     resetEditPage: resetEditPage,
     editingItinerary: editingItinerary,
-    selectID: selectID
+    selectID: selectID,
+    updateMapCenter
 })(EditPage);

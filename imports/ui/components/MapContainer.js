@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import debounceRender from 'react-debounce-render';
 
 const googleMapsApiKey = Meteor.settings.public.googleMapsApiKey;
-import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue, setMapLoadedFalse, updateMapCenter} from "../actions/mapContainerActions";
+import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue, setMapLoadedFalse} from "../actions/mapContainerActions";
 import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import {Button} from "semantic-ui-react";
 import {showPanel} from '../actions/panelActions';
@@ -42,14 +42,6 @@ export class MapContainer extends React.Component {
             this.props.handleOnMapClicked();
         }
     };
-
-    centerMoved = (props, map) => {
-        let latlng = map.getCenter();
-        if (!latlng) return null;
-        let lat = latlng.lat();
-        let lng = latlng.lng();
-        this.props.updateMapCenter({lat: lat, lng: lng});
-    }
 
     onSaveEventClick = () => {
         // get EventID from marker
@@ -103,15 +95,13 @@ export class MapContainer extends React.Component {
         const mapContainerStore = this.props.mapContainer;
         return (
             <Map
-                onReady={() => {console.log("ready")}}
-                // onIdle={this.handleMapIdle}
+                onReady={this.props.setMapLoadedTrue}
                 google={this.props.google}
                 zoom={14}
                 style={mapStyle}
                 initialCenter={this.props.center ? this.props.center : this.props.mapContainer.currentCenter}
                 center={this.props.center ? this.props.center : this.props.mapContainer.currentCenter}
                 onClick={this.onMapClicked}
-                onCenterChanged={this.centerMoved}
             >
                 {this.props.children}
                 <MapInfoWindowContainer
@@ -157,6 +147,5 @@ export default connect(mapStateToProps, {
     setMapLoadedTrue: setMapLoadedTrue,
     setMapLoadedFalse,
     loadEventDrawer,
-    showPanel,
-    updateMapCenter
+    showPanel
 })(debouncedMapContainer);
