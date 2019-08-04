@@ -65,8 +65,8 @@ class AppRouter extends React.Component {
                 <Route path="/profile/" component={ProfilePage}/>
                 <Route path="/edit/" component={EditPage}/>
                 <Route path="/itinerary/" exact component={ItineraryPageContainer}/>
-                <Route path="/itinerary/edit/" component={HomePage}/>
-                <Route path="/itinerary/edit/2/" component={EditPage}/>
+                <Route path="/itinerary/edit/" exact component={HomePage}/>
+                <Route path="/itinerary/edit/2/" exact component={EditPage}/>
                 <Route path="/login/" component={LoginPage}/>
                 <Route path="/register/" component={RegistrationPage}/>
                 <Route path="/logout/" component={HomePage}/>
