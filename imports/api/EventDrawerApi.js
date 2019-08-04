@@ -84,7 +84,7 @@ if (Meteor.isServer) {
             }
 
             if (containsItem(items, itemToBeSaved)) {
-                throw new Meteor.Error(`saveToCurrentUserData(): item "${itemToBeSaved.name}}" is already in user's event drawer. Will not be added again`);
+                throw new Meteor.Error(`"${itemToBeSaved.name}" is already in event drawer.`);
             } else {
                 items.push(itemToBeSaved);
                 console.log(`saveToCurrentUserData(): item "${itemToBeSaved.name}}" added to user drawer`);
