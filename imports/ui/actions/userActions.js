@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
+import { batch } from 'react-redux';
+import { changeDate } from './datePickerActions.js';
+import { editingItinerary } from './itineraryActions.js';
 
 // Field updates
 export const updateLoginField = (event) => {
@@ -78,7 +80,11 @@ export const logout = () => {
             if (err) {
                 console.log(err);
             } else {
-                dispatch(logoutRequest());
+                batch(() => {
+                    dispatch(editingItinerary(false));
+                    dispatch(changeDate(new Date()));
+                    dispatch(logoutRequest());
+                })
             }
         });
     }

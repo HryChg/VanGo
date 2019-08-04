@@ -10,10 +10,10 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {loadCurrentEvents} from './../../actions/currentEventsActions';
+import {filterPrice} from "../../actions/eventFilterActions";
 import {showPanel, hidePanel} from './../../actions/panelActions';
-import {loadEventDrawer} from './../../actions/draggableItemsActions';
 import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/homePageActions";
-import {formatAMPM} from "../../../util/util";
+import {formatAMPM, getMaxPrice} from "../../../util/util";
 
 class HomePage extends React.Component {
     // Don't update when date changes as If the date doesn't change, don't update
@@ -26,10 +26,17 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        Meteor.call('updateEvents', this.props.selectedDate, (err, res) => {
+        let date;
+        if (this.props.location.pathname !== "/logout/") {
+            date = this.props.selectedDate;    
+        } else {
+            date = new Date();
+        }
+        Meteor.call('updateEvents', date, (err, res) => {
             if (err) console.log(err);
             this.props.loadCurrentEvents(res);
-        })
+            this.setMaxPrice(res);
+        })    
         if (this.props.editing) {
             this.props.showPanel();
         }
@@ -104,6 +111,11 @@ class HomePage extends React.Component {
         } else {
             return 0;
         }
+    }
+
+    setMaxPrice(events) {
+        let maxPrice = getMaxPrice(events);
+        this.props.filterPrice([0, maxPrice? maxPrice: 0]);
     }
 
     // EFFECTS: create a marker based on an attraction
@@ -211,7 +223,7 @@ class HomePage extends React.Component {
                                             {this.toggleEditHeader()}
                                             {this.toggleDatePicker()}
                                             <div className={"EventFilterContainer"}>
-                                                <EventFilter items={this.props.currentEvents}/>
+                                                <EventFilter/>
                                             </div>
 
                                             <Menu vertical fluid={true}>
@@ -281,5 +293,5 @@ export default connect(mapStateToProps, {
     showPanel,
     hidePanel,
     loadCurrentEvents,
-    loadEventDrawer
+    filterPrice
 })(HomePage);

@@ -17,6 +17,7 @@ if (Meteor.isServer) {
         },
 
         'updateEvents': async (date) => {
+            console.log(date)
             // var dbEvents = CurrentEvents.find();
             // for (event of eventsToday.events) {
             //     CurrentEvents.insert(event);
@@ -27,13 +28,6 @@ if (Meteor.isServer) {
                 CurrentEvents.insert(event)
             }
             return await CurrentEvents.find().fetch();
-
-            // let yelp = new YelpAttractionsApi();
-            // let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
-            // let attractions = convertBusinessesToAttractions(res);
-            // for (let attraction of attractions) {
-            //     CurrentEvents.insert(attraction);
-            // }
         }
     });
 }

@@ -11,7 +11,6 @@ import { toggleCategoryInArray } from "../../../util/util";
 import { debounce } from 'lodash';
 
 class EventFilter extends React.PureComponent {
-
     // REQUIRES: input must be a valid Yelp category
     // EFFECTS: handle value sent from the toggles.
     //          If toggleText exist in either categories or price range,
@@ -57,19 +56,6 @@ class EventFilter extends React.PureComponent {
         this.props.updateCategories(newCategories);
     };
 
-    // EFFECTS: stores max price range into state
-    setMaxPrice() {
-        let maxPrice = this.getMaxPrice();
-        this.props.filterPrice([0, maxPrice? maxPrice: 0]);
-    }
-
-    //EFFECTS: Returns the max price of all loaded events for the day
-    getMaxPrice() {
-        if (!Array.isArray(this.props.items) || !this.props.items.length) return 0;
-        let maxPrice = Math.max.apply(Math, this.props.items.map(item => { return item.price }));
-        return maxPrice;
-    }
-
     //EFFECTS: formats and displays price range
     // if the lower and upper bounds are equal, display one value
     displayPrice(priceRange) {
@@ -87,7 +73,6 @@ class EventFilter extends React.PureComponent {
     }
 
     render() {
-        let maxPrice = this.getMaxPrice();
         return (
             <div className={""}>
                 <Grid>
@@ -114,9 +99,9 @@ class EventFilter extends React.PureComponent {
                                 </span>
                             </h4>
                             <Slider multiple color="red" settings={{
-                                start: [this.props.eventFilter.priceRange[0], maxPrice +10],
+                                start: [this.props.eventFilter.priceRange[0], this.props.eventFilter.priceRange[1] +10],
                                 min: 0,
-                                max: maxPrice + 10,
+                                max: this.props.eventFilter.priceRange[1] + 10,
                                 step: 1,
                                 onChange: debounce((value) => {
                                     this.props.filterPrice(value)
@@ -134,6 +119,7 @@ class EventFilter extends React.PureComponent {
 const mapStateToProps = (state) => {
     return { 
         eventFilter: state.eventFilter,
+        items: state.currentEventsStore.currentEvents,
     };
 };
 

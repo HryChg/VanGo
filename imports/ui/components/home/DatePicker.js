@@ -6,10 +6,12 @@ import {Popup, Icon, Button} from 'semantic-ui-react';
 import { changeDate, toggleConfirmWindow, confirm, cancel } from '../../actions/datePickerActions';
 import {loadCurrentEvents} from './../../actions/currentEventsActions';
 import {clearDrawerItems} from './../../actions/draggableItemsActions';
+import {filterPrice} from "../../actions/eventFilterActions";
 import { CalledDates } from '../../../api/CalledDates';
 import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
 import {showDimmer} from "../../actions/homePageActions";
+import {getMaxPrice} from "../../../util/util";
 
 
 class DatePicker extends React.PureComponent {
@@ -51,9 +53,15 @@ class DatePicker extends React.PureComponent {
             Meteor.call('updateEvents', value, (err, res) => {
                 if (err) console.log(err);
                 this.props.loadCurrentEvents(res);
+                this.setMaxPrice(res);
             })
         }
     };
+
+    setMaxPrice(events) {
+        let maxPrice = getMaxPrice(events);
+        this.props.filterPrice([0, maxPrice? maxPrice: 0]);
+    }
 
     render() {
         return (
@@ -92,5 +100,6 @@ export default connect(mapStateToProps, {
     cancel,
     loadCurrentEvents,
     clearDrawerItems,
-    showDimmer
+    showDimmer,
+    filterPrice
 })(DatePicker);

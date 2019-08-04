@@ -2,7 +2,7 @@
 import React from 'react';
 import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 import { logout, setLoginState } from '../actions/userActions.js';
-import { connect } from 'react-redux';
+import { connect, batch } from 'react-redux';
 import { Meteor } from 'meteor/meteor';
 import { Menu, Icon } from 'semantic-ui-react';
 
@@ -13,7 +13,6 @@ import HomePage from "./home/HomePage";
 import RegistrationPage from './user/RegistrationPage';
 
 import { editingItinerary } from '../actions/itineraryActions';
-import { changeDate } from '../actions/datePickerActions';
 
 // This part routes to "different pages"
 function ProfilePage() {
@@ -40,10 +39,8 @@ class AppRouter extends React.Component {
                     }}>Saved Itineraries
                     </Menu.Item>
                     <Menu.Item as={NavLink} to="/logout/" onClick={() => {
-                        this.props.editingItinerary(false);
-                        this.props.changeDate(new Date());
-                        this.props.logout();
-                        }}>
+                        this.props.logout();    
+                    }}>
                         Logout
                     </Menu.Item>
                 </Menu>
@@ -83,4 +80,4 @@ const mapStateToProps = (state) => {
     });
 }
 
-export default connect(mapStateToProps, { logout, setLoginState, editingItinerary, changeDate })(AppRouter);
+export default connect(mapStateToProps, { logout, setLoginState, editingItinerary })(AppRouter);

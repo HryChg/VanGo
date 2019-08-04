@@ -133,3 +133,10 @@ export const getToday = () => {
     date.setMilliseconds(0);
     return date;
 }
+
+// EFFECTS: returns item with the maximum price
+export const getMaxPrice = (items) => {
+    if (!Array.isArray(items) || !items.length) return 0;
+    let maxPrice = Math.max.apply(Math, items.map(item => { return item.price }));
+    return maxPrice;
+} 
