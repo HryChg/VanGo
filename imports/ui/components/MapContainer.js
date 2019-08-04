@@ -83,7 +83,7 @@ export class MapContainer extends Component {
                 style={mapStyle}
                 initialCenter={(this.props.initialCenter) ? this.props.initialCenter : {lat: 49.2820, lng: -123.1171}}
                 onClick={this.onMapClicked}
-                bounds={null}
+                bounds={this.props.bounds}
             >
                 {this.props.children}
                 <MapInfoWindowContainer

@@ -203,6 +203,21 @@ class ItineraryPage extends React.Component {
         return null;
     };
 
+    makeBounds = () => {
+        let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
+        if (selectedItinerary && this.props.mapLoaded) {
+            let bounds = new google.maps.LatLngBounds();
+            let points = selectedItinerary.items.map((item) => {
+                return {lat: item.latitude, lng: item.longitude};
+            });
+            for (let i = 0; i < points.length; i++){
+                bounds.extend(points[i]);
+            }
+            return bounds;
+        }
+        return null;
+    };
+
     // EFFECTS: display path based on the order of items in DraggableItems
     displayPolyLine = () => {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
@@ -291,7 +306,7 @@ class ItineraryPage extends React.Component {
                                         <MapContainer
                                             width={'97.5%'}
                                             height={'101.5%'}
-                                            bounds={null}>
+                                            bounds={this.makeBounds()}>
                                             {this.displayMarkers()}
                                             {this.displayPolyLine()}
                                         </MapContainer>
