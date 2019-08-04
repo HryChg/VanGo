@@ -243,7 +243,7 @@ class HomePage extends React.Component {
                                                           showSaveButton={true}
                                                           ignore={this.props.visible}
                                                           ignore2={this.props.dimmerActive}
-                                                          >
+                                            >
                                                 {this.displayMarkers()}
                                             </MapContainer>
                                         </div>

@@ -94,6 +94,7 @@ export class MapContainer extends React.Component {
     };
 
     render() {
+        console.log(this.props)
         const mapStyle = {
             width: this.props.width,
             height: this.props.height,
