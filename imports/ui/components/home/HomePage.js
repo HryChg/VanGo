@@ -192,7 +192,6 @@ class HomePage extends React.Component {
     };
 
     render() {
-        console.log(this.props)
         return (
             <div>
                 <Sidebar.Pushable>
@@ -242,6 +241,7 @@ class HomePage extends React.Component {
                                                           initialCenter={{lat: 49.2820, lng: -123.1171}}
                                                           showSaveButton={true}
                                                           ignore={this.props.visible}
+                                                          ignoreException={this.props.eventFilter}
                                                           ignore2={this.props.dimmerActive}
                                             >
                                                 {this.displayMarkers()}

@@ -19,13 +19,15 @@ import {loadEventDrawer} from '../actions/draggableItemsActions';
 
 export class MapContainer extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.ignoreException !== nextProps.ignoreException) {
+            return true;
+        }
         let ignoreParentPropChange = this.props.ignore !== nextProps.ignore;
         let ignoreParentPropChange2 = this.props.ignore2 !== nextProps.ignore2;
         if (ignoreParentPropChange || ignoreParentPropChange2) {
             return false;
-        } else {
-            return true;
-        }
+        } 
+        return true;
     }
 
     componentWillUnmount() {
@@ -86,7 +88,6 @@ export class MapContainer extends React.Component {
     };
 
     render() {
-        console.log(this.props)
         const mapStyle = {
             width: this.props.width,
             height: this.props.height,
