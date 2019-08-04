@@ -84,7 +84,6 @@ export const logout = () => {
             } else {
                 batch(() => {
                     dispatch(editingItinerary(false));
-                    dispatch(changeDate(new Date()));
                     dispatch(logoutRequest());
                 })
             }

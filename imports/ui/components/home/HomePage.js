@@ -10,6 +10,7 @@ import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
+import {changeDate} from "../../actions/datePickerActions";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {loadCurrentEvents} from './../../actions/currentEventsActions';
 import {filterPrice} from "../../actions/eventFilterActions";
@@ -30,16 +31,17 @@ class HomePage extends React.Component {
     componentDidMount() {
         // set default date to today if not editing
         let date;
-        if (this.props.editing) {
-            date = this.props.selectedDate;
-        } else {
+        if (!this.props.editing || this.props.location.pathname === "/logout/") {
             date = new Date();
+            this.props.changeDate(date);
+        } else {
+            date = this.props.selectedDate;
         }
         Meteor.call('updateEvents', date, (err, res) => {
             if (err) console.log(err);
             this.props.loadCurrentEvents(res);
             this.setMaxPrice(res);
-        })    
+        })
         if (this.props.editing) {
             this.props.showPanel();
         }
@@ -302,5 +304,6 @@ export default connect(mapStateToProps, {
     showPanel,
     hidePanel,
     loadCurrentEvents,
-    filterPrice
+    filterPrice,
+    changeDate
 })(HomePage);
