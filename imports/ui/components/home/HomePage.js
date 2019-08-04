@@ -92,7 +92,7 @@ class HomePage extends React.Component {
     toggleSaveButton() {
         if (this.displaySelectionCount()) {
             if (this.props.editing) {
-                return (<Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/itinerary/edit/2/">
+                return (<Button fluid className="redirect-to-itinerary blue" as={NavLink} exact to="/itinerary/edit/2/">
                     {"Review & Save"}
                 </Button>);
             } else {
