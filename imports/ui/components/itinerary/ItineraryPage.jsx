@@ -305,8 +305,8 @@ class ItineraryPage extends React.Component {
                                         style={{width: '50vw', height: '100vh'}}
                                     >
                                         <MapContainer 
-                                            width={'97.5%'} 
-                                            height={'101.5%'} 
+                                            width={'98%'} 
+                                            height={'100%'} 
                                             center={this.props.currentCenter}
                                             ignore={this.props.visible}
                                         >

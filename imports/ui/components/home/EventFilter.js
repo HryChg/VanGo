@@ -7,7 +7,7 @@ import { Grid } from 'semantic-ui-react';
 
 import Toggle from "../Toggle";
 import { updateCategories, filterPrice, filterPriceByEntry } from "../../actions/eventFilterActions";
-import { toggleCategoryInArray } from "../../../util/util";
+import { toggleCategoryInArray, getMaxPrice } from "../../../util/util";
 import { debounce } from 'lodash';
 
 class EventFilter extends React.PureComponent {
@@ -101,7 +101,7 @@ class EventFilter extends React.PureComponent {
                             <Slider multiple color="red" settings={{
                                 start: [this.props.eventFilter.priceRange[0], this.props.eventFilter.priceRange[1] +10],
                                 min: 0,
-                                max: this.props.eventFilter.priceRange[1] + 10,
+                                max: getMaxPrice(this.props.items) + 10,
                                 step: 1,
                                 onChange: debounce((value) => {
                                     this.props.filterPrice(value)
