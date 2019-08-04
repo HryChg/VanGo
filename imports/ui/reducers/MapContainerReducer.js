@@ -7,6 +7,7 @@ let initialState = {
 };
 
 export default function MapContainerReducer(state = initialState, action) {
+    console.log(action.type);
     switch(action.type) {
         case 'ON_MARKER_CLICK':
             return {
@@ -50,6 +51,14 @@ export default function MapContainerReducer(state = initialState, action) {
                 activeMarker: state.activeMarker,
                 selectedPlace: state.selectedPlace
             }
+        case 'SET_MAP_LOADED_FALSE':
+                return {
+                    currentCenter: state.currentCenter,
+                    mapLoaded: false,
+                    showingInfoWindow: state.showingInfoWindow,
+                    activeMarker: state.activeMarker,
+                    selectedPlace: state.selectedPlace
+                }
         case 'CHANGE_DATE':
         case 'UPDATE_FILTERS':
         case 'FILTER_PRICE':

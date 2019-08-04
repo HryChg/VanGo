@@ -3,14 +3,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Slider } from "react-semantic-ui-range";
-import { Grid, Input } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 import Toggle from "../Toggle";
 import { updateCategories, filterPrice, filterPriceByEntry } from "../../actions/eventFilterActions";
 import { toggleCategoryInArray } from "../../../util/util";
 import { debounce } from 'lodash';
 
-class EventFilter extends React.Component {
+class EventFilter extends React.PureComponent {
 
     // REQUIRES: input must be a valid Yelp category
     // EFFECTS: handle value sent from the toggles.
@@ -59,8 +59,8 @@ class EventFilter extends React.Component {
 
     // EFFECTS: stores max price range into state
     setMaxPrice() {
-        maxPrice = this.getMaxPrice();
-        this.props.filterPrice([0, maxPrice]);
+        let maxPrice = this.getMaxPrice();
+        this.props.filterPrice([0, maxPrice? maxPrice: 0]);
     }
 
     //EFFECTS: Returns the max price of all loaded events for the day
@@ -78,7 +78,7 @@ class EventFilter extends React.Component {
         if (upperBound < 0) {
             upperBound = 0;
         } else {
-            upperBound = this.getMaxPrice();
+            upperBound = priceRange[1];
         }
         if (lowerBound === upperBound) {
             return "$" + lowerBound;
@@ -87,7 +87,7 @@ class EventFilter extends React.Component {
     }
 
     render() {
-        const maxPrice = this.getMaxPrice();
+        let maxPrice = this.getMaxPrice();
         return (
             <div className={""}>
                 <Grid>
@@ -113,9 +113,6 @@ class EventFilter extends React.Component {
                                     {this.displayPrice(this.props.eventFilter.priceRange)}
                                 </span>
                             </h4>
-                            {/* <Input placeholder="Enter Value" onChange={(e) => {this.props.filterPriceByEntry(e)}} />
-                                to
-                            <Input placeholder="Enter Value" onChange={(e) => {this.props.filterPriceByEntry(e)}} /> */}
                             <Slider multiple color="red" settings={{
                                 start: [this.props.eventFilter.priceRange[0], maxPrice +10],
                                 min: 0,

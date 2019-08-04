@@ -40,6 +40,15 @@ class HomePage extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        Object.entries(this.props).forEach(([key, val]) =>
+          prevProps[key] !== val && console.log(`Prop '${key}' changed`)
+        );
+        // Object.entries(this.state).forEach(([key, val]) =>
+        //   prevState[key] !== val && console.log(`State '${key}' changed`)
+        // );
+      }
+
     // EFFECTS: renders name and logo; if edit state, renders editing title
     toggleEditHeader() {
         if (this.props.editing) {
@@ -185,6 +194,7 @@ class HomePage extends React.Component {
     };
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 <Sidebar.Pushable>
@@ -232,7 +242,10 @@ class HomePage extends React.Component {
                                             <MapContainer width={'98%'}
                                                           height={'100%'}
                                                           initialCenter={{lat: 49.2820, lng: -123.1171}}
-                                                          showSaveButton={true}>
+                                                          showSaveButton={true}
+                                                          ignore={this.props.visible}
+                                                          ignore2={this.props.dimmerActive}
+                                                          >
                                                 {this.displayMarkers()}
                                             </MapContainer>
                                         </div>

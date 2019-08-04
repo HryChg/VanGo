@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import debounceRender from 'react-debounce-render';
 
 const googleMapsApiKey = Meteor.settings.public.googleMapsApiKey;
-import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue, updateMapCenter} from "../actions/mapContainerActions";
+import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue, setMapLoadedFalse, updateMapCenter} from "../actions/mapContainerActions";
 import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import {Button} from "semantic-ui-react";
 import {showPanel} from '../actions/panelActions';
@@ -20,13 +20,16 @@ import {loadEventDrawer} from '../actions/draggableItemsActions';
 export class MapContainer extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         let ignoreParentPropChange = this.props.ignore !== nextProps.ignore;
-        // Current center changes with new page -- may not be a good idea
-        // let ignoreChangeInMapCenter = this.props.mapContainer.currentCenter !== nextProps.mapContainer.currentCenter;
-        if (ignoreParentPropChange) {
+        let ignoreParentPropChange2 = this.props.ignore2 !== nextProps.ignore2;
+        if (ignoreParentPropChange || ignoreParentPropChange2) {
             return false;
         } else {
             return true;
         }
+    }
+
+    componentWillUnmount() {
+        this.props.setMapLoadedFalse();
     }
 
     handleMapIdle = () => {
@@ -99,7 +102,8 @@ export class MapContainer extends React.Component {
         const mapContainerStore = this.props.mapContainer;
         return (
             <Map
-                onIdle={this.handleMapIdle}
+                onReady={() => {console.log("ready")}}
+                // onIdle={this.handleMapIdle}
                 google={this.props.google}
                 zoom={14}
                 style={mapStyle}
@@ -150,6 +154,7 @@ export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
     handleOnMarkerClick: handleOnMarkerClick,
     setMapLoadedTrue: setMapLoadedTrue,
+    setMapLoadedFalse,
     loadEventDrawer,
     showPanel,
     updateMapCenter
