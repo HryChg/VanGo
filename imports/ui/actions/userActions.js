@@ -47,8 +47,10 @@ export const login = (email, password) => {
                 console.log(err);
                 dispatch(loginFailure(err));
             } else {
-                dispatch(loginSuccess());
-                dispatch(clearField());
+                batch(() => {
+                    dispatch(loginSuccess());
+                    dispatch(clearField());
+                })
             }
         });
     }

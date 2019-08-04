@@ -28,9 +28,10 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
+        // set default date to today if not editing
         let date;
-        if (this.props.location.pathname !== "/logout/") {
-            date = this.props.selectedDate;    
+        if (this.props.editing) {
+            date = this.props.selectedDate;
         } else {
             date = new Date();
         }
