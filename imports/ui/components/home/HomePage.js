@@ -241,8 +241,9 @@ class HomePage extends React.Component {
                                                           initialCenter={{lat: 49.2820, lng: -123.1171}}
                                                           showSaveButton={true}
                                                           ignore={this.props.visible}
-                                                          ignoreException={this.props.eventFilter}
                                                           ignore2={this.props.dimmerActive}
+                                                          ignoreException={this.props.eventFilter}
+                                                          ignoreException2={this.props.homePage.toggleNearbyAttractions}
                                             >
                                                 {this.displayMarkers()}
                                             </MapContainer>
