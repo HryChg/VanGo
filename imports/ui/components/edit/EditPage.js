@@ -65,7 +65,6 @@ class EditPage extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.editingItinerary(false);
         this.props.resetEditPage();
     }
 
@@ -271,6 +270,7 @@ class EditPage extends React.Component {
 
     render() {
         if (this.props.saved) {
+            this.props.editingItinerary(false);
             return (<Redirect exact to='/itinerary'/>);
         } else {
             return (

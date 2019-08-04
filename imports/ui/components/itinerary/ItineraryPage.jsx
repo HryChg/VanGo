@@ -256,6 +256,7 @@ class ItineraryPage extends React.Component {
     // EFFECTS: If itinerary is being edited, redirect to home page; otherwise, display itinerary page
     render() {
         if (this.props.editing) {
+            console.log("redirected...")
             return (<Redirect exact to='/itinerary/edit/'/>);
         }
         return (
