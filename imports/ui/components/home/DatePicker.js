@@ -2,16 +2,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Calendar from 'react-calendar';
-import {Popup, Icon, Button} from 'semantic-ui-react';
+import {Icon} from 'semantic-ui-react';
 import { changeDate, toggleConfirmWindow, confirm, cancel } from '../../actions/datePickerActions';
-import {loadCurrentEvents} from './../../actions/currentEventsActions';
+import {updateToCurrentEvents} from './../../actions/currentEventsActions';
 import {clearDrawerItems} from './../../actions/draggableItemsActions';
-import {filterPrice} from "../../actions/eventFilterActions";
 import { CalledDates } from '../../../api/CalledDates';
 import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
 import {showDimmer} from "../../actions/homePageActions";
-import {getMaxPrice} from "../../../util/util";
 
 
 class DatePicker extends React.PureComponent {
@@ -24,10 +22,7 @@ class DatePicker extends React.PureComponent {
 
         let value = this.state.tempDate;
         this.props.changeDate(value);
-        Meteor.call('updateEvents', value, (err, res) => {
-            if (err) console.log(err);
-            this.props.loadCurrentEvents(res);
-        })
+        this.props.updateToCurrentEvents(value);
         Meteor.call('clearDrawer', (err, res) => {
             if (err) console.log(err);
             this.props.clearDrawerItems();
@@ -50,18 +45,9 @@ class DatePicker extends React.PureComponent {
             this.setState({tempDate: value});
             this.props.changeDate(value);
             CalledDates.insert({date: value});
-            Meteor.call('updateEvents', value, (err, res) => {
-                if (err) console.log(err);
-                this.props.loadCurrentEvents(res);
-                this.setMaxPrice(res);
-            })
+            this.props.updateToCurrentEvents(value);
         }
     };
-
-    setMaxPrice(events) {
-        let maxPrice = getMaxPrice(events);
-        this.props.filterPrice([0, maxPrice? maxPrice: 0]);
-    }
 
     render() {
         return (
@@ -98,8 +84,7 @@ export default connect(mapStateToProps, {
     toggleConfirmWindow,
     confirm,
     cancel,
-    loadCurrentEvents,
+    updateToCurrentEvents,
     clearDrawerItems,
-    showDimmer,
-    filterPrice
+    showDimmer
 })(DatePicker);

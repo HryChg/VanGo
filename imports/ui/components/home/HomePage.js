@@ -12,11 +12,10 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {changeDate} from "../../actions/datePickerActions";
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
-import {loadCurrentEvents} from './../../actions/currentEventsActions';
-import {filterPrice} from "../../actions/eventFilterActions";
+import {updateToCurrentEvents} from './../../actions/currentEventsActions';
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/homePageActions";
-import {formatAMPM, getMaxPrice} from "../../../util/util";
+import {formatAMPM} from "../../../util/util";
 
 class HomePage extends React.Component {
     // Don't update when date changes as If the date doesn't change, don't update
@@ -29,7 +28,7 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        // set default date to today if not editing
+        // Retrieve events for default date or selected date
         let date;
         if (!this.props.editing || this.props.location.pathname === "/logout/") {
             date = new Date();
@@ -37,12 +36,10 @@ class HomePage extends React.Component {
         } else {
             date = this.props.selectedDate;
         }
-        Meteor.call('updateEvents', date, (err, res) => {
-            if (err) console.log(err);
-            this.props.loadCurrentEvents(res);
-            this.setMaxPrice(res);
-        })
-        if (this.props.editing) {
+        this.props.updateToCurrentEvents(date);
+
+        // Show when editing
+        if (this.props.location.pathname.includes("/itinerary/edit/")) {
             this.props.showPanel();
         }
     }
@@ -50,7 +47,7 @@ class HomePage extends React.Component {
     // EFFECTS: Debug - Prints which prop was updated
     componentDidUpdate(prevProps, prevState) {
         Object.entries(this.props).forEach(([key, val]) =>
-          prevProps[key] !== val && console.log(`Prop '${key}' changed`)
+          prevProps[key] !== val && console.log(`Prop '${key}' changed '${prevProps[key]}'`)
         );
     }
 
@@ -122,11 +119,6 @@ class HomePage extends React.Component {
         } else {
             return 0;
         }
-    }
-
-    setMaxPrice(events) {
-        let maxPrice = getMaxPrice(events);
-        this.props.filterPrice([0, maxPrice? maxPrice: 0]);
     }
 
     // EFFECTS: create a marker based on an attraction
@@ -210,6 +202,7 @@ class HomePage extends React.Component {
     };
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 <Sidebar.Pushable>
@@ -303,7 +296,6 @@ export default connect(mapStateToProps, {
     showDimmer,
     showPanel,
     hidePanel,
-    loadCurrentEvents,
-    filterPrice,
+    updateToCurrentEvents,
     changeDate
 })(HomePage);

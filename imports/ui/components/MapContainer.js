@@ -37,10 +37,6 @@ export class MapContainer extends React.Component {
         this.props.setMapLoadedFalse();
     }
 
-    handleMapIdle = () => {
-        this.props.setMapLoadedTrue();
-    };
-
     // EFFECTS: close InfoWindow when clicking on map area
     onMapClicked = (props) => {
         if (this.props.mapContainer.showingInfoWindow) {
@@ -143,7 +139,7 @@ const apiWrapper = GoogleApiWrapper({apiKey: googleMapsApiKey})(MapContainer);
 
 // Possible fix but timeout needs to be 750 ms+ (slow)
 // The issue with this is that info window is also slow to load
-const debouncedMapContainer = debounceRender(apiWrapper, 250, {leading: false, trailing: true});
+const debouncedMapContainer = debounceRender(apiWrapper, 200, {leading: false, trailing: true});
 
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,

@@ -15,7 +15,7 @@ import ItineraryList from './ItineraryList';
 
 import { updateMapCenter } from './../../actions/mapContainerActions';
 import { selectID, editingItinerary, loadItineraries } from './../../actions/itineraryActions';
-import { loadCurrentEvents } from './../../actions/currentEventsActions';
+import { updateToCurrentEvents } from './../../actions/currentEventsActions';
 import { changeDate } from './../../actions/datePickerActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM, sortByDateName, getToday, getLatLonCenterOfEvents } from "../../../util/util";
@@ -125,10 +125,7 @@ class ItineraryPage extends React.Component {
                         this.props.editingItinerary(true);
                         let date = this.getDateFromID(this.props.selectedID)
                         this.props.changeDate(date);
-                        Meteor.call('updateEvents', date, (err, res) => {
-                            if (err) console.log(err);
-                            this.props.loadCurrentEvents(res);
-                        })
+                        this.props.updateToCurrentEvents(date);
                     }}>
                         <Icon name={"pencil"} size={"large"} color={"black"}/>
                     </Button>
@@ -346,5 +343,5 @@ export default connect(mapStateToProps,
         changeDate, 
         loadItineraries, 
         updateMapCenter, 
-        loadCurrentEvents }
+        updateToCurrentEvents }
 )(debouncedItineraryPage);
