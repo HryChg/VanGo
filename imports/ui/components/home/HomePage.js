@@ -1,3 +1,5 @@
+// Reference: https://stackoverflow.com/questions/41004631/trace-why-a-react-component-is-re-rendering/41005168
+
 import React from 'react';
 import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
@@ -43,11 +45,11 @@ class HomePage extends React.Component {
     }
 
     // EFFECTS: Debug - Prints which prop was updated
-    componentDidUpdate(prevProps, prevState) {
-        Object.entries(this.props).forEach(([key, val]) =>
-          prevProps[key] !== val && console.log(`Prop '${key}' changed`)
-        );
-    }
+    // componentDidUpdate(prevProps, prevState) {
+    //     Object.entries(this.props).forEach(([key, val]) =>
+    //       prevProps[key] !== val && console.log(`Prop '${key}' changed`)
+    //     );
+    // }
 
     // EFFECTS: renders name and logo; if edit state, renders editing title
     toggleEditHeader() {
@@ -89,9 +91,15 @@ class HomePage extends React.Component {
     //          otherwise, renders unclickable button
     toggleSaveButton() {
         if (this.displaySelectionCount()) {
-            return (<Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
-                {"Review & Save"}
-            </Button>);
+            if (this.props.editing) {
+                return (<Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/itinerary/edit/2/">
+                    {"Review & Save"}
+                </Button>);
+            } else {
+                return (<Button fluid className="redirect-to-itinerary blue" as={NavLink} to="/edit/">
+                    {"Review & Save"}
+                </Button>);
+            }
         } else {
             return (<Button fluid disabled className="redirect-to-itinerary" as={NavLink} to="/edit/">
                 {"Review & Save"}

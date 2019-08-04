@@ -73,6 +73,9 @@ https://reacttraining.com/react-router/web/guides/quick-start
 React Calendar
 https://www.npmjs.com/package/react-calendar
 
+Debug Tool: Tracing why a react component is re-rendering
+https://stackoverflow.com/questions/41004631/trace-why-a-react-component-is-re-rendering/41005168
+
 ##### React Google Map
 React Google Map API Tutorial
 https://dev.to/jessicabetts/how-to-use-google-maps-api-and-react-js-26c2
