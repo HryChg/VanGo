@@ -21,7 +21,8 @@ export class MapContainer extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         let exception1 = this.props.ignoreException !== nextProps.ignoreException;
         let exception2 = this.props.ignoreException2 !== nextProps.ignoreException2;
-        if (exception1 || exception2) {
+        let exception3 = this.props.mapContainer.showingInfoWindow !== nextProps.mapContainer.showingInfoWindow;
+        if (exception1 || exception2 || exception3) {
             return true;
         }
         let ignoreParentPropChange = this.props.ignore !== nextProps.ignore;
