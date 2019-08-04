@@ -1,7 +1,7 @@
 let initialState = {
     mapLoaded: false,
     showingInfoWindow: false,
-    currentCenter: {lat: 49.2820, lng: -123.1171},
+    currentCenter: {lat: 49.2820, lng: -123.1171}, // initial center for page
     activeMarker: {},
     selectedPlace: {}
 };
@@ -52,15 +52,6 @@ export default function MapContainerReducer(state = initialState, action) {
                 selectedPlace: state.selectedPlace
             }
         case 'SET_MAP_LOADED_FALSE':
-<<<<<<< HEAD
-                return {
-                    currentCenter: state.currentCenter,
-                    mapLoaded: false,
-                    showingInfoWindow: state.showingInfoWindow,
-                    activeMarker: state.activeMarker,
-                    selectedPlace: state.selectedPlace
-                }
-=======
             return {
                 currentCenter: state.currentCenter,
                 mapLoaded: false,
@@ -68,7 +59,6 @@ export default function MapContainerReducer(state = initialState, action) {
                 activeMarker: state.activeMarker,
                 selectedPlace: state.selectedPlace
             }
->>>>>>> e488f4177d90996057d263e7e77f3f2d4cae1a07
         case 'CHANGE_DATE':
         case 'UPDATE_FILTERS':
         case 'FILTER_PRICE':
