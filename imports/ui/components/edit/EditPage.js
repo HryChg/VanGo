@@ -26,7 +26,7 @@ const assignIconImage = (idx, type, listSize) => {
             url: `https://img.icons8.com/color/${size}/000000/filled-flag.png`,
             size: new google.maps.Size(size, size),
             origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(size/3, size)
+            anchor: new google.maps.Point(size / 3, size)
         };
     } else if (idx === listSize - 1) { // end flag
         image = {
@@ -40,14 +40,14 @@ const assignIconImage = (idx, type, listSize) => {
             url: `https://img.icons8.com/color/${size}/000000/compact-camera.png`,
             size: new google.maps.Size(size, size),
             origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(10, size-10)
+            anchor: new google.maps.Point(10, size - 10)
         };
     } else {
         image = {
             url: `https://img.icons8.com/color/${size}/000000/marker.png`,
             size: new google.maps.Size(size, size),
             origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(size/2, size)
+            anchor: new google.maps.Point(size / 2, size)
         };
     }
     return image
@@ -201,6 +201,20 @@ class EditPage extends React.Component {
         return markers;
     };
 
+    makeBounds = () => {
+        if (this.props.mapLoaded) {
+            let bounds = new google.maps.LatLngBounds();
+            let points = this.selectItems().map((item) => {
+                return {lat: item.latitude, lng: item.longitude};
+            });
+            for (let i = 0; i < points.length; i++) {
+                bounds.extend(points[i]);
+            }
+            return bounds;
+        }
+        return null;
+    };
+
     // EFFECTS: display path based on the order of events in DraggableItems
     displayPolyLine = () => {
         let items = this.selectItems();
@@ -284,7 +298,9 @@ class EditPage extends React.Component {
 
                         <Grid.Column width={12}>
                             <div style={{height: '94vh'}}>
-                                <MapContainer width={'98%'} height={'100%'}>
+                                <MapContainer width={'98%'}
+                                              height={'100%'}
+                                              bounds={this.makeBounds()}>
                                     {this.displayMarkers()}
                                     {this.displayPolyLine()}
                                 </MapContainer>
@@ -302,7 +318,8 @@ const mapStateToProps = (state) => {
         draggableItems: state.draggableItems,
         datePicker: state.datePicker,
         saved: state.draggableItems.saved,
-        editing: state.itineraryStore.editing
+        editing: state.itineraryStore.editing,
+        mapLoaded: state.mapContainer.mapLoaded
     };
 };
 
