@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { Grid, Icon, Menu, Sidebar, Button } from 'semantic-ui-react';
 import { handleOnMarkerClick } from "../../actions/mapContainerActions";
 import { Meteor } from 'meteor/meteor';
+import debounceRender from 'react-debounce-render';
 
 import ItineraryDatePanel from './ItineraryDatePanel';
 import MapContainer from '../MapContainer';
@@ -308,7 +309,6 @@ class ItineraryPage extends React.Component {
                                             height={'101.5%'} 
                                             center={this.props.currentCenter}
                                             ignore={this.props.visible}
-                                            ignoreCenterChange={this.props.currentCenter}
                                         >
                                             {this.displayMarkers()}
                                             {this.displayPolyLine()}
@@ -323,6 +323,8 @@ class ItineraryPage extends React.Component {
         );
     }
 }
+
+const debouncedItineraryPage = debounceRender(ItineraryPage, 100, {leading: false, trailing: true});
 
 const mapStateToProps = (state) => {
     return {
@@ -345,4 +347,4 @@ export default connect(mapStateToProps,
         loadItineraries, 
         updateMapCenter, 
         loadCurrentEvents }
-)(ItineraryPage);
+)(debouncedItineraryPage);

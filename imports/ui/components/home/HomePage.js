@@ -8,7 +8,7 @@ import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
-import {handleOnMarkerClick, resetMapCenter} from "../../actions/mapContainerActions";
+import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {loadCurrentEvents} from './../../actions/currentEventsActions';
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {loadEventDrawer} from './../../actions/draggableItemsActions';
@@ -26,11 +26,6 @@ class HomePage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.resetMapCenter();
-        Meteor.call('getEventDrawer', (err, res) => {
-            if (err) console.log(err);
-            this.props.loadEventDrawer(res);
-        });
         Meteor.call('updateEvents', this.props.selectedDate, (err, res) => {
             if (err) console.log(err);
             this.props.loadCurrentEvents(res);
@@ -40,12 +35,12 @@ class HomePage extends React.Component {
         }
     }
 
-    // EFFECTS: Prints which prop was updated
+    // EFFECTS: Debug - Prints which prop was updated
     componentDidUpdate(prevProps, prevState) {
         Object.entries(this.props).forEach(([key, val]) =>
           prevProps[key] !== val && console.log(`Prop '${key}' changed`)
         );
-      }
+    }
 
     // EFFECTS: renders name and logo; if edit state, renders editing title
     toggleEditHeader() {
@@ -285,7 +280,6 @@ export default connect(mapStateToProps, {
     showDimmer,
     showPanel,
     hidePanel,
-    resetMapCenter,
     loadCurrentEvents,
     loadEventDrawer
 })(HomePage);

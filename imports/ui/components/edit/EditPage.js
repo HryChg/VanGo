@@ -302,6 +302,8 @@ class EditPage extends React.Component {
                                     height={'100%'}
                                     center={this.props.currentCenter}
                                     ignore={this.state.nameInput}
+                                    ignore2={this.props.visible}
+                                    ignoreException={this.props.eventFilter}
                                 >
                                     {this.displayMarkers()}
                                     {this.displayPolyLine()}

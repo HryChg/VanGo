@@ -1,9 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, batch } from 'react-redux';
 import { selectID, loadItineraries } from './../../actions/itineraryActions';
 import { updateMapCenter } from './../../actions/mapContainerActions';
 import { sortByDateName, getLatLonCenterOfEvents } from '../../../util/util';
 import { Menu, Icon } from 'semantic-ui-react';
+import { debounce } from 'lodash';
 
 class ItineraryDatePanel extends React.Component {
     getDisplayName(itinerary) {
@@ -29,8 +30,8 @@ class ItineraryDatePanel extends React.Component {
                 key={itinerary._id}
                 fitted='horizontally'
                 onClick={() => {
-                    this.props.selectID(itinerary._id);
                     this.getSelectedLatLonCenter(itinerary); // recenters map when new itinerary is selected
+                    this.props.selectID(itinerary._id);
                 }}
             >
                 <div className="it-date">{this.getDisplayName(itinerary)}
