@@ -15,7 +15,7 @@ import ItineraryList from './ItineraryList';
 
 import {updateEventDrawer} from '../../actions/draggableItemsActions';
 import { updateMapCenter } from './../../actions/mapContainerActions';
-import { selectID, editingItinerary, loadItineraries } from './../../actions/itineraryActions';
+import { selectID, editingItinerary, loadItineraries, loadItineraryToDrawer } from './../../actions/itineraryActions';
 import { updateToCurrentEvents } from './../../actions/currentEventsActions';
 import { changeDate } from './../../actions/datePickerActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
@@ -124,11 +124,12 @@ class ItineraryPage extends React.Component {
             if (itineraryDate.getTime() >= today.getTime()) {
                 return (
                     <Button className="it-edit" onClick={() => {
-                        Meteor.call('addItineraryToDrawer', this.props.selectedID);
-                        this.props.editingItinerary(true);
-                        let date = this.getDateFromID(this.props.selectedID)
-                        this.props.changeDate(date);
-                        this.props.updateEventDrawer();
+                        this.props.loadItineraryToDrawer(this.props.selectedID);
+                        // Meteor.call('addItineraryToDrawer', this.props.selectedID);
+                        // this.props.editingItinerary(true);
+                        // let date = this.getDateFromID(this.props.selectedID)
+                        // this.props.changeDate(date);
+                        // this.props.updateEventDrawer();
                     }}>
                         <Icon name={"pencil"} size={"large"} color={"black"}/>
                     </Button>
@@ -346,6 +347,7 @@ export default connect(mapStateToProps,
         loadItineraries, 
         updateMapCenter, 
         updateToCurrentEvents,
-        updateEventDrawer
+        updateEventDrawer,
+        loadItineraryToDrawer
     }
 )(debouncedItineraryPage);

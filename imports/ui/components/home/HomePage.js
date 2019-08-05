@@ -35,12 +35,8 @@ class HomePage extends React.Component {
         // Date logic:
         // if drawer date is passed, clear drawer and get today's events
         // if drawer date is not the same as selected date, get drawer date's events
-        let date = getToday();
-        let today = getToday();
-
         if (this.props.editing) {
-            date = this.props.eventDrawer.itineraryEdit ? this.props.eventDrawer.itineraryEdit.date : today;
-            this.props.changeDate(date);
+            // do nothing
         } else if (this.props.location.pathname === '/logout/') {
             this.props.postLogout();
         } else {
@@ -66,7 +62,7 @@ class HomePage extends React.Component {
         if (this.props.editing) {
             if (this.props.eventDrawer && this.props.eventDrawer.itineraryEdit) {
                 let date = this.props.eventDrawer.itineraryEdit.date;
-                let dateString = isString(date) ? date : date.toDateString;
+                let dateString = isString(date) ? date : date.toDateString();
                 return (<h2>Add/Remove Itinerary Items from
                     {" " + dateString + ": " + this.props.eventDrawer.itineraryEdit.name}
                     </h2>);
