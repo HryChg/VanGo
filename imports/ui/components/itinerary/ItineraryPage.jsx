@@ -206,6 +206,10 @@ class ItineraryPage extends React.Component {
     makeBounds = () => {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary && this.props.mapLoaded) {
+            if(selectedItinerary.items.length === 0){
+                return null;
+            }
+
             let bounds = new google.maps.LatLngBounds();
             let points = selectedItinerary.items.map((item) => {
                 return {lat: item.latitude, lng: item.longitude};
@@ -306,6 +310,7 @@ class ItineraryPage extends React.Component {
                                         <MapContainer
                                             width={'97.5%'}
                                             height={'101.5%'}
+                                            setBounds={true}
                                             bounds={this.makeBounds()}>
                                             {this.displayMarkers()}
                                             {this.displayPolyLine()}

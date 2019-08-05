@@ -1,8 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { selectID, loadItineraries } from './../../actions/itineraryActions';
-import { sortByDateName } from '../../../util/util';
-import { Menu, Icon } from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import {selectID, loadItineraries} from './../../actions/itineraryActions';
+import {sortByDateName} from '../../../util/util';
+import {Menu, Icon} from 'semantic-ui-react';
 
 class ItineraryDatePanel extends React.Component {
     getDisplayName(itinerary) {
@@ -25,17 +25,16 @@ class ItineraryDatePanel extends React.Component {
                     <Icon name="trash" onClick={(e) => {
                         e.stopPropagation();
                         Meteor.call('deleteItinerary', itinerary._id, (error, result) => {
-                            error ? alert(error) : Meteor.call('fetchItineraries', (err, res) => {
-                                if (err) {
-                                    console.log(err);
-                                } else {
-                                    this.props.loadItineraries(res);
-                                    this.props.selectID("");
-                                }
+                            if (error) return alert(error);
+
+                            Meteor.call('fetchItineraries', (err, res) => {
+                                if (err) return console.log(err);
+                                this.props.loadItineraries(res);
+                                this.props.selectID("");
                             })
                         })
                     }
-                    } />
+                    }/>
                 </div>
             </Menu.Item>
         )
@@ -45,4 +44,4 @@ class ItineraryDatePanel extends React.Component {
     }
 }
 
-export default connect(null, { selectID, loadItineraries })(ItineraryDatePanel);
+export default connect(null, {selectID, loadItineraries})(ItineraryDatePanel);

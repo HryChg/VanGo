@@ -51,9 +51,9 @@ export class MapContainer extends Component {
 
     // EFFECTS: Show save button on the map info window only if specified on the property of MapContainer.
     //          E.g. in the mapContainer props --> showSaveButton={true}
-    toggleSaveButton = ()=>{
+    toggleSaveButton = () => {
         let showSaveButton = this.props.showSaveButton;
-        if (showSaveButton){
+        if (showSaveButton) {
             return (<Button
                 className="extra content ui button"
                 onClick={() => {
@@ -68,6 +68,16 @@ export class MapContainer extends Component {
     };
 
 
+    defaultBounds = () => {
+        let bounds = new this.props.google.maps.LatLngBounds();
+        let points = [{lat: 49.2827, lng: -123.1207}, {lat: 49.3043, lng: -123.1443}];
+        for (let i = 0; i < points.length; i++){
+            bounds.extend(points[i]);
+        }
+        return bounds;
+    };
+
+
     render() {
         const mapStyle = {
             width: this.props.width,
@@ -75,47 +85,73 @@ export class MapContainer extends Component {
             position: 'fixed'
         };
         const mapContainerStore = this.props.mapContainer;
-        return (
-            <Map
-                onIdle={this.handleMapIdle}
-                google={this.props.google}
-                zoom={14}
-                style={mapStyle}
-                initialCenter={(this.props.initialCenter) ? this.props.initialCenter : {lat: 49.2820, lng: -123.1171}}
-                onClick={this.onMapClicked}
-                bounds={this.props.bounds}
-            >
-                {this.props.children}
-                <MapInfoWindowContainer
-                    marker={mapContainerStore.activeMarker}
-                    visible={mapContainerStore.showingInfoWindow}>
-                    <div>
-                        <div className="ui card">
-                            <div className="content">
-                                <div className="header">{mapContainerStore.selectedPlace.name}</div>
-                                <div className="meta">Start Time: {mapContainerStore.selectedPlace.start_time}</div>
-                                <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
-                                <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
-                                <div className="meta">Location: {mapContainerStore.selectedPlace.location}</div>
-                                <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to
-                                    Website...</a></div>
-                                <div className="description">{mapContainerStore.selectedPlace.description}</div>
-                            </div>
 
-                            {/*<Button*/}
-                            {/*    className="extra content ui button"*/}
-                            {/*    onClick={() => {*/}
-                            {/*        this.onSaveEventClick();*/}
-                            {/*    }}>*/}
-                            {/*    <i className="heart icon"/>*/}
-                            {/*    Save to Event Drawer*/}
-                            {/*</Button>*/}
-                            {this.toggleSaveButton()}
+        if (this.props.setBounds === true){
+            return (
+                <Map
+                    onIdle={this.handleMapIdle}
+                    google={this.props.google}
+                    zoom={14}
+                    style={mapStyle}
+                    initialCenter={(this.props.initialCenter) ? this.props.initialCenter : {lat: 49.2820, lng: -123.1171}}
+                    onClick={this.onMapClicked}
+                    bounds={this.props.bounds ? this.props.bounds : this.defaultBounds()}
+                >
+                    {this.props.children}
+                    <MapInfoWindowContainer
+                        marker={mapContainerStore.activeMarker}
+                        visible={mapContainerStore.showingInfoWindow}>
+                        <div>
+                            <div className="ui card">
+                                <div className="content">
+                                    <div className="header">{mapContainerStore.selectedPlace.name}</div>
+                                    <div className="meta">Start Time: {mapContainerStore.selectedPlace.start_time}</div>
+                                    <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
+                                    <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
+                                    <div className="meta">Location: {mapContainerStore.selectedPlace.location}</div>
+                                    <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to
+                                        Website...</a></div>
+                                    <div className="description">{mapContainerStore.selectedPlace.description}</div>
+                                </div>
+                                {this.toggleSaveButton()}
+                            </div>
                         </div>
-                    </div>
-                </MapInfoWindowContainer>
-            </Map>
-        );
+                    </MapInfoWindowContainer>
+                </Map>
+            );
+        } else {
+            return (
+                <Map
+                    onIdle={this.handleMapIdle}
+                    google={this.props.google}
+                    zoom={14}
+                    style={mapStyle}
+                    initialCenter={(this.props.initialCenter) ? this.props.initialCenter : {lat: 49.2820, lng: -123.1171}}
+                    onClick={this.onMapClicked}
+                >
+                    {this.props.children}
+                    <MapInfoWindowContainer
+                        marker={mapContainerStore.activeMarker}
+                        visible={mapContainerStore.showingInfoWindow}>
+                        <div>
+                            <div className="ui card">
+                                <div className="content">
+                                    <div className="header">{mapContainerStore.selectedPlace.name}</div>
+                                    <div className="meta">Start Time: {mapContainerStore.selectedPlace.start_time}</div>
+                                    <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
+                                    <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
+                                    <div className="meta">Location: {mapContainerStore.selectedPlace.location}</div>
+                                    <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to
+                                        Website...</a></div>
+                                    <div className="description">{mapContainerStore.selectedPlace.description}</div>
+                                </div>
+                                {this.toggleSaveButton()}
+                            </div>
+                        </div>
+                    </MapInfoWindowContainer>
+                </Map>
+            );
+        }
     }
 }
 

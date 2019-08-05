@@ -302,6 +302,7 @@ class EditPage extends React.Component {
                             <div style={{height: '94vh'}}>
                                 <MapContainer width={'98%'}
                                               height={'100%'}
+                                              setBounds={true}
                                               bounds={this.makeBounds()}>
                                     {this.displayMarkers()}
                                     {this.displayPolyLine()}
