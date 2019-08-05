@@ -125,11 +125,6 @@ class ItineraryPage extends React.Component {
                 return (
                     <Button className="it-edit" onClick={() => {
                         this.props.loadItineraryToDrawer(this.props.selectedID);
-                        // Meteor.call('addItineraryToDrawer', this.props.selectedID);
-                        // this.props.editingItinerary(true);
-                        // let date = this.getDateFromID(this.props.selectedID)
-                        // this.props.changeDate(date);
-                        // this.props.updateEventDrawer();
                     }}>
                         <Icon name={"pencil"} size={"large"} color={"black"}/>
                     </Button>

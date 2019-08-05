@@ -59,7 +59,7 @@ export class MapContainer extends React.Component {
             if (error) {
                 alert(error.message);
             }
-            // this.props.updateEventDrawer();
+            this.props.updateEventDrawer();
         })
     };
 
