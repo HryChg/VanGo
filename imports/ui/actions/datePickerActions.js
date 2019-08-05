@@ -1,5 +1,6 @@
 import {batch} from 'react-redux';
 import {updateToCurrentEvents} from './currentEventsActions';
+import {updateEventDrawer} from './draggableItemsActions';
 
 export const changeDate = (date) => {
     return async dispatch => {
