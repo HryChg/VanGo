@@ -36,6 +36,17 @@ export const updateEventDrawer = () => {
         if (err) console.log(err);
         batch(()=> {
           dispatch(loadEventDrawer(res));
+        })
+    });
+  }
+}
+
+export const updateEventDrawerAndDate = () => {
+  return async dispatch => {
+    Meteor.call('getEventDrawer', (err, res) => {
+        if (err) console.log(err);
+        batch(()=> {
+          dispatch(loadEventDrawer(res));
           res.date ? dispatch(changeDate(res.date)) : null;
         })
     });
