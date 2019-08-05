@@ -27,6 +27,7 @@ class DatePicker extends React.PureComponent {
             if (err) console.log(err);
             this.props.clearDrawerState(value);
         });
+        Meteor.call('updateDrawerDate', value);
     };
 
     // EFFECTS: user canceled to the window. Nothing Changed.

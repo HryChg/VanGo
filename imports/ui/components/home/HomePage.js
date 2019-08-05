@@ -19,14 +19,14 @@ import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/hom
 import {formatAMPM, getToday} from "../../../util/util";
 
 class HomePage extends React.Component {
-    // Don't update when date changes as If the date doesn't change, don't update
-    shouldComponentUpdate(nextProps, nextState) {
-        if (!this.props.editing && nextProps.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+    // // Don't update when date changes as If the date doesn't change, don't update
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     if (!this.props.editing && nextProps.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
+    //         return false;
+    //     } else {
+    //         return true;
+    //     }
+    // }
 
     componentWillMount() {
         // Position of the map
@@ -42,22 +42,12 @@ class HomePage extends React.Component {
 
         if (this.props.editing) {
             date = this.props.eventDrawer.itineraryEdit ? this.props.eventDrawer.itineraryEdit.date : today;
-        } else {
-            if (this.props.selectedDate) {
-                if (this.props.selectedDate.getTime() < today.getTime()) {
-                    date = today;
-                    Meteor.call('clearDrawer', date, (err, res) => {
-                        if (err) console.log(err);
-                        this.props.clearDrawerState(date);
-                    });
-                } else if (this.props.selectedDate.getTime() === today.getTime()) {
-                    date = today;
-                } else if (this.props.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
-                    date = this.props.selectedDate;
-                }
-            }
+        } else if (this.props.location.pathname === '/logout/') {
+            Meteor.call('clearDrawer', today, (err, res) => {
+                if (err) console.log(err);
+                this.props.clearDrawerState(today);
+            });
         }
-
         this.props.changeDate(date);
         this.props.updateToCurrentEvents(date);
 

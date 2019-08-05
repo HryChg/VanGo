@@ -151,6 +151,11 @@ if (Meteor.isServer) {
 
         updateDrawerDate: async (date) => {
             let userData = await EventDrawerApi.update({_id: this.userId}, {$set: {date: date}});
+        },
+
+        getDrawerDate: async () => {
+            let userData = await EventDrawerApi.findOne({_id: this.userId});
+            return userData.date;
         }
     });
 }

@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { batch } from 'react-redux';
 import { editingItinerary } from './itineraryActions.js';
 import { updateEventDrawer, clearDrawerState } from './draggableItemsActions';
+import { changeDate } from './datePickerActions';
+import { updateToCurrentEvents } from './currentEventsActions';
 import { getToday } from '../../util/util.js';
 
 // Field updates
@@ -48,10 +50,31 @@ export const login = (email, password) => {
                 console.log(err);
                 dispatch(loginFailure(err));
             } else {
+                // update login success
+                // clear login form
+                // get event drawer
+                // get the date and fetch current events
                 batch(() => {
                     dispatch(loginSuccess());
                     dispatch(clearField());
                     dispatch(updateEventDrawer());
+                    Meteor.call('getDrawerDate', (err, res) => {
+                        let today = getToday();
+                        let date = today;
+                        if (res.getTime() < today.getTime()) {
+                            Meteor.call('clearDrawer', today, (err, res) => {
+                                if (err) console.log(err);
+                                dispatch(clearDrawerState(today));
+                            });
+                        } else {
+                            date = res;
+                        }
+                        batch (() => {
+                            dispatch(changeDate(date));
+                            dispatch(updateToCurrentEvents(date));    
+                        })
+                    })
+
                 })
             }
         });
