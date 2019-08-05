@@ -17,12 +17,14 @@ import {updateToCurrentEvents} from './../../actions/currentEventsActions';
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {initializeUser, postLogout} from './../../actions/userActions';
 import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/homePageActions";
-import {formatAMPM, getToday, isString} from "../../../util/util";
+import {formatAMPM, getToday, isString, parseDate} from "../../../util/util";
 
 class HomePage extends React.Component {
     // // Don't update when date changes as If the date doesn't change, don't update
     shouldComponentUpdate(nextProps, nextState) {
-        if (!this.props.editing && nextProps.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
+        let thisDate = isString(this.props.selectedDate) ? parseDate(this.props.selectedDate) : this.props.selectedDate;
+        let nextDate = isString(nextProps.selectedDate) ? parseDate(nextProps.selectedDate) : nextProps.selectedDate;
+        if (!this.props.editing && nextDate.getTime() !== thisDate.getTime()) {
             return false;
         } else {
             return true;
@@ -43,7 +45,6 @@ class HomePage extends React.Component {
             this.props.postLogout();
         } else {
             this.props.initializeUser();
-            this.props.resetMapCenter();
         }
 
         // When Editing: Show panel

@@ -4,8 +4,8 @@ import { editingItinerary } from './itineraryActions.js';
 import { updateEventDrawer, clearDrawerState } from './draggableItemsActions';
 import { loadEventDrawer } from './draggableItemsActions';
 import { changeDate } from './datePickerActions';
-import { updateToCurrentEvents } from './currentEventsActions';
-import { getToday } from '../../util/util.js';
+import { resetMapCenter } from './mapContainerActions';
+import { getToday, isString, parseDate } from '../../util/util.js';
 
 // Field updates
 export const updateLoginField = (event) => {
@@ -71,18 +71,20 @@ export const initializeUser = () => {
             if (err) console.log(err);
             batch(()=> {
               dispatch(loadEventDrawer(drawer));
+              dispatch(resetMapCenter());
               Meteor.call('getDrawerDate', (err, res) => {
                 let today = getToday();
                 let date = today;
-                if (res.date.getTime() < today.getTime()) {
+                let drawerDate = isString(res.date) ? parseDate(res.date) : res.date ;
+                if (drawerDate.getTime() < today.getTime()) {
                     Meteor.call('clearDrawer', today, (err, response) => {
                         if (err) console.log(err);
-                        dispatch(clearDrawerState(today));
                     });
+                    dispatch(clearDrawerState(today));
                 } else {
-                    date = res.date;
+                    date = drawerDate;
                 }
-                    dispatch(changeDate(date)); 
+                dispatch(changeDate(date));
                 })
             })
         });

@@ -136,12 +136,13 @@ export const getToday = () => {
 
 // EFFECTS: converts date in WWW MMM DD YYYY format to date with 00:00:00 time
 export const parseDate = (date) => {
+    if (date instanceof Date) return date;
     let newDate = new Date(date);
     newDate.setHours(0);
     newDate.setMinutes(0);
     newDate.setSeconds(0);
     newDate.setMilliseconds(0);
-    return newDate;
+    return newDate;        
 }
 
 // EFFECTS: returns item with the maximum price
