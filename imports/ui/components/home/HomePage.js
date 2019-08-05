@@ -49,11 +49,11 @@ class HomePage extends React.Component {
 
 
     // EFFECTS: Debug - Prints which prop was updated
-    componentDidUpdate(prevProps, prevState) {
-        Object.entries(this.props).forEach(([key, val]) =>
-          prevProps[key] !== val && console.log(`Prop '${key}' changed`)
-        );
-    }
+    // componentDidUpdate(prevProps, prevState) {
+    //     Object.entries(this.props).forEach(([key, val]) =>
+    //       prevProps[key] !== val && console.log(`Prop '${key}' changed`)
+    //     );
+    // }
 
     // EFFECTS: renders name and logo; if edit state, renders editing title
     toggleEditHeader() {
