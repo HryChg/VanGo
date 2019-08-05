@@ -12,7 +12,7 @@ const EventDrawerApi = new Mongo.Collection('eventDrawer');
 //          If not such document exist in eventDrawerCollection, create one and return its _id
 // TODO: This might cause issues if multiple anon users are concurrently on the app !!!
 const getAnonDrawerID = async () => {
-    let anonDrawer = EventDrawerApi.findOne({user: 'anon'});
+    let anonDrawer = await EventDrawerApi.findOne({user: 'anon'});
     if (!anonDrawer) {
         let anonDrawer = {
             user: 'anon',
@@ -27,7 +27,7 @@ const getAnonDrawerID = async () => {
 
 // EFFECTS: return the document _id for the user drawer related to currently logged-in user
 const getUserDrawerID = async () => {
-    let userDrawerID = EventDrawerApi.findOne({user: Meteor.userId()});
+    let userDrawerID = await EventDrawerApi.findOne({user: Meteor.userId()});
     if (!userDrawerID) {
         let userDrawer = {
             user: Meteor.userId(),
