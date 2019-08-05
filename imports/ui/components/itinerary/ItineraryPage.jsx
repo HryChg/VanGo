@@ -192,7 +192,7 @@ class ItineraryPage extends React.Component {
     toggleEmailForm = () => {
         if (this.getSelectedItinerary(this.props.selectedID)) {
             return (
-                <div className={"container"}>
+                <div className={"container column"}>
                     <Divider />
                     <div className={"emailFormItin"}>
                         <h3>Share Your Itinerary</h3>
@@ -238,19 +238,21 @@ class ItineraryPage extends React.Component {
                         <Grid stackable divided='vertically'>
                             <Grid.Row columns={2}>
                                 <Grid.Column className="itinPageScroll">
-                                    <div id="it-date-toggle">
-                                        <Menu inverted attached icon>
-                                            <Menu.Item
-                                                onClick={this.props.showPanel}>
-                                                <Icon name="calendar" />
-                                            </Menu.Item>
-                                        </Menu>
-                                    </div>
-                                    <div id="itinerary-name">
-                                        <h1>
-                                            <span className="it-header">{this.getDisplayName(this.props.selectedID)}</span>
-                                            {this.displayEditButton()}
-                                        </h1>
+                                    <div className="ui grid">
+                                        <div id="it-date-toggle" className="column">
+                                            <Menu inverted attached icon>
+                                                <Menu.Item
+                                                    onClick={this.props.showPanel}>
+                                                    <Icon name="calendar" />
+                                                </Menu.Item>
+                                            </Menu>
+                                        </div>
+                                        <div id="itinerary-name">
+                                            <h1>
+                                                <div className="it-header column">{this.getDisplayName(this.props.selectedID)}</div>
+                                                {this.displayEditButton()}
+                                            </h1>
+                                        </div>
                                     </div>
                                     <div id="it-list">
                                         <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)} />
@@ -259,7 +261,7 @@ class ItineraryPage extends React.Component {
                                 </Grid.Column>
 
                                 <Grid.Column>
-                                <div style={{height: '100vh'}}>
+                                    <div style={{ height: '100vh' }}>
                                         <MapContainer width={'97%'} height={'95%'}>
                                             {this.displayMarkers()}
                                             {this.displayPolyLine()}
