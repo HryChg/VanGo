@@ -16,10 +16,6 @@ if (Meteor.isServer) {
         },
 
         'updateEvents': async (date) => {
-            // var dbEvents = CurrentEvents.find();
-            // for (event of eventsToday.events) {
-            //     CurrentEvents.insert(event);
-            //   }
             if (!date) return [];
             let newDate = isString(date) ? parseDate(date) : date; 
             var newEvents = await getEventsInDay(newDate);
