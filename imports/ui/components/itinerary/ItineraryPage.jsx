@@ -327,11 +327,11 @@ class ItineraryPage extends React.Component {
 
                                 <Grid.Column>
                                     <div
-                                        style={{width: '50vw', height: '100vh'}}
+                                        style={{height: '94vh'}}
                                     >
                                         <MapContainer
                                             width={'97.5%'}
-                                            height={'101.5%'}
+                                            height={'100%'}
                                             center={this.props.currentCenter}
                                             setBounds={true}
                                             bounds={this.makeBounds()}
