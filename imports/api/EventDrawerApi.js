@@ -159,7 +159,6 @@ if (Meteor.isServer) {
         getDrawerDate: async () => {
             return await EventDrawerApi.findOne({user: Meteor.userId()}, {fields: {date: 1}}, (err, res) => {
                 console.log(err)
-                console.log(res);
             });
         }
     });

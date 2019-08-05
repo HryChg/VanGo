@@ -7,7 +7,6 @@ let initialState = {
 };
 
 export default function MapContainerReducer(state = initialState, action) {
-    console.log(action.type);
     switch(action.type) {
         case 'ON_MARKER_CLICK':
             return {
