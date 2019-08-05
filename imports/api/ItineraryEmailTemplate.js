@@ -390,7 +390,8 @@ export const makeItineraryEmail = (itinJson, senderMsg) => {
                                                                 <h5 class="">VanGo:</h5>
                                                                 <p>
                                                                     Phone: <strong>123.456.000</strong><br/>
-                                                                    Email: <strong><a href="emailto:hseldon@trantor.com">VanGo436@gmail.com</a></strong>
+                                                                    Email: <strong><a href="VanGo436@gmail.com">VanGo436@gmail.com</a></strong>
+                                                                    Website: <strong><a href="https://vango436.herokuapp.com/">vango436.herokuapp.com</a></strong>
                                                                 </p>
         
                                                             </td>
