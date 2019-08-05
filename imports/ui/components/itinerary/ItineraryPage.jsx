@@ -207,7 +207,7 @@ class ItineraryPage extends React.Component {
                         <button className="ui button fluid" onClick={() =>
                             downloadPdf(this.getDisplayName(this.props.selectedID),
                                 this.getSelectedItinerary(this.props.selectedID).items)}>
-                                    <i class="download icon"></i>
+                                    <i className="download icon"></i>
                                     Download Itinerary</button>
                     </div>
                 </div>
@@ -263,7 +263,7 @@ class ItineraryPage extends React.Component {
                                 </Grid.Column>
 
                                 <Grid.Column>
-                                    <div style={{ height: '100vh' }}>
+                                    <div style={{ height: '97vh' }}>
                                         <MapContainer width={'97%'} height={'95%'}>
                                             {this.displayMarkers()}
                                             {this.displayPolyLine()}
