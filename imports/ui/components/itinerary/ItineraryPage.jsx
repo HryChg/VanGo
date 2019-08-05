@@ -241,7 +241,7 @@ class ItineraryPage extends React.Component {
                             <Grid.Row columns={2}>
                                 <Grid.Column className="itinPageScroll">
                                     <div className="ui grid">
-                                        <div id="it-date-toggle" className="column">
+                                        <div id="it-date-toggle">
                                             <Menu inverted attached icon>
                                                 <Menu.Item
                                                     onClick={this.props.showPanel}>
