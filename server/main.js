@@ -4,7 +4,6 @@ import '/imports/api/MailgunEmailStats';
 import './methods/itinerary';
 import './methods/users';
 import './methods/email';
-import '../imports/api/CalledDates'; // DO NOT DELETE. Methods needed need to refactor I suppose?
 import CurrentEvents from '../imports/api/CurrentEvents';
 import Attractions from '../imports/api/Attractions';
 import getEventsInDay from './../imports/api/getDayEvents';

@@ -5,7 +5,6 @@ import Calendar from 'react-calendar';
 import {Icon} from 'semantic-ui-react';
 import { changeDate, toggleConfirmWindow, confirm, cancel } from '../../actions/datePickerActions';
 import {clearDrawerState} from './../../actions/draggableItemsActions';
-import { CalledDates } from '../../../api/CalledDates';
 import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
 import {showDimmer} from "../../actions/homePageActions";
