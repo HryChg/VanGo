@@ -247,7 +247,6 @@ class EditPage extends React.Component {
             items: items
         };
 
-        console.log(itin);
         this.props.saveItinerary(itin, this.props.editing);
         this.props.selectID(itin._id);
     };
