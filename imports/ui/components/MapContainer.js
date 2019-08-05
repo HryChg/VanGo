@@ -92,6 +92,11 @@ export class MapContainer extends React.Component {
     };
 
 
+    openInNewTab = (url) => {
+        let win = window.open(url, '_blank');
+        win.focus();
+    };
+
     render() {
         const mapStyle = {
             width: this.props.width,
@@ -124,8 +129,9 @@ export class MapContainer extends React.Component {
                                     <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
                                     <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
                                     <div className="meta">Location: {mapContainerStore.selectedPlace.location}</div>
-                                    <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to
-                                        Website...</a></div>
+                                    <div className="meta" onClick={() => this.openInNewTab(mapContainerStore.selectedPlace.link)}>
+                                        <a href={'#'}>Link toWebsite...</a>
+                                    </div>
                                     <div className="description">{mapContainerStore.selectedPlace.description}</div>
                                 </div>
                                 {this.toggleSaveButton()}
@@ -157,8 +163,9 @@ export class MapContainer extends React.Component {
                                     <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
                                     <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
                                     <div className="meta">Location: {mapContainerStore.selectedPlace.location}</div>
-                                    <div className="meta"><a href={mapContainerStore.selectedPlace.link}>Link to
-                                        Website...</a></div>
+                                    <div className="meta" onClick={() => this.openInNewTab(mapContainerStore.selectedPlace.link)}>
+                                        <a href={'#'}>Link toWebsite...</a>
+                                    </div>
                                     <div className="description">{mapContainerStore.selectedPlace.description}</div>
                                 </div>
                                 {this.toggleSaveButton()}
