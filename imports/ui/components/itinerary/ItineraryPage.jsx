@@ -6,32 +6,31 @@ import { Marker, Polyline } from "google-maps-react";
 import { Redirect } from 'react-router-dom';
 import { Grid, Icon, Menu, Sidebar, Button } from 'semantic-ui-react';
 import { handleOnMarkerClick } from "../../actions/mapContainerActions";
-import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
+import debounceRender from 'react-debounce-render';
 
 import ItineraryDatePanel from './ItineraryDatePanel';
 import MapContainer from '../MapContainer';
 import ItineraryList from './ItineraryList';
 
-import Itineraries from '../../../api/itineraries.js';
-import { Meteor } from 'meteor/meteor';
-
-import { selectID, editingItinerary, loadItineraries } from './../../actions/itineraryActions';
-import { changeDate } from './../../actions/datePickerActions';
+import { updateMapCenter } from './../../actions/mapContainerActions';
+import { selectID, editingItinerary, loadItineraries, loadItineraryToDrawer } from './../../actions/itineraryActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
-import { formatAMPM, sortByDateName, getToday } from "../../../util/util";
+import { formatAMPM, sortByDateName, getToday, getLatLonCenterOfEvents } from "../../../util/util";
 import EmailForm from "./../edit/EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import { downloadPdf } from '../edit/ItineraryPdf';
 import { VanGoStore } from '../../../../client/main';
+import { isString } from 'util';
 
 
 class ItineraryPage extends React.Component {
     componentWillMount() {
         Meteor.call('fetchItineraries', (err, res) => {
             if (err) console.log(err);
-            console.log(res);
             this.props.loadItineraries(res);
             this.initializeSelectedID(res);
+            this.getSelectedLatLonCenter();
         });
     }
 
@@ -98,9 +97,23 @@ class ItineraryPage extends React.Component {
     getDisplayName(selectedID) {
         let itinerary = this.getSelectedItinerary(selectedID);
         if (itinerary) {
-            return itinerary.name ? itinerary.date + ': ' + itinerary.name : itinerary.date;
+            let date = isString(itinerary.date) ? itinerary.date : itinerary.date.toDateString();
+            return itinerary.name ? date + ': ' + itinerary.name : date;
         }
         return "";
+    }
+
+    // TODO: How do I get this method called between clicking the button in datepanel and here?
+    // EFFECTS: retrieves selected itinerary, finds the center lat and lon, updates state, returning the center
+    getSelectedLatLonCenter() {
+        let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
+        if (!selectedItinerary) return null;
+        let center = getLatLonCenterOfEvents(selectedItinerary.items);
+        if (center) {
+            this.props.updateMapCenter(center);
+            return center;
+        }
+        return null;
     }
 
     // EFFECTS: renders edit button when itinerary date is not in the past
@@ -111,24 +124,62 @@ class ItineraryPage extends React.Component {
             if (itineraryDate.getTime() >= today.getTime()) {
                 return (
                     <Button className="it-edit" onClick={() => {
-                        Meteor.call('updateItinerary', this.props.selectedID);
-                        this.props.editingItinerary(true);
-                        let date = this.getDateFromID(this.props.selectedID)
-                        this.props.changeDate(date);
-                        Meteor.call('updateEvents', date);
+                        this.props.loadItineraryToDrawer(this.props.selectedID);
                     }}>
-                        <Icon name={"pencil"} size={"large"} color={"black"} />
+                        <Icon name={"pencil"} size={"large"} color={"black"}/>
                     </Button>
                 );
             }
         }
     }
 
+    // EFFECTS: given the parameter, determine the icon for the marker at idx position
+    assignIconImage = (idx, type, listSize) => {
+        let size = 48;
+        // if (!this.props.mapLoaded){
+        //     return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
+        // }
+
+
+        let image;
+        if (idx === 0) { // start flag
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/filled-flag.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(size / 3, size)
+            };
+        } else if (idx === listSize - 1) { // end flag
+            image = {
+                url: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAMFBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg3dw3XQE0AAAADnRSTlMAHry7uh/yvly9UPTz/diodF0AAABHSURBVDjLY2CgJmDVNsQuwfTuCXYJnnfPsEsw49LBOrcQh+3rGnBI/P///927d8jkYJBAEwWSg0FiNKxIkHiAI8GNStAKAAB2D73brPu5/AAAAABJRU5ErkJggg==`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, size)
+            };
+        } else if (type === "Attraction") {
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/compact-camera.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, size - 10)
+            };
+        } else {
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/marker.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(size / 2, size)
+            };
+        }
+        return image
+    };
+
     // EFFECTS: display markers base on items in draggable items
     displayMarkers = () => {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
-            let markers = selectedItinerary.items.map((item) => {
+            let listSize = selectedItinerary.items.length;
+            let markers = selectedItinerary.items.map((item, index) => {
                 if (item.type === 'Attraction') {
                     return <Marker
                         key={item._id}
@@ -139,15 +190,10 @@ class ItineraryPage extends React.Component {
                         price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                         location={item.location.display_address[0]}
                         link={item.link}
-                        position={{
-                            lat: item.latitude,
-                            lng: item.longitude
-                        }}
-                        icon={{
-                            url: "https://img.icons8.com/color/43/000000/compact-camera.png"
-                        }}
+                        position={{lat: item.latitude, lng: item.longitude}}
+                        icon={this.assignIconImage(index, "Attraction", listSize)}
                         description={(item.description) ? item.description : 'No Description Available'}
-                        onClick={this.props.handleOnMarkerClick} />
+                        onClick={this.props.handleOnMarkerClick}/>
                 } else {
                     return <Marker
                         key={item._id}
@@ -158,15 +204,32 @@ class ItineraryPage extends React.Component {
                         price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                         location={item.location.display_address[0]}
                         link={item.link}
-                        position={{
-                            lat: item.latitude,
-                            lng: item.longitude
-                        }}
+                        position={{lat: item.latitude, lng: item.longitude}}
+                        icon={this.assignIconImage(index, "Event", listSize)}
                         description={item.description}
-                        onClick={this.props.handleOnMarkerClick} />
+                        onClick={this.props.handleOnMarkerClick}/>
                 }
             });
             return markers;
+        }
+        return null;
+    };
+
+    makeBounds = () => {
+        let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
+        if (selectedItinerary && this.props.mapLoaded) {
+            if(selectedItinerary.items.length === 0){
+                return null;
+            }
+
+            let bounds = new google.maps.LatLngBounds();
+            let points = selectedItinerary.items.map((item) => {
+                return {lat: item.latitude, lng: item.longitude};
+            });
+            for (let i = 0; i < points.length; i++){
+                bounds.extend(points[i]);
+            }
+            return bounds;
         }
         return null;
     };
@@ -176,7 +239,7 @@ class ItineraryPage extends React.Component {
         let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
         if (selectedItinerary) {
             let coordinates = selectedItinerary.items.map((item, index) => {
-                return { lat: item.latitude, lng: item.longitude };
+                return {lat: item.latitude, lng: item.longitude};
             });
 
             return (<Polyline
@@ -218,7 +281,7 @@ class ItineraryPage extends React.Component {
     // EFFECTS: If itinerary is being edited, redirect to home page; otherwise, display itinerary page
     render() {
         if (this.props.editing) {
-            return (<Redirect exact to='/' />);
+            return (<Redirect exact to='/itinerary/edit/'/>);
         }
         return (
             <div>
@@ -233,7 +296,8 @@ class ItineraryPage extends React.Component {
                         vertical
                         visible={this.props.visible}
                     >
-                        <ItineraryDatePanel itineraries={this.props.itineraries}><h2>Itineraries</h2></ItineraryDatePanel>
+                        <ItineraryDatePanel itineraries={this.props.itineraries}><h2>Itineraries</h2>
+                        </ItineraryDatePanel>
                     </Sidebar>
 
                     <Sidebar.Pusher>
@@ -257,7 +321,7 @@ class ItineraryPage extends React.Component {
                                         </div>
                                     </div>
                                     <div id="it-list">
-                                        <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)} />
+                                        <ItineraryList itinerary={this.getSelectedItinerary(this.props.selectedID)}/>
                                     </div>
                                     {this.toggleEmailForm()}
                                 </Grid.Column>
@@ -279,16 +343,28 @@ class ItineraryPage extends React.Component {
     }
 }
 
+const debouncedItineraryPage = debounceRender(ItineraryPage, 100, {leading: false, trailing: true});
+
 const mapStateToProps = (state) => {
     return {
         selectedID: state.itineraryStore.selectedID,
+        selectedItinerary: state.itineraryStore.selectedItinerary,
         editing: state.itineraryStore.editing,
         visible: state.panel.visible,
         itineraries: state.itineraryStore.itineraries,
-        datePicker: state.datePicker
+        mapLoaded: state.mapContainer.mapLoaded,
+        currentCenter: state.mapContainer.currentCenter
     };
 }
 
 export default connect(mapStateToProps,
-    { handleOnMarkerClick, selectID, editingItinerary, showPanel, hidePanel, changeDate, loadItineraries }
-)(ItineraryPage);
+    { handleOnMarkerClick,
+        selectID,
+        editingItinerary,
+        showPanel,
+        hidePanel,
+        loadItineraries,
+        updateMapCenter,
+        loadItineraryToDrawer
+    }
+)(debouncedItineraryPage);

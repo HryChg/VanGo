@@ -1,5 +1,11 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
+import { batch } from 'react-redux';
+import { editingItinerary } from './itineraryActions.js';
+import { updateEventDrawer, clearDrawerState } from './draggableItemsActions';
+import { loadEventDrawer } from './draggableItemsActions';
+import { changeDate } from './datePickerActions';
+import { resetMapCenter } from './mapContainerActions';
+import { getToday, isString, parseDate } from '../../util/util.js';
 
 // Field updates
 export const updateLoginField = (event) => {
@@ -45,9 +51,42 @@ export const login = (email, password) => {
                 console.log(err);
                 dispatch(loginFailure(err));
             } else {
-                dispatch(loginSuccess());
-                dispatch(clearField());
+                // update login success
+                // clear login form
+                // get event drawer
+                // get the date and fetch current events
+                batch(() => {
+                    dispatch(loginSuccess());
+                    dispatch(clearField());
+                    dispatch(initializeUser());
+                })
             }
+        });
+    }
+}
+
+export const initializeUser = () => {
+    return async dispatch => {
+        dispatch(resetMapCenter());
+        Meteor.call('getEventDrawer', (err, drawer) => {
+            if (err) console.log(err);
+            batch(()=> {
+              dispatch(loadEventDrawer(drawer));
+              Meteor.call('getDrawerDate', (err, res) => {
+                let today = getToday();
+                let date = today;
+                let drawerDate = isString(res.date) ? parseDate(res.date) : res.date ;
+                if (drawerDate.getTime() < today.getTime()) {
+                    Meteor.call('clearDrawer', today, (err, response) => {
+                        if (err) console.log(err);
+                    });
+                    dispatch(clearDrawerState(today));
+                } else {
+                    date = drawerDate;
+                }
+                dispatch(changeDate(date));
+                })
+            })
         });
     }
 }
@@ -78,8 +117,24 @@ export const logout = () => {
             if (err) {
                 console.log(err);
             } else {
-                dispatch(logoutRequest());
+                dispatch(postLogout());
             }
+        });
+    }
+}
+
+export const postLogout = () => {
+    return async dispatch => {
+        let today = getToday();
+        Meteor.call('clearDrawer', today, (err, res) => {
+            if (err) console.log(err);
+            batch(() => {
+                dispatch(editingItinerary(false));
+                dispatch(logoutRequest());
+                dispatch(clearDrawerState(today));
+                dispatch(changeDate(today));
+                dispatch(resetMapCenter());
+            })
         });
     }
 }

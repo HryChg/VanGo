@@ -1,20 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Marker, Polyline } from "google-maps-react";
-import { Redirect } from 'react-router-dom';
-import { Grid, Icon, Popup } from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import {Marker, Polyline} from "google-maps-react";
+import {Redirect} from 'react-router-dom';
+import {Grid, Icon, Popup} from 'semantic-ui-react';
 import uniqid from 'uniqid';
 
 import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
-import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import {handleOnMarkerClick, updateMapCenter} from "../../actions/mapContainerActions";
 import {saveItinerary, resetEditPage} from "../../actions/editPageActions";
+import {clearDrawerState} from './../../actions/draggableItemsActions';
 import {selectID, editingItinerary} from "../../actions/itineraryActions";
-import {formatAMPM} from "../../../util/util";
-import Mailgun from "../../../api/Mailgun";
+import {formatAMPM, getLatLonCenterOfEvents, getToday} from "../../../util/util";
 import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
-import { downloadPdf } from './ItineraryPdf';
+import {downloadPdf} from './ItineraryPdf';
+import { isString } from 'util';
 
 
 class EditPage extends React.Component {
@@ -25,8 +26,11 @@ class EditPage extends React.Component {
         }
     }
 
+    componentWillMount() {
+        this.getSelectedLatLonCenter();
+    }
+
     componentWillUnmount() {
-        this.props.editingItinerary(false);
         this.props.resetEditPage();
     }
 
@@ -46,7 +50,7 @@ class EditPage extends React.Component {
     getDate = () => {
         if (this.props.editing) {
             let ready = this.props.draggableItems.itineraryEdit;
-            let date = ready ? ready.date : "";
+            let date = ready ? (isString(ready.date)? ready.date: ready.date.toDateString()) : "";
             let name = ready ? ready.name : "";
             let header = date || name ? date + ": " + name : "";
             return header;
@@ -69,35 +73,50 @@ class EditPage extends React.Component {
     toggleEditHeader() {
         if (this.props.editing) {
             let ready = this.props.draggableItems.itineraryEdit;
-            let date = ready ? ready.date : "";
+            let date = ready ? (isString(ready.date)? ready.date: ready.date.toDateString()) : "";
             let name = ready ? ready.name : "";
             let header = date || name ? date + ": " + name : "";
             return (<h3>{header}</h3>);
         } else {
-            let selectedDateString = this.props.datePicker.selectedDate.toDateString();
-            return (<h3>{selectedDateString}</h3>);
+            let date = this.props.datePicker.selectedDate.toDateString();
+            return (<h3>{date}</h3>);
         }
     }
 
     // EFFECTS: renders save button; disabled when user is not logged in
     toggleSaveButton() {
         if (Meteor.userId()) {
-            return (
-            <button className="ui blue button"
-                onClick={() => {
-                    this.createItinerary();
-                }}>
-                <Icon name="heart"/>
-                Save
-            </button>)
+            if (this.props.editing && !this.props.draggableItems.itineraryEdit) {
+                return (
+                    <button className="ui disabled button">
+                        <Icon name="heart"/>
+                        Save
+                    </button>)
+            } else {
+                return (
+                    <button className="ui blue button"
+                            onClick={() => {
+                                this.createItinerary();
+                                let today = getToday();
+                                if (!this.props.editing) {
+                                    Meteor.call('clearDrawer', today, (err, res) => {
+                                        if (err) console.log(err);
+                                        this.props.clearDrawerState(today);
+                                    });
+                                }
+                            }}>
+                        <Icon name="heart"/>
+                        Save
+                    </button>)
+            }
         } else {
             return (
-                <Popup 
-                    content='Please login to save.' 
+                <Popup
+                    content='Please login to save.'
                     trigger={<button className="ui button">
                         <Icon name="heart"/>
                         Save
-                        </button>} 
+                    </button>}
                 />
             )
         }
@@ -105,31 +124,86 @@ class EditPage extends React.Component {
 
     // EFFECTS: changes state of name input
     handleNameChange = (event) => {
-        this.setState({ nameInput: event.target.value });
-    }
+        this.setState({nameInput: event.target.value});
+    };
 
     // EFFECTS: renders field to save name
     //          if editing, renders field as rename with default value itinerary name
     toggleNameInput() {
         if (this.props.editing) {
             return (<input className={"edit-page-path-name"}
-                type="text"
-                placeholder={"Give it a name..."}
-                value={this.state.nameInput}
-                onChange={this.handleNameChange}
+                           type="text"
+                           placeholder={"Give it a name..."}
+                           value={this.state.nameInput}
+                           onChange={this.handleNameChange}
             />);
         } else {
             return (<input className={"edit-page-path-name"}
-                type="text"
-                placeholder={"Give it a name..."}
+                           type="text"
+                           placeholder={"Give it a name..."}
             />);
         }
+    }
+
+    // EFFECTS: given the parameter, determine the icon for the marker at idx position
+    assignIconImage = (idx, type, listSize) => {
+        let size = 48;
+        if (!this.props.mapLoaded) {
+            return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
+        }
+
+
+        let image;
+        if (idx === 0) { // start flag
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/filled-flag.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(size / 3, size)
+            };
+        } else if (idx === listSize - 1) { // end flag
+            image = {
+                url: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAMFBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg3dw3XQE0AAAADnRSTlMAHry7uh/yvly9UPTz/diodF0AAABHSURBVDjLY2CgJmDVNsQuwfTuCXYJnnfPsEsw49LBOrcQh+3rGnBI/P///927d8jkYJBAEwWSg0FiNKxIkHiAI8GNStAKAAB2D73brPu5/AAAAABJRU5ErkJggg==`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, size)
+            };
+        } else if (type === "Attraction") {
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/compact-camera.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, size - 10)
+            };
+        } else {
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/marker.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(size / 2, size)
+            };
+        }
+        return image
+    };
+
+    // EFFECTS: returns center of map based on given itinerary
+    getSelectedLatLonCenter() {
+        let items = this.selectItems();
+        if (!items) return null;
+        let center = getLatLonCenterOfEvents(items);
+        if (center) {
+            this.props.updateMapCenter(center);
+            return center;
+        }
+        return null;
     }
 
     // EFFECTS: display markers base on events in draggable items
     displayMarkers = () => {
         let items = this.selectItems();
-        let markers = items.map((item) => {
+        let size = items.length;
+
+        let markers = items.map((item, index) => {
             if (item.type === 'Attraction') {
                 return <Marker
                     key={item._id}
@@ -140,15 +214,10 @@ class EditPage extends React.Component {
                     price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                     location={item.location.display_address[0]}
                     link={item.link}
-                    position={{
-                        lat: item.latitude,
-                        lng: item.longitude
-                    }}
-                    icon={{
-                        url: "https://img.icons8.com/color/43/000000/compact-camera.png"
-                    }}
+                    position={{lat: item.latitude, lng: item.longitude}}
+                    icon={this.assignIconImage(index, "Attraction", size)}
                     description={(item.description) ? item.description : 'No Description Available'}
-                    onClick={this.props.handleOnMarkerClick} />
+                    onClick={this.props.handleOnMarkerClick}/>
             } else {
                 return <Marker
                     key={item._id}
@@ -159,22 +228,34 @@ class EditPage extends React.Component {
                     price={item.free ? 'Free' : ((item.price) ? '$'.concat(item.price.toString()) : 'n/a')}
                     location={item.location.display_address[0]}
                     link={item.link}
-                    position={{
-                        lat: item.latitude,
-                        lng: item.longitude
-                    }}
+                    position={{lat: item.latitude, lng: item.longitude}}
+                    icon={this.assignIconImage(index, "Event", size)}
                     description={item.description}
-                    onClick={this.props.handleOnMarkerClick} />
+                    onClick={this.props.handleOnMarkerClick}/>
             }
         });
         return markers;
+    };
+
+    makeBounds = () => {
+        if (this.props.mapLoaded) {
+            let bounds = new google.maps.LatLngBounds();
+            let points = this.selectItems().map((item) => {
+                return {lat: item.latitude, lng: item.longitude};
+            });
+            for (let i = 0; i < points.length; i++) {
+                bounds.extend(points[i]);
+            }
+            return bounds;
+        }
+        return null;
     };
 
     // EFFECTS: display path based on the order of events in DraggableItems
     displayPolyLine = () => {
         let items = this.selectItems();
         let coordinates = items.map((item, index) => {
-            return { lat: item.latitude, lng: item.longitude };
+            return {lat: item.latitude, lng: item.longitude};
         });
 
         return (<Polyline
@@ -196,11 +277,9 @@ class EditPage extends React.Component {
         let itin = {
             _id: this.props.editing ? this.props.draggableItems.itineraryEdit._id : uniqid(),
             name: itineraryName,
-            date: this.props.datePicker.selectedDate.toDateString(),
+            date: this.props.editing ? this.props.draggableItems.itineraryEdit.date : this.props.datePicker.selectedDate,
             items: items
         };
-
-        console.log(itin);
         this.props.saveItinerary(itin, this.props.editing);
         this.props.selectID(itin._id);
     };
@@ -227,7 +306,8 @@ class EditPage extends React.Component {
 
     render() {
         if (this.props.saved) {
-            return (<Redirect exact to='/itinerary' />);
+            this.props.editingItinerary(false);
+            return (<Redirect exact to='/itinerary'/>);
         } else {
             return (
                 <Grid stackable divided='vertically'>
@@ -236,7 +316,7 @@ class EditPage extends React.Component {
                             <div className={"edit-panel"}>
                                 <h2 className={"ui header"}>Reorder Itinerary</h2>
                                 {this.toggleEditHeader()}
-                                <DraggableItems />
+                                <DraggableItems/>
                                 <div className={"container"}>
                                     <div className="ui action input mini fluid">
                                         {this.toggleNameInput()}
@@ -244,7 +324,7 @@ class EditPage extends React.Component {
                                     </div>
                                 </div>
                                 <div className={"container"}>
-                                    <Divider />
+                                    <Divider/>
                                     <h3>Share Your Itinerary</h3>
                                     {this.toggleEmailForm()}
                                 </div>
@@ -252,8 +332,17 @@ class EditPage extends React.Component {
                         </Grid.Column>
 
                         <Grid.Column width={12}>
-                            <div style={{ height: '100vh' }}>
-                                <MapContainer width={'98%'} height={'100%'}>
+                            <div style={{height: '94vh'}}>
+                                <MapContainer
+                                    width={'98%'}
+                                    height={'100%'}
+                                    setBounds={true}
+                                    bounds={this.makeBounds()}
+                                    center={this.props.currentCenter}
+                                    ignore={this.state.nameInput}
+                                    ignore2={this.props.visible}
+                                    ignoreException={this.props.eventFilter}
+                                >
                                     {this.displayMarkers()}
                                     {this.displayPolyLine()}
                                 </MapContainer>
@@ -271,7 +360,9 @@ const mapStateToProps = (state) => {
         draggableItems: state.draggableItems,
         datePicker: state.datePicker,
         saved: state.draggableItems.saved,
-        editing: state.itineraryStore.editing
+        editing: state.itineraryStore.editing,
+        currentCenter: state.mapContainer.currentCenter,
+        mapLoaded: state.mapContainer.mapLoaded
     };
 };
 
@@ -280,5 +371,7 @@ export default connect(mapStateToProps, {
     saveItinerary: saveItinerary,
     resetEditPage: resetEditPage,
     editingItinerary: editingItinerary,
-    selectID: selectID
+    selectID: selectID,
+    updateMapCenter,
+    clearDrawerState
 })(EditPage);

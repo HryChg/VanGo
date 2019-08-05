@@ -21,7 +21,9 @@ class MapInfoWindowContainer extends React.Component {
             React.Children.only(this.props.children),
             this.containerElement
         );
-        this.infoWindowRef.current.infowindow.setContent(this.containerElement);
+        if(this.infoWindowRef.current){
+            this.infoWindowRef.current.infowindow.setContent(this.containerElement);
+        }
     }
 
     render() {

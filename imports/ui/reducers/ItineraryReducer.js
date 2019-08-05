@@ -19,6 +19,7 @@ export default function ItineraryReducer(state = initialState, action) {
             newState.editing = state.editing;
             newState.selectedID = state.selectedID;
             return newState;
+        case 'LOGIN_SUCCESS':
         case 'LOGOUT':
             return initialState;
         default:

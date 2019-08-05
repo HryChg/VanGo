@@ -18,4 +18,3 @@ export const filterPriceByEntry = (e) => {
         payload: e.target.value
     };
 };
-

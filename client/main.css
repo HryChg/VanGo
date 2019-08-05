@@ -121,6 +121,11 @@ i.icon.info.circle {
     margin-bottom: 0px !important;
 }
 
+.react-calendar__tile:disabled,
+.react-calendar__navigation button[disabled] {
+    border-radius: 0px;
+}
+
 
 .filter-margin, #filter-name {
     margin-top: 5px;
@@ -182,7 +187,7 @@ button.ui.button.it-edit {
     display: block;
     margin-top: 24px;
     margin-left: 24px;
-    vertical-align: bottom;
+    /* vertical-align: bottom; */
 }
 
 .it-header {
@@ -313,4 +318,19 @@ i.trash.icon {
 .itinPageScroll {
     overflow-y: auto;
     height: 95vh;
+}
+
+/* ---------------------------------------- */
+/* --- Dimmer on the Homepage Calendar -----*/
+/* ---------------------------------------- */
+.dimmed.dimmable>.ui.animating.dimmer, .dimmed.dimmable>.ui.visible.dimmer, .ui.active.dimmer {
+    border-radius: .28571429rem;
+}
+
+
+/* ---------------------------------------- */
+/* --- Questions Button on the Homepage Calendar -----*/
+/* ---------------------------------------- */
+#info-btn{
+    float: right;
 }

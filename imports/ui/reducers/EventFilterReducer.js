@@ -1,4 +1,4 @@
-let initialState = {categories: [], priceRange: [-1,0]};
+let initialState = {categories: [], priceRange: [0,0]};
 
 export default function EventFilterReducer(state = initialState, action) {
     switch (action.type) {
@@ -14,6 +14,7 @@ export default function EventFilterReducer(state = initialState, action) {
                 [state.priceRange[0], action.payload];
             return {categories: state.categories, 
                     priceRange: priceRange};
+        case 'LOGIN_SUCCESS':
         case 'LOGOUT':
             return initialState;
         default:

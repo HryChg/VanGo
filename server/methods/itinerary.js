@@ -16,7 +16,6 @@ Meteor.methods({
             throw new Meteor.Error(err, err);
         }
         if (editing) {
-            console.log(itinerary);
             Itineraries.update({
                 _id: itinerary._id
             },
@@ -49,11 +48,11 @@ Meteor.methods({
     },
 
     // EFFECTS: finds given itinerary and adds it to user's event drawer
-    'updateItinerary': async function(id) {
+    'addItineraryToDrawer': async function(id) {
         if (!id) return;
         let itinerary = await Itineraries.findOne({_id: id});
         await EventDrawerApi.update({
-            user: itinerary.user
+            user: Meteor.userId()
         },{
             $set: {itineraryEdit: itinerary}
         }, (err) => {

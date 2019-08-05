@@ -3,6 +3,7 @@
 
 import {Mongo} from 'meteor/mongo';
 import {Meteor} from 'meteor/meteor';
+import {getToday} from '../util/util.js';
 
 const EventDrawerApi = new Mongo.Collection('eventDrawer');
 
@@ -15,7 +16,8 @@ const getAnonDrawerID = async () => {
     if (!anonDrawer) {
         let anonDrawer = {
             user: 'anon',
-            items: []
+            items: [],
+            date: getToday()
         };
         console.log(`EventDrawerApi: no anonymous drawer found. Will insert one into collection`);
         return await EventDrawerApi.insert(anonDrawer);
@@ -30,9 +32,10 @@ const getUserDrawerID = async () => {
         let userDrawer = {
             user: Meteor.userId(),
             items: [],
-            itineraryEdit: null
+            itineraryEdit: null,
+            date: getToday()
         };
-        console.log(`EventDrawerApi: drawer for user ${Meteor.userId()} NOT found. Will insert one into collection`);
+        console.log(`Drawer for user ${Meteor.userId()} NOT found. Will insert one into collection`);
         return await EventDrawerApi.insert(userDrawer);
     }
     return userDrawerID._id;
@@ -58,18 +61,20 @@ function containsItem(items, item) {
 }
 
 if (Meteor.isServer) {
-    Meteor.publish('userEventDrawer', function (user) {
-        if (user) {
-            return EventDrawerApi.find({user: Meteor.userId()});
-        } else {
-            return EventDrawerApi.find({user: 'anon'});
-        }
-    });
 
     Meteor.methods({
         // EFFECTS: initialize eventDrawer so that that it has the anonymous userDrawer or the userDrawer for current user ready
         initializeEventDrawerApi: async () => {
             return await getDrawerID();
+        },
+
+        // EFFECTS: loads event
+        getEventDrawer: async () => {
+            if (Meteor.userId()) {
+                return await EventDrawerApi.findOne({user: Meteor.userId()});
+            } else {
+                return await EventDrawerApi.findOne({user: 'anon'});
+            }
         },
 
         // EFFECTS: save the item to user drawer based on the current Drawer ID. Repeated Items will not be added
@@ -84,10 +89,10 @@ if (Meteor.isServer) {
             }
 
             if (containsItem(items, itemToBeSaved)) {
-                throw new Meteor.Error(`saveToCurrentUserData(): item "${itemToBeSaved.name}}" is already in user's event drawer. Will not be added again`);
+                throw new Meteor.Error(`"${itemToBeSaved.name}" is already in event drawer.`);
             } else {
                 items.push(itemToBeSaved);
-                console.log(`saveToCurrentUserData(): item "${itemToBeSaved.name}}" added to user drawer`);
+                console.log(`"${itemToBeSaved.name}" added to user drawer`);
                 EventDrawerApi.update({_id: accountID}, userData);
                 return itemToBeSaved._id;
             }
@@ -106,7 +111,7 @@ if (Meteor.isServer) {
             }
 
             if (!containsItem(items, itemToBeDeleted)) {
-                throw new Meteor.Error(`deleteFromCurrentUserData(): item "${itemToBeDeleted.name}}" is NOT in user's event drawer. No action taken.`);
+                throw new Meteor.Error(`"${itemToBeDeleted.name}}" NOT FOUND.`);
             } else {
                 let newItems = items.filter((item) => {
                     return item._id !== itemToBeDeleted._id
@@ -123,24 +128,36 @@ if (Meteor.isServer) {
                 } else {
                     EventDrawerApi.update({_id: accountID}, {$set: {items: newItems}});
                 }
-                console.log(`deleteFromCurrentUserData(): item "${itemToBeDeleted.name}}" deleted from user drawer`);
+                console.log(`"${itemToBeDeleted.name}" deleted from user drawer`);
                 return;
-            }
+            }    
         },
 
         // EFFECTS: Clear out the items in current user's drawer, not itineraryEdit
-        clearDrawer: async () => {
+        clearDrawer: async (date) => {
             let accountID = await getDrawerID();
             let userData = await EventDrawerApi.findOne({_id: accountID});
             userData.items = [];
+            userData.itineraryEdit ? userData.itineraryEdit = null : null;
+            userData.date ? userData.date = date: null;
             EventDrawerApi.update({_id: accountID}, userData);
             console.log(`Due to user choosing a new date in calendar, the user drawer is cleared out`)
         },
 
         // EFFECTS: Overwrites existing drawer data with selected itinerary
         saveItineraryToDrawer: async (itinerary) => {
-            let userData = await EventDrawerApi.update({_id: this.userId}, itinerary);
-            return;
+            let userData = await EventDrawerApi.update({user: Meteor.userId()}, itinerary);
+        },
+
+        updateDrawerDate: async (date) => {
+            let userData = await EventDrawerApi.update({user: Meteor.userId()}, {$set: {date: date}});
+        },
+
+        getDrawerDate: async () => {
+            return await EventDrawerApi.findOne({user: Meteor.userId()}, {fields: {date: 1}}, (err, res) => {
+                console.log(err)
+                console.log(res);
+            });
         }
     });
 }

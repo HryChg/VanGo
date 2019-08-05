@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import getEventsInDay from './getDayEvents';
-import YelpAttractionsApi, { convertBusinessesToAttractions } from "../api/YelpAttractionsApi";
+import { parseDate, isString } from '../util/util';
 
 const CurrentEvents = new Mongo.Collection('currentEvents');
 
@@ -21,18 +21,14 @@ if (Meteor.isServer) {
             // for (event of eventsToday.events) {
             //     CurrentEvents.insert(event);
             //   }
-            CurrentEvents.remove({});
-            var newEvents = await getEventsInDay(date);
+            if (!date) return [];
+            let newDate = isString(date) ? parseDate(date) : date; 
+            await CurrentEvents.remove({type: "Event"});
+            var newEvents = await getEventsInDay(newDate);
             for (event of newEvents.events) {
                 CurrentEvents.insert(event)
             }
-
-            let yelp = new YelpAttractionsApi();
-            let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
-            let attractions = convertBusinessesToAttractions(res);
-            for (let attraction of attractions) {
-                CurrentEvents.insert(attraction);
-            }
+            return await CurrentEvents.find().fetch();
         }
     });
 }

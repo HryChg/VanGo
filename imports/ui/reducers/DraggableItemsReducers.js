@@ -1,9 +1,6 @@
-import {
-    GET_EVENT_DRAWER_SUBSCRIPTION_CHANGED,
-    GET_EVENT_DRAWER_SUBSCRIPTION_READY
-} from "../actions/draggableItemsActions";
+import {getToday, parseDate} from './../../util/util.js';
 
-let initialState = {_id: null, items: [], itineraryEdit: null, ready: false, saved: false};
+let initialState = {_id: null, items: [], itineraryEdit: null, date: getToday(), ready: false, saved: false};
 
 export default function DraggableItemsReducer(state = initialState, action) {
     let newState;
@@ -16,10 +13,10 @@ export default function DraggableItemsReducer(state = initialState, action) {
                 return newState;
             } else {
                 return {
-                    _id: state._id, 
-                    items: action.payload.newOrder, 
+                    _id: state._id,
+                    items: action.payload.newOrder,
                     itineraryEdit: state.itineraryEdit,
-                    ready: state.ready, 
+                    ready: state.ready,
                     saved: false
                 };
             }
@@ -28,29 +25,39 @@ export default function DraggableItemsReducer(state = initialState, action) {
             newState.itineraryEdit = null;
             newState.saved = true;
             return newState;
-
+        case 'LOAD_EVENT_DRAWER':
+            newState = Object.assign({}, state);
+            newState._id = action.payload._id;
+            newState.items = action.payload.items;
+            newState.itineraryEdit = action.payload.itineraryEdit;
+            newState.date = action.payload.date;
+            newState.saved = state.saved;
+            return newState;
+        case 'CLEAR_DRAWER':
+            newState = Object.assign({}, state);
+            newState._id = state._id,
+            newState.items = [];
+            newState.itineraryEdit = null;
+            newState.date = action.payload;
+            newState.saved = state.saved;
+            return newState;
+        case 'EDITING_ITINERARY':
+            if (!action.payload) {
+                newState = Object.assign({}, state);
+                newState._id = state._id,
+                newState.items = state.items;
+                newState.itineraryEdit = null;
+                newState.date = state.itineraryEdit ? parseDate(state.itineraryEdit.date) : getToday();
+                newState.saved = state.saved;
+                return newState;
+            } else {
+                return state;
+            }
         case 'RESET_EDIT':
             return initialState;
+        case 'LOGIN_SUCCESS':
         case 'LOGOUT':
             return initialState;
-        case GET_EVENT_DRAWER_SUBSCRIPTION_READY:
-            return {
-                ready: action.payload.ready,
-                _id: state._id,
-                items: state.items,
-                itineraryEdit: state.itineraryEdit,
-                saved: state.saved
-            };
-
-        case GET_EVENT_DRAWER_SUBSCRIPTION_CHANGED:
-            return {
-                ready: state.ready,
-                _id: action.payload._id,
-                items: action.payload.items,
-                itineraryEdit: action.payload.itineraryEdit,
-                saved: state.saved
-            };
-
         default:
             return state;
     }

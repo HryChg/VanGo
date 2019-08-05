@@ -1,5 +1,7 @@
+import {getToday} from './../../util/util.js';
+
 let initialState = {
-    selectedDate: new Date(),
+    selectedDate: getToday(),
     openConfirmWindow: false,
     result: 'initial state'
 };
@@ -30,6 +32,7 @@ export default function DatePickerReducer(state = initialState, action) {
                 openConfirmWindow: false,
                 result: 'cancelled'
             };
+        case 'LOGIN_SUCCESS':
         case 'LOGOUT':
             return initialState;
         default:

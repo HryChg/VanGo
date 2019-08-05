@@ -1,4 +1,4 @@
-export const saveItineraryState = () => {
+const saveItineraryState = () => {
 	return {
 		type: 'SAVED_ITINERARY'
 	}

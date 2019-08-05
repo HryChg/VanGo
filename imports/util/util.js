@@ -1,5 +1,5 @@
 // Reference:
-// - Getting Latitude and Longitude Center: https://gist.github.com/amites/3718961
+// - Getting Latitude and Longitude Center: https://gist.github.com/tlhunter/0ea604b77775b3e7d7d25ea0f70a23eb
 
 // EFFECTS: return true if listA contains every element in listB
 export const containAll = (listA, listB) => {
@@ -63,26 +63,49 @@ export const formatAMPM = (date) => {
     return strTime;
 }
 
+// EFFECTS: convert array of events to an array of [lat, lon]
+export const getLatLonCenterOfEvents = (events) => {
+    if (!events) return null;
+    let latlons = events.map(item => [item.latitude, item.longitude]);
+    let center = getLatLonCenter(latlons);
+    return center;
+}
+
 // EFFECTS: return the center latitude and longitude,
 //          given a list of latitudes and longitudes
 export const getLatLonCenter = (listOfLatLons) => {
-    let x = 0, y = 0, z = 0;
-    for (let i in listOfLatLons) {
-        let lat = listOfLatLons[i][0];
-        let lon = listOfLatLons[i][1];
-        x += Math.cos(lat) * Math.cos(lon);
-        y += Math.cos(lat) * Math.sin(lon);
-        z += Math.sin(lat);
+    if (listOfLatLons == null) return null;
+    if (listOfLatLons.length === 1) {
+        let latLon = listOfLatLons[0];
+        return {lat: latLon[0], lng: latLon[1]};
     }
-
-    x = x/listOfLatLons.length;
-    y = y/listOfLatLons.length;
-    z = y/listOfLatLons.length;
-
-    let center = Math.atan2(z, Math.sqrt(x*x + y*y), Math.atan2(y, x));
-    console.log(center);
+    
+    let x = 0.0;
+    let y = 0.0;
+    let z = 0.0;
+    
+    for (let latlon of listOfLatLons) {
+        let latitude = latlon[0] * Math.PI / 180;
+        let longitude = latlon[1] * Math.PI / 180;
+    
+        x += Math.cos(latitude) * Math.cos(longitude);
+        y += Math.cos(latitude) * Math.sin(longitude);
+        z += Math.sin(latitude);
+    }
+    
+    let total = listOfLatLons.length;
+    
+    x = x / total;
+    y = y / total;
+    z = z / total;
+    
+    let centralLongitude = Math.atan2(y, x);
+    let centralSquareRoot = Math.sqrt(x * x + y * y);
+    let centralLatitude = Math.atan2(z, centralSquareRoot);
+    let center = {lat: centralLatitude * 180 / Math.PI, 
+                  lng: centralLongitude * 180 / Math.PI}
     return center;
-};
+}
 
 // REQUIRES: objects in list must contain attributes: date, name
 // EFFECTS: sorts given itinerary list by date, then name
@@ -109,4 +132,30 @@ export const getToday = () => {
     date.setSeconds(0);
     date.setMilliseconds(0);
     return date;
+}
+
+// EFFECTS: converts date in WWW MMM DD YYYY format to date with 00:00:00 time
+export const parseDate = (date) => {
+    if (date instanceof Date) return date;
+    let newDate = new Date(date);
+    newDate.setHours(0);
+    newDate.setMinutes(0);
+    newDate.setSeconds(0);
+    newDate.setMilliseconds(0);
+    return newDate;        
+}
+
+// EFFECTS: returns item with the maximum price
+export const getMaxPrice = (items) => {
+    if (!Array.isArray(items) || !items.length) return 0;
+    let maxPrice = Math.max.apply(Math, items.map(item => { return item.price }));
+    return maxPrice;
+} 
+
+export const isEqualDate = (date1, date2) => {
+    return date1.getTime() === date2.getTime();
+}
+
+export const isString = (value) => {
+    return typeof value === 'string'|| value instanceof String;
 }

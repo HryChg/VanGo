@@ -3,15 +3,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Slider } from "react-semantic-ui-range";
-import { Grid, Input } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 
 import Toggle from "../Toggle";
 import { updateCategories, filterPrice, filterPriceByEntry } from "../../actions/eventFilterActions";
-import { toggleCategoryInArray } from "../../../util/util";
+import { toggleCategoryInArray, getMaxPrice } from "../../../util/util";
 import { debounce } from 'lodash';
 
-class EventFilter extends React.Component {
-
+class EventFilter extends React.PureComponent {
     // REQUIRES: input must be a valid Yelp category
     // EFFECTS: handle value sent from the toggles.
     //          If toggleText exist in either categories or price range,
@@ -57,17 +56,16 @@ class EventFilter extends React.Component {
         this.props.updateCategories(newCategories);
     };
 
-    //EFFECTS: Returns the max price of all loaded events for the day
-    getMaxPrice() {
-        let maxPrice = Math.max.apply(Math, this.props.items.map(item => { return item.price }));
-        return maxPrice;
-    }
-
     //EFFECTS: formats and displays price range
     // if the lower and upper bounds are equal, display one value
     displayPrice(priceRange) {
         let lowerBound = priceRange[0] < 0 ? 0 : priceRange[0];
-        let upperBound = priceRange[1];
+        let upperBound;
+        if (upperBound < 0) {
+            upperBound = 0;
+        } else {
+            upperBound = priceRange[1];
+        }
         if (lowerBound === upperBound) {
             return "$" + lowerBound;
         }
@@ -75,7 +73,6 @@ class EventFilter extends React.Component {
     }
 
     render() {
-        let maxPrice = this.getMaxPrice();
         return (
             <div className={""}>
                 <Grid>
@@ -101,13 +98,10 @@ class EventFilter extends React.Component {
                                     {this.displayPrice(this.props.eventFilter.priceRange)}
                                 </span>
                             </h4>
-                            {/* <Input placeholder="Enter Value" onChange={(e) => {this.props.filterPriceByEntry(e)}} />
-                                to
-                            <Input placeholder="Enter Value" onChange={(e) => {this.props.filterPriceByEntry(e)}} /> */}
                             <Slider multiple color="red" settings={{
-                                start: [-1,0],
+                                start: [this.props.eventFilter.priceRange[0], this.props.eventFilter.priceRange[1] +10],
                                 min: 0,
-                                max: this.getMaxPrice() + 10,
+                                max: getMaxPrice(this.props.items) + 10,
                                 step: 1,
                                 onChange: debounce((value) => {
                                     this.props.filterPrice(value)
@@ -123,7 +117,10 @@ class EventFilter extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { eventFilter: state.eventFilter };
+    return { 
+        eventFilter: state.eventFilter,
+        items: state.currentEventsStore.currentEvents,
+    };
 };
 
 export default connect(mapStateToProps, {

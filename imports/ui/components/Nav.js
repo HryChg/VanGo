@@ -2,7 +2,7 @@
 import React from 'react';
 import {BrowserRouter as Router, NavLink, Route} from 'react-router-dom';
 import { logout, setLoginState } from '../actions/userActions.js';
-import { connect } from 'react-redux';
+import { connect, batch } from 'react-redux';
 import { Meteor } from 'meteor/meteor';
 import { Menu, Icon } from 'semantic-ui-react';
 
@@ -34,14 +34,13 @@ class AppRouter extends React.Component {
         } else {
             return (
                 <Menu inverted attached>
-                    <Menu.Item as={NavLink} to="/itinerary/" onClick={() => {
+                    <Menu.Item as={NavLink} exact to="/itinerary/" onClick={() => {
                         this.props.editingItinerary(false);
                     }}>Saved Itineraries
                     </Menu.Item>
                     <Menu.Item as={NavLink} to="/logout/" onClick={() => {
-                        this.props.editingItinerary(false);
-                        this.props.logout();
-                        }}>
+                        this.props.logout();    
+                    }}>
                         Logout
                     </Menu.Item>
                 </Menu>
@@ -58,7 +57,6 @@ class AppRouter extends React.Component {
                         <Icon name="street view"/>
                         VanGo
                     </Menu.Item>
-                    {/* <Menu.Item as={NavLink} to="/edit/">Edit</Menu.Item> */}
                     <Menu.Menu position='right'>
                         {this.toggleUserView()}
                     </Menu.Menu>
@@ -66,7 +64,9 @@ class AppRouter extends React.Component {
                 <Route path="/" exact component={HomePage}/>
                 <Route path="/profile/" component={ProfilePage}/>
                 <Route path="/edit/" component={EditPage}/>
-                <Route path="/itinerary/" component={ItineraryPageContainer}/>
+                <Route path="/itinerary/" exact component={ItineraryPageContainer}/>
+                <Route path="/itinerary/edit/" exact component={HomePage}/>
+                <Route path="/itinerary/edit/2/" exact component={EditPage}/>
                 <Route path="/login/" component={LoginPage}/>
                 <Route path="/register/" component={RegistrationPage}/>
                 <Route path="/logout/" component={HomePage}/>

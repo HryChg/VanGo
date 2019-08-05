@@ -20,6 +20,18 @@ export const handleOnMapClicked = () => {
     }
 };
 
+export const updateMapCenter = (center) => {
+    return {
+        type: 'UPDATE_MAP_CENTER',
+        payload: center
+    }
+}
+
+export const resetMapCenter = () => {
+    return {
+        type: 'RESET_MAP_CENTER'
+    }
+}
 
 export const popUpInfoWindow = (props, marker) => {
     return {
@@ -35,5 +47,11 @@ export const popUpInfoWindow = (props, marker) => {
 export const setMapLoadedTrue = () => {
     return {
         type: 'SET_MAP_LOADED_TRUE'
+    }
+};
+
+export const setMapLoadedFalse = () => {
+    return {
+        type: 'SET_MAP_LOADED_FALSE'
     }
 };

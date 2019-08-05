@@ -9,13 +9,14 @@ import registerReducer from './RegisterReducer.js';
 import registerFormReducer from './RegisterFormReducer.js';
 import eventFilterReducer from './EventFilterReducer';
 import datePickerReducer from './DatePickerReducer';
-import eventDrawerReducer from './EventDrawerReducer';
 import mapContainerReducer from './MapContainerReducer';
 import draggableItemsReducer from './DraggableItemsReducers';
 import HomePageReducer from "./HomePageReducer";
 import PanelReducer from './PanelReducer.js';
+import CurrentEventsReducer from './CurrentEventsReducer.js';
 
 export default combineReducers({
+    currentEventsStore: CurrentEventsReducer,
     datePicker: datePickerReducer,
     itineraryStore: itineraryReducer,
     sidebar: sidebarReducer,
@@ -25,7 +26,6 @@ export default combineReducers({
     register: registerReducer,
     registerForm: registerFormReducer,
     eventFilter: eventFilterReducer,
-    eventDrawer: eventDrawerReducer,
     mapContainer: mapContainerReducer,
     draggableItems: draggableItemsReducer,
     homePage: HomePageReducer,
