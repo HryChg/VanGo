@@ -20,7 +20,6 @@ import { formatAMPM, sortByDateName, getToday, getLatLonCenterOfEvents } from ".
 import EmailForm from "./../edit/EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import { downloadPdf } from '../edit/ItineraryPdf';
-import { VanGoStore } from '../../../../client/main';
 import { isString } from 'util';
 
 
@@ -327,8 +326,17 @@ class ItineraryPage extends React.Component {
                                 </Grid.Column>
 
                                 <Grid.Column>
-                                    <div style={{ height: '100vh' }}>
-                                        <MapContainer width={'97%'} height={'95%'}>
+                                    <div
+                                        style={{width: '50vw', height: '100vh'}}
+                                    >
+                                        <MapContainer
+                                            width={'97.5%'}
+                                            height={'101.5%'}
+                                            center={this.props.currentCenter}
+                                            setBounds={true}
+                                            bounds={this.makeBounds()}
+                                            ignore={this.props.visible}
+                                        >
                                             {this.displayMarkers()}
                                             {this.displayPolyLine()}
                                         </MapContainer>
