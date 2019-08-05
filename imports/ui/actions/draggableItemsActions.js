@@ -1,4 +1,6 @@
 import { Meteor } from "meteor/meteor";
+import { batch } from 'react-redux';
+import { changeDate } from './datePickerActions';
 
 export const updateDraggableItems = (newOrder, editing) => {
   return {
@@ -32,7 +34,10 @@ export const updateEventDrawer = () => {
   return async dispatch => {
     Meteor.call('getEventDrawer', (err, res) => {
         if (err) console.log(err);
-        dispatch(loadEventDrawer(res));
+        batch(()=> {
+          dispatch(loadEventDrawer(res));
+          res.date ? dispatch(changeDate(res.date)) : null;
+        })
     });
   }
 }

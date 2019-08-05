@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { batch } from 'react-redux';
 import { editingItinerary } from './itineraryActions.js';
+import { updateEventDrawer, clearDrawerState } from './draggableItemsActions';
+import { getToday } from '../../util/util.js';
 
 // Field updates
 export const updateLoginField = (event) => {
@@ -49,6 +51,7 @@ export const login = (email, password) => {
                 batch(() => {
                     dispatch(loginSuccess());
                     dispatch(clearField());
+                    dispatch(updateEventDrawer());
                 })
             }
         });
@@ -81,10 +84,15 @@ export const logout = () => {
             if (err) {
                 console.log(err);
             } else {
-                batch(() => {
-                    dispatch(editingItinerary(false));
-                    dispatch(logoutRequest());
-                })
+                let today = getToday();
+                Meteor.call('clearDrawer', today, (err, res) => {
+                    if (err) console.log(err);
+                    batch(() => {
+                        dispatch(editingItinerary(false));
+                        dispatch(logoutRequest());
+                        dispatch(clearDrawerState(today));
+                    })
+                });
             }
         });
     }

@@ -140,7 +140,7 @@ if (Meteor.isServer) {
             userData.items = [];
             userData.itineraryEdit ? userData.itineraryEdit = null : null;
             userData.date ? userData.date = date: null;
-            EventDrawerApi.update({user: Meteor.userId()}, userData);
+            EventDrawerApi.update({_id: accountID}, userData);
             console.log(`Due to user choosing a new date in calendar, the user drawer is cleared out`)
         },
 

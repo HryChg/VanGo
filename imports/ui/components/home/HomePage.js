@@ -43,17 +43,17 @@ class HomePage extends React.Component {
         if (this.props.editing) {
             date = this.props.eventDrawer.itineraryEdit ? this.props.eventDrawer.itineraryEdit.date : today;
         } else {
-            if (this.props.eventDrawer.date) {
-                if (this.props.eventDrawer.date.getTime() < today.getTime()) {
+            if (this.props.selectedDate) {
+                if (this.props.selectedDate.getTime() < today.getTime()) {
                     date = today;
                     Meteor.call('clearDrawer', date, (err, res) => {
                         if (err) console.log(err);
                         this.props.clearDrawerState(date);
                     });
-                } else if (this.props.eventDrawer.date.getTime() === today.getTime()) {
+                } else if (this.props.selectedDate.getTime() === today.getTime()) {
                     date = today;
-                } else if (this.props.eventDrawer.date.getTime() !== this.props.selectedDate.getTime()) {
-                    date = this.props.eventDrawer.date;
+                } else if (this.props.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
+                    date = this.props.selectedDate;
                 }
             }
         }
