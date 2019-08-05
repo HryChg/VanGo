@@ -70,14 +70,12 @@ if (Meteor.isServer) {
 
         // EFFECTS: loads event
         getEventDrawer: async () => {
-            let accountID = await getDrawerID();
-            let userData = await EventDrawerApi.findOne({_id: accountID});
-            return userData;
-            // if (Meteor.userId()) {
-            //     return await EventDrawerApi.findOne({user: Meteor.userId()});
-            // } else {
-            //     return await EventDrawerApi.findOne({user: 'anon'});
-            // }
+            try{
+                let drawerId = await getUserDrawerID();
+                return await EventDrawerApi.findOne({_id: drawerId});
+            } catch (e) {
+                console.error(e.message);
+            }
         },
 
         // EFFECTS: save the item to user drawer based on the current Drawer ID. Repeated Items will not be added
@@ -133,7 +131,7 @@ if (Meteor.isServer) {
                 }
                 console.log(`"${itemToBeDeleted.name}" deleted from user drawer`);
                 return;
-            }    
+            }
         },
 
         // EFFECTS: Clear out the items in current user's drawer, not itineraryEdit
