@@ -26,10 +26,10 @@ export const VanGoStore = createStore(reducers, compose(
     applyMiddleware(sources, subscriptions, thunk)
 ));
 
-window.store = VanGoStore;
-window.getStoreState = () => {
-    console.log(window.store.getState());
-};
+// window.store = VanGoStore;
+// window.getStoreState = () => {
+//     console.log(window.store.getState());
+// };
 
 Meteor.startup(() => {
   render(
