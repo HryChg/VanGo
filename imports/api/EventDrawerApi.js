@@ -147,17 +147,19 @@ if (Meteor.isServer) {
 
         // EFFECTS: Overwrites existing drawer data with selected itinerary
         saveItineraryToDrawer: async (itinerary) => {
-            let userData = await EventDrawerApi.update({user: Meteor.userId()}, itinerary);
+            let accountID = await getDrawerID();
+            let userData = await EventDrawerApi.update({_id: accountID}, itinerary);
         },
 
         updateDrawerDate: async (date) => {
-            let userData = await EventDrawerApi.update({user: Meteor.userId()}, {$set: {date: date}});
+            let accountID = await getDrawerID();
+            let userData = await EventDrawerApi.update({_id: accountID}, {$set: {date: date}});
         },
 
         getDrawerDate: async () => {
-            return await EventDrawerApi.findOne({user: Meteor.userId()}, {fields: {date: 1}}, (err, res) => {
+            let accountID = await getDrawerID();
+            return await EventDrawerApi.findOne({_id: accountID}, {fields: {date: 1}}, (err, res) => {
                 console.log(err)
-                console.log(res);
             });
         }
     });
