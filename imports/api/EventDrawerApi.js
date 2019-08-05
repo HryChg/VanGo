@@ -71,7 +71,7 @@ if (Meteor.isServer) {
         // EFFECTS: loads event
         getEventDrawer: async () => {
             try{
-                let drawerId = await getUserDrawerID();
+                let drawerId = await getDrawerID();
                 return await EventDrawerApi.findOne({_id: drawerId});
             } catch (e) {
                 console.error(e.message);
