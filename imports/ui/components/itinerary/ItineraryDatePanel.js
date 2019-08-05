@@ -5,10 +5,12 @@ import { updateMapCenter } from './../../actions/mapContainerActions';
 import { sortByDateName, getLatLonCenterOfEvents } from '../../../util/util';
 import { Menu, Icon } from 'semantic-ui-react';
 import { debounce } from 'lodash';
+import { isString } from 'util';
 
 class ItineraryDatePanel extends React.Component {
     getDisplayName(itinerary) {
-        let displayName = itinerary.name ? itinerary.date + ": " + itinerary.name : itinerary.date;
+        let date = isString(itinerary.date) ? itinerary.date : itinerary.date.toDateString();
+        let displayName = itinerary.name ? date + ": " + itinerary.name : date;
         return displayName;
     }
 

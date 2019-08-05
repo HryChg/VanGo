@@ -3,21 +3,14 @@ import {connect} from 'react-redux';
 import { Menu } from 'semantic-ui-react';
 
 import {maskString} from "../../../util/util";
-import {loadEventDrawer} from '../../actions/draggableItemsActions';
+import {updateEventDrawer} from '../../actions/draggableItemsActions';
 
 class EventDrawer extends React.Component {
     componentDidMount() {
         Meteor.call('initializeEventDrawerApi', (err, res)=>{
             if (err) console.log(`Error loading user data to event drawer: ${err.message}`);
         });
-        this.updateEventDrawer();
-    }
-
-    updateEventDrawer() {
-        Meteor.call('getEventDrawer', (err, res) => {
-            if (err) console.log(err);
-            this.props.loadEventDrawer(res);
-        });
+        this.props.updateEventDrawer();
     }
 
     // EFFECTS: returns menu items for event drawer
@@ -48,7 +41,7 @@ class EventDrawer extends React.Component {
                                 } else {
                                     // alert(`Event Deleted!`);
                                 }
-                                this.updateEventDrawer();
+                                this.props.updateEventDrawer();
                             });
                         }}/>
                     </Menu.Item>
@@ -74,5 +67,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-loadEventDrawer
+updateEventDrawer,
 })(EventDrawer);

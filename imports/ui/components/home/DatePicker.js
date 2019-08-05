@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 import {Icon} from 'semantic-ui-react';
 import { changeDate, toggleConfirmWindow, confirm, cancel } from '../../actions/datePickerActions';
 import {updateToCurrentEvents} from './../../actions/currentEventsActions';
-import {clearDrawerItems} from './../../actions/draggableItemsActions';
+import {clearDrawerState} from './../../actions/draggableItemsActions';
 import { CalledDates } from '../../../api/CalledDates';
 import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
@@ -23,9 +23,9 @@ class DatePicker extends React.PureComponent {
         let value = this.state.tempDate;
         this.props.changeDate(value);
         this.props.updateToCurrentEvents(value);
-        Meteor.call('clearDrawer', (err, res) => {
+        Meteor.call('clearDrawer', value, (err, res) => {
             if (err) console.log(err);
-            this.props.clearDrawerItems();
+            this.props.clearDrawerState(value);
         });
     };
 
@@ -44,6 +44,7 @@ class DatePicker extends React.PureComponent {
         } else {
             this.setState({tempDate: value});
             this.props.changeDate(value);
+            Meteor.call('updateDrawerDate', value);
             CalledDates.insert({date: value});
             this.props.updateToCurrentEvents(value);
         }
@@ -85,6 +86,6 @@ export default connect(mapStateToProps, {
     confirm,
     cancel,
     updateToCurrentEvents,
-    clearDrawerItems,
+    clearDrawerState,
     showDimmer
 })(DatePicker);

@@ -10,11 +10,11 @@ import {connect} from 'react-redux';
 import debounceRender from 'react-debounce-render';
 
 const googleMapsApiKey = Meteor.settings.public.googleMapsApiKey;
-import {handleOnMapClicked, handleOnMarkerClick, setMapLoadedTrue, setMapLoadedFalse} from "../actions/mapContainerActions";
+import {handleOnMapClicked, setMapLoadedTrue, setMapLoadedFalse} from "../actions/mapContainerActions";
 import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import {Button} from "semantic-ui-react";
 import {showPanel} from '../actions/panelActions';
-import {loadEventDrawer} from '../actions/draggableItemsActions';
+import {updateEventDrawer} from '../actions/draggableItemsActions';
 
 
 export class MapContainer extends React.Component {
@@ -57,14 +57,8 @@ export class MapContainer extends React.Component {
         Meteor.call('saveToCurrentUserDrawer', eventToBeSaved, this.props.editing, (error, result) => {
             if (error) {
                 alert(error.message);
-            } else {
-                // alert(`Event Saved! EventID: ${result}, EventName: ${eventToBeSaved.name}`);
-                this.props.showPanel();
             }
-            Meteor.call('getEventDrawer', (err, res) => {
-                if (err) console.log(err);
-                this.props.loadEventDrawer(res);
-            });
+            this.props.updateEventDrawer();
         })
     };
 
@@ -143,9 +137,8 @@ const debouncedMapContainer = debounceRender(apiWrapper, 200, {leading: false, t
 
 export default connect(mapStateToProps, {
     handleOnMapClicked: handleOnMapClicked,
-    handleOnMarkerClick: handleOnMarkerClick,
     setMapLoadedTrue: setMapLoadedTrue,
     setMapLoadedFalse,
-    loadEventDrawer,
+    updateEventDrawer,
     showPanel
 })(debouncedMapContainer);

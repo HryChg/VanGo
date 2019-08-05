@@ -134,9 +134,27 @@ export const getToday = () => {
     return date;
 }
 
+// EFFECTS: converts date in WWW MMM DD YYYY format to date with 00:00:00 time
+export const parseDate = (date) => {
+    let newDate = new Date(date);
+    newDate.setHours(0);
+    newDate.setMinutes(0);
+    newDate.setSeconds(0);
+    newDate.setMilliseconds(0);
+    return newDate;
+}
+
 // EFFECTS: returns item with the maximum price
 export const getMaxPrice = (items) => {
     if (!Array.isArray(items) || !items.length) return 0;
     let maxPrice = Math.max.apply(Math, items.map(item => { return item.price }));
     return maxPrice;
 } 
+
+export const isEqualDate = (date1, date2) => {
+    return date1.getTime() === date2.getTime();
+}
+
+export const isString = (value) => {
+    return typeof value === 'string'|| value instanceof String;
+}

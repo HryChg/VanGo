@@ -9,8 +9,9 @@ import MapContainer from "../MapContainer";
 import DraggableItems from "./DraggableItems";
 import {handleOnMarkerClick, updateMapCenter} from "../../actions/mapContainerActions";
 import {saveItinerary, resetEditPage} from "../../actions/editPageActions";
+import {clearDrawerState} from './../../actions/draggableItemsActions';
 import {selectID, editingItinerary} from "../../actions/itineraryActions";
-import {formatAMPM, getLatLonCenterOfEvents} from "../../../util/util";
+import {formatAMPM, getLatLonCenterOfEvents, getToday} from "../../../util/util";
 import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import {downloadPdf} from './ItineraryPdf';
@@ -107,27 +108,40 @@ class EditPage extends React.Component {
     toggleEditHeader() {
         if (this.props.editing) {
             let ready = this.props.draggableItems.itineraryEdit;
-            let date = ready ? ready.date : "";
+            let date = ready ? ready.date.toDateString() : "";
             let name = ready ? ready.name : "";
             let header = date || name ? date + ": " + name : "";
             return (<h3>{header}</h3>);
         } else {
-            let selectedDateString = this.props.datePicker.selectedDate.toDateString();
-            return (<h3>{selectedDateString}</h3>);
+            let date = this.props.datePicker.selectedDate.toDateString();
+            return (<h3>{date}</h3>);
         }
     }
 
     // EFFECTS: renders save button; disabled when user is not logged in
     toggleSaveButton() {
         if (Meteor.userId()) {
-            return (
-                <button className="ui blue button"
-                        onClick={() => {
-                            this.createItinerary();
-                        }}>
-                    <Icon name="heart"/>
-                    Save
-                </button>)
+            if (this.props.editing && !this.props.draggableItems.itineraryEdit) {
+                return (
+                    <button className="ui disabled button">
+                        <Icon name="heart"/>
+                        Save
+                    </button>)
+            } else {
+                return (
+                    <button className="ui blue button"
+                            onClick={() => {
+                                this.createItinerary();
+                                let today = getToday();
+                                Meteor.call('clearDrawer', today, (err, res) => {
+                                    if (err) console.log(err);
+                                    this.props.clearDrawerState(today);
+                                });
+                            }}>
+                        <Icon name="heart"/>
+                        Save
+                    </button>)
+            }
         } else {
             return (
                 <Popup
@@ -238,10 +252,11 @@ class EditPage extends React.Component {
             return null;
         }
         let items = this.selectItems();
+        let date = this.props.datePicker.selectedDate;
         let itin = {
             _id: this.props.editing ? this.props.draggableItems.itineraryEdit._id : uniqid(),
             name: itineraryName,
-            date: this.props.datePicker.selectedDate.toDateString(),
+            date: date,
             items: items
         };
         this.props.saveItinerary(itin, this.props.editing);
@@ -333,5 +348,6 @@ export default connect(mapStateToProps, {
     resetEditPage: resetEditPage,
     editingItinerary: editingItinerary,
     selectID: selectID,
-    updateMapCenter
+    updateMapCenter,
+    clearDrawerState
 })(EditPage);

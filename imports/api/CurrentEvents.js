@@ -17,7 +17,6 @@ if (Meteor.isServer) {
         },
 
         'updateEvents': async (date) => {
-            console.log(date)
             // var dbEvents = CurrentEvents.find();
             // for (event of eventsToday.events) {
             //     CurrentEvents.insert(event);

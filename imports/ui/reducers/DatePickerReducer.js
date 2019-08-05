@@ -1,5 +1,7 @@
+import {getToday} from './../../util/util.js';
+
 let initialState = {
-    selectedDate: new Date(),
+    selectedDate: getToday(),
     openConfirmWindow: false,
     result: 'initial state'
 };

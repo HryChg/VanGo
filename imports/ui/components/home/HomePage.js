@@ -11,43 +11,67 @@ import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {changeDate} from "../../actions/datePickerActions";
-import {handleOnMarkerClick} from "../../actions/mapContainerActions";
+import {clearDrawerState, updateEventDrawer} from '../../actions/draggableItemsActions';
+import {handleOnMarkerClick, resetMapCenter} from "../../actions/mapContainerActions";
 import {updateToCurrentEvents} from './../../actions/currentEventsActions';
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/homePageActions";
-import {formatAMPM} from "../../../util/util";
+import {formatAMPM, getToday} from "../../../util/util";
 
 class HomePage extends React.Component {
     // Don't update when date changes as If the date doesn't change, don't update
     shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
+        if (!this.props.editing && nextProps.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
             return false;
         } else {
             return true;
         }
     }
 
-    componentDidMount() {
-        // Retrieve events for default date or selected date
-        let date;
+    componentWillMount() {
+        // Position of the map
         if (!this.props.editing || this.props.location.pathname === "/logout/") {
-            date = new Date();
-            this.props.changeDate(date);
-        } else {
-            date = this.props.selectedDate;
+            this.props.resetMapCenter();
         }
+
+        // Date logic:
+        // if drawer date is passed, clear drawer and get today's events
+        // if drawer date is not the same as selected date, get drawer date's events
+        let date = getToday();
+        let today = getToday();
+
+        if (this.props.editing) {
+            date = this.props.eventDrawer.itineraryEdit ? this.props.eventDrawer.itineraryEdit.date : today;
+        } else {
+            if (this.props.eventDrawer.date) {
+                if (this.props.eventDrawer.date.getTime() < today.getTime()) {
+                    date = today;
+                    Meteor.call('clearDrawer', date, (err, res) => {
+                        if (err) console.log(err);
+                        this.props.clearDrawerState(date);
+                    });
+                } else if (this.props.eventDrawer.date.getTime() === today.getTime()) {
+                    date = today;
+                } else if (this.props.eventDrawer.date.getTime() !== this.props.selectedDate.getTime()) {
+                    date = this.props.eventDrawer.date;
+                }
+            }
+        }
+
+        this.props.changeDate(date);
         this.props.updateToCurrentEvents(date);
 
-        // Show when editing
+        // When Editing: Show panel
         if (this.props.location.pathname.includes("/itinerary/edit/")) {
             this.props.showPanel();
         }
     }
 
+
     // EFFECTS: Debug - Prints which prop was updated
     componentDidUpdate(prevProps, prevState) {
         Object.entries(this.props).forEach(([key, val]) =>
-          prevProps[key] !== val && console.log(`Prop '${key}' changed '${prevProps[key]}'`)
+          prevProps[key] !== val && console.log(`Prop '${key}' changed`)
         );
     }
 
@@ -56,7 +80,7 @@ class HomePage extends React.Component {
         if (this.props.editing) {
             if (this.props.eventDrawer && this.props.eventDrawer.itineraryEdit) {
                 return (<h2>Add/Remove Itinerary Items from
-                    {" " + this.props.eventDrawer.itineraryEdit.date + ": " + this.props.eventDrawer.itineraryEdit.name}
+                    {" " + this.props.eventDrawer.itineraryEdit.date.toDateString() + ": " + this.props.eventDrawer.itineraryEdit.name}
                     </h2>);
             } else {
                 return (<h2>Add/Remove Itinerary Items</h2>);
@@ -297,5 +321,8 @@ export default connect(mapStateToProps, {
     showPanel,
     hidePanel,
     updateToCurrentEvents,
-    changeDate
+    changeDate,
+    resetMapCenter,
+    clearDrawerState,
+    updateEventDrawer
 })(HomePage);

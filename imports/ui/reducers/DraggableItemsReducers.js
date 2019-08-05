@@ -1,4 +1,6 @@
-let initialState = {_id: null, items: [], itineraryEdit: null, ready: false, saved: false};
+import {getToday, parseDate} from './../../util/util.js';
+
+let initialState = {_id: null, items: [], itineraryEdit: null, date: getToday(), ready: false, saved: false};
 
 export default function DraggableItemsReducer(state = initialState, action) {
     let newState;
@@ -28,13 +30,15 @@ export default function DraggableItemsReducer(state = initialState, action) {
             newState._id = action.payload._id,
             newState.items = action.payload.items;
             newState.itineraryEdit = action.payload.itineraryEdit;
+            newState.date = action.payload.date;
             newState.saved = state.saved;
             return newState;
-        case 'CLEAR_DRAWER_ITEMS':
+        case 'CLEAR_DRAWER':
             newState = Object.assign({}, state);
             newState._id = state._id,
             newState.items = [];
-            newState.itineraryEdit = state.itineraryEdit;
+            newState.itineraryEdit = null;
+            newState.date = action.payload;
             newState.saved = state.saved;
             return newState;
         case 'EDITING_ITINERARY':
@@ -43,6 +47,7 @@ export default function DraggableItemsReducer(state = initialState, action) {
                 newState._id = state._id,
                 newState.items = state.items;
                 newState.itineraryEdit = null;
+                newState.date = state.itineraryEdit ? parseDate(state.itineraryEdit.date) : getToday();
                 newState.saved = state.saved;
                 return newState;
             } else {

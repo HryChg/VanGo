@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { batch } from 'react-redux';
-import { changeDate } from './datePickerActions.js';
 import { editingItinerary } from './itineraryActions.js';
 
 // Field updates

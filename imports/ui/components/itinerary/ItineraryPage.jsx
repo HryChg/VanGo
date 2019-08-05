@@ -13,6 +13,7 @@ import ItineraryDatePanel from './ItineraryDatePanel';
 import MapContainer from '../MapContainer';
 import ItineraryList from './ItineraryList';
 
+import {updateEventDrawer} from '../../actions/draggableItemsActions';
 import { updateMapCenter } from './../../actions/mapContainerActions';
 import { selectID, editingItinerary, loadItineraries } from './../../actions/itineraryActions';
 import { updateToCurrentEvents } from './../../actions/currentEventsActions';
@@ -20,6 +21,7 @@ import { changeDate } from './../../actions/datePickerActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM, sortByDateName, getToday, getLatLonCenterOfEvents } from "../../../util/util";
 import EmailForm from "./../edit/EmailForm";
+import { isString } from 'util';
 
 
 class ItineraryPage extends React.Component {
@@ -95,7 +97,8 @@ class ItineraryPage extends React.Component {
     getDisplayName(selectedID) {
         let itinerary = this.getSelectedItinerary(selectedID);
         if (itinerary) {
-            return itinerary.name ? itinerary.date + ': ' + itinerary.name : itinerary.date;
+            let date = isString(itinerary.date) ? itinerary.date : itinerary.date.toDateString();
+            return itinerary.name ? date + ': ' + itinerary.name : date;
         }
         return "";
     }
@@ -121,11 +124,12 @@ class ItineraryPage extends React.Component {
             if (itineraryDate.getTime() >= today.getTime()) {
                 return (
                     <Button className="it-edit" onClick={() => {
-                        Meteor.call('updateItinerary', this.props.selectedID);
+                        Meteor.call('addItineraryToDrawer', this.props.selectedID);
                         this.props.editingItinerary(true);
                         let date = this.getDateFromID(this.props.selectedID)
                         this.props.changeDate(date);
                         this.props.updateToCurrentEvents(date);
+                        this.props.updateEventDrawer();
                     }}>
                         <Icon name={"pencil"} size={"large"} color={"black"}/>
                     </Button>
@@ -252,7 +256,6 @@ class ItineraryPage extends React.Component {
     // EFFECTS: If itinerary is being edited, redirect to home page; otherwise, display itinerary page
     render() {
         if (this.props.editing) {
-            console.log("redirected...")
             return (<Redirect exact to='/itinerary/edit/'/>);
         }
         return (
@@ -343,5 +346,7 @@ export default connect(mapStateToProps,
         changeDate, 
         loadItineraries, 
         updateMapCenter, 
-        updateToCurrentEvents }
+        updateToCurrentEvents,
+        updateEventDrawer
+    }
 )(debouncedItineraryPage);
