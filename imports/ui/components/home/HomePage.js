@@ -261,7 +261,7 @@ class HomePage extends React.Component {
                                                     {this.props.homePage.toggleNearbyAttractions ? 'Hide Attractions' : 'Show Nearby Attractions'}
                                                 </Menu.Item>
                                                 <Menu.Item onClick={this.props.visible ? null : this.props.showPanel}>
-                                                    <Label>{this.displaySelectionCount()}</Label>
+                                                    <Label color={this.displaySelectionCount() > 0 ? 'blue' : 'grey'}>{this.displaySelectionCount()}</Label>
                                                     Show Current Selection
                                                 </Menu.Item>
                                             </Menu>

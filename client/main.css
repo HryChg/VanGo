@@ -184,7 +184,8 @@ i.caret.square.right.large.icon.next-button {
 /* ---------------------------------------- */
 #it-list {
     display: inline-block;
-    margin-left: 36px;
+    margin-top: 10px;
+    margin-left: 65px;
 }
 
 #it-date-toggle {
@@ -323,7 +324,7 @@ i.trash.icon {
 .emailFormItin {
     width: 70%;
     position: absolute;
-    left: 10%;
+    left: 14%;
     padding: 0px 0px 25px 0px;
 }
 
