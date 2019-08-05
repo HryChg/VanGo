@@ -1,7 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import getEventsInDay from './getDayEvents';
-import YelpAttractionsApi, { convertBusinessesToAttractions } from "../api/YelpAttractionsApi";
 import { parseDate, isString } from '../util/util';
 
 const CurrentEvents = new Mongo.Collection('currentEvents');

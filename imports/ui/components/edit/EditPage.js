@@ -134,10 +134,12 @@ class EditPage extends React.Component {
                             onClick={() => {
                                 this.createItinerary();
                                 let today = getToday();
-                                Meteor.call('clearDrawer', today, (err, res) => {
-                                    if (err) console.log(err);
-                                    this.props.clearDrawerState(today);
-                                });
+                                if (!this.props.editing) {
+                                    Meteor.call('clearDrawer', today, (err, res) => {
+                                        if (err) console.log(err);
+                                        this.props.clearDrawerState(today);
+                                    });    
+                                }
                             }}>
                         <Icon name="heart"/>
                         Save
