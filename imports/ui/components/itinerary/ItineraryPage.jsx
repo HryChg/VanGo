@@ -206,7 +206,9 @@ class ItineraryPage extends React.Component {
                         <p style={{ textAlign: "center" }}> <br /> Or</p>
                         <button className="ui button fluid" onClick={() =>
                             downloadPdf(this.getDisplayName(this.props.selectedID),
-                                this.getSelectedItinerary(this.props.selectedID).items)}>Download Itinerary</button>
+                                this.getSelectedItinerary(this.props.selectedID).items)}>
+                                    <i class="download icon"></i>
+                                    Download Itinerary</button>
                     </div>
                 </div>
             );
