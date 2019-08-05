@@ -12,14 +12,14 @@ import YelpAttractionsApi, {convertBusinessesToAttractions} from "../imports/api
 
 
 Meteor.startup(async () => {
-    CurrentEvents.remove({});
-    console.log(`clear out current events collection`);
+    // CurrentEvents.remove({});
+    // console.log(`clear out current events collection`);
 
-    let eventsToday = await getEventsInDay(new Date());
-    for (event of eventsToday.events) {
-        CurrentEvents.insert(event);
-    }
-    console.log(`Added ${eventsToday.events.length} events from Yelp`);
+    // let eventsToday = await getEventsInDay(new Date());
+    // for (event of eventsToday.events) {
+    //     CurrentEvents.insert(event);
+    // }
+    // console.log(`Added ${eventsToday.events.length} events from Yelp`);
 
     let yelp = new YelpAttractionsApi();
     let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
