@@ -43,6 +43,7 @@ export default class YelpAttractionsApi {
             });
             return res.data.businesses;
         } catch (err) {
+            console.log(err);
             throw new Error(err);
         }
     }

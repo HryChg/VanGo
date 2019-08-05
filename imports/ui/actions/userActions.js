@@ -71,20 +71,21 @@ export const initializeUser = () => {
         Meteor.call('getEventDrawer', (err, drawer) => {
             if (err) console.log(err);
             batch(()=> {
-              dispatch(loadEventDrawer(drawer));
-              Meteor.call('getDrawerDate', (err, res) => {
-                let today = getToday();
-                let date = today;
-                let drawerDate = isString(res.date) ? parseDate(res.date) : res.date ;
-                if (drawerDate.getTime() < today.getTime()) {
-                    Meteor.call('clearDrawer', today, (err, response) => {
-                        if (err) console.log(err);
-                    });
-                    dispatch(clearDrawerState(today));
-                } else {
-                    date = drawerDate;
-                }
-                dispatch(changeDate(date));
+                dispatch(loadEventDrawer(drawer));
+                Meteor.call('getDrawerDate', (err, res) => {
+                    if (!res) return;
+                    let today = getToday();
+                    let date = today;
+                    let drawerDate = isString(res.date) ? parseDate(res.date) : res.date ;
+                    if (drawerDate.getTime() < today.getTime()) {
+                        Meteor.call('clearDrawer', today, (err, response) => {
+                            if (err) console.log(err);
+                        });
+                        dispatch(clearDrawerState(today));
+                    } else {
+                        date = drawerDate;
+                    }
+                    dispatch(changeDate(date));
                 })
             })
         });
