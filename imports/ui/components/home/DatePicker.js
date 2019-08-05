@@ -10,7 +10,7 @@ import { CalledDates } from '../../../api/CalledDates';
 import "./customDatePickerWidth.css";
 import { Confirm } from "semantic-ui-react";
 import {showDimmer} from "../../actions/homePageActions";
-
+import {isString, parseDate} from "../../../util/util";
 
 class DatePicker extends React.PureComponent {
     // Holding a temporary date in case user selected OK at the ConfirmWindow
@@ -48,6 +48,7 @@ class DatePicker extends React.PureComponent {
     };
 
     render() {
+        let date = isString(this.props.selectedDate) ? this.props.selectedDate : this.props.selectedDate.toDateString();
         return (
             <div className="customDatePickerWidth">
                 <Confirm open={this.props.openConfirmWindow}
@@ -55,13 +56,13 @@ class DatePicker extends React.PureComponent {
                     onCancel={this.handleCancel}
                     content={"Choosing a new date will clear out your saved markers for the current date. Are you sure?"} />
                 <h3>
-                    {"Current Selection: " + this.props.selectedDate.toDateString()}
+                    {"Current Selection: " + date}
                     <Icon id={"info-btn"} className="question circle outline" onClick={this.props.showDimmer} floated={"right"}/>
                 </h3>
                 <Calendar
                     className={"react-calendar__tile--active"}
                     onChange={this.onChange}
-                    value={this.props.selectedDate}
+                    value={parseDate(this.props.selectedDate)}
                     minDate={new Date()}
                 />
             </div>

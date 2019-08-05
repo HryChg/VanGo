@@ -15,14 +15,16 @@ import {clearDrawerState, updateEventDrawer} from '../../actions/draggableItemsA
 import {handleOnMarkerClick, resetMapCenter} from "../../actions/mapContainerActions";
 import {updateToCurrentEvents} from './../../actions/currentEventsActions';
 import {showPanel, hidePanel} from './../../actions/panelActions';
-import {initializeUser} from './../../actions/userActions';
+import {initializeUser, postLogout} from './../../actions/userActions';
 import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/homePageActions";
-import {formatAMPM, getToday, isString} from "../../../util/util";
+import {formatAMPM, getToday, isString, parseDate} from "../../../util/util";
 
 class HomePage extends React.Component {
     // // Don't update when date changes as If the date doesn't change, don't update
     shouldComponentUpdate(nextProps, nextState) {
-        if (!this.props.editing && nextProps.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
+        let thisDate = isString(this.props.selectedDate) ? parseDate(this.props.selectedDate) : this.props.selectedDate;
+        let nextDate = isString(nextProps.selectedDate) ? parseDate(nextProps.selectedDate) : nextProps.selectedDate;
+        if (!this.props.editing && nextDate.getTime() !== thisDate.getTime()) {
             return false;
         } else {
             return true;
@@ -30,11 +32,6 @@ class HomePage extends React.Component {
     }
 
     componentWillMount() {
-        // Position of the map
-        if (!this.props.editing || this.props.location.pathname === "/logout/") {
-            this.props.resetMapCenter();
-        }
-
         // Date logic:
         // if drawer date is passed, clear drawer and get today's events
         // if drawer date is not the same as selected date, get drawer date's events
@@ -45,13 +42,8 @@ class HomePage extends React.Component {
             date = this.props.eventDrawer.itineraryEdit ? this.props.eventDrawer.itineraryEdit.date : today;
             this.props.changeDate(date);
         } else if (this.props.location.pathname === '/logout/') {
-            Meteor.call('clearDrawer', today, (err, res) => {
-                if (err) console.log(err);
-                this.props.clearDrawerState(today);
-            });
-            this.props.changeDate(date);
+            this.props.postLogout();
         } else {
-            date = this.props.selectedDate;
             this.props.initializeUser();
         }
 
@@ -293,6 +285,7 @@ class HomePage extends React.Component {
                                                           showSaveButton={true}
                                                           ignore={this.props.visible}
                                                           ignore2={this.props.dimmerActive}
+                                                          ignore3={this.props.eventDrawer}
                                                           ignoreException={this.props.eventFilter}
                                                           ignoreException2={this.props.homePage.toggleNearbyAttractions}
                                             >
@@ -341,5 +334,6 @@ export default connect(mapStateToProps, {
     resetMapCenter,
     clearDrawerState,
     updateEventDrawer,
-    initializeUser
+    initializeUser,
+    postLogout
 })(HomePage);
