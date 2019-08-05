@@ -13,7 +13,6 @@ import ItineraryDatePanel from './ItineraryDatePanel';
 import MapContainer from '../MapContainer';
 import ItineraryList from './ItineraryList';
 
-import {updateEventDrawer} from '../../actions/draggableItemsActions';
 import { updateMapCenter } from './../../actions/mapContainerActions';
 import { selectID, editingItinerary, loadItineraries, loadItineraryToDrawer } from './../../actions/itineraryActions';
 import { updateToCurrentEvents } from './../../actions/currentEventsActions';
@@ -342,7 +341,6 @@ export default connect(mapStateToProps,
         loadItineraries, 
         updateMapCenter, 
         updateToCurrentEvents,
-        updateEventDrawer,
         loadItineraryToDrawer
     }
 )(debouncedItineraryPage);
