@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { batch } from 'react-redux';
 import { editingItinerary } from './itineraryActions.js';
 import { updateEventDrawer, clearDrawerState } from './draggableItemsActions';
+import { loadEventDrawer } from './draggableItemsActions';
 import { changeDate } from './datePickerActions';
 import { updateToCurrentEvents } from './currentEventsActions';
 import { getToday } from '../../util/util.js';
@@ -57,26 +58,36 @@ export const login = (email, password) => {
                 batch(() => {
                     dispatch(loginSuccess());
                     dispatch(clearField());
-                    dispatch(updateEventDrawer());
-                    Meteor.call('getDrawerDate', (err, res) => {
-                        let today = getToday();
-                        let date = today;
-                        if (res.getTime() < today.getTime()) {
-                            Meteor.call('clearDrawer', today, (err, res) => {
-                                if (err) console.log(err);
-                                dispatch(clearDrawerState(today));
-                            });
-                        } else {
-                            date = res;
-                        }
-                        batch (() => {
-                            dispatch(changeDate(date));
-                            dispatch(updateToCurrentEvents(date));    
-                        })
-                    })
-
+                    dispatch(initializeUser());
                 })
             }
+        });
+    }
+}
+
+export const initializeUser = () => {
+    return async dispatch => {
+        Meteor.call('getEventDrawer', (err, drawer) => {
+            if (err) console.log(err);
+            batch(()=> {
+              dispatch(loadEventDrawer(drawer));
+              Meteor.call('getDrawerDate', (err, res) => {
+                let today = getToday();
+                let date = today;
+                if (res.date.getTime() < today.getTime()) {
+                    Meteor.call('clearDrawer', today, (err, response) => {
+                        if (err) console.log(err);
+                        dispatch(clearDrawerState(today));
+                    });
+                } else {
+                    date = res.date;
+                }
+                batch (() => {
+                    dispatch(changeDate(date));
+                    dispatch(updateToCurrentEvents(date));    
+                })
+            })
+            })
         });
     }
 }

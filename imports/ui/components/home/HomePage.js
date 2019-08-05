@@ -15,18 +15,19 @@ import {clearDrawerState, updateEventDrawer} from '../../actions/draggableItemsA
 import {handleOnMarkerClick, resetMapCenter} from "../../actions/mapContainerActions";
 import {updateToCurrentEvents} from './../../actions/currentEventsActions';
 import {showPanel, hidePanel} from './../../actions/panelActions';
+import {initializeUser} from './../../actions/userActions';
 import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/homePageActions";
 import {formatAMPM, getToday} from "../../../util/util";
 
 class HomePage extends React.Component {
     // // Don't update when date changes as If the date doesn't change, don't update
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     if (!this.props.editing && nextProps.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
-    //         return false;
-    //     } else {
-    //         return true;
-    //     }
-    // }
+    shouldComponentUpdate(nextProps, nextState) {
+        if (!this.props.editing && nextProps.selectedDate.getTime() !== this.props.selectedDate.getTime()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     componentWillMount() {
         // Position of the map
@@ -42,14 +43,22 @@ class HomePage extends React.Component {
 
         if (this.props.editing) {
             date = this.props.eventDrawer.itineraryEdit ? this.props.eventDrawer.itineraryEdit.date : today;
+            this.props.changeDate(date);
+            this.props.updateToCurrentEvents(date);
         } else if (this.props.location.pathname === '/logout/') {
             Meteor.call('clearDrawer', today, (err, res) => {
                 if (err) console.log(err);
                 this.props.clearDrawerState(today);
             });
+            this.props.changeDate(date);
+            this.props.updateToCurrentEvents(date);
+        } else {
+            date = this.props.selectedDate;
+            this.props.initializeUser();
         }
-        this.props.changeDate(date);
-        this.props.updateToCurrentEvents(date);
+        // this.props.changeDate(date);
+        // this.props.updateToCurrentEvents(date);
+
 
         // When Editing: Show panel
         if (this.props.location.pathname.includes("/itinerary/edit/")) {
@@ -314,5 +323,6 @@ export default connect(mapStateToProps, {
     changeDate,
     resetMapCenter,
     clearDrawerState,
-    updateEventDrawer
+    updateEventDrawer,
+    initializeUser
 })(HomePage);
