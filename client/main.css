@@ -1,6 +1,7 @@
 body {
     padding: 10px;
     font-family: sans-serif;
+    overflow-y: hidden;
 }
 
 .container {
@@ -9,6 +10,18 @@ body {
 
 .inline {
     display: inline-block;
+}
+
+.column {
+    padding-bottom: 0px !important;
+}
+
+.column.mapContainerClass {
+    padding-left: 0px !important;
+}
+
+form.ui.form.email-form {
+    margin-bottom: 10px;
 }
 
 /* ---------------------------------------- */

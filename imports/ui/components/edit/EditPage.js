@@ -312,7 +312,7 @@ class EditPage extends React.Component {
             return (
                 <Grid stackable divided='vertically'>
                     <Grid.Row columns={2}>
-                        <Grid.Column width={4}>
+                        <Grid.Column width={4} className={"itinPageScroll"}>
                             <div className={"edit-panel"}>
                                 <h2 className={"ui header"}>Reorder Itinerary</h2>
                                 {this.toggleEditHeader()}
@@ -331,10 +331,10 @@ class EditPage extends React.Component {
                             </div>
                         </Grid.Column>
 
-                        <Grid.Column width={12}>
+                        <Grid.Column width={12} className={'mapContainerClass'}>
                             <div style={{height: '94vh'}}>
                                 <MapContainer
-                                    width={'98%'}
+                                    width={'99%'}
                                     height={'100%'}
                                     setBounds={true}
                                     bounds={this.makeBounds()}

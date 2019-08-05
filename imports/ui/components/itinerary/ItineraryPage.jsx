@@ -325,12 +325,12 @@ class ItineraryPage extends React.Component {
                                     {this.toggleEmailForm()}
                                 </Grid.Column>
 
-                                <Grid.Column>
+                                <Grid.Column className={'mapContainerClass'}>
                                     <div
                                         style={{height: '94vh'}}
                                     >
                                         <MapContainer
-                                            width={'97.5%'}
+                                            width={'98.5%'}
                                             height={'100%'}
                                             center={this.props.currentCenter}
                                             setBounds={true}

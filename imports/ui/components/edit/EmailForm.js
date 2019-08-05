@@ -98,7 +98,7 @@ class EmailForm extends React.Component {
 
     render = () => {
         return (
-            <Form>
+            <Form className={'email-form'}>
                 <Form.Group widths='equal'>
                     <Form.Input onChange={this.handleRecipientEmailChange}
                                 fluid
