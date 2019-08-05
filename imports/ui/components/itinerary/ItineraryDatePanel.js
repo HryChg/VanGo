@@ -40,7 +40,7 @@ class ItineraryDatePanel extends React.Component {
                     <Icon name="trash" onClick={(e) => {
                         e.stopPropagation();
                         Meteor.call('deleteItinerary', itinerary._id, (error, result) => {
-                            if (error) return alert(error);
+                            if (error) return alert(error.reason);
 
                             Meteor.call('fetchItineraries', (err, res) => {
                                 if (err) return console.log(err);

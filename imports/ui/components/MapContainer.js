@@ -57,7 +57,7 @@ export class MapContainer extends React.Component {
 
         Meteor.call('saveToCurrentUserDrawer', eventToBeSaved, this.props.editing, (error, result) => {
             if (error) {
-                alert(error.message);
+                alert(error.reason);
             }
             this.props.updateEventDrawer();
         })
