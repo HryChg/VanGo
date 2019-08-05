@@ -10,10 +10,8 @@ import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
-import {changeDate} from "../../actions/datePickerActions";
 import {clearDrawerState, updateEventDrawer} from '../../actions/draggableItemsActions';
 import {handleOnMarkerClick} from "../../actions/mapContainerActions";
-import {updateToCurrentEvents} from './../../actions/currentEventsActions';
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {initializeUser, postLogout} from './../../actions/userActions';
 import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/homePageActions";
@@ -325,8 +323,6 @@ export default connect(mapStateToProps, {
     showDimmer,
     showPanel,
     hidePanel,
-    updateToCurrentEvents,
-    changeDate,
     clearDrawerState,
     updateEventDrawer,
     initializeUser,

@@ -10,7 +10,7 @@ class EventDrawer extends React.Component {
         Meteor.call('initializeEventDrawerApi', (err, res)=>{
             if (err) console.log(`Error loading user data to event drawer: ${err.message}`);
         });
-        this.props.updateEventDrawerAndDate();
+        this.props.updateEventDrawer();
     }
 
     // EFFECTS: returns menu items for event drawer

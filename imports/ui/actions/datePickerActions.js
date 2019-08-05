@@ -1,16 +1,26 @@
 import {batch} from 'react-redux';
-import {updateToCurrentEvents} from './currentEventsActions';
-import {updateEventDrawer} from './draggableItemsActions';
+import {loadCurrentEvents} from './currentEventsActions';
+import {filterPrice} from "./eventFilterActions.js";
+import {getMaxPrice} from './../../util/util.js'
 
 export const changeDate = (date) => {
     return async dispatch => {
         batch(()=> {
             dispatch(changeDateState(date));
-            dispatch(updateToCurrentEvents(date));  
             Meteor.call('updateDrawerDate', date);
+            Meteor.call('updateEvents', date, (err, res) => {
+                if (err) console.log(err);
+                batch(() => {
+                    dispatch(loadCurrentEvents(res));
+                    let maxPrice = getMaxPrice(res);
+                    dispatch(filterPrice([0, maxPrice? maxPrice: 0]));    
+                })
+            })
         })
     }
 }
+
+
 
 export const changeDateState = (date) => {
     return {

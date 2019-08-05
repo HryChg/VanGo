@@ -15,8 +15,6 @@ import ItineraryList from './ItineraryList';
 
 import { updateMapCenter } from './../../actions/mapContainerActions';
 import { selectID, editingItinerary, loadItineraries, loadItineraryToDrawer } from './../../actions/itineraryActions';
-import { updateToCurrentEvents } from './../../actions/currentEventsActions';
-import { changeDate } from './../../actions/datePickerActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM, sortByDateName, getToday, getLatLonCenterOfEvents } from "../../../util/util";
 import EmailForm from "./../edit/EmailForm";
@@ -360,10 +358,8 @@ export default connect(mapStateToProps,
         editingItinerary,
         showPanel,
         hidePanel,
-        changeDate,
         loadItineraries,
         updateMapCenter,
-        updateToCurrentEvents,
         loadItineraryToDrawer
     }
 )(debouncedItineraryPage);
