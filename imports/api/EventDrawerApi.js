@@ -90,7 +90,8 @@ if (Meteor.isServer) {
             }
 
             if (containsItem(items, itemToBeSaved)) {
-                throw new Meteor.Error(`"${itemToBeSaved.name}" is already in event drawer.`);
+                let message = `"${itemToBeSaved.name}" has already been saved!`
+                throw new Meteor.Error(message, message);
             } else {
                 items.push(itemToBeSaved);
                 console.log(`"${itemToBeSaved.name}" added to user drawer`);
@@ -112,7 +113,8 @@ if (Meteor.isServer) {
             }
 
             if (!containsItem(items, itemToBeDeleted)) {
-                throw new Meteor.Error(`"${itemToBeDeleted.name}}" NOT FOUND.`);
+                let message = `"${itemToBeDeleted.name}}" NOT FOUND.`;
+                throw new Meteor.Error(message, message);
             } else {
                 let newItems = items.filter((item) => {
                     return item._id !== itemToBeDeleted._id

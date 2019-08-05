@@ -37,7 +37,7 @@ class EventDrawer extends React.Component {
                         <i className="trash icon" onClick={() => {
                             Meteor.call('deleteFromCurrentUserDrawer', selectedEvent, this.props.editing, (error, result)=>{
                                 if (error) {
-                                    alert(error);
+                                    alert(error.reason);
                                 } else {
                                     // alert(`Event Deleted!`);
                                 }
