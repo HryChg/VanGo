@@ -128,7 +128,6 @@ class ItineraryPage extends React.Component {
                         this.props.editingItinerary(true);
                         let date = this.getDateFromID(this.props.selectedID)
                         this.props.changeDate(date);
-                        this.props.updateToCurrentEvents(date);
                         this.props.updateEventDrawer();
                     }}>
                         <Icon name={"pencil"} size={"large"} color={"black"}/>

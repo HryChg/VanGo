@@ -1,4 +1,17 @@
+import {batch} from 'react-redux';
+import {updateToCurrentEvents} from './currentEventsActions';
+
 export const changeDate = (date) => {
+    return async dispatch => {
+        batch(()=> {
+            dispatch(changeDateState(date));
+            dispatch(updateToCurrentEvents(date));  
+            Meteor.call('updateDrawerDate', date);
+        })
+    }
+}
+
+export const changeDateState = (date) => {
     return {
         type: 'CHANGE_DATE',
         payload: date
@@ -24,3 +37,4 @@ export const cancel = () => {
         type: "CANCEL"
     }
 };
+

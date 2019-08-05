@@ -22,7 +22,6 @@ class DatePicker extends React.PureComponent {
 
         let value = this.state.tempDate;
         this.props.changeDate(value);
-        this.props.updateToCurrentEvents(value);
         Meteor.call('clearDrawer', value, (err, res) => {
             if (err) console.log(err);
             this.props.clearDrawerState(value);
@@ -45,9 +44,6 @@ class DatePicker extends React.PureComponent {
         } else {
             this.setState({tempDate: value});
             this.props.changeDate(value);
-            Meteor.call('updateDrawerDate', value);
-            CalledDates.insert({date: value});
-            this.props.updateToCurrentEvents(value);
         }
     };
 

@@ -82,11 +82,8 @@ export const initializeUser = () => {
                 } else {
                     date = res.date;
                 }
-                batch (() => {
-                    dispatch(changeDate(date));
-                    dispatch(updateToCurrentEvents(date));    
+                    dispatch(changeDate(date)); 
                 })
-            })
             })
         });
     }

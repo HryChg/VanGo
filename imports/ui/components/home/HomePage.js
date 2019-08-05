@@ -44,21 +44,16 @@ class HomePage extends React.Component {
         if (this.props.editing) {
             date = this.props.eventDrawer.itineraryEdit ? this.props.eventDrawer.itineraryEdit.date : today;
             this.props.changeDate(date);
-            this.props.updateToCurrentEvents(date);
         } else if (this.props.location.pathname === '/logout/') {
             Meteor.call('clearDrawer', today, (err, res) => {
                 if (err) console.log(err);
                 this.props.clearDrawerState(today);
             });
             this.props.changeDate(date);
-            this.props.updateToCurrentEvents(date);
         } else {
             date = this.props.selectedDate;
             this.props.initializeUser();
         }
-        // this.props.changeDate(date);
-        // this.props.updateToCurrentEvents(date);
-
 
         // When Editing: Show panel
         if (this.props.location.pathname.includes("/itinerary/edit/")) {
