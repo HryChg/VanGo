@@ -115,16 +115,24 @@ export const logout = () => {
             if (err) {
                 console.log(err);
             } else {
-                let today = getToday();
-                Meteor.call('clearDrawer', today, (err, res) => {
-                    if (err) console.log(err);
-                    batch(() => {
-                        dispatch(editingItinerary(false));
-                        dispatch(logoutRequest());
-                        dispatch(clearDrawerState(today));
-                    })
-                });
+                dispatch(postLogout());
             }
+        });
+    }
+}
+
+export const postLogout = () => {
+    return async dispatch => {
+        let today = getToday();
+        Meteor.call('clearDrawer', today, (err, res) => {
+            if (err) console.log(err);
+            batch(() => {
+                dispatch(editingItinerary(false));
+                dispatch(logoutRequest());
+                dispatch(clearDrawerState(today));
+                dispatch(changeDate(today));
+                dispatch(resetMapCenter());
+            })
         });
     }
 }

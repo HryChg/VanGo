@@ -15,7 +15,7 @@ import MapInfoWindowContainer from "./MapInfoWindowContainer";
 import {Button} from "semantic-ui-react";
 import {showPanel} from '../actions/panelActions';
 import {updateEventDrawer} from '../actions/draggableItemsActions';
-
+import isEqual from 'lodash';
 
 export class MapContainer extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
@@ -27,7 +27,8 @@ export class MapContainer extends React.Component {
         }
         let ignoreParentPropChange = this.props.ignore !== nextProps.ignore;
         let ignoreParentPropChange2 = this.props.ignore2 !== nextProps.ignore2;
-        if (ignoreParentPropChange || ignoreParentPropChange2) {
+        let ignoreParentPropChange3 = this.props.ignore3 !== nextProps.ignore3;
+        if (ignoreParentPropChange || ignoreParentPropChange2 || ignoreParentPropChange3) {
             return false;
         } 
         return true;
