@@ -291,7 +291,7 @@ class EditPage extends React.Component {
                     <div className="header">Notice</div>
                     <p>To share your itinerary via email, please log in.</p>
                     <button className="ui button" onClick={() => downloadPdf(this.getDate(), this.selectItems())}>
-                    <i class="download icon"></i>
+                    <i className="download icon"></i>
                     Download Itinerary</button>
                 </div>
             )
