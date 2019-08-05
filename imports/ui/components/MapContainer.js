@@ -80,6 +80,17 @@ export class MapContainer extends React.Component {
         }
     };
 
+
+    defaultBounds = () => {
+        let bounds = new this.props.google.maps.LatLngBounds();
+        let points = [{lat: 49.2827, lng: -123.1207}, {lat: 49.3043, lng: -123.1443}];
+        for (let i = 0; i < points.length; i++){
+            bounds.extend(points[i]);
+        }
+        return bounds;
+    };
+
+
     render() {
         const mapStyle = {
             width: this.props.width,

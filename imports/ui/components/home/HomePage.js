@@ -145,9 +145,9 @@ class HomePage extends React.Component {
     // EFFECTS: given the parameter, determine the icon for the marker at idx position
     assignIconImage = (type) => {
         let size = 48;
-        if (!this.props.mapContainer.mapLoaded){
-            return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
-        }
+        // if (!this.props.mapContainer.mapLoaded){
+        //     return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
+        // }
 
         let image;
         if (type === "Attraction") {

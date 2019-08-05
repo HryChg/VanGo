@@ -13,10 +13,10 @@ export default function DraggableItemsReducer(state = initialState, action) {
                 return newState;
             } else {
                 return {
-                    _id: state._id, 
-                    items: action.payload.newOrder, 
+                    _id: state._id,
+                    items: action.payload.newOrder,
                     itineraryEdit: state.itineraryEdit,
-                    ready: state.ready, 
+                    ready: state.ready,
                     saved: false
                 };
             }
@@ -27,7 +27,7 @@ export default function DraggableItemsReducer(state = initialState, action) {
             return newState;
         case 'LOAD_EVENT_DRAWER':
             newState = Object.assign({}, state);
-            newState._id = action.payload._id,
+            newState._id = action.payload._id;
             newState.items = action.payload.items;
             newState.itineraryEdit = action.payload.itineraryEdit;
             newState.date = action.payload.date;
@@ -51,7 +51,7 @@ export default function DraggableItemsReducer(state = initialState, action) {
                 newState.saved = state.saved;
                 return newState;
             } else {
-                return state;   
+                return state;
             }
         case 'RESET_EDIT':
             return initialState;

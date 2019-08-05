@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {updateDraggableItems, getEventDrawer} from "../../actions/draggableItemsActions";
+import {updateDraggableItems, updateEventDrawer} from "../../actions/draggableItemsActions";
 import {maskString} from "../../../util/util";
 
 
 class DraggableItems extends React.Component {
     componentDidMount() {
-        this.props.getEventDrawer();
+        this.props.updateEventDrawer();
     }
     // EFFECTS: if editing returns selected itinerary items, otherwise returns unsaved items
     selectItems() {
@@ -108,7 +108,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     updateDraggableItems,
-    getEventDrawer,
+    updateEventDrawer,
 })(DraggableItems);
 
 
