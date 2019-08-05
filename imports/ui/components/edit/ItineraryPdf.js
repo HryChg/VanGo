@@ -453,14 +453,10 @@ export const makeItinHtml = (itinJson) => {
 };
 
 export const downloadPdf = (date, items) => {
-    // let itinSummary = {
-    //     date: this.getDate(),
-    //     items: this.selectItems()
-    // }
-    // let htmlStr = makeItinHtml(itinSummary);
-    // htmlStr = $(htmlStr);
-    // let htmlBody = $('body', htmlStr);
-    // doc.html(htmlBody);
+
+    if (items == null) {
+        console.log('cannot download empty itinerary');
+    }
 
     let doc = new jsPDF();
 

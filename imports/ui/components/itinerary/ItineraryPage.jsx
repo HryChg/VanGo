@@ -21,7 +21,8 @@ import { showPanel, hidePanel } from './../../actions/panelActions';
 import { formatAMPM, sortByDateName, getToday } from "../../../util/util";
 import EmailForm from "./../edit/EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
-
+import { downloadPdf } from '../edit/ItineraryPdf';
+import { VanGoStore } from '../../../../client/main';
 
 
 class ItineraryPage extends React.Component {
@@ -202,6 +203,10 @@ class ItineraryPage extends React.Component {
                             userName={(Meteor.user()) ? Meteor.user().profile.name : 'Meteor Loading'}
                             date={this.getDateFromID(this.props.selectedID) ?
                                 this.getDateFromID(this.props.selectedID).toDateString() : null} />
+                        <p style={{ textAlign: "center" }}> <br /> Or</p>
+                        <button className="ui button fluid" onClick={() =>
+                            downloadPdf(this.getDisplayName(this.props.selectedID),
+                                this.getSelectedItinerary(this.props.selectedID).items)}>Download Itinerary</button>
                     </div>
                 </div>
             );
@@ -244,9 +249,6 @@ class ItineraryPage extends React.Component {
                                     <div id="itinerary-name">
                                         <h1>
                                             <span className="it-header">{this.getDisplayName(this.props.selectedID)}</span>
-
-                                            <Icon name={"download"} size={"large"} color={"black"} />
-
                                             {this.displayEditButton()}
                                         </h1>
                                     </div>
@@ -257,8 +259,10 @@ class ItineraryPage extends React.Component {
                                 </Grid.Column>
 
                                 <Grid.Column>
-                                    <div style={{height: '100vh'}}>
-                                        <MapContainer width={'97%'} height={'95%'}>
+                                    <div
+                                        style={{ width: '50vw', height: '100vh', position: 'fixed' }}
+                                    >
+                                        <MapContainer width={'97.5vw'} height={'100vh'}>
                                             {this.displayMarkers()}
                                             {this.displayPolyLine()}
                                         </MapContainer>
@@ -278,7 +282,8 @@ const mapStateToProps = (state) => {
         selectedID: state.itineraryStore.selectedID,
         editing: state.itineraryStore.editing,
         visible: state.panel.visible,
-        itineraries: state.itineraryStore.itineraries
+        itineraries: state.itineraryStore.itineraries,
+        datePicker: state.datePicker
     };
 }
 
