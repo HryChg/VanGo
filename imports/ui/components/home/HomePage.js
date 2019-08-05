@@ -247,7 +247,7 @@ class HomePage extends React.Component {
                         <div>
                             <Grid stackable divided='vertically'>
                                 <Grid.Row columns={2}>
-                                    <Grid.Column width={4}>
+                                    <Grid.Column width={4} className={"itinPageScroll"}>
                                         <div className={"home-panel"}>
                                             {this.toggleEditHeader()}
                                             {this.toggleDatePicker()}
