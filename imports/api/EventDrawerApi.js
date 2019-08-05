@@ -35,7 +35,7 @@ const getUserDrawerID = async () => {
             itineraryEdit: null,
             date: getToday()
         };
-        console.log(`EventDrawerApi: drawer for user ${Meteor.userId()} NOT found. Will insert one into collection`);
+        console.log(`Drawer for user ${Meteor.userId()} NOT found. Will insert one into collection`);
         return await EventDrawerApi.insert(userDrawer);
     }
     return userDrawerID._id;
@@ -89,10 +89,10 @@ if (Meteor.isServer) {
             }
 
             if (containsItem(items, itemToBeSaved)) {
-                throw new Meteor.Error(`saveToCurrentUserData(): item "${itemToBeSaved.name}}" is already in user's event drawer. Will not be added again`);
+                throw new Meteor.Error(`"${itemToBeSaved.name}" is already in event drawer.`);
             } else {
                 items.push(itemToBeSaved);
-                console.log(`saveToCurrentUserData(): item "${itemToBeSaved.name}}" added to user drawer`);
+                console.log(`"${itemToBeSaved.name}" added to user drawer`);
                 EventDrawerApi.update({_id: accountID}, userData);
                 return itemToBeSaved._id;
             }
@@ -111,7 +111,7 @@ if (Meteor.isServer) {
             }
 
             if (!containsItem(items, itemToBeDeleted)) {
-                throw new Meteor.Error(`deleteFromCurrentUserData(): item "${itemToBeDeleted.name}}" is NOT in user's event drawer. No action taken.`);
+                throw new Meteor.Error(`"${itemToBeDeleted.name}}" NOT FOUND.`);
             } else {
                 let newItems = items.filter((item) => {
                     return item._id !== itemToBeDeleted._id
@@ -128,7 +128,7 @@ if (Meteor.isServer) {
                 } else {
                     EventDrawerApi.update({_id: accountID}, {$set: {items: newItems}});
                 }
-                console.log(`deleteFromCurrentUserData(): item "${itemToBeDeleted.name}}" deleted from user drawer`);
+                console.log(`"${itemToBeDeleted.name}" deleted from user drawer`);
                 return;
             }    
         },

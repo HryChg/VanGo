@@ -38,13 +38,13 @@ class EmailForm extends React.Component {
     emailItinerary = () => {
         // prevent empty values
         if (!this.state.recipientEmail || !this.state.subject || !this.state.message) {
-            alert(`emailItinerary(): Warning: At least One of the following "recipientEmail, subject, message" is empty`);
+            alert(`Warning: At least One of the following "recipientEmail, subject, message" is empty`);
             return;
         }
 
         // prevent invalid email format
         if (!this.checkEmail(this.state.recipientEmail)) {
-            alert(`emailItinerary(): Warning: Recipient Email is not formatted correctly`);
+            alert(`Recipient Email is not formatted correctly`);
             return;
         }
 

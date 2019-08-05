@@ -18,42 +18,6 @@ import {downloadPdf} from './ItineraryPdf';
 import { isString } from 'util';
 
 
-// EFFECTS: given the parameter, determine the icon for the marker at idx position
-const assignIconImage = (idx, type, listSize) => {
-    let image;
-    let size = 48;
-    if (idx === 0) { // start flag
-        image = {
-            url: `https://img.icons8.com/color/${size}/000000/filled-flag.png`,
-            size: new google.maps.Size(size, size),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(size/3, size)
-        };
-    } else if (idx === listSize - 1) { // end flag
-        image = {
-            url: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAMFBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg3dw3XQE0AAAADnRSTlMAHry7uh/yvly9UPTz/diodF0AAABHSURBVDjLY2CgJmDVNsQuwfTuCXYJnnfPsEsw49LBOrcQh+3rGnBI/P///927d8jkYJBAEwWSg0FiNKxIkHiAI8GNStAKAAB2D73brPu5/AAAAABJRU5ErkJggg==`,
-            size: new google.maps.Size(size, size),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(10, size)
-        };
-    } else if (type === "Attraction") {
-        image = {
-            url: `https://img.icons8.com/color/${size}/000000/compact-camera.png`,
-            size: new google.maps.Size(size, size),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(10, size-10)
-        };
-    } else {
-        image = {
-            url: `https://img.icons8.com/color/${size}/000000/marker.png`,
-            size: new google.maps.Size(size, size),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(size/2, size)
-        };
-    }
-    return image
-};
-
 class EditPage extends React.Component {
     constructor(props) {
         super(props);
@@ -138,7 +102,7 @@ class EditPage extends React.Component {
                                     Meteor.call('clearDrawer', today, (err, res) => {
                                         if (err) console.log(err);
                                         this.props.clearDrawerState(today);
-                                    });    
+                                    });
                                 }
                             }}>
                         <Icon name="heart"/>
@@ -161,7 +125,7 @@ class EditPage extends React.Component {
     // EFFECTS: changes state of name input
     handleNameChange = (event) => {
         this.setState({nameInput: event.target.value});
-    }
+    };
 
     // EFFECTS: renders field to save name
     //          if editing, renders field as rename with default value itinerary name
@@ -180,6 +144,47 @@ class EditPage extends React.Component {
             />);
         }
     }
+
+    // EFFECTS: given the parameter, determine the icon for the marker at idx position
+    assignIconImage = (idx, type, listSize) => {
+        let size = 48;
+        if (!this.props.mapLoaded) {
+            return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
+        }
+
+
+        let image;
+        if (idx === 0) { // start flag
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/filled-flag.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(size / 3, size)
+            };
+        } else if (idx === listSize - 1) { // end flag
+            image = {
+                url: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAMFBMVEVHcEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg3dw3XQE0AAAADnRSTlMAHry7uh/yvly9UPTz/diodF0AAABHSURBVDjLY2CgJmDVNsQuwfTuCXYJnnfPsEsw49LBOrcQh+3rGnBI/P///927d8jkYJBAEwWSg0FiNKxIkHiAI8GNStAKAAB2D73brPu5/AAAAABJRU5ErkJggg==`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, size)
+            };
+        } else if (type === "Attraction") {
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/compact-camera.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, size - 10)
+            };
+        } else {
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/marker.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(size / 2, size)
+            };
+        }
+        return image
+    };
 
     // EFFECTS: returns center of map based on given itinerary
     getSelectedLatLonCenter() {
@@ -210,7 +215,7 @@ class EditPage extends React.Component {
                     location={item.location.display_address[0]}
                     link={item.link}
                     position={{lat: item.latitude, lng: item.longitude}}
-                    icon={assignIconImage(index, "Attraction", size)}
+                    icon={this.assignIconImage(index, "Attraction", size)}
                     description={(item.description) ? item.description : 'No Description Available'}
                     onClick={this.props.handleOnMarkerClick}/>
             } else {
@@ -224,12 +229,26 @@ class EditPage extends React.Component {
                     location={item.location.display_address[0]}
                     link={item.link}
                     position={{lat: item.latitude, lng: item.longitude}}
-                    icon={assignIconImage(index, "Event", size)}
+                    icon={this.assignIconImage(index, "Event", size)}
                     description={item.description}
                     onClick={this.props.handleOnMarkerClick}/>
             }
         });
         return markers;
+    };
+
+    makeBounds = () => {
+        if (this.props.mapLoaded) {
+            let bounds = new google.maps.LatLngBounds();
+            let points = this.selectItems().map((item) => {
+                return {lat: item.latitude, lng: item.longitude};
+            });
+            for (let i = 0; i < points.length; i++) {
+                bounds.extend(points[i]);
+            }
+            return bounds;
+        }
+        return null;
     };
 
     // EFFECTS: display path based on the order of events in DraggableItems
@@ -314,9 +333,11 @@ class EditPage extends React.Component {
 
                         <Grid.Column width={12}>
                             <div style={{height: '94vh'}}>
-                                <MapContainer 
-                                    width={'98%'} 
+                                <MapContainer
+                                    width={'98%'}
                                     height={'100%'}
+                                    setBounds={true}
+                                    bounds={this.makeBounds()}
                                     center={this.props.currentCenter}
                                     ignore={this.state.nameInput}
                                     ignore2={this.props.visible}
@@ -340,7 +361,8 @@ const mapStateToProps = (state) => {
         datePicker: state.datePicker,
         saved: state.draggableItems.saved,
         editing: state.itineraryStore.editing,
-        currentCenter: state.mapContainer.currentCenter 
+        currentCenter: state.mapContainer.currentCenter,
+        mapLoaded: state.mapContainer.mapLoaded
     };
 };
 

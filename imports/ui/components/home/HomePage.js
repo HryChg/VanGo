@@ -141,6 +141,33 @@ class HomePage extends React.Component {
         }
     }
 
+
+    // EFFECTS: given the parameter, determine the icon for the marker at idx position
+    assignIconImage = (type) => {
+        let size = 48;
+        if (!this.props.mapContainer.mapLoaded){
+            return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
+        }
+
+        let image;
+        if (type === "Attraction") {
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/compact-camera.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, size - 10)
+            };
+        } else {
+            image = {
+                url: `https://img.icons8.com/color/${size}/000000/marker.png`,
+                size: new google.maps.Size(size, size),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(size / 2, size)
+            };
+        }
+        return image
+    };
+
     // EFFECTS: create a marker based on an attraction
     //          Set marker to invisible if user choose to hide attractions
     //              or the attraction did not pass event filter (this.showMarker())
@@ -155,13 +182,8 @@ class HomePage extends React.Component {
             price={attraction.free ? 'Free' : ((attraction.price) ? '$'.concat(attraction.price.toString()) : 'n/a')}
             location={attraction.location.display_address[0]}
             link={attraction.link}
-            position={{
-                lat: attraction.latitude,
-                lng: attraction.longitude
-            }}
-            icon={{
-                url: "https://img.icons8.com/color/43/000000/compact-camera.png"
-            }}
+            position={{ lat: attraction.latitude, lng: attraction.longitude }}
+            icon={this.assignIconImage('Attraction')}
             description={(attraction.description) ? attraction.description : 'No Description Available'}
             onClick={this.props.handleOnMarkerClick}
             visible={showAttraction && this.showMarker(attraction)}
@@ -180,10 +202,8 @@ class HomePage extends React.Component {
             price={event.free ? 'Free' : ((event.price) ? '$'.concat(event.price.toString()) : 'n/a')}
             location={event.location.display_address[0]}
             link={event.link}
-            position={{
-                lat: event.latitude,
-                lng: event.longitude
-            }}
+            position={{lat: event.latitude, lng: event.longitude}}
+            icon={this.assignIconImage('Event')}
             description={event.description}
             onClick={this.props.handleOnMarkerClick}
             visible={this.showMarker(event)}

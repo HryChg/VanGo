@@ -140,9 +140,10 @@ class ItineraryPage extends React.Component {
     // EFFECTS: given the parameter, determine the icon for the marker at idx position
     assignIconImage = (idx, type, listSize) => {
         let size = 48;
-        // if (!this.props.mapLoaded){
-        //     return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
-        // }
+        if (!this.props.mapLoaded){
+            return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
+        }
+
 
         let image;
         if (idx === 0) { // start flag
@@ -214,6 +215,25 @@ class ItineraryPage extends React.Component {
                 }
             });
             return markers;
+        }
+        return null;
+    };
+
+    makeBounds = () => {
+        let selectedItinerary = this.getSelectedItinerary(this.props.selectedID);
+        if (selectedItinerary && this.props.mapLoaded) {
+            if(selectedItinerary.items.length === 0){
+                return null;
+            }
+
+            let bounds = new google.maps.LatLngBounds();
+            let points = selectedItinerary.items.map((item) => {
+                return {lat: item.latitude, lng: item.longitude};
+            });
+            for (let i = 0; i < points.length; i++){
+                bounds.extend(points[i]);
+            }
+            return bounds;
         }
         return null;
     };
@@ -303,10 +323,12 @@ class ItineraryPage extends React.Component {
                                     <div
                                         style={{width: '50vw', height: '100vh'}}
                                     >
-                                        <MapContainer 
-                                            width={'98%'} 
-                                            height={'100%'} 
+                                        <MapContainer
+                                            width={'97.5%'}
+                                            height={'101.5%'}
                                             center={this.props.currentCenter}
+                                            setBounds={true}
+                                            bounds={this.makeBounds()}
                                             ignore={this.props.visible}
                                         >
                                             {this.displayMarkers()}
@@ -332,19 +354,20 @@ const mapStateToProps = (state) => {
         editing: state.itineraryStore.editing,
         visible: state.panel.visible,
         itineraries: state.itineraryStore.itineraries,
-        currentCenter: state.mapContainer.currentCenter 
+        mapLoaded: state.mapContainer.mapLoaded,
+        currentCenter: state.mapContainer.currentCenter
     };
 }
 
 export default connect(mapStateToProps,
-    { handleOnMarkerClick, 
-        selectID, 
-        editingItinerary, 
-        showPanel, 
-        hidePanel, 
-        changeDate, 
-        loadItineraries, 
-        updateMapCenter, 
+    { handleOnMarkerClick,
+        selectID,
+        editingItinerary,
+        showPanel,
+        hidePanel,
+        changeDate,
+        loadItineraries,
+        updateMapCenter,
         updateToCurrentEvents,
         updateEventDrawer
     }
