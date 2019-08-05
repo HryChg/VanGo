@@ -5,21 +5,11 @@ import './methods/itinerary';
 import './methods/users';
 import './methods/email';
 import '../imports/api/CalledDates'; // DO NOT DELETE. Methods needed need to refactor I suppose?
-import Itineraries from '../imports/api/itineraries';
 import CurrentEvents from '../imports/api/CurrentEvents';
+import Attractions from '../imports/api/Attractions';
 import getEventsInDay from './../imports/api/getDayEvents';
 import YelpAttractionsApi, {convertBusinessesToAttractions} from "../imports/api/YelpAttractionsApi";
-import {containOneOf} from "../imports/util/util";
 
-
-// TODO: This will need to be moved into a handleSubmit
-// https://github.com/meteor/simple-todos-react/commit/39a066815149de6a1b327fd389278e3c2da93e60
-function insertItineraries(events, date) {
-    Itineraries.insert({
-        events: events,
-        date: date,
-    });
-}
 
 Meteor.startup(async () => {
     CurrentEvents.remove({});
@@ -35,7 +25,7 @@ Meteor.startup(async () => {
     let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
     let attractions = convertBusinessesToAttractions(res);
     for (let attraction of attractions) {
-        CurrentEvents.insert(attraction);
+        Attractions.insert(attraction);
     }
     console.log(`Added ${attractions.length} attraction from Yelp`);
 
