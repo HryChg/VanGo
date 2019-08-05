@@ -17,7 +17,7 @@ import {updateToCurrentEvents} from './../../actions/currentEventsActions';
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {initializeUser} from './../../actions/userActions';
 import {toggleNearbyAttractions, hideDimmer, showDimmer} from "../../actions/homePageActions";
-import {formatAMPM, getToday} from "../../../util/util";
+import {formatAMPM, getToday, isString} from "../../../util/util";
 
 class HomePage extends React.Component {
     // // Don't update when date changes as If the date doesn't change, don't update
@@ -78,8 +78,10 @@ class HomePage extends React.Component {
     toggleEditHeader() {
         if (this.props.editing) {
             if (this.props.eventDrawer && this.props.eventDrawer.itineraryEdit) {
+                let date = this.props.eventDrawer.itineraryEdit.date;
+                let dateString = isString(date) ? date : date.toDateString;
                 return (<h2>Add/Remove Itinerary Items from
-                    {" " + this.props.eventDrawer.itineraryEdit.date.toDateString() + ": " + this.props.eventDrawer.itineraryEdit.name}
+                    {" " + dateString + ": " + this.props.eventDrawer.itineraryEdit.name}
                     </h2>);
             } else {
                 return (<h2>Add/Remove Itinerary Items</h2>);

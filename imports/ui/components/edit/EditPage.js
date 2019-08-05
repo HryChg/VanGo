@@ -15,6 +15,7 @@ import {formatAMPM, getLatLonCenterOfEvents, getToday} from "../../../util/util"
 import EmailForm from "./EmailForm";
 import Divider from "semantic-ui-react/dist/commonjs/elements/Divider";
 import {downloadPdf} from './ItineraryPdf';
+import { isString } from 'util';
 
 
 // EFFECTS: given the parameter, determine the icon for the marker at idx position
@@ -85,7 +86,7 @@ class EditPage extends React.Component {
     getDate = () => {
         if (this.props.editing) {
             let ready = this.props.draggableItems.itineraryEdit;
-            let date = ready ? ready.date : "";
+            let date = ready ? (isString(ready.date)? ready.date: ready.date.toDateString()) : "";
             let name = ready ? ready.name : "";
             let header = date || name ? date + ": " + name : "";
             return header;
@@ -108,7 +109,7 @@ class EditPage extends React.Component {
     toggleEditHeader() {
         if (this.props.editing) {
             let ready = this.props.draggableItems.itineraryEdit;
-            let date = ready ? ready.date.toDateString() : "";
+            let date = ready ? (isString(ready.date)? ready.date: ready.date.toDateString()) : "";
             let name = ready ? ready.name : "";
             let header = date || name ? date + ": " + name : "";
             return (<h3>{header}</h3>);
@@ -252,11 +253,10 @@ class EditPage extends React.Component {
             return null;
         }
         let items = this.selectItems();
-        let date = this.props.datePicker.selectedDate;
         let itin = {
             _id: this.props.editing ? this.props.draggableItems.itineraryEdit._id : uniqid(),
             name: itineraryName,
-            date: date,
+            date: this.props.editing ? this.props.draggableItems.itineraryEdit.date : this.props.datePicker.selectedDate,
             items: items
         };
         this.props.saveItinerary(itin, this.props.editing);

@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import getEventsInDay from './getDayEvents';
 import YelpAttractionsApi, { convertBusinessesToAttractions } from "../api/YelpAttractionsApi";
+import { parseDate, isString } from '../util/util';
 
 const CurrentEvents = new Mongo.Collection('currentEvents');
 
@@ -21,8 +22,10 @@ if (Meteor.isServer) {
             // for (event of eventsToday.events) {
             //     CurrentEvents.insert(event);
             //   }
+            if (!date) return [];
+            let newDate = isString(date) ? parseDate(date) : date; 
             await CurrentEvents.remove({type: "Event"});
-            var newEvents = await getEventsInDay(date);
+            var newEvents = await getEventsInDay(newDate);
             for (event of newEvents.events) {
                 CurrentEvents.insert(event)
             }
