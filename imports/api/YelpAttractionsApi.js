@@ -1,6 +1,6 @@
 // Yelp Business Search Documentation
 // https://www.yelp.ca/developers/documentation/v3/business_search
-
+import uniqid from 'uniqid';
 const axios = require('axios');
 let yelpApiKey = Meteor.settings.yelpApiKey;
 
@@ -65,6 +65,7 @@ const approximatePrice = (dollarSign) => {
 
 export const convertBusinessToAttraction = (business) => {
     let attraction = {};
+    attraction._id = uniqid();
     attraction.name = business.name;
     attraction.start_time = null;
     attraction.end_time = null;

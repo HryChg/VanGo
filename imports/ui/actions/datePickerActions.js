@@ -7,12 +7,15 @@ export const changeDate = (date) => {
     return async dispatch => {
         dispatch(changeDateState(date));
         Meteor.call('updateDrawerDate', date);
-        Meteor.call('updateEvents', date, (err, res) => {
+        Meteor.call('updateEvents', date, (err, evt) => {
             if (err) console.log(err);
-            batch(() => {
-                dispatch(loadCurrentEvents(res));
-                let maxPrice = getMaxPrice(res);
-                dispatch(filterPrice([0, maxPrice? maxPrice: 0]));    
+            Meteor.call('getAttractions', (err, res) => {
+                batch(() => {
+                    let items = res.concat(evt);
+                    dispatch(loadCurrentEvents(items));
+                    let maxPrice = getMaxPrice(items);
+                    dispatch(filterPrice([0, maxPrice? maxPrice: 0]));    
+                })    
             })
         })
     }

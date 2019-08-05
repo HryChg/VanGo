@@ -70,10 +70,11 @@ if (Meteor.isServer) {
 
         // EFFECTS: loads event
         getEventDrawer: async () => {
-            if (Meteor.userId()) {
-                return await EventDrawerApi.findOne({user: Meteor.userId()});
-            } else {
-                return await EventDrawerApi.findOne({user: 'anon'});
+            try{
+                let drawerId = await getDrawerID();
+                return await EventDrawerApi.findOne({_id: drawerId});
+            } catch (e) {
+                console.error(e.message);
             }
         },
 
@@ -130,7 +131,7 @@ if (Meteor.isServer) {
                 }
                 console.log(`"${itemToBeDeleted.name}" deleted from user drawer`);
                 return;
-            }    
+            }
         },
 
         // EFFECTS: Clear out the items in current user's drawer, not itineraryEdit
