@@ -67,11 +67,11 @@ export const login = (email, password) => {
 
 export const initializeUser = () => {
     return async dispatch => {
+        dispatch(resetMapCenter());
         Meteor.call('getEventDrawer', (err, drawer) => {
             if (err) console.log(err);
             batch(()=> {
               dispatch(loadEventDrawer(drawer));
-              dispatch(resetMapCenter());
               Meteor.call('getDrawerDate', (err, res) => {
                 let today = getToday();
                 let date = today;

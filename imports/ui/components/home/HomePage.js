@@ -12,7 +12,7 @@ import MapContainer from "../MapContainer";
 import EventDrawer from "./EventDrawer";
 import {changeDate} from "../../actions/datePickerActions";
 import {clearDrawerState, updateEventDrawer} from '../../actions/draggableItemsActions';
-import {handleOnMarkerClick, resetMapCenter} from "../../actions/mapContainerActions";
+import {handleOnMarkerClick} from "../../actions/mapContainerActions";
 import {updateToCurrentEvents} from './../../actions/currentEventsActions';
 import {showPanel, hidePanel} from './../../actions/panelActions';
 import {initializeUser, postLogout} from './../../actions/userActions';
@@ -327,7 +327,6 @@ export default connect(mapStateToProps, {
     hidePanel,
     updateToCurrentEvents,
     changeDate,
-    resetMapCenter,
     clearDrawerState,
     updateEventDrawer,
     initializeUser,
