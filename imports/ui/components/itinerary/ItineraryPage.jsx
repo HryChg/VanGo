@@ -8,11 +8,9 @@ import { Grid, Icon, Menu, Sidebar, Button } from 'semantic-ui-react';
 import { handleOnMarkerClick } from "../../actions/mapContainerActions";
 import { Meteor } from 'meteor/meteor';
 import debounceRender from 'react-debounce-render';
-
 import ItineraryDatePanel from './ItineraryDatePanel';
 import MapContainer from '../MapContainer';
 import ItineraryList from './ItineraryList';
-
 import { updateMapCenter } from './../../actions/mapContainerActions';
 import { selectID, editingItinerary, loadItineraries, loadItineraryToDrawer } from './../../actions/itineraryActions';
 import { showPanel, hidePanel } from './../../actions/panelActions';
@@ -135,11 +133,6 @@ class ItineraryPage extends React.Component {
     // EFFECTS: given the parameter, determine the icon for the marker at idx position
     assignIconImage = (idx, type, listSize) => {
         let size = 48;
-        // if (!this.props.mapLoaded){
-        //     return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
-        // }
-
-
         let image;
         if (idx === 0) { // start flag
             image = {

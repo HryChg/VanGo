@@ -10,9 +10,6 @@ Meteor.methods({
         throw new Meteor.Error(errorMessage, errorMessage);
       }
         return Accounts.createUser(data);
-        // , (err) => {
-        //   throw new Meteor.Error(err, err);
-        // });
     }
   });
 

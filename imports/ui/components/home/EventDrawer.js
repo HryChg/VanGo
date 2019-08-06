@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Menu } from 'semantic-ui-react';
-
 import {maskString} from "../../../util/util";
 import {updateEventDrawer, updateEventDrawerAndDate} from '../../actions/draggableItemsActions';
 
@@ -39,7 +38,6 @@ class EventDrawer extends React.Component {
                                 if (error) {
                                     alert(error.reason);
                                 } else {
-                                    // alert(`Event Deleted!`);
                                 }
                                 this.props.updateEventDrawer();
                             });

@@ -56,7 +56,7 @@ class EmailForm extends React.Component {
         };
 
         let from = `${this.props.userName} <${this.props.userEmail}>`;
-        let to = this.state.recipientEmail; // TODO: move mailgun api to production so that unauthorized recipient can get email too
+        let to = this.state.recipientEmail;
         let subject = this.state.subject;
         let html = makeItineraryEmail(itinSummary, this.state.message);
 
