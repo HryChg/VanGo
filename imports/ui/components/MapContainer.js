@@ -164,7 +164,7 @@ export class MapContainer extends React.Component {
                                     <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
                                     <div className="meta">Location: {mapContainerStore.selectedPlace.location}</div>
                                     <div className="meta" onClick={() => this.openInNewTab(mapContainerStore.selectedPlace.link)}>
-                                        <a href={'#'}>Link toWebsite...</a>
+                                        <a href={'#'}>Link to Website...</a>
                                     </div>
                                     <div className="description">{mapContainerStore.selectedPlace.description}</div>
                                 </div>
