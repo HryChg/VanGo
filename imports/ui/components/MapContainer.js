@@ -69,7 +69,7 @@ export class MapContainer extends React.Component {
         let showSaveButton = this.props.showSaveButton;
         if (showSaveButton) {
             return (<Button
-                className="extra content ui button"
+                className="ui button"
                 onClick={() => {
                     this.onSaveEventClick();
                 }}>
