@@ -11,6 +11,9 @@ import YelpAttractionsApi, {convertBusinessesToAttractions} from "../imports/api
 
 
 Meteor.startup(async () => {
+    Attractions.remove({});
+    console.log(`Cleared out Attractions collection`);
+
     let yelp = new YelpAttractionsApi();
     let res = await yelp.getTouristAttractionFromCoord(50, 49.2820, -123.1171);
     let attractions = convertBusinessesToAttractions(res);
