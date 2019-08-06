@@ -155,21 +155,19 @@ export class MapContainer extends React.Component {
                     <MapInfoWindowContainer
                         marker={mapContainerStore.activeMarker}
                         visible={mapContainerStore.showingInfoWindow}>
-                        <div>
-                            <div className="ui card">
-                                <div className="content">
-                                    <div className="header">{mapContainerStore.selectedPlace.name}</div>
-                                    <div className="meta">Start Time: {mapContainerStore.selectedPlace.start_time}</div>
-                                    <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
-                                    <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
-                                    <div className="meta">Location: {mapContainerStore.selectedPlace.location}</div>
-                                    <div className="meta" onClick={() => this.openInNewTab(mapContainerStore.selectedPlace.link)}>
-                                        <a href={'#'}>Link to Website...</a>
-                                    </div>
-                                    <div className="description">{mapContainerStore.selectedPlace.description}</div>
+                        <div className="ui card infoWindowContent">
+                            <div className="content">
+                                <div className="header">{mapContainerStore.selectedPlace.name}</div>
+                                <div className="meta">Start Time: {mapContainerStore.selectedPlace.start_time}</div>
+                                <div className="meta">End Time: {mapContainerStore.selectedPlace.end_time}</div>
+                                <div className="meta">Price: {mapContainerStore.selectedPlace.price}</div>
+                                <div className="meta">Location: {mapContainerStore.selectedPlace.location}</div>
+                                <div className="meta" onClick={() => this.openInNewTab(mapContainerStore.selectedPlace.link)}>
+                                    <a href={'#'}>Link to Website...</a>
                                 </div>
-                                {this.toggleSaveButton()}
+                                <div className="description">{mapContainerStore.selectedPlace.description}</div>
                             </div>
+                            {this.toggleSaveButton()}
                         </div>
                     </MapInfoWindowContainer>
                 </Map>

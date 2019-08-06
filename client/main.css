@@ -320,3 +320,8 @@ i.trash.icon {
 #info-btn{
     float: right;
 }
+
+.ui.card.infoWindowContent{
+    overflow: hidden;
+    border-radius: 0;
+}
