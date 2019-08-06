@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import {Marker} from "google-maps-react";
 import {NavLink} from 'react-router-dom';
 import {Button, Dimmer, Grid, Menu, Sidebar, Icon, Label, Header, Image} from 'semantic-ui-react';
-
 import DatePicker from "./DatePicker";
 import EventFilter from "./EventFilter";
 import MapContainer from "../MapContainer";
@@ -115,7 +114,7 @@ class HomePage extends React.Component {
         }
     }
 
-    // // EFFECTS: returns the number of items in the event drawer
+    // EFFECTS: returns the number of items in the event drawer
     displaySelectionCount() {
         if (this.props.eventDrawer) {
             if (this.props.editing) {
@@ -133,10 +132,6 @@ class HomePage extends React.Component {
     // EFFECTS: given the parameter, determine the icon for the marker at idx position
     assignIconImage = (type) => {
         let size = 48;
-        // if (!this.props.mapContainer.mapLoaded){
-        //     return {url: `https://img.icons8.com/color/${size}/000000/marker.png`}
-        // }
-
         let image;
         if (type === "Attraction") {
             image = {
@@ -249,7 +244,7 @@ class HomePage extends React.Component {
                         <div>
                             <Grid stackable divided='vertically'>
                                 <Grid.Row columns={2}>
-                                    <Grid.Column width={4}>
+                                    <Grid.Column width={4} className={"itinPageScroll"}>
                                         <div className={"home-panel"}>
                                             {this.toggleEditHeader()}
                                             {this.toggleDatePicker()}

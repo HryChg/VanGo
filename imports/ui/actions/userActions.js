@@ -73,7 +73,6 @@ export const initializeUser = () => {
             batch(()=> {
                 dispatch(loadEventDrawer(drawer));
                 Meteor.call('getDrawerDate', (err, res) => {
-                    // if (!res) return;
                     let today = getToday();
                     let date = today;
                     let drawerDate = isString(res.date) ? parseDate(res.date) : res.date ;

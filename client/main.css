@@ -1,7 +1,11 @@
 body {
     padding: 10px;
     font-family: sans-serif;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 .container {
@@ -14,6 +18,7 @@ body {
 
 .column {
     padding-bottom: 0px !important;
+    margin-bottom: 0px !important;
 }
 
 .column.mapContainerClass {
@@ -45,29 +50,6 @@ a.ui.button.redirect-to-itinerary {
 }
 
 /* ---------------------------------------- */
-/* ------------    SideNav   -------------- */
-/* ---------------------------------------- */
-.sidenav {
-    width: 100%;
-    position: relative;
-    left: 10px;
-    background: #eee;
-    min-width: 300px;
-    min-height: 89vh;
-    /*padding: 8px 0;*/
-}
-
-.sidenav .ui.header:first-child {
-    margin-top: -0.05em;
-    margin-bottom: -0.05em;
-}
-
-.sidenav h2 {
-    text-align: center;
-}
-
-
-/* ---------------------------------------- */
 /* ------------  DatePicker  -------------- */
 /* ---------------------------------------- */
 .DatePickerContainer {
@@ -84,15 +66,6 @@ a.ui.button.redirect-to-itinerary {
 
 .ui.toggle.checkbox label {
     padding-left: 3.8rem;
-}
-
-
-/* ---------------------------------------- */
-/* ------------     Form     -------------- */
-/* ---------------------------------------- */
-/* TODO: This code does not work...*/
-.form-item {
-    margin-bottom: 1rem;
 }
 
 /* ---------------------------------------- */
