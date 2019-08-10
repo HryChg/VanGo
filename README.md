@@ -48,7 +48,7 @@ We were able to complete all of our minimal and standard goals and one of our st
 - Setting up Mongo Collections for Itineraries
 - User Testing
 
-As a team, on top of using the technologies introduced in our class: HTML/CSS/Javascript, React, Redux, NodeJS, Meteor, MongoDB and Release Engineering, we also integrated many external APIs to create a seamless project that integrates both events and attractions in Vancouver into a simple-to-use itinerary planner.  
+As a team, on top of using the technologies introduced in our class: HTML/CSS/Javascript, React, Redux, NodeJS, Meteor, MongoDB and Heroku for Release Engineering, we also integrated many external APIs to create a seamless project that integrates both events and attractions in Vancouver into a simple-to-use itinerary planner.  
 
 ### Challenges
 ##### Getting the Event Data
