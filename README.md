@@ -3,12 +3,13 @@
 VanGo is an itinerary planner for locals and tourists who want to discover events and attractions in Vancouver. Users can find information on events and attractions, organize their plans, and save or share them to better explore the city.
 
 ### Project Details:
-VanGo was created to aid locals and tourists in exploring the city by showing them local events and nearby attractions. We will be storing event information, list of itineraries, and user information. Using this data, users will be able to plan and fill their itineraries with events and attractions, generate a path between all their events and attractions, and create a user account to save their itineraries. Some additional functionality we can add are an event filter based on type and cost, Google sign-in to save data to itinerary information, the ability to detect time conflicts between events, the ability to display projected weather, and the ability to display areas with high crime activity. 
+VanGo was created to aid locals and tourists in exploring the city by showing them local events and nearby attractions. In comparison to other itinerary apps, VanGo integrates attractions and events all in one place. We will be storing event information, list of itineraries, and user information. Using this data, users will be able to plan and fill their itineraries with events and attractions, generate a path between all their events and attractions, and create a user account to save their itineraries. Some additional functionality we can add are an event filter based on type and cost, Google sign-in to save data to itinerary information, the ability to detect time conflicts between events, the ability to display projected weather, and the ability to display areas with high crime activity.
 
 ### Project Task Requirements:
 #### Minimal Requirements (3-5) (will definitely complete):
 - User interface
 - Web-scraping for events
+    - Changed to collecting data form Yelp API
 - Bookmark/star/add interested events to itinerary
 - Pop-up (or side-bar) for each event with its name, location, time and link for details
 - Share itinerary with self/others
@@ -28,32 +29,36 @@ VanGo was created to aid locals and tourists in exploring the city by showing th
 - Show weather/temperature for the day
 - Sign in with Google, save data to Google account/calendar
 
-#### Breakdown on Tasks (What we can do right now)
-- Create HTML and CSS static website for now (Four Pages)
-    - Events Today (Main page)
-        - Google Map Display
-        - DatePicker Widget
-        - Button
-    - Select Neighborhood Activities
-        - Google Map Display
-        - Additional Markers for Neighboring Events
-        - Filters on event categories
-    - Itineraries Generation
-        - Google Maps Path Generation
-        - Saving path as an json file 
-        - Itinerary view (location order can be changed)
-    - User view (saved itineraries)
-        - Convert JSON file to HTML
-        - List view on all Itineraries
-        - Additional features: add, edit, delete on Itineraries
-    - Each of these pages will require a navigation bar
-- Scrape websites for details
-    - Find the attributes in the HTML page:
-        - DailyHive
-        - Georgia Strait
-        - ToDoCanada
-        - Eventbrite
-    - Save name, location, date, time, price, category, additional details as JSON object
+We were able to complete all of our minimal and standard goals and one of our stretch goals which was to add filtering. In the future, we'd like to be able to detect time conflicts between events, add social media sign-in. Most of all, we would like to extend functionality to other major cities.
+
+
+### Contributions
+##### Harry Chuang: 
+- Google Maps Integration
+- Mailgun Integration
+- UI for Home and Edit Page (React/Redux)
+- Setting up Mongo Collections for Events
+##### Mary Datan: 
+- Getting event data through Yelp API
+- PDF generation
+- Setting up Mongo Collections for Events
+##### Shirley Bi:
+- Meteor Accounts API - Login/Registration
+- General UI and UI for Itinerary Page and Login/Registration Page (React/Redux)
+- Setting up Mongo Collections for Itineraries
+- User Testing
+
+As a team, on top of using the technologies introduced in our class: HTML/CSS/Javascript, React, Redux, NodeJS, Meteor, MongoDB and Release Engineering, we also integrated many external APIs to create a seemless project that integrates both events and attractions in Vancouver into a simple-to-use itinerary planner.  
+
+### Challenges
+##### Getting the Event Data
+Our initial plan to webscrape for event data was changed, ultimately, because the other websites either had a terms of conditions that did not allow for scraping or the data from the websites had inconsistent formatting (as each of the dates were strings in different formats which did not allow us to get the correct times for events). We had to adapt our plans by using Yelp API to get our events instead.
+##### Throttling
+We learnt that Meteor and Redux do not interact well together. We used a withTracker was tracking data in the database, so whenever we updated the database (like fetching the event and attraction data using Yelp API and storing it), the map would re-render each time causing a lot of throttling. This was fixed by removing withTracker from the client, and creating Meteor methods to store the data in redux to decouple the client and the database.
+##### Current Events Database
+When we deployed the app, we realized that there was an issue with our markers. One of us would select one date and the other would get the markers for that particular date. We realized the cause was due to the events being stored and fetched from a single database where multiple users were all manipulating the same data. This was fixed by adding current events redux store so that each user had their own state instead of sharing one. In the future, we would like to store all the events in the database per call to reduce the number of API calls as it is slower. We learnt the importance to where to place the data as it not only affects time to retrieve the data, but also who has access to the data.
+##### API Documentation
+As our project involved many APIs such as google-maps-react and Meteor Accounts, our team came across insufficient documentation of how to use certain features of the API. To overcome this, we often had to read the code, look through existing issues, etc. to search for answers.
 
 
 ### Acknowledgements, References and Resources:
@@ -113,3 +118,4 @@ https://forums.meteor.com/t/solved-meteor-1-3s-createcontainer-and-redux-dispatc
 - service-configuration
 - react-semantic-ui-range
 - jsPDF
+
