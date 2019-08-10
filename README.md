@@ -9,7 +9,7 @@ VanGo was created to aid locals and tourists in exploring the city by showing th
 #### Minimal Requirements (3-5) (will definitely complete):
 - User interface
 - Web-scraping for events
-    - Changed to collecting data form Yelp API
+    - Changed to retrieving data from Yelp API
 - Bookmark/star/add interested events to itinerary
 - Pop-up (or side-bar) for each event with its name, location, time and link for details
 - Share itinerary with self/others
@@ -29,7 +29,7 @@ VanGo was created to aid locals and tourists in exploring the city by showing th
 - Show weather/temperature for the day
 - Sign in with Google, save data to Google account/calendar
 
-We were able to complete all of our minimal and standard goals and one of our stretch goals which was to add filtering. In the future, we'd like to be able to detect time conflicts between events, add social media sign-in. Most of all, we would like to extend functionality to other major cities.
+We were able to complete all of our minimal and standard goals and one of our stretch goals which was to add filtering. In the future, we'd like to be able to detect time conflicts between events and add social media sign-in. Most of all, we would like to extend functionality to other major cities.
 
 
 ### Contributions
