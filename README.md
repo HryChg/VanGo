@@ -105,7 +105,7 @@ github link https://github.com/siffogh/drag-and-drop-article
 ##### Connecting Itinerary Page with Meteor and Redux
 https://forums.meteor.com/t/solved-meteor-1-3s-createcontainer-and-redux-dispatch-event-handlers-etc/20092/9
 
-##### External Library Used
+##### External Libraries Used
 - google-maps-react
 - react-calendar
 - accounts-password
