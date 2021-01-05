@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.4.5",
     "arc-templates": "^0.5.3",
     "atpl": "^0.9.3",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bcrypt": "^3.0.6",
     "bracket-template": "^1.1.5",
     "dot": "^1.1.2",
