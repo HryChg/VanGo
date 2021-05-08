@@ -30,7 +30,7 @@
     "haml-coffee": "^1.14.1",
     "hamlet": "^0.3.3",
     "hamljs": "^0.6.2",
-    "handlebars": "^4.1.2",
+    "handlebars": "^4.7.7",
     "hogan.js": "^3.0.2",
     "htmling": "0.0.8",
     "iced-coffee-script": "^108.0.13",
